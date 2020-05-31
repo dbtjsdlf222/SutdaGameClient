@@ -2,8 +2,7 @@ package main;
 
 import javax.swing.JFrame;
 
-public class Loginextends JFrame
-{
+public class Loginextends JFrame {`
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
 
@@ -15,6 +14,4 @@ public class Loginextends JFrame
     setVisible(true);
     setDefaultCloseOperation(3);
   }
-	
-	
 }
