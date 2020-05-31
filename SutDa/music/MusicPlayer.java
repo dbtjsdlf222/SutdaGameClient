@@ -10,7 +10,8 @@ import main.Main;
 
 public class MusicPlayer extends Thread {
 	private Player player;
-
+	File file = "";
+	boolean loop = true;
 	public MusicPlayer() {
 		try {
 			File file = new File(Main.class.getResource("../Music/BigSleep.mp3").getFile());
@@ -27,9 +28,12 @@ public class MusicPlayer extends Thread {
 
 	public void run() {
 		try {
-			while(true)
-				this.player.play();
-			}
+			do {
+				FileInputStream buff = new FileInputStream(file);
+				player = new Player(buff);
+				player.play();
+			} while (loop);	
+		} catch (Exception e) { }
 		}catch(
 
 	JavaLayerException e)
