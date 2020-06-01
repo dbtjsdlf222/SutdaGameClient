@@ -2,7 +2,7 @@ package main;
 
 import javax.swing.JFrame;
 
-public class Loginextends JFrame {
+public class Login extends JFrame {
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
 
