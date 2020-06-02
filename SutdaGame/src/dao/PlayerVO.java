@@ -106,3 +106,4 @@ public class PlayerVO{
 		this.online = online;
 	}
 }
+}
