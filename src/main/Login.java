@@ -1,14 +1,8 @@
-package puzzle;
+package main;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.regex.*;
 
 import javax.swing.*;
 
@@ -26,36 +20,79 @@ public class Login extends JFrame {
 		logJF.setSize(416, 220);
 		logJF.setLocation(550, 300);
 		logJF.setLayout(null);
+		
 
-		JLabel jlbl = new JLabel("아이디와 비밀번호를 입력해주세요");
-		jlbl.setBounds(100, 0, 1100, 30);
-		logJF.add(jlbl);
+		JLabel lbl = new JLabel("아이디와 비밀번호를 입력해주세요");
+		lbl.setBounds(100, 0, 1100, 30);
+		logJF.add(lbl);
 
-		JButton imgbtn = new JButton(new ImageIcon("admin.jpg"));
-		imgbtn.setBounds(380, 0, 20, 20);
-		logJF.add(imgbtn);
+		JButton adminBtn = new JButton(new ImageIcon("admin.jpg"));
+		adminBtn.setBounds(380, 0, 20, 20);
+		logJF.add(adminBtn);
+		
+		adminBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==adminBtn) {
+					JFrame adminJF = new JFrame("관리자");
+					adminJF.setSize(300, 200);
+					adminJF.setLocation(610, 280);
+					adminJF.setLayout(null);
+					
+					JLabel adminLbl = new JLabel("관리자 모드");
+					adminJF.add(adminLbl);
+					adminLbl.setBounds(100, 10, 100, 20);
+					
+					JButton adLogBtn = new JButton("로그인");
+					adLogBtn.setBounds(200, 40, 70, 90);
+					adminJF.add(adLogBtn);
+					
+					JPanel adIdPal = new JPanel();
+					JLabel adIdLbl = new JLabel("아이디");
+					JTextField adIdTxt = new JTextField(10);
+					adIdPal.setBounds(6, 50, 200, 30);
+					adminJF.add(adIdPal);
+					adIdPal.add(adIdLbl);
+					adIdPal.add(adIdTxt);
+					
+					JPanel adPwPal = new JPanel();
+					JLabel adPwLbl = new JLabel("비밀번호");
+					JPasswordField adPwTxt = new JPasswordField(10);
+					adPwPal.setBounds(0, 90, 200, 30);
+					adminJF.add(adPwPal);
+					adPwPal.add(adPwLbl);
+					adPwPal.add(adPwTxt);
+					adPwTxt.setEchoChar('*');
+					
+					
+					dispose();
+					adminJF.setVisible(true);
+				}
+			}
+		});
 
-		JPanel idpal = new JPanel();
-		JLabel idlbl = new JLabel("아이디");
-		JTextField idtxt = new JTextField(10);
-		idpal.setBounds(-5, 50, 215, 30);
-		logJF.add(idpal);
-		idpal.add(idlbl);
-		idpal.add(idtxt);
+		JPanel idPal = new JPanel();
+		JLabel idLbl = new JLabel("아이디");
+		JTextField idTxt = new JTextField(10);
+		idPal.setBounds(-5, 50, 215, 30);
+		logJF.add(idPal);
+		idPal.add(idLbl);
+		idPal.add(idTxt);
 
-		JPanel pwpal = new JPanel();
-		JLabel pwlbl = new JLabel("비밀번호");
-		JPasswordField pwtxt = new JPasswordField(10);
-		pwpal.setBounds(-11, 80, 215, 30);
-		logJF.add(pwpal);
-		pwpal.add(pwlbl);
-		pwpal.add(pwtxt);
-		pwtxt.setEchoChar('*');
+		JPanel pwPal = new JPanel();
+		JLabel pwLbl = new JLabel("비밀번호");
+		JPasswordField pwTxt = new JPasswordField(10);
+		pwPal.setBounds(-11, 80, 215, 30);
+		logJF.add(pwPal);
+		pwPal.add(pwLbl);
+		pwPal.add(pwTxt);
+		pwTxt.setEchoChar('*');
 
-		JLabel loglbl = new JLabel();
-		loglbl.setBounds(15, 110, 230, 30);
-		loglbl.setForeground(Color.red);
-		logJF.add(loglbl);
+		JLabel logLbl = new JLabel();
+		logLbl.setBounds(15, 110, 230, 30);
+		logLbl.setForeground(Color.red);
+		logJF.add(logLbl);
 
 		JButton logBtn = new JButton("로그인");
 		logBtn.setBounds(210, 40, 70, 100);
@@ -65,7 +102,7 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (idtxt.getText().equals(DBID) && pwtxt.getText().equals(DBPW)) {
+					if (idTxt.getText().equals(DBID) && pwTxt.getText().equals(DBPW)) {
 
 						logJF.setVisible(false);
 						JFrame listJF = new JFrame("방 목록");
@@ -73,10 +110,10 @@ public class Login extends JFrame {
 						listJF.setLocation(550, 150);
 						listJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						listJF.setVisible(true);
-					} else if (idtxt.getText().equals("") || (pwtxt.getText().equals(""))) {
-						loglbl.setText("아이디 또는 비밀번호를 입력하세요.");
+					} else if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
+						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
 					} else
-						loglbl.setText("아이디 또는 비밀번호가 틀립니다.");
+						logLbl.setText("아이디 또는 비밀번호가 틀립니다.");
 				}
 			}
 
@@ -95,29 +132,29 @@ public class Login extends JFrame {
 					joinJF.setLocation(600, 200);
 					joinJF.setLayout(null);
 
-					JLabel jlbl = new JLabel("새롭게 만들 아이디와 비밀번호를 입력해주세요");
-					jlbl.setBounds(35, 5, 1100, 30);
-					jlbl.setForeground(Color.PINK);
-					joinJF.add(jlbl);
+					JLabel jLbl = new JLabel("새롭게 만들 아이디와 비밀번호를 입력해주세요");
+					jLbl.setBounds(35, 5, 1100, 30);
+					jLbl.setForeground(Color.PINK);
+					joinJF.add(jLbl);
 
-					JLabel exlbl = new JLabel("아이디는 5 ~ 10자리  비밀번호는 영어 + 숫자로만 가능합니다.");
-					exlbl.setBounds(15, 30, 1100, 30);
-					exlbl.setFont(exlbl.getFont().deriveFont(11.0f));
-					exlbl.setForeground(Color.PINK);
-					joinJF.add(exlbl);
+					JLabel exLbl = new JLabel("아이디는 5 ~ 10자리  비밀번호는 영어 + 숫자로만 가능합니다.");
+					exLbl.setBounds(15, 30, 1100, 30);
+					exLbl.setFont(exLbl.getFont().deriveFont(11.0f));
+					exLbl.setForeground(Color.PINK);
+					joinJF.add(exLbl);
 
-					JPanel idpal = new JPanel();
-					JLabel idlbl = new JLabel("아이디");
-					JTextField idtxt = new JTextField(10);
-					idpal.setBounds(19, 60, 200, 30);
-					joinJF.add(idpal);
-					idpal.add(idlbl);
-					idpal.add(idtxt);
+					JPanel joIdPal = new JPanel();
+					JLabel joIdLbl = new JLabel("아이디");
+					JTextField joIdTxt = new JTextField(10);
+					joIdPal.setBounds(19, 60, 200, 30);
+					joinJF.add(joIdPal);
+					joIdPal.add(joIdLbl);
+					joIdPal.add(joIdTxt);
 
-					JLabel joinlbl = new JLabel();
-					joinlbl.setBounds(40, 85, 200, 30);
-					joinlbl.setForeground(Color.red);
-					joinJF.add(joinlbl);
+					JLabel joLbl = new JLabel();
+					joLbl.setBounds(40, 85, 200, 30);
+					joLbl.setForeground(Color.red);
+					joinJF.add(joLbl);
 
 					JButton orBtn = new JButton("중복체크");
 					orBtn.setBounds(220, 65, 85, 20);
@@ -129,49 +166,49 @@ public class Login extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == orBtn) {
 								idPt = Pattern.compile("^[a-zA-Z0-9]*$");
-								match = idPt.matcher(idtxt.getText());
+								match = idPt.matcher(joIdTxt.getText());
 								if (match.find()) {
-									if (idtxt.getText().equals(DBID)) {
-										joinlbl.setText("이미 생성된 아이디 입니다.");
-									} else if (idtxt.getText().length() <= 10 && idtxt.getText().length() >= 5) {
-										joinlbl.setText("생성 가능한 아이디 입니다.");
-									} else if (idtxt.getText().equals("")) {
-										joinlbl.setText("아이디를 입력해주세요.");
-									} else if (idtxt.getText().length() > 10 || idtxt.getText().length() < 5) {
-										joinlbl.setText("5 ~ 10자리 이하만 가능합니다.");
+									if (joIdTxt.getText().equals(DBID)) {
+										joLbl.setText("이미 생성된 아이디 입니다.");
+									} else if (joIdTxt.getText().length() <= 10 && joIdTxt.getText().length() >= 5) {
+										joLbl.setText("생성 가능한 아이디 입니다.");
+									} else if (joIdTxt.getText().equals("")) {
+										joLbl.setText("아이디를 입력해주세요.");
+									} else if (joIdTxt.getText().length() > 10 || joIdTxt.getText().length() < 5) {
+										joLbl.setText("5 ~ 10자리 이하만 가능합니다.");
 									}
 								} else
-									joinlbl.setText("영어와 숫자로 입력 가능합니다.");
+									joLbl.setText("영어와 숫자로 입력 가능합니다.");
 							}
 
 						}
 					});
 
-					JPanel pwpal = new JPanel();
-					JLabel pwlbl = new JLabel("비밀번호");
-					JPasswordField pwtxt = new JPasswordField(10);
-					pwpal.setBounds(13, 115, 200, 30);
-					joinJF.add(pwpal);
-					pwpal.add(pwlbl);
-					pwpal.add(pwtxt);
-					pwtxt.setEchoChar('*');
+					JPanel joPwPal = new JPanel();
+					JLabel joPwLbl = new JLabel("비밀번호");
+					JPasswordField joPwTxt = new JPasswordField(10);
+					joPwPal.setBounds(13, 115, 200, 30);
+					joinJF.add(joPwPal);
+					joPwPal.add(joPwLbl);
+					joPwPal.add(joPwTxt);
+					joPwTxt.setEchoChar('*');
 
-					JPanel pwpal2 = new JPanel();
-					JLabel pwlbl2 = new JLabel("비밀번호 확인");
-					JPasswordField pwtxt2 = new JPasswordField(10);
-					pwpal2.setBounds(-1, 170, 200, 30);
-					pwlbl2.setFont(pwlbl2.getFont().deriveFont(12.0f));
-					joinJF.add(pwpal2);
-					pwpal2.add(pwlbl2);
-					pwpal2.add(pwtxt2);
-					pwtxt2.setEchoChar('*');
+					JPanel joPwPal2 = new JPanel();
+					JLabel joPwLbl2 = new JLabel("비밀번호 확인");
+					JPasswordField joPwTxt2 = new JPasswordField(10);
+					joPwPal2.setBounds(-1, 170, 200, 30);
+					joPwLbl2.setFont(joPwLbl2.getFont().deriveFont(12.0f));
+					joinJF.add(joPwPal2);
+					joPwPal2.add(joPwLbl2);
+					joPwPal2.add(joPwTxt2);
+					joPwTxt2.setEchoChar('*');
 
-					JLabel joinlbl2 = new JLabel("일치하지 않습니다.");
-					joinlbl2.setBounds(65, 195, 200, 30);
-					joinlbl2.setForeground(Color.red);
-					joinJF.add(joinlbl2);
+					JLabel joLbl2 = new JLabel("일치하지 않습니다.");
+					joLbl2.setBounds(65, 195, 200, 30);
+					joLbl2.setForeground(Color.red);
+					joinJF.add(joLbl2);
 
-					pwtxt2.addKeyListener(new KeyListener() {
+					joPwTxt2.addKeyListener(new KeyListener() {
 
 						@Override
 						public void keyTyped(KeyEvent e) {
@@ -179,10 +216,10 @@ public class Login extends JFrame {
 
 						@Override
 						public void keyReleased(KeyEvent e) {
-							if (pwtxt.getText().equals(pwtxt2.getText())) {
-								joinlbl2.setText("일치");
+							if (joPwTxt.getText().equals(joPwTxt2.getText())) {
+								joLbl2.setText("일치");
 							} else {
-								joinlbl2.setText("불일치");
+								joLbl2.setText("불일치");
 							}
 						}
 
@@ -192,50 +229,61 @@ public class Login extends JFrame {
 
 					});
 
-					JPanel nicpal = new JPanel();
-					JLabel niclbl = new JLabel("닉네임");
-					JTextField nictxt = new JTextField(10);
-					nicpal.setBounds(19, 225, 200, 30);
-					joinJF.add(nicpal);
-					nicpal.add(niclbl);
-					nicpal.add(nictxt);
+					JPanel joNicPal = new JPanel();
+					JLabel joNicLbl = new JLabel("닉네임");
+					JTextField joNicTxt = new JTextField(10);
+					joNicPal.setBounds(19, 225, 200, 30);
+					joinJF.add(joNicPal);
+					joNicPal.add(joNicLbl);
+					joNicPal.add(joNicTxt);
 
-					JButton orBtn2 = new JButton("중복체크");
-					orBtn2.setBounds(220, 220, 85, 20);
-					joinJF.add(orBtn2);
+					JButton joOrBtn2 = new JButton("중복체크");
+					joOrBtn2.setBounds(220, 230, 85, 20);
+					joinJF.add(joOrBtn2);
 
-					JLabel joinlbl3 = new JLabel();
-					joinlbl3.setBounds(40, 250, 180, 30);
-					joinlbl3.setForeground(Color.red);
-					joinJF.add(joinlbl3);
+					JLabel joLbl3 = new JLabel();
+					joLbl3.setBounds(40, 250, 180, 30);
+					joLbl3.setForeground(Color.red);
+					joinJF.add(joLbl3);
 
-					orBtn2.addActionListener(new ActionListener() {
+					joOrBtn2.addActionListener(new ActionListener() {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (e.getSource() == orBtn2) {
-								idPt = Pattern.compile("^[가-힣]*$");
-								match = idPt.matcher(nictxt.getText());
+							if (e.getSource() == joOrBtn2) {
+								idPt = Pattern.compile("^[a-zA-Z0-9가-힣]*$");
+								match = idPt.matcher(joNicTxt.getText());
 								if (match.find()) {
-									if (nictxt.getText().equals(DBNIC)) {
-										joinlbl3.setText("이미 생성된 닉네임 입니다.");
-									} else if (nictxt.getText().length() <= 6 && nictxt.getText().length() >= 2) {
-										joinlbl3.setText("생성 가능한 닉네임 입니다.");
-									} else if (nictxt.getText().equals("")) {
-										joinlbl3.setText("닉네임을 입력해주세요.");
-									} else if (nictxt.getText().length() > 7 || nictxt.getText().length() < 2) {
-										joinlbl3.setText("2 ~ 7자리 미만만 가능합니다.");
+									if (joNicTxt.getText().equals(DBNIC)) {
+										joLbl3.setText("이미 생성된 닉네임 입니다.");
+									} else if (joNicTxt.getText().length() <= 6 && joNicTxt.getText().length() >= 2) {
+										joLbl3.setText("생성 가능한 닉네임 입니다.");
+									} else if (joNicTxt.getText().equals("")) {
+										joLbl3.setText("닉네임을 입력해주세요.");
+									} else if (joNicTxt.getText().length() > 7 || joNicTxt.getText().length() < 2) {
+										joLbl3.setText("2 ~ 7자리 미만만 가능합니다.");
 									}
 								} else {
-									joinlbl3.setText("한글로만 입력 가능합니다.");
+									joLbl3.setText("특수문자는 불가능합니다.");
 								}
 							}
 						}
 					});
 
-					JButton joinBtn2 = new JButton("가 입");
-					joinBtn2.setBounds(30, 280, 200, 50);
-					joinJF.add(joinBtn2);
+					JButton joBtn2 = new JButton("가 입 완 료");
+					joBtn2.setBounds(50, 280, 150, 40);
+					joinJF.add(joBtn2);
+
+					joBtn2.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if (e.getSource() == joBtn2) {
+								
+							}
+
+						}
+					});
 
 					dispose();
 					joinJF.setVisible(true);
