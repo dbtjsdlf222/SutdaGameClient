@@ -1,12 +1,8 @@
 package dao;
 
-import java.awt.List;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import connection.DBCon;
@@ -14,25 +10,27 @@ import connection.DBCon;
 public class PlayerDAO {
 
 	private Connection conn;
-	private Statement stmt;
-	private ResultSet rs;
 
+	public PlayerDAO() {
+		conn = new DBCon().getOracleConn();
+	}
+	
 	public String playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		String id = null;
 		String pw = null;
-		String nic = null;
+		String nick = null;
 
 		id = vo.getID();
 		pw = vo.getPW();
-		nic = vo.getNICKNAME();
+		nick = vo.getNICKNAME();
 		
-		String sql = "INSERT INTO Player(id,password,nickname) VALUES (?,?,?)";
+		String sql = "INSERT INTO player(id,password,nickname) VALUES (?,?,?)";
 		Connection conn = new DBCon().getMysqlConn();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
-			pstmt.setString(3, nic);
+			pstmt.setString(3, nick);
 			pstmt.executeUpdate();
 		}
 		catch (Exception e) {
@@ -42,19 +40,19 @@ public class PlayerDAO {
 	}
 
 	public ArrayList<PlayerVO> listAll() {
+		ResultSet rs;
 		ArrayList<PlayerVO> list = new ArrayList<>();
-		connDB();
-		String query = "SELECT * FROM Member";
+		String query = "SELECT * FROM player";
 		try {
-			rs = stmt.executeQuery(query);
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				String id = rs.getString("id");
-				String pw = rs.getString("pw");
-				String nic = rs.getString("nic");
-
-				for (List list : playerlist) {
-					System.out.println(list);
-				}
+				String pw = rs.getString("password");
+				String nick = rs.getString("nickname");
+				
+				list.add(new PlayerVO(id, pw, nick));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

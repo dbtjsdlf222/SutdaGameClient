@@ -3,17 +3,12 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DBCon {
-	private final static Connection conn = null;
+	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	
-	DBCon() {
-		
-	}
 	public Connection getOracleConn() {
 		String driver ="oracle.jdbc.driver.OracleDriver";
 		String dburl = "jdbc:oracle:thin:@localhost:1521:xe";
