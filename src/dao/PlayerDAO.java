@@ -1,5 +1,6 @@
 package dao;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,51 +9,60 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class PlayerDAO {
-	private Connection con;
+
+	private Connection conn;
 	private Statement stmt;
 	private ResultSet rs;
 
-	public void conDB() {
+	public void connDB() {
+		String dburl = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbid = "lee";
+		String dbpw = "lee";
+
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.con = DriverManager.getConnection(
-					"jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC", "sunx",
-					"sun123@@");
-			this.stmt = this.con.createStatement();
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(dburl, dbid, dbpw);
+			stmt = conn.createStatement();
+
+		} catch (ClassNotFoundException e) {
+			System.err.println("Class.forName에서 오타 발견 또는 빌드패스 문제");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("url,id,pw 확인 요망");
 		}
-		return this.stmt;
 	}
 
-	public void addPlayer(PlayerVO playerVO) {
-		String ID = null;
-		String PWD = null;
-		String NICKNAME = null;
+	public String playerJoin(PlayerVO vo) {
+		String id = null;
+		String pw = null;
+		String nic = null;
 
-		ID = playerVO.getID();
-		PWD = playerVO.getPW();
-		NICKNAME = playerVO.getNICKNAME();
+		id = vo.getID();
+		pw = vo.getPW();
+		nic = vo.getNICKNAME();
 
-		conDB();
-		String query = "INSERT INTO PLAYER VALUES('" + ID + "', '" + PWD + "', '" + NICKNAME + "')";
+		connDB();
+		String query = "INSERT INTO Player VALUES ('" + id + "', '" + pw + "', '" + nic + "')";
 		try {
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public ArrayList<PlayerVO> list() {
+	public ArrayList<PlayerVO> listAll() {
 		ArrayList<PlayerVO> list = new ArrayList<>();
-		conDB();
-		String query = "SELCT * FROM PLAYER";
+		connDB();
+		String query = "SELECT * FROM Member";
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				String id = rs.getString("ID");
-				String pwd = rs.getString("PWD");
-				String nick = rs.getString("NICKNAME");
+				String id = rs.getString("id");
+				String pw = rs.getString("pw");
+				String nic = rs.getString("nic");
+
+				for (List list : playerlist) {
+					System.out.println(list);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
