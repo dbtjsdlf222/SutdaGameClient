@@ -3,10 +3,13 @@ package dao;
 import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import connection.DBCon;
 
 public class PlayerDAO {
 
@@ -14,24 +17,7 @@ public class PlayerDAO {
 	private Statement stmt;
 	private ResultSet rs;
 
-	public void connDB() {
-		String dburl = "jdbc:oracle:thin:@localhost:1521:xe";
-		String dbid = "lee";
-		String dbpw = "lee";
-
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection(dburl, dbid, dbpw);
-			stmt = conn.createStatement();
-
-		} catch (ClassNotFoundException e) {
-			System.err.println("Class.forName에서 오타 발견 또는 빌드패스 문제");
-		} catch (SQLException e) {
-			System.err.println("url,id,pw 확인 요망");
-		}
-	}
-
-	public String playerJoin(PlayerVO vo) {
+	public String playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		String id = null;
 		String pw = null;
 		String nic = null;
@@ -39,14 +25,20 @@ public class PlayerDAO {
 		id = vo.getID();
 		pw = vo.getPW();
 		nic = vo.getNICKNAME();
-
-		connDB();
-		String query = "INSERT INTO Player VALUES ('" + id + "', '" + pw + "', '" + nic + "')";
+		
+		String sql = "INSERT INTO Player(id,password,nickname) VALUES (?,?,?)";
+		Connection conn = new DBCon().getMysqlConn();
 		try {
-			stmt.executeUpdate(query);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			pstmt.setString(3, nic);
+			pstmt.executeUpdate();
 		}
+		catch (Exception e) {
+			e.getMessage();
+		}
+		return sql;
 	}
 
 	public ArrayList<PlayerVO> listAll() {
