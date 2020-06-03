@@ -207,29 +207,60 @@ public class Login extends JFrame {
 					joPwPal2.add(joPwTxt2);
 					joPwTxt2.setEchoChar('*');
 
-					JLabel joLbl2 = new JLabel("비밀번호를 입력해주세요.");
-					joLbl2.setBounds(65, 195, 200, 30);
+					JLabel joLbl2 = new JLabel("5 ~ 10자리를 입력하세요.");
+					joLbl2.setBounds(65, 140, 200, 30);
 					joLbl2.setForeground(Color.red);
 					joinJF.add(joLbl2);
 
-					joPwTxt2.addKeyListener(new KeyListener() {
+					JLabel joLbl3 = new JLabel("비밀번호를 입력해주세요.");
+					joLbl3.setBounds(65, 195, 200, 30);
+					joLbl3.setForeground(Color.red);
+					joinJF.add(joLbl3);
+
+					joPwTxt.addKeyListener(new KeyListener() {
 
 						@Override
-						public void keyTyped(KeyEvent e) {}
-						
-						@Override
-						public void keyReleased(KeyEvent e) {
-							if (joPwTxt.getText().equals(joPwTxt2.getText())) {
-								joLbl2.setText("일치");
-								pwCheck = true;
-							} else {
-								joLbl2.setText("불일치");
-							}
+						public void keyTyped(KeyEvent e) {
+
 						}
 
 						@Override
-						public void keyPressed(KeyEvent e) {}
-						
+						public void keyPressed(KeyEvent e) {
+
+							if (joPwTxt.getText().length() >= 4 && joPwTxt.getText().length() <= 9) {
+								joLbl2.setText("가능한 비밀번호입니다.");
+								joPwTxt2.addKeyListener(new KeyListener() {
+
+									@Override
+									public void keyTyped(KeyEvent e) {
+
+									}
+
+									@Override
+									public void keyReleased(KeyEvent e) {
+										if (joPwTxt.getText().equals(joPwTxt2.getText())) {
+											joLbl3.setText("일치");
+											pwCheck = true;
+										} else {
+											joLbl3.setText("불일치");
+											pwCheck = false;
+										}
+									}
+
+									@Override
+									public void keyPressed(KeyEvent e) {
+									}
+
+								});
+							} else
+								joLbl2.setText("5 ~ 10자리를 입력하세요.");
+							pwCheck = false;
+						}
+
+						@Override
+						public void keyReleased(KeyEvent e) {
+
+						}
 
 					});
 
@@ -245,10 +276,10 @@ public class Login extends JFrame {
 					joOrBtn2.setBounds(220, 230, 85, 20);
 					joinJF.add(joOrBtn2);
 
-					JLabel joLbl3 = new JLabel();
-					joLbl3.setBounds(40, 250, 180, 30);
-					joLbl3.setForeground(Color.red);
-					joinJF.add(joLbl3);
+					JLabel joLbl4 = new JLabel();
+					joLbl4.setBounds(40, 250, 180, 30);
+					joLbl4.setForeground(Color.red);
+					joinJF.add(joLbl4);
 
 					joOrBtn2.addActionListener(new ActionListener() {
 
@@ -259,17 +290,17 @@ public class Login extends JFrame {
 								match = idPt.matcher(joNickTxt.getText());
 								if (match.find()) {
 									if (joNickTxt.getText().equals("")) {
-										joLbl3.setText("닉네임을 입력해주세요.");
+										joLbl4.setText("닉네임을 입력해주세요.");
 									} else if (joNickTxt.getText().length() > 7 || joNickTxt.getText().length() < 2) {
-										joLbl3.setText("2 ~ 7자리 미만만 가능합니다.");
+										joLbl4.setText("2 ~ 7자리 미만만 가능합니다.");
 									} else if (playerDAO.selectNick(joNickTxt.getText())) {
-										joLbl3.setText("이미 생성된 닉네임 입니다.");
+										joLbl4.setText("이미 생성된 닉네임 입니다.");
 									} else if (joNickTxt.getText().length() <= 6 && joNickTxt.getText().length() >= 2) {
-										joLbl3.setText("생성 가능한 닉네임 입니다.");
+										joLbl4.setText("생성 가능한 닉네임 입니다.");
 										nickCheck = true;
 									}
 								} else {
-									joLbl3.setText("특수문자는 불가능합니다.");
+									joLbl4.setText("특수문자는 불가능합니다.");
 								}
 							}
 						}
