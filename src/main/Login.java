@@ -9,7 +9,7 @@ import javax.swing.*;
 public class Login extends JFrame {
 	Pattern idPt = null;
 	Matcher match;
-
+	
 	String DBID = "lee";
 	String DBPW = "lee";
 	String DBNIC = "lee";
@@ -26,7 +26,7 @@ public class Login extends JFrame {
 		lbl.setBounds(100, 0, 1100, 30);
 		logJF.add(lbl);
 
-		JButton adminBtn = new JButton(new ImageIcon(Main.class.getResource("../img/admin.jpg")));
+		JButton adminBtn = new JButton(new ImageIcon(Login.class.getResource("../img/admin.jpg")));
 		adminBtn.setBounds(380, 0, 20, 20);
 		logJF.add(adminBtn);
 		
