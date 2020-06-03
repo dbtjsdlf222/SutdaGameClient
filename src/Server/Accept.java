@@ -11,7 +11,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Accept extends Thread {
+	private RoomOperator roomOperator;
+	
 	public void run() {
+		
 		String ip = "192.168.55.246";
 		try {
 			Socket socket = new Socket(ip, 4999);
@@ -22,7 +25,7 @@ public class Accept extends Thread {
 			while (true) {
 				String order = br.readLine();
 				ObjectMapper mapper = new ObjectMapper();
-
+				roomOperator.
 				remote.runMainGame(order);
 				System.out.println(order);
 			}
