@@ -15,10 +15,6 @@ public class Room {
 	private String master;
 	private int cardLevel;
 
-	public static void main(String[] args) {
-		new Room();
-	}
-
 	// 생성자
 	public Room() {
 		roomNo = increaseRoomNo++;
