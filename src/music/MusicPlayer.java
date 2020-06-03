@@ -3,14 +3,12 @@ package music;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URL;
-import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import main.Main;
 
 public class MusicPlayer extends Thread {
 	private Player player;
-	File file = "";
+	private File file;
 	boolean loop = true;
 	public MusicPlayer() {
 		try {
@@ -34,10 +32,4 @@ public class MusicPlayer extends Thread {
 				player.play();
 			} while (loop);	
 		} catch (Exception e) { }
-		}catch(
-
-	JavaLayerException e)
-	{
-		e.printStackTrace();
-	}
 }}
