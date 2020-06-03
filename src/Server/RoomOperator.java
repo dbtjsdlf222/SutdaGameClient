@@ -13,7 +13,5 @@ public class RoomOperator {
 		room.joinPlayer(pVO);
 		roomList.add(room);
 	}
-	
 	String message;
-	
 }
