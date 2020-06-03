@@ -7,11 +7,13 @@ import vo.Room;
 
 public class RoomOperator {
 	private ArrayList<Room> roomList = new ArrayList<>();
-			
+	
 	public void makeRoom(PlayerVO pVO) {
 		Room room = new Room();
 		room.joinPlayer(pVO);
 		roomList.add(room);
 	}
+	
+	String message;
 	
 }

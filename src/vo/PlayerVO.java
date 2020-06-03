@@ -1,6 +1,6 @@
 package vo;
 
-public class PlayerVO{
+public class PlayerVO {
    private int no;
    private String id = null;
    private String pw = null;
@@ -11,6 +11,7 @@ public class PlayerVO{
    private int lose = 0;
    private boolean online = false;
    private int cha;
+   private boolean live;
 
    public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha) {

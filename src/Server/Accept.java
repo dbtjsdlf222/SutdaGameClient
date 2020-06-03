@@ -25,9 +25,6 @@ public class Accept extends Thread {
 			while (true) {
 				String order = br.readLine();
 				ObjectMapper mapper = new ObjectMapper();
-				roomOperator.
-				remote.runMainGame(order);
-				System.out.println(order);
 			}
 		} catch (UnknownHostException e) {
 			System.err.println("서버 접속 실패");
