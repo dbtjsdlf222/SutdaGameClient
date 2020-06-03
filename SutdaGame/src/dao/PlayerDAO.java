@@ -74,4 +74,4 @@ public class PlayerDAO {
 		return list;
 	}
 }
-}
+
