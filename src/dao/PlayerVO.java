@@ -5,7 +5,10 @@ public class PlayerVO {
    String PW;
    String NICKNAME;
    
-   public PlayerVO(String id, String pw, String nick){
+   int[] card = new int [2];
+   boolean admin = false;
+   
+   PlayerVO(String id, String pw, String nick){
       this.ID = id;
       this.PW = pw;
       this.NICKNAME = nick;

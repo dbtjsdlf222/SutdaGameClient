@@ -12,8 +12,34 @@ public class PlayerVO {
    private boolean online = false;
    private int cha;
    private boolean live;
+   private String card1, card2;
+   private int cardLevel;
 
-   public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
+   public boolean isLive() {
+	return live;
+}
+
+public void setLive(boolean live) {
+	this.live = live;
+}
+
+public String getCardSetNo() {
+	return cardSetNo;
+}
+
+public void setCardSetNo(String cardSetNo) {
+	this.cardSetNo = cardSetNo;
+}
+
+public int getCardLevel() {
+	return cardLevel;
+}
+
+public void setCardLevel(int cardLevel) {
+	this.cardLevel = cardLevel;
+}
+
+public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha) {
       this.no = no;
       this.id = id;
