@@ -6,10 +6,19 @@ import java.util.regex.*;
 
 import javax.swing.*;
 
+import dao.PlayerDAO;
+import dao.PlayerVO;
+
 public class Login extends JFrame {
+	private PlayerDAO playerDAO = new PlayerDAO();
+
 	Pattern idPt = null;
 	Matcher match;
-	
+
+	boolean idCheck = false;
+	boolean pwCheck = false;
+	boolean nickCheck = false;
+
 	String DBID = "lee";
 	String DBPW = "lee";
 	String DBNIC = "lee";
@@ -20,7 +29,6 @@ public class Login extends JFrame {
 		logJF.setSize(416, 220);
 		logJF.setLocation(550, 300);
 		logJF.setLayout(null);
-		
 
 		JLabel lbl = new JLabel("아이디와 비밀번호를 입력해주세요");
 		lbl.setBounds(100, 0, 1100, 30);
@@ -29,25 +37,25 @@ public class Login extends JFrame {
 		JButton adminBtn = new JButton(new ImageIcon(Login.class.getResource("../img/admin.jpg")));
 		adminBtn.setBounds(380, 0, 20, 20);
 		logJF.add(adminBtn);
-		
+
 		adminBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource()==adminBtn) {
+				if (e.getSource() == adminBtn) {
 					JFrame adminJF = new JFrame("관리자");
 					adminJF.setSize(300, 200);
 					adminJF.setLocation(610, 280);
 					adminJF.setLayout(null);
-					
+
 					JLabel adminLbl = new JLabel("관리자 모드");
 					adminJF.add(adminLbl);
 					adminLbl.setBounds(100, 10, 100, 20);
-					
+
 					JButton adLogBtn = new JButton("로그인");
 					adLogBtn.setBounds(200, 40, 70, 90);
 					adminJF.add(adLogBtn);
-					
+
 					JPanel adIdPal = new JPanel();
 					JLabel adIdLbl = new JLabel("아이디");
 					JTextField adIdTxt = new JTextField(10);
@@ -55,7 +63,7 @@ public class Login extends JFrame {
 					adminJF.add(adIdPal);
 					adIdPal.add(adIdLbl);
 					adIdPal.add(adIdTxt);
-					
+
 					JPanel adPwPal = new JPanel();
 					JLabel adPwLbl = new JLabel("비밀번호");
 					JPasswordField adPwTxt = new JPasswordField(10);
@@ -64,8 +72,7 @@ public class Login extends JFrame {
 					adPwPal.add(adPwLbl);
 					adPwPal.add(adPwTxt);
 					adPwTxt.setEchoChar('*');
-					
-					
+
 					dispose();
 					adminJF.setVisible(true);
 				}
@@ -168,14 +175,15 @@ public class Login extends JFrame {
 								idPt = Pattern.compile("^[a-zA-Z0-9]*$");
 								match = idPt.matcher(joIdTxt.getText());
 								if (match.find()) {
-									if (joIdTxt.getText().equals(DBID)) {
-										joLbl.setText("이미 생성된 아이디 입니다.");
-									} else if (joIdTxt.getText().length() <= 10 && joIdTxt.getText().length() >= 5) {
-										joLbl.setText("생성 가능한 아이디 입니다.");
-									} else if (joIdTxt.getText().equals("")) {
+									if (joIdTxt.getText().equals("")) {
 										joLbl.setText("아이디를 입력해주세요.");
 									} else if (joIdTxt.getText().length() > 10 || joIdTxt.getText().length() < 5) {
 										joLbl.setText("5 ~ 10자리 이하만 가능합니다.");
+									} else if (playerDAO.selectID(joIdTxt.getText())) {
+										joLbl.setText("이미 생성된 아이디 입니다.");
+									} else if (joIdTxt.getText().length() <= 10 && joIdTxt.getText().length() >= 5) {
+										joLbl.setText("생성 가능한 아이디 입니다.");
+										idCheck = true;
 									}
 								} else
 									joLbl.setText("영어와 숫자로 입력 가능합니다.");
@@ -218,6 +226,7 @@ public class Login extends JFrame {
 						public void keyReleased(KeyEvent e) {
 							if (joPwTxt.getText().equals(joPwTxt2.getText())) {
 								joLbl2.setText("일치");
+								pwCheck = true;
 							} else {
 								joLbl2.setText("불일치");
 							}
@@ -229,13 +238,13 @@ public class Login extends JFrame {
 
 					});
 
-					JPanel joNicPal = new JPanel();
-					JLabel joNicLbl = new JLabel("닉네임");
-					JTextField joNicTxt = new JTextField(10);
-					joNicPal.setBounds(19, 225, 200, 30);
-					joinJF.add(joNicPal);
-					joNicPal.add(joNicLbl);
-					joNicPal.add(joNicTxt);
+					JPanel joNickPal = new JPanel();
+					JLabel joNickLbl = new JLabel("닉네임");
+					JTextField joNickTxt = new JTextField(10);
+					joNickPal.setBounds(19, 225, 200, 30);
+					joinJF.add(joNickPal);
+					joNickPal.add(joNickLbl);
+					joNickPal.add(joNickTxt);
 
 					JButton joOrBtn2 = new JButton("중복체크");
 					joOrBtn2.setBounds(220, 230, 85, 20);
@@ -252,16 +261,17 @@ public class Login extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == joOrBtn2) {
 								idPt = Pattern.compile("^[a-zA-Z0-9가-힣]*$");
-								match = idPt.matcher(joNicTxt.getText());
+								match = idPt.matcher(joNickTxt.getText());
 								if (match.find()) {
-									if (joNicTxt.getText().equals(DBNIC)) {
-										joLbl3.setText("이미 생성된 닉네임 입니다.");
-									} else if (joNicTxt.getText().length() <= 6 && joNicTxt.getText().length() >= 2) {
-										joLbl3.setText("생성 가능한 닉네임 입니다.");
-									} else if (joNicTxt.getText().equals("")) {
+									if (joNickTxt.getText().equals("")) {
 										joLbl3.setText("닉네임을 입력해주세요.");
-									} else if (joNicTxt.getText().length() > 7 || joNicTxt.getText().length() < 2) {
+									} else if (joNickTxt.getText().length() > 7 || joNickTxt.getText().length() < 2) {
 										joLbl3.setText("2 ~ 7자리 미만만 가능합니다.");
+									} else if (playerDAO.selectNick(joNickTxt.getText())) {
+										joLbl3.setText("이미 생성된 닉네임 입니다.");
+									} else if (joNickTxt.getText().length() <= 6 && joNickTxt.getText().length() >= 2) {
+										joLbl3.setText("생성 가능한 닉네임 입니다.");
+										nickCheck = true;
 									}
 								} else {
 									joLbl3.setText("특수문자는 불가능합니다.");
@@ -279,21 +289,31 @@ public class Login extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == joBtn2) {
-								
-							}
+								if (idCheck && pwCheck && nickCheck) {
 
+									try {
+										System.out.println(joIdTxt.getText() + joPwTxt.getText() + joNickTxt.getText());
+
+										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
+												joNickTxt.getText()))) {
+											JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
+											joinJF.dispose();
+										}
+									} catch (ClassNotFoundException e1) {
+										e1.printStackTrace();
+									}
+								} else
+									JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호 또는 닉네임을 입력해주세요.");
+							}
 						}
 					});
-
 					dispose();
 					joinJF.setVisible(true);
 				}
 			}
 		});
-
 		logJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logJF.setVisible(true);
-
 	}
 
 	public static void main(String[] args) {
