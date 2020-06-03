@@ -2,13 +2,13 @@ package Server;
 
 import java.util.ArrayList;
 
-import vo.PlayerVO;
+import vo.PlayerVOsunil;
 import vo.Room;
 
 public class RoomOperator {
 	private ArrayList<Room> roomList = new ArrayList<>();
 	
-	public void makeRoom(PlayerVO pVO) {
+	public void makeRoom(PlayerVOsunil pVO) {
 		Room room = new Room();
 		room.joinPlayer(pVO);
 		roomList.add(room);

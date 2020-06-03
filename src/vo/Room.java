@@ -9,7 +9,7 @@ public class Room {
 	private static int increaseRoomNo = 0;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
-	private ArrayList<PlayerVO> list = new ArrayList<>(); // 방안에 있는 사람 리스트
+	private ArrayList<PlayerVOsunil> list = new ArrayList<>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20];
 	private Queue<Float> shuffledCard = new LinkedList();
 	private String master;
@@ -55,11 +55,11 @@ public class Room {
 		arr[j] = temp;
 	}
 
-	public void joinPlayer(PlayerVO vo) {
+	public void joinPlayer(PlayerVOsunil vo) {
 		list.add(vo);
 	}
 
-	public void exitPlayer(PlayerVO vo) {
+	public void exitPlayer(PlayerVOsunil vo) {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getNic().equals(vo.getNic())) {
 
