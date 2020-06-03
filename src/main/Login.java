@@ -19,10 +19,6 @@ public class Login extends JFrame {
 	boolean pwCheck = false;
 	boolean nickCheck = false;
 
-	String DBID = "lee";
-	String DBPW = "lee";
-	String DBNIC = "lee";
-
 	public void login() {
 
 		JFrame logJF = new JFrame("로 그 인 창");
@@ -109,7 +105,7 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (idTxt.getText().equals(DBID) && pwTxt.getText().equals(DBPW)) {
+					if (playerDAO.selectID(idTxt.getText()) && playerDAO.selectPW(pwTxt.getText())) {
 
 						logJF.setVisible(false);
 						JFrame listJF = new JFrame("방 목록");
@@ -211,7 +207,7 @@ public class Login extends JFrame {
 					joPwPal2.add(joPwTxt2);
 					joPwTxt2.setEchoChar('*');
 
-					JLabel joLbl2 = new JLabel("일치하지 않습니다.");
+					JLabel joLbl2 = new JLabel("비밀번호를 입력해주세요.");
 					joLbl2.setBounds(65, 195, 200, 30);
 					joLbl2.setForeground(Color.red);
 					joinJF.add(joLbl2);
@@ -219,9 +215,8 @@ public class Login extends JFrame {
 					joPwTxt2.addKeyListener(new KeyListener() {
 
 						@Override
-						public void keyTyped(KeyEvent e) {
-						}
-
+						public void keyTyped(KeyEvent e) {}
+						
 						@Override
 						public void keyReleased(KeyEvent e) {
 							if (joPwTxt.getText().equals(joPwTxt2.getText())) {
@@ -233,8 +228,8 @@ public class Login extends JFrame {
 						}
 
 						@Override
-						public void keyPressed(KeyEvent e) {
-						}
+						public void keyPressed(KeyEvent e) {}
+						
 
 					});
 

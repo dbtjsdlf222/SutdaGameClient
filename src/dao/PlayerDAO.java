@@ -121,6 +121,26 @@ public class PlayerDAO {
 		return true;
 	}
 	
+	public boolean selectPW(String pw) {
+		ResultSet rs;
+		String query = "select EXISTS (select * from player where password= ? ) as success";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pw);
+
+			rs = pstmt.executeQuery();
+			rs.next();
+			if(rs.getInt(1) == 1) {
+				return true;
+			}else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 	
 	
 	
