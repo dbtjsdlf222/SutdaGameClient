@@ -1,17 +1,20 @@
 package vo;
 
+import java.net.Socket;
+
 public class PlayerVO {
-   private int no;
-   private String id = null;
-   private String pw = null;
-   private String nic = null;
-   private int money = 0;
-   private boolean admin;
-   private int win = 0;
-   private int lose = 0;
-   private boolean online = false;
-   private int cha;
-   private boolean live;
+	private Socket socket;
+	private int no;
+	private String id = null;
+	private String pw = null;
+	private String nic = null;
+	private int money = 0;
+	private boolean admin;
+	private int win = 0;
+	private int lose = 0;
+	private boolean online = false;
+	private int cha;
+	private boolean live;
 
    public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha) {
