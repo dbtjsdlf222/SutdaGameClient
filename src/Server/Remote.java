@@ -1,4 +1,4 @@
-package main;
+package Server;
 
 public class Remote extends MainScreen {
 	public void runMainGame(int key) {
