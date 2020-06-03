@@ -1,6 +1,6 @@
 package Server;
 
-public class Remote extends MainScreen {
+public class Remote  {
 	public void runMainGame(int key) {
 		switch (key) {
 		case 1:
