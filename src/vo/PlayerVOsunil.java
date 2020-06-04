@@ -3,6 +3,7 @@ package vo;
 import java.net.Socket;
 
 public class PlayerVOsunil {
+	
 	private Socket socket;
 	private int no;
 	private String id = null;
@@ -14,8 +15,8 @@ public class PlayerVOsunil {
 	private int lose = 0;
 	private boolean online = false;
 	private int cha;
-	private boolean live;
-
+	private boolean live = false;
+	
    public PlayerVOsunil(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha) {
       this.no = no;

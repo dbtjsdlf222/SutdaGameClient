@@ -8,10 +8,11 @@ import javax.swing.*;
 
 import dao.PlayerDAO;
 import dao.PlayerVO;
+import vo.PlayerVOsunil;
 
 public class Login extends JFrame {
 	private PlayerDAO playerDAO = new PlayerDAO();
-
+	private PlayerVOsunil playerVO = null; 
 	Pattern idPt = null;
 	Matcher match;
 
@@ -106,7 +107,7 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (playerDAO.selectID(idTxt.getText()) && playerDAO.selectPW(pwTxt.getText())) {
+					if (playerDAO.login(idTxt.getText(),pwTxt.getText())) {
 
 						logJF.setVisible(false);
 						JFrame listJF = new JFrame("방 목록");
@@ -325,8 +326,8 @@ public class Login extends JFrame {
 								if (idCheck && pwCheck && pwCheck2 && nickCheck) {
 
 									try {
-										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
-												joNickTxt.getText()))) {
+										if (1 == playerDAO.playerJoin(new PlayerVO
+												(joIdTxt.getText(), joPwTxt.getText(),joNickTxt.getText()))) {
 											JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
 											joinJF.dispose();
 										}
