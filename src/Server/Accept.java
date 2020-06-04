@@ -22,8 +22,7 @@ public class Accept extends Thread {
 			
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			String order = br.readLine();
-			ObjectMapper mapper = new ObjectMapper();
+			
 			
 			while (true) {
 				Socket socket = serverSocket.accept();

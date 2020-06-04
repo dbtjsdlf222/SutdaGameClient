@@ -9,14 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vo.Packet;
 
-public class ReceivePacket extends Thread {
+public class ReceiveClientPacket extends Thread {
 	
 	@Override
 	public void run() {
 		
 	}
 
-	public ReceivePacket(Socket socket) {
+	public ReceiveClientPacket(Socket socket) {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 			
 		while (true) {
