@@ -44,6 +44,10 @@ public class Room {
 		return shuffledCard.poll();
 	}
 	
+	public void roomSpeaker() {
+		list
+	}
+	
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];
 		arr[i] = arr[j];

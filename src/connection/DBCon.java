@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public class DBCon {
 	private Connection conn = null;
-	private PreparedStatement pstmt = null;
 	
 //	public Connection getOracleConn() {
 //		String driver ="oracle.jdbc.driver.OracleDriver";

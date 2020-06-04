@@ -8,13 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
+
 import connection.DBCon;
 import vo.PlayerVOsunil;
 
 public class PlayerDAO {
 
 	private Connection conn;
-	private PreparedStatement pstmt;
+	private PreparedStatement pstmt; 
 
 	public PlayerDAO() {
 		try {

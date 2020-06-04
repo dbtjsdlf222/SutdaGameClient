@@ -23,7 +23,6 @@ public class ReceiveClientPacket extends Thread {
 			String packetStr = br.readLine();
 			ObjectMapper json = new ObjectMapper();
 			Packet packet = json.convertValue(json, Packet.class);
-			
 		}
 			
 		} catch (IOException e) {
