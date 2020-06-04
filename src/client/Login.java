@@ -107,7 +107,7 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (playerDAO.login(idTxt.getText(),pwTxt.getText())) {
+					if (playerDAO.login(idTxt.getText(),pwTxt.getText())!=null) {
 
 						logJF.setVisible(false);
 						JFrame listJF = new JFrame("방 목록");
