@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -15,21 +17,25 @@ public class Accept extends Thread {
 	
 	public void run() {
 		
-		String ip = "192.168.55.246";
 		try {
-			Socket socket = new Socket(ip, 4999);
+			ServerSocket serverSocket = new ServerSocket(4888);
+			
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			Remote remote = new Remote();
+			String order = br.readLine();
+			ObjectMapper mapper = new ObjectMapper();
 			
 			while (true) {
-				String order = br.readLine();
-				ObjectMapper mapper = new ObjectMapper();
-			}
+				Socket socket = serverSocket.accept();
+				
+				
+			} //while
+			
 		} catch (UnknownHostException e) {
 			System.err.println("서버 접속 실패");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-}
+		} //try~catch
+		
+	} //run()
+} //Accept()
