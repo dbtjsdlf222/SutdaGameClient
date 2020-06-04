@@ -3,8 +3,9 @@ package music;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+
+import client.Main;
 import javazoom.jl.player.Player;
-import main.Main;
 
 public class MusicPlayer extends Thread {
 	private Player player;
