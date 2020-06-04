@@ -16,8 +16,42 @@ public class PlayerVOsunil {
 	private boolean online = false;
 	private int cha;
 	private boolean live = false;
+	private String card1, card2;
 	
-   public PlayerVOsunil(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
+	
+   public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+	public boolean isLive() {
+		return live;
+	}
+
+	public void setLive(boolean live) {
+		this.live = live;
+	}
+
+	public String getCard1() {
+		return card1;
+	}
+
+	public void setCard1(String card1) {
+		this.card1 = card1;
+	}
+
+	public String getCard2() {
+		return card2;
+	}
+
+	public void setCard2(String card2) {
+		this.card2 = card2;
+	}
+
+public PlayerVOsunil(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha) {
       this.no = no;
       this.id = id;

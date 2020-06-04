@@ -18,7 +18,7 @@ public class PlayerVO {
 	private String card1, card2;
 	private int cardLevel;
 
-   public Socket getSocket() {
+	public Socket getSocket() {
 		return socket;
 	}
 
@@ -42,113 +42,113 @@ public class PlayerVO {
 		this.card2 = card2;
 	}
 
-public boolean isLive() {
-	return live;
-}
+	public boolean isLive() {
+		return live;
+	}
 
-public void setLive(boolean live) {
-	this.live = live;
-}
+	public void setLive(boolean live) {
+		this.live = live;
+	}
 
-public int getCardLevel() {
-	return cardLevel;
-}
+	public int getCardLevel() {
+		return cardLevel;
+	}
 
-public void setCardLevel(int cardLevel) {
-	this.cardLevel = cardLevel;
-}
+	public void setCardLevel(int cardLevel) {
+		this.cardLevel = cardLevel;
+	}
 
-public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
-         boolean online, int cha) {
-      this.no = no;
-      this.id = id;
-      this.pw = pw;
-      this.nic = nic;
-      this.money = money;
-      this.admin = admin;
-      this.win = win;
-      this.lose = lose;
-      this.online = online;
-      this.cha = cha;
-   }
+	public PlayerVO(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
+			boolean online, int cha) {
+		this.no = no;
+		this.id = id;
+		this.pw = pw;
+		this.nic = nic;
+		this.money = money;
+		this.admin = admin;
+		this.win = win;
+		this.lose = lose;
+		this.online = online;
+		this.cha = cha;
+	}
 
-   public int getNo() {
-      return this.no;
-   }
+	public int getNo() {
+		return this.no;
+	}
 
-   public void setNo(int no) {
-      this.no = no;
-   }
+	public void setNo(int no) {
+		this.no = no;
+	}
 
-   public int getCha() {
-      return cha;
-   }
+	public int getCha() {
+		return cha;
+	}
 
-   public void setCha(int cha) {
-      this.cha = cha;
-   }
+	public void setCha(int cha) {
+		this.cha = cha;
+	}
 
-   public String getId() {
-      return this.id;
-   }
+	public String getId() {
+		return this.id;
+	}
 
-   public void setId(String id) {
-      this.id = id;
-   }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-   public String getPw() {
-      return this.pw;
-   }
+	public String getPw() {
+		return this.pw;
+	}
 
-   public void setPw(String pw) {
-      this.pw = pw;
-   }
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
 
-   public String getNic() {
-      return this.nic;
-   }
+	public String getNic() {
+		return this.nic;
+	}
 
-   public void setNic(String nic) {
-      this.nic = nic;
-   }
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 
-   public int getMoney() {
-      return this.money;
-   }
+	public int getMoney() {
+		return this.money;
+	}
 
-   public void setMoney(int money) {
-      this.money = money;
-   }
+	public void setMoney(int money) {
+		this.money = money;
+	}
 
-   public boolean isAdmin() {
-      return this.admin;
-   }
+	public boolean isAdmin() {
+		return this.admin;
+	}
 
-   public void setAdmin(boolean admin) {
-      this.admin = admin;
-   }
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 
-   public int getWin() {
-      return this.win;
-   }
+	public int getWin() {
+		return this.win;
+	}
 
-   public void setWin(int win) {
-      this.win = win;
-   }
+	public void setWin(int win) {
+		this.win = win;
+	}
 
-   public int getLose() {
-      return this.lose;
-   }
+	public int getLose() {
+		return this.lose;
+	}
 
-   public void setLose(int lose) {
-      this.lose = lose;
-   }
+	public void setLose(int lose) {
+		this.lose = lose;
+	}
 
-   public boolean isOnline() {
-      return this.online;
-   }
+	public boolean isOnline() {
+		return this.online;
+	}
 
-   public void setOnline(boolean online) {
-      this.online = online;
-   }
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
 }
