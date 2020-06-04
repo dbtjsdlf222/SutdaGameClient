@@ -126,12 +126,4 @@ public class Room {
 		this.gameStarted = gameStarted;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 }
