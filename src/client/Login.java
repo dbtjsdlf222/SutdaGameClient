@@ -1,4 +1,4 @@
-package main;
+package client;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -17,6 +17,7 @@ public class Login extends JFrame {
 
 	boolean idCheck = false;
 	boolean pwCheck = false;
+	boolean pwCheck2 = false;
 	boolean nickCheck = false;
 
 	public void login() {
@@ -168,7 +169,8 @@ public class Login extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == orBtn) {
-								idPt = Pattern.compile("^[a-zA-Z0-9]*$");
+								idPt = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
+
 								match = idPt.matcher(joIdTxt.getText());
 								if (match.find()) {
 									if (joIdTxt.getText().equals("")) {
@@ -181,8 +183,11 @@ public class Login extends JFrame {
 										joLbl.setText("생성 가능한 아이디 입니다.");
 										idCheck = true;
 									}
-								} else
-									joLbl.setText("영어와 숫자로 입력 가능합니다.");
+								} else if (!(joIdTxt.getText().matches("^[a-zA-Z0-9]*$"))) {
+									joLbl.setText("영어와 숫자만 입력 가능합니다.");
+								} else if (!(joIdTxt.getText().matches("^[a-zA-Z]{1}$"))) {
+									joLbl.setText("앞자리는 영어만 가능합니다.");
+								}
 							}
 
 						}
@@ -229,6 +234,7 @@ public class Login extends JFrame {
 
 							if (joPwTxt.getText().length() >= 4 && joPwTxt.getText().length() <= 9) {
 								joLbl2.setText("가능한 비밀번호입니다.");
+								pwCheck2 = true;
 								joPwTxt2.addKeyListener(new KeyListener() {
 
 									@Override
@@ -252,9 +258,10 @@ public class Login extends JFrame {
 									}
 
 								});
-							} else
+							} else {
 								joLbl2.setText("5 ~ 10자리를 입력하세요.");
-							pwCheck = false;
+								pwCheck2 = false;
+							}
 						}
 
 						@Override
@@ -292,7 +299,7 @@ public class Login extends JFrame {
 									if (joNickTxt.getText().equals("")) {
 										joLbl4.setText("닉네임을 입력해주세요.");
 									} else if (joNickTxt.getText().length() > 7 || joNickTxt.getText().length() < 2) {
-										joLbl4.setText("2 ~ 7자리 미만만 가능합니다.");
+										joLbl4.setText("2 ~ 6자리 미만만 가능합니다.");
 									} else if (playerDAO.selectNick(joNickTxt.getText())) {
 										joLbl4.setText("이미 생성된 닉네임 입니다.");
 									} else if (joNickTxt.getText().length() <= 6 && joNickTxt.getText().length() >= 2) {
@@ -315,11 +322,9 @@ public class Login extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == joBtn2) {
-								if (idCheck && pwCheck && nickCheck) {
+								if (idCheck && pwCheck && pwCheck2 && nickCheck) {
 
 									try {
-										System.out.println(joIdTxt.getText() + joPwTxt.getText() + joNickTxt.getText());
-
 										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
 												joNickTxt.getText()))) {
 											JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
