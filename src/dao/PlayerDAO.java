@@ -131,6 +131,11 @@ public class PlayerDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
+			
+			String update = "UPDATE player online = 'true' WHERE id=?";
+			pstmt = conn.prepareStatement(update);
+			pstmt = conn.prepareStatement(sql);
+			
 			rs = pstmt.executeQuery();
 			int no = rs.getInt(1);
 			String rsID = rs.getString(2);

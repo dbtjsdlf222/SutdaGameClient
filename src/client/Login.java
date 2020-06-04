@@ -12,7 +12,7 @@ import vo.PlayerVOsunil;
 
 public class Login extends JFrame {
 	private PlayerDAO playerDAO = new PlayerDAO();
-	private PlayerVOsunil playerVO = null; 
+	private PlayerVOsunil playerVO = null;
 	Pattern idPt = null;
 	Matcher match;
 
@@ -107,18 +107,21 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (playerDAO.login(idTxt.getText(),pwTxt.getText())!=null) {
 
-						logJF.setVisible(false);
-						JFrame listJF = new JFrame("방 목록");
-						listJF.setSize(400, 600);
-						listJF.setLocation(550, 150);
-						listJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						listJF.setVisible(true);
-					} else if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
-						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
-					} else
-						logLbl.setText("아이디 또는 비밀번호가 틀립니다.");
+					if (playerDAO.login(idTxt.getText(), pwTxt.getText()) != null) {
+						if (playerVO.isOnline() == true) {
+
+							logJF.setVisible(false);
+							JFrame listJF = new JFrame("방 목록");
+							listJF.setSize(400, 600);
+							listJF.setLocation(550, 150);
+							listJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							listJF.setVisible(true);
+						} else if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
+							logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
+						} else
+							logLbl.setText("아이디 또는 비밀번호가 틀립니다.");
+					}
 				}
 			}
 
@@ -326,8 +329,8 @@ public class Login extends JFrame {
 								if (idCheck && pwCheck && pwCheck2 && nickCheck) {
 
 									try {
-										if (1 == playerDAO.playerJoin(new PlayerVO
-												(joIdTxt.getText(), joPwTxt.getText(),joNickTxt.getText()))) {
+										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
+												joNickTxt.getText()))) {
 											JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
 											joinJF.dispose();
 										}
