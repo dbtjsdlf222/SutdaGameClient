@@ -9,7 +9,7 @@ public class Room {
 	private static int increaseRoomNo = 0;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
-	private ArrayList<PlayerVOsunil> list = new ArrayList<>(); // 방안에 있는 사람 리스트
+	protected ArrayList<PlayerVOsunil> list = new ArrayList<>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20];	//카드각
 	private Queue<Float> shuffledCard = new LinkedList();	// 위에서 부터 카드 한장씩 배분하기위한 queue
 	private String master;	//방장 or 선판 이긴거

@@ -139,7 +139,9 @@ public class PlayerDAO {
 			int lose = rs.getInt(7);
 			boolean online = rs.getBoolean(8);
 			int character = rs.getInt(9);
+			
 			return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
