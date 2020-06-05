@@ -49,16 +49,21 @@ public class Room {
 
 	public void roomSpeaker(Packet pac) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		for (int i = 0; i < cardArr.length; i++) {
+		for (int i = 0; i < list.size(); i++) {
 			try {
 				list.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
 		} // for
-
 	} // roomSpeaker
 
+	public void roomChat(String msg) {
+		for (int i = 0; i < list.size(); i++) {
+				list.get(i).getPwSocket().println(msg);
+		} // for
+	} // roomChat
+	
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];
 		arr[i] = arr[j];
