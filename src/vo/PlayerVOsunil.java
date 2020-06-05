@@ -29,7 +29,6 @@ public class PlayerVOsunil {
 	private boolean live = false;
 	private float card1, card2;
 	private int cardLevel;
-	
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	private BufferedReader brSocket;
 	@JsonIgnoreProperties(ignoreUnknown = true)
@@ -52,6 +51,31 @@ public class PlayerVOsunil {
 		this.cha = cha;
 	}
 	
+	
+	
+	public PlayerVOsunil(Socket socket, int no, String id, String password, String nic, int money, boolean admin,
+			int win, int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel,
+			BufferedReader brSocket, PrintWriter pwSocket) {
+		super();
+		this.socket = socket;
+		this.no = no;
+		this.id = id;
+		this.password = password;
+		this.nic = nic;
+		this.money = money;
+		this.admin = admin;
+		this.win = win;
+		this.lose = lose;
+		this.online = online;
+		this.cha = cha;
+		this.live = live;
+		this.card1 = card1;
+		this.card2 = card2;
+		this.cardLevel = cardLevel;
+		this.brSocket = brSocket;
+		this.pwSocket = pwSocket;
+	}
+
 	public void setSocketWithBrPw(Socket socket) {
 		this.socket = socket;
 		try {
@@ -62,6 +86,14 @@ public class PlayerVOsunil {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "PlayerVOsunil [socket=" + socket + ", no=" + no + ", id=" + id + ", password=" + password + ", nic="
+				+ nic + ", money=" + money + ", admin=" + admin + ", win=" + win + ", lose=" + lose + ", online="
+				+ online + ", cha=" + cha + ", live=" + live + ", card1=" + card1 + ", card2=" + card2 + ", cardLevel="
+				+ cardLevel + ", brSocket=" + brSocket + ", pwSocket=" + pwSocket + "]";
+	}
+
 	public String getPassword() {
 		return password;
 	}
