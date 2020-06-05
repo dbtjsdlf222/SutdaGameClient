@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import Server.OrderType;
 import vo.Packet;
@@ -80,7 +79,6 @@ public class Lobby {
 						//객체 포장원 (전송 최적화 포장을 해줌)
 						ObjectMapper mapper = new ObjectMapper();
 						mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-						mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 						//메세지
 						String msg = chatText.getText();
 						
@@ -107,7 +105,6 @@ public class Lobby {
 
 		JRootPane  rootPane  =  roList.getRootPane();
         rootPane.setDefaultButton(chatBtn);  
-		
 
 		roList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		roList.setVisible(true);
