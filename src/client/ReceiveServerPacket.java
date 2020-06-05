@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import vo.Packet;
 
 public class ReceiveServerPacket extends Thread {
-	Socket socket;
+	private Socket socket;
 	
 	public ReceiveServerPacket(Socket socket) {
 		this.socket = socket;

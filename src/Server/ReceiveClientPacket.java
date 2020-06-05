@@ -11,23 +11,27 @@ import vo.Packet;
 
 public class ReceiveClientPacket extends Thread {
 	
+	private Socket socket;
+	
 	@Override
 	public void run() {
-		
-	}
-
-	public ReceiveClientPacket(Socket socket) {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
 			
 		while (true) {
 			String packetStr = br.readLine();
-			ObjectMapper json = new ObjectMapper();
-			Packet packet = json.convertValue(json, Packet.class);
+			ObjectMapper mapper = new ObjectMapper();
+			Packet packet = mapper.convertValue(mapper, Packet.class);
+			System.out.println("성공 : "+packet);
 		}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} //try~catch
+	} //run()
+
+	public ReceiveClientPacket(Socket socket) {
+		System.out.println(socket);
+		this.socket = socket;
 	}
 
 	public void getPacket(int key) {

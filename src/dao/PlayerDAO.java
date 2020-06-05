@@ -25,6 +25,35 @@ public class PlayerDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getServerIP() {
+		String sql = "SELECT ip FROM player WHERE id = 'SERVER'";
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String ip = rs.getString(1);
+			
+			return ip;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void setServerIP() {
+		String sql = "UPDATE player SET ip = ? online = ? WHERE id = 'SERVER'";
+		try(PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, InetAddress.getLocalHost().toString());
+			ps.setString(2, InetAddress.getLocalHost().toString());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		InetAddress local = null;
@@ -83,7 +112,7 @@ public class PlayerDAO {
 
 	public boolean selectID(String id) {
 		ResultSet rs;
-		String query = "select EXISTS (select * from player where id= ? ) as success";
+		String query = "SELECT EXISTS (select * from player where id= ? ) AS SUCCESS";
 
 		try {
 			pstmt = conn.prepareStatement(query);
