@@ -108,9 +108,5 @@ public class Lobby {
 
 		roList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		roList.setVisible(true);
-
 	}
-
-	
-
 }
