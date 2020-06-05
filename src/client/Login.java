@@ -111,12 +111,8 @@ public class Login extends JFrame {
 						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
 					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getText())) != null) {
 						if (playerVO.isOnline() == false) {
-							logJF.setVisible(false);
-							JFrame listJF = new JFrame("방 목록");
-							listJF.setSize(400, 600);
-							listJF.setLocation(550, 150);
-							listJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-							listJF.setVisible(true);
+							logJF.dispose();
+							Lobby lobby = new Lobby(playerVO);
 						} else if (playerVO.isOnline() == true) {
 							logLbl.setText("이미 접속하고 있는 아이디입니다.");
 						}
@@ -303,7 +299,7 @@ public class Login extends JFrame {
 								if (match.find()) {
 									if (joNickTxt.getText().equals("")) {
 										joLbl4.setText("닉네임을 입력해주세요.");
-									} else if (joNickTxt.getText().length() > 7 || joNickTxt.getText().length() < 2) {
+									} else if (joNickTxt.getText().length() < 2 || joNickTxt.getText().length() > 7) {
 										joLbl4.setText("2 ~ 6자리 미만만 가능합니다.");
 									} else if (playerDAO.selectNick(joNickTxt.getText())) {
 										joLbl4.setText("이미 생성된 닉네임 입니다.");

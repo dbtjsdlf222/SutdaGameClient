@@ -28,50 +28,21 @@ public class Lobby {
 	private PlayerVOsunil pvo;
 	private ArrayList<PlayerVOsunil> playerList = new ArrayList<>();
 	
-	public Lobby() {
-		
+	public Lobby(PlayerVOsunil vo) {
+		this.pvo = vo;
+		try {
+			vo.setSocketWithBrPw(new Socket("192.168.0.19", 4888));
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		roomList(vo);
 	}
 	
 	public void roomList(PlayerVOsunil vo) {
 		this.pvo = vo;
 		
-		try {
-			//객체 포장원 (전송 최적화 포장을 해줌)
-			ObjectMapper mapper = new ObjectMapper();
-			
-			//메세지
-			String msg = "안녕?";
-			
-			//어떤 택배인지 옷인지 컴퓨터인지 가정제품인지 표기
-			Packet pac = new Packet(OrderType.MESSAGE, msg);	
-			String m;
-			
-			//
-			m = mapper.writeValueAsString(pac);
-			
-			//네비게이션
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-			
-			//packet 싣고 > 네비 찍는놈
-			pw.println(m);
-			
-			//출발
-			pw.flush();
-			
-		} catch (JsonProcessingException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		
-		
-		try {
-			socket = new Socket("192.168.0.19",4888);
-		}
-		catch (UnknownHostException e) { e.printStackTrace(); } 
-		catch (IOException e) { e.printStackTrace(); }
 		
 		JFrame roList = new JFrame();
 		roList.setSize(800, 950);
@@ -91,7 +62,6 @@ public class Lobby {
 		roList.add(scrollPane);
 		
 		
-		
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(448, 887, 70, 24);
 		roList.add(chatBtn);
@@ -100,6 +70,30 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
+					
+					//네비게이션
+					PrintWriter pw = vo.getPwSocket();
+					try {
+						//객체 포장원 (전송 최적화 포장을 해줌)
+						ObjectMapper mapper = new ObjectMapper();
+						
+						//메세지
+						String msg = chatText.getText();
+						
+						//어떤 택배인지 옷인지 컴퓨터인지 가정제품인지 표기
+						Packet pac = new Packet(OrderType.MESSAGE, msg, pvo);	
+						 String m = mapper.writeValueAsString(pac);
+						
+						//packet 싣고 > 네비 찍는놈
+						pw.println(m);
+						
+						//출발
+						pw.flush();
+						
+					} catch (JsonProcessingException e1) {
+						e1.printStackTrace();
+					}
+					
 					chatArea.append(chatText.getText() + "\n");
 					chatText.requestFocus();
 					chatText.setText("");
@@ -116,10 +110,6 @@ public class Lobby {
 
 	}
 
-	public static void main(String[] args) {
-		Lobby list = new Lobby();
-		list.roomList();
-
-	}
+	
 
 }
