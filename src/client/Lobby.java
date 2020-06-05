@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -76,7 +78,7 @@ public class Lobby {
 					try {
 						//객체 포장원 (전송 최적화 포장을 해줌)
 						ObjectMapper mapper = new ObjectMapper();
-						
+						mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 						//메세지
 						String msg = chatText.getText();
 						
