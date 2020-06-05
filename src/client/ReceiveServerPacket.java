@@ -17,13 +17,12 @@ public class ReceiveServerPacket extends Thread {
 	
 	@Override
 	public void run() {
-		ObjectMapper mapper;
+		ObjectMapper mapper = new ObjectMapper();
 		try(BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"))) {
 			
 			while (true) {
 				String packetStr = br.readLine();
-				mapper = new ObjectMapper();
-				Packet packet = mapper.convertValue(packetStr, Packet.class);
+				Packet packet = mapper.readValue(packetStr, Packet.class);
 				System.out.println(packet.toString());
 			} 
 		} catch (Exception e) {

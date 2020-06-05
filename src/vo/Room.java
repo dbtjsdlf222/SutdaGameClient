@@ -5,25 +5,28 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Room {
 	private static int increaseRoomNo = 0;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
 	protected ArrayList<PlayerVOsunil> list = new ArrayList<>(); // 방안에 있는 사람 리스트
-	private float[] cardArr = new float[20];	//카드각
-	private Queue<Float> shuffledCard = new LinkedList();	// 위에서 부터 카드 한장씩 배분하기위한 queue
-	private String master;	//방장 or 선판 이긴거
+	private float[] cardArr = new float[20]; // 카드각
+	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
+	private String master; // 방장 or 선판 이긴거
 	private boolean gameStarted = false;
 
 	// 생성자
 	public Room() {
 		roomNo = increaseRoomNo++;
 		cardShuffle();
-		for (int i = 0; i < cardArr.length-1; i++) {
+		for (int i = 0; i < cardArr.length - 1; i++) {
 			System.out.println(rollCard());
 		}
 	} // Room()
-		
+
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -39,18 +42,23 @@ public class Room {
 			shuffledCard.offer(cardArr[i]);
 		}
 	}
-	
+
 	public float rollCard() {
 		return shuffledCard.poll();
 	}
-	
-	public void roomSpeaker() {
+
+	public void roomSpeaker(Packet pac) {
+		ObjectMapper objectMapper = new ObjectMapper();
 		for (int i = 0; i < cardArr.length; i++) {
-			list.get(i).getPwSocket();
-		} //for
-			
-	} //roomSpeaker
-	
+			try {
+				list.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		} // for
+
+	} // roomSpeaker
+
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];
 		arr[i] = arr[j];
@@ -132,5 +140,5 @@ public class Room {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
-	
+
 }

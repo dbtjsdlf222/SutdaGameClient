@@ -131,13 +131,8 @@ public class PlayerDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
-			
-			String update = "UPDATE player online = 'true' WHERE id=?";
-			pstmt = conn.prepareStatement(update);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-			
 			rs = pstmt.executeQuery();
+			
 			int no = rs.getInt(1);
 			String rsID = rs.getString(2);
 			String rsPW = rs.getString(3);
@@ -147,6 +142,11 @@ public class PlayerDAO {
 			int lose = rs.getInt(7);
 			boolean online = rs.getBoolean(8);
 			int character = rs.getInt(9);
+			
+			String update = "UPDATE player SET `online` = 'true' WHERE id=?";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
 			
 			return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
 			
