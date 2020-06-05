@@ -21,6 +21,10 @@ public class Packet {
 		this.motion = motion;
 		this.playerVO = playerVO;
 	}
+	public Packet(String action, String motion) {
+		this.action = action;
+		this.motion = motion;
+	}
 
 	public PlayerVOsunil getPlayerVO() {
 		return playerVO;
