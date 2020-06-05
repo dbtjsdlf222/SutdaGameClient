@@ -8,36 +8,38 @@ import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vo.Packet;
+import vo.Room;
 
 public class ReceiveClientPacket extends Thread {
-	
+
 	private Socket socket;
-	
+
 	@Override
 	public void run() {
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
-			
-		while (true) {
-			String packetStr = br.readLine();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 			ObjectMapper mapper = new ObjectMapper();
-			Packet packet = mapper.convertValue(mapper, Packet.class);
-			System.out.println("성공 : "+packet);
-		}
-			
+
+			while (true) {
+				String packetStr = br.readLine();
+				Packet packet = mapper.convertValue(packetStr, Packet.class);
+				analysisPacket(packet);
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		} //try~catch
-	} //run()
+		} // try~catch
+	} // run()
 
 	public ReceiveClientPacket(Socket socket) {
-		System.out.println(socket);
 		this.socket = socket;
 	}
 
-	public void getPacket(int key) {
-
-		switch (key) {
-		case 1:
+	public void analysisPacket(Packet packet) {
+		switch (packet.getAction()) {
+		case OrderType.MESSAGE:
+			RoomOperator operator = RoomOperator.getRoomOperator();
+			Room room = operator.getRoom(packet.getRoomNo());
+			room.roomChat(packet.getMotion());
 			break;
 		} // switch
 

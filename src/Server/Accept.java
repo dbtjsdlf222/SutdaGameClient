@@ -12,7 +12,6 @@ public class Accept extends Thread {
 
 	public static void main(String[] args) {
 		new Thread(new Accept()).start();
-		
 	}
 
 	@Override

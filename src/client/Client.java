@@ -14,24 +14,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import vo.Packet;
 
 public class Client {
-	public static void main(String[] args) {
+	private Socket socket;
+	
+	public Client(Socket socket) {
+		this.socket = socket;
+	}
+	
+	public void sendServer(Packet packet) {
 		try {
-			Socket socket = new Socket("192.168.0.19", 4888);
-			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 			
 			ObjectMapper mapper = new ObjectMapper();
-			Scanner sc = new Scanner(System.in);
 
-			while (true) {
-				String msg = sc.nextLine();	
 				Packet pac = new Packet("message", msg);	
 				String m = mapper.writeValueAsString(pac);
 				pw.println(m);
 				pw.flush();
-			}
-			
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

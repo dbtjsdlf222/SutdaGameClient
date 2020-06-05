@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet {
 	private String action;
-	private String card;
+	private String motion;
 	private int roomNo;
 	
 	public Packet() { }
@@ -19,12 +19,12 @@ public class Packet {
 		this.action = action;
 	}
 
-	public String getCard() {
-		return card;
+	public String getMotion() {
+		return motion;
 	}
 
-	public void setCard(String card) {
-		this.card = card;
+	public void setMotion(String motion) {
+		this.motion = motion;
 	}
 
 	public int getRoomNo() {
@@ -35,12 +35,12 @@ public class Packet {
 		this.roomNo = roomNo;
 	}
 
-	public Packet(String action, String card) {
+	public Packet(String action, String motion) {
 		this.action = action;
-		this.card = card;
+		this.motion = motion;
 	}
 	@Override
 	public String toString() {
-		return action +": "+ card;
+		return action +": "+ motion;
 	}
 }
