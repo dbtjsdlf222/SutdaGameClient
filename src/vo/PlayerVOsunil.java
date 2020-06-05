@@ -21,7 +21,7 @@ public class PlayerVOsunil {
 	private boolean online = false;
 	private int cha;
 	private boolean live = false;
-	private String card1, card2;
+	private float card1, card2;
 	private int cardLevel;
 	private BufferedReader brSocket;
 	private PrintWriter pwSocket;
@@ -98,19 +98,19 @@ public class PlayerVOsunil {
 		this.live = live;
 	}
 
-	public String getCard1() {
+	public float getCard1() {
 		return card1;
 	}
 
-	public void setCard1(String card1) {
+	public void setCard1(float card1) {
 		this.card1 = card1;
 	}
 
-	public String getCard2() {
+	public float getCard2() {
 		return card2;
 	}
 
-	public void setCard2(String card2) {
+	public void setCard2(float card2) {
 		this.card2 = card2;
 	}
 

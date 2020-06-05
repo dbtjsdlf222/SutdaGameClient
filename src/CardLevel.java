@@ -13,14 +13,46 @@ public class CardLevel extends Room {
 	private boolean gusa = false;
 	private boolean mungsa = false;
 	private boolean amhaeng = false;
+	private int getCardLevel = 0;
 
 	public CardLevel() {
 		super();
 	}
 
-	public static void main(String[] args) {
+	public boolean ddaeng() {
+		if ((card1 == 3 && card2 == 7) || (card1 == 7 && card2 == 3)) {
+			for (int i = 0; i < list.size(); i++) {
+				if (Math.abs(list.get(i).getCard1()) == Math.abs(list.get(i).getCard2())) {
+					getCardLevel = 950;
+				} else if (Math.abs(card1) != Math.abs(card2)) {
+					getCardLevel = 0;
+				}
+			}
 
-	}
+		}
+		return true;
+	} // 땡잡이
+
+	public boolean amhaeng() {
+		if ((card1 == 4 && card2 == 7) || (card1 == 7 && card2 == 4)) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getCardLevel() == 1800) {
+					getCardLevel = 2000;
+				} else if (list.get(i).getCardLevel() == 1300) {
+					getCardLevel = 1500;
+				}
+			}
+		}
+		return true;
+	} // 암행어사
+
+	public void gusa() {
+
+	} // 구사 재경기
+
+	public void mungsa() {
+
+	} // 멍텅구리 구사 재경기
 
 	public int getCardLevel(float card1, float card2) {
 		int getCardLevel = 0;
@@ -32,6 +64,8 @@ public class CardLevel extends Room {
 		} else if ((card1 == 1 && card2 == 3) || (card1 == 3 && card2 == 1)) { // 13광땡
 			getCardLevel = 1300;
 		}
+
+		amhaeng();
 
 		if (Math.abs(card1) == Math.abs(card2))
 			getCardLevel = (int) (Math.abs(card1) * 100); // 땡
@@ -57,6 +91,8 @@ public class CardLevel extends Room {
 		}
 
 		getCardLevel = (int) ((Math.abs(card1) + Math.abs(card2)) % 10); // 끗
+
+		ddaeng();
 
 		return getCardLevel;
 	}
