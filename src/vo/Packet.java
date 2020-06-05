@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class Packet {
 	private String action;
 	private String motion;
-	private int roomNo;
+	private Integer roomNo = null;
 	private PlayerVOsunil playerVO;
 	
 	public Packet(String action, String motion, int roomNo, PlayerVOsunil playerVO) {

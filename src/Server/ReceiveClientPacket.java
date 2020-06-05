@@ -40,7 +40,7 @@ public class ReceiveClientPacket extends Thread {
 			RoomOperator operator = RoomOperator.getRoomOperator();
 			Room room = operator.getRoom(packet.getRoomNo());
 			room.roomChat(packet);
-			System.out.println("Server: " + packet.getMotion());
+			System.out.println(packet);
 			break;
 		} // switch
 
