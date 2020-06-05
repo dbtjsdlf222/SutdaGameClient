@@ -107,20 +107,21 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-
-					if (playerDAO.login(idTxt.getText(), pwTxt.getText()) != null) {
-						if (playerVO.isOnline() == true) {
-
+					if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
+						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
+					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getText())) != null) {
+						if (playerVO.isOnline() == false) {
 							logJF.setVisible(false);
 							JFrame listJF = new JFrame("방 목록");
 							listJF.setSize(400, 600);
 							listJF.setLocation(550, 150);
 							listJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 							listJF.setVisible(true);
-						} else if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
-							logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
-						} else
-							logLbl.setText("아이디 또는 비밀번호가 틀립니다.");
+						} else if (playerVO.isOnline() == true) {
+							logLbl.setText("이미 접속하고 있는 아이디입니다.");
+						}
+					} else if (playerDAO.login(idTxt.getText(), pwTxt.getText()) == null) {
+						logLbl.setText("가입을 하지 않은 아이디 입니다.");
 					}
 				}
 			}
@@ -251,7 +252,7 @@ public class Login extends JFrame {
 										if (joPwTxt.getText().equals(joPwTxt2.getText())) {
 											joLbl3.setText("일치");
 											pwCheck = true;
-										} else {
+										} else if (!(joPwTxt.getText().equals(joPwTxt2.getText()))) {
 											joLbl3.setText("불일치");
 											pwCheck = false;
 										}
@@ -326,6 +327,12 @@ public class Login extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == joBtn2) {
+								if (!(joPwTxt.getText().equals(joPwTxt2.getText()))) {
+									pwCheck2 = false;
+									joLbl2.setText("");
+									joLbl3.setText("비밀번호가 일치 하지 않습니다.");
+
+								}
 								if (idCheck && pwCheck && pwCheck2 && nickCheck) {
 
 									try {

@@ -16,7 +16,7 @@ import vo.PlayerVOsunil;
 public class PlayerDAO {
 
 	private Connection conn;
-	private PreparedStatement pstmt; 
+	private PreparedStatement pstmt;
 
 	public PlayerDAO() {
 		try {
@@ -124,33 +124,40 @@ public class PlayerDAO {
 	}
 
 	public PlayerVOsunil login(String id, String pw) {
-		String sql = "SELECT * FROM player WHERE id=? AND pw=?";
-		ResultSet rs;
+		String sql = "SELECT * FROM player WHERE id=? AND password=?";
+		ResultSet rs = null;
 
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
-			
-			int no = rs.getInt(1);
-			String rsID = rs.getString(2);
-			String rsPW = rs.getString(3);
-			String nickname = rs.getString(4);
-			int money = rs.getInt(5);
-			int win = rs.getInt(6);
-			int lose = rs.getInt(7);
-			boolean online = rs.getBoolean(8);
-			int character = rs.getInt(9);
-			
-			String update = "UPDATE player SET `online` = 'true' WHERE id=?";
-			pstmt = conn.prepareStatement(update);
-			pstmt.setString(1, id);
-			pstmt.executeUpdate();
-			
-			return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
-			
-		} catch (SQLException e) {
+			rs.next();
+
+			try {
+				int no = rs.getInt(1);
+				String rsID = rs.getString(2);
+				String rsPW = rs.getString(3);
+				String nickname = rs.getString(4);
+				int money = rs.getInt(5);
+				int win = rs.getInt(6);
+				int lose = rs.getInt(7);
+				boolean online = rs.getBoolean(8);
+				int character = rs.getInt(9);
+
+				String update = "UPDATE player SET online = true WHERE id=?";
+				pstmt = conn.prepareStatement(update);
+				pstmt.setString(1, id);
+				pstmt.executeUpdate();
+
+				return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
+			} catch (SQLException e) {
+				return null;
+			}
+
+		} catch (
+
+		SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
