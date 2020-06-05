@@ -39,7 +39,8 @@ public class ReceiveClientPacket extends Thread {
 		case OrderType.MESSAGE:
 			RoomOperator operator = RoomOperator.getRoomOperator();
 			Room room = operator.getRoom(packet.getRoomNo());
-			room.roomChat(packet.getMotion());
+			room.roomChat(packet);
+			System.out.println("Server: " + packet.getMotion());
 			break;
 		} // switch
 

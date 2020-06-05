@@ -58,9 +58,9 @@ public class Room {
 		} // for
 	} // roomSpeaker
 
-	public void roomChat(String msg) {
+	public void roomChat(Packet packet) {
 		for (int i = 0; i < list.size(); i++) {
-				list.get(i).getPwSocket().println(msg);
+				list.get(i).getPwSocket().println(packet);
 		} // for
 	} // roomChat
 	

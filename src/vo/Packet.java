@@ -8,7 +8,28 @@ public class Packet {
 	private String action;
 	private String motion;
 	private int roomNo;
+	private PlayerVOsunil playerVO;
 	
+	public Packet(String action, String motion, int roomNo, PlayerVOsunil playerVO) {
+		this.action = action;
+		this.motion = motion;
+		this.roomNo = roomNo;
+		this.playerVO = playerVO;
+	}
+	public Packet(String action, String motion, PlayerVOsunil playerVO) {
+		this.action = action;
+		this.motion = motion;
+		this.playerVO = playerVO;
+	}
+
+	public PlayerVOsunil getPlayerVO() {
+		return playerVO;
+	}
+
+	public void setPlayerVO(PlayerVOsunil playerVO) {
+		this.playerVO = playerVO;
+	}
+
 	public Packet() { }
 	
 	public String getAction() {
@@ -33,11 +54,6 @@ public class Packet {
 
 	public void setRoomNo(int roomNo) {
 		this.roomNo = roomNo;
-	}
-
-	public Packet(String action, String motion) {
-		this.action = action;
-		this.motion = motion;
 	}
 	@Override
 	public String toString() {
