@@ -102,6 +102,9 @@ public class Login extends JFrame {
 		JButton logBtn = new JButton("로그인");
 		logBtn.setBounds(210, 40, 70, 100);
 		logJF.add(logBtn);
+		JRootPane  rootPane  =  logJF.getRootPane();
+        rootPane.setDefaultButton(logBtn);  
+		
 		logBtn.addActionListener(new ActionListener() {
 
 			@Override
