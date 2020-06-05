@@ -19,7 +19,7 @@ public class ReceiveServerPacket extends Thread {
 	public void run() {
 		ObjectMapper mapper = new ObjectMapper();
 		try(BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"))) {
-			
+			System.out.println(socket.getLocalAddress());
 			while (true) {
 				String packetStr = br.readLine();
 				Packet packet = mapper.readValue(packetStr, Packet.class);
