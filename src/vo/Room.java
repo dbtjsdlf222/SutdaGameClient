@@ -45,8 +45,11 @@ public class Room {
 	}
 	
 	public void roomSpeaker() {
-		list
-	}
+		for (int i = 0; i < cardArr.length; i++) {
+			list.get(i).getPwSocket();
+		} //for
+			
+	} //roomSpeaker
 	
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];

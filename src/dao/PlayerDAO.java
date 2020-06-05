@@ -124,7 +124,7 @@ public class PlayerDAO {
 	}
 
 	public PlayerVOsunil login(String id, String pw) {
-		String sql = "SELECT * from player WHERE id=? AND pw=?";
+		String sql = "SELECT * FROM player WHERE id=? AND pw=?";
 		ResultSet rs;
 
 		try {
@@ -134,7 +134,8 @@ public class PlayerDAO {
 			
 			String update = "UPDATE player online = 'true' WHERE id=?";
 			pstmt = conn.prepareStatement(update);
-			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
 			
 			rs = pstmt.executeQuery();
 			int no = rs.getInt(1);

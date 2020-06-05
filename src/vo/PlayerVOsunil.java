@@ -1,13 +1,18 @@
 package vo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class PlayerVOsunil {
-	
+
 	private Socket socket;
 	private int no;
 	private String id = null;
-	private String pw = null;
+	private String password = null;
 	private String nic = null;
 	private int money = 0;
 	private boolean admin;
@@ -17,9 +22,67 @@ public class PlayerVOsunil {
 	private int cha;
 	private boolean live = false;
 	private String card1, card2;
+	private int cardLevel;
+	private BufferedReader brSocket;
+	private PrintWriter pwSocket;
 	
+	public PlayerVOsunil(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
+			boolean online, int cha) {
+		this.no = no;
+		this.id = id;
+		this.password = password;
+		this.nic = nic;
+		this.money = money;
+		this.admin = admin;
+		this.win = win;
+		this.lose = lose;
+		this.online = online;
+		this.cha = cha;
+	}
 	
-   public Socket getSocket() {
+	public void setSocketWithBrPw(Socket socket) {
+		this.socket = socket;
+		try {
+			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()),true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getCardLevel() {
+		return cardLevel;
+	}
+
+	public void setCardLevel(int cardLevel) {
+		this.cardLevel = cardLevel;
+	}
+
+	public BufferedReader getBrSocket() {
+		return brSocket;
+	}
+
+	public void setBrSocket(BufferedReader brSocket) {
+		this.brSocket = brSocket;
+	}
+
+	public PrintWriter getPwSocket() {
+		return pwSocket;
+	}
+
+	public void setPwSocket(PrintWriter pwSocket) {
+		this.pwSocket = pwSocket;
+	}
+
+	public Socket getSocket() {
 		return socket;
 	}
 
@@ -51,97 +114,76 @@ public class PlayerVOsunil {
 		this.card2 = card2;
 	}
 
-public PlayerVOsunil(int no, String id, String pw, String nic, int money, boolean admin, int win, int lose,
-         boolean online, int cha) {
-      this.no = no;
-      this.id = id;
-      this.pw = pw;
-      this.nic = nic;
-      this.money = money;
-      this.admin = admin;
-      this.win = win;
-      this.lose = lose;
-      this.online = online;
-      this.cha = cha;
-   }
 
-   public int getNo() {
-      return this.no;
-   }
+	public int getNo() {
+		return this.no;
+	}
 
-   public void setNo(int no) {
-      this.no = no;
-   }
+	public void setNo(int no) {
+		this.no = no;
+	}
 
-   public int getCha() {
-      return cha;
-   }
+	public int getCha() {
+		return cha;
+	}
 
-   public void setCha(int cha) {
-      this.cha = cha;
-   }
+	public void setCha(int cha) {
+		this.cha = cha;
+	}
 
-   public String getId() {
-      return this.id;
-   }
+	public String getId() {
+		return this.id;
+	}
 
-   public void setId(String id) {
-      this.id = id;
-   }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-   public String getPw() {
-      return this.pw;
-   }
+	public String getNic() {
+		return this.nic;
+	}
 
-   public void setPw(String pw) {
-      this.pw = pw;
-   }
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 
-   public String getNic() {
-      return this.nic;
-   }
+	public int getMoney() {
+		return this.money;
+	}
 
-   public void setNic(String nic) {
-      this.nic = nic;
-   }
+	public void setMoney(int money) {
+		this.money = money;
+	}
 
-   public int getMoney() {
-      return this.money;
-   }
+	public boolean isAdmin() {
+		return this.admin;
+	}
 
-   public void setMoney(int money) {
-      this.money = money;
-   }
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 
-   public boolean isAdmin() {
-      return this.admin;
-   }
+	public int getWin() {
+		return this.win;
+	}
 
-   public void setAdmin(boolean admin) {
-      this.admin = admin;
-   }
+	public void setWin(int win) {
+		this.win = win;
+	}
 
-   public int getWin() {
-      return this.win;
-   }
+	public int getLose() {
+		return this.lose;
+	}
 
-   public void setWin(int win) {
-      this.win = win;
-   }
+	public void setLose(int lose) {
+		this.lose = lose;
+	}
 
-   public int getLose() {
-      return this.lose;
-   }
+	public boolean isOnline() {
+		return this.online;
+	}
 
-   public void setLose(int lose) {
-      this.lose = lose;
-   }
-
-   public boolean isOnline() {
-      return this.online;
-   }
-
-   public void setOnline(boolean online) {
-      this.online = online;
-   }
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
 }
