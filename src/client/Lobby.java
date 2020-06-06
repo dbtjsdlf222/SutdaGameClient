@@ -33,6 +33,7 @@ public class Lobby {
 	
 	public Lobby(PlayerVO vo) {
 		this.pvo = vo;
+		vo.setLocation("Lobby");
 		try {
 			vo.setSocketWithBrPw(new Socket("127.0.0.1", 4888));
 		} catch (UnknownHostException e) {
@@ -105,9 +106,8 @@ public class Lobby {
 				}
 			}
 		});
-
 		JRootPane  rootPane  =  roList.getRootPane();
-        rootPane.setDefaultButton(chatBtn);  
+        rootPane.setDefaultButton(chatBtn);
 
 		roList.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		roList.setVisible(true);

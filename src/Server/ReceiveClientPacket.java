@@ -3,11 +3,15 @@ package Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javazoom.jl.player.Player;
 import vo.Packet;
+import vo.PlayerVO;
 import vo.Room;
 
 public class ReceiveClientPacket extends Thread {
@@ -38,15 +42,22 @@ public class ReceiveClientPacket extends Thread {
 		switch (packet.getAction()) {
 		case OrderType.MESSAGE:
 			try {
-				RoomOperator operator = RoomOperator.getRoomOperator();
-				Room room = operator.getRoom(packet.getRoomNo());
-				room.roomChat(packet);
-				System.out.println(packet);
+//				RoomOperator operator = RoomOperator.getRoomOperator();
+//				Room room = operator.getRoom(packet.getRoomNo());
+//				room.roomChat(packet);
+//				System.out.println(packet);
+				for (int j = 0; j < PlayerVO.playerList.size(); j++) {
+					if(packet.getPlayerVO().getLocation().equals(PlayerVO.playerList.get(j).getLocation())) {
+						PrintWriter pw = PlayerVO.playerList.get(j).getPwSocket();
+						pw.println(packet.getMotion());
+					} //if
+				} //for
+				packet.getPlayerVO().getLocation();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		} // switch
-
 	} // runMainGame
 } // remote

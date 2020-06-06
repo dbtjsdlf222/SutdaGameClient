@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
-	private static ArrayList<PlayerVO> playerList = new ArrayList<>();
+	public static ArrayList<PlayerVO> playerList = new ArrayList<>();
 	
 	private int no;
 	private String id = null;
@@ -31,6 +31,7 @@ public class PlayerVO {
 	private float card1, card2;
 	private int cardLevel;
 	private String location;
+	private String ip;
 	
 	@JsonIgnore
 	private Socket socket;
@@ -86,6 +87,14 @@ public class PlayerVO {
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
 		playerList.add(this);
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	public String getLocation() {
