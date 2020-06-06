@@ -177,7 +177,7 @@ public class PlayerDAO {
 				String update = "UPDATE player SET online = true WHERE id=?";
 				pstmt = conn.prepareStatement(update);
 				pstmt.setString(1, id);
-				pstmt.executeUpdate();
+//				pstmt.executeUpdate();
 
 				return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
 			} catch (SQLException e) {

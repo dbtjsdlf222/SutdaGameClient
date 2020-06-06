@@ -34,7 +34,7 @@ public class Lobby {
 	public Lobby(PlayerVOsunil vo) {
 		this.pvo = vo;
 		try {
-			vo.setSocketWithBrPw(new Socket("192.168.0.19", 4888));
+			vo.setSocketWithBrPw(new Socket("192.168.55.246", 4888));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
