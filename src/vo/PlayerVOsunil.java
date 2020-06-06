@@ -9,12 +9,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVOsunil {
 
-	@JsonIgnoreProperties(ignoreUnknown = true)
+	@JsonIgnore
 	private Socket socket;
 	private int no;
 	private String id = null;
@@ -29,9 +30,9 @@ public class PlayerVOsunil {
 	private boolean live = false;
 	private float card1, card2;
 	private int cardLevel;
-	@JsonIgnoreProperties(ignoreUnknown = true)
+	@JsonIgnore
 	private BufferedReader brSocket;
-	@JsonIgnoreProperties(ignoreUnknown = true)
+	@JsonIgnore
 	private PrintWriter pwSocket;
 	
 	public PlayerVOsunil() {
