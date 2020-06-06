@@ -52,7 +52,7 @@ public class PlayerVO {
 	}
 	
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
-			boolean online, int cha) {
+			boolean online, int cha, String ip) {
 		this.no = no;
 		this.id = id;
 		this.password = password;
@@ -63,6 +63,7 @@ public class PlayerVO {
 		this.lose = lose;
 		this.online = online;
 		this.cha = cha;
+		this.ip = ip;
 		playerList.add(this);
 	}
 	
