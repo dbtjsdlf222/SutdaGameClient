@@ -90,6 +90,16 @@ public class PlayerVO {
 		playerList.add(this);
 	}
 
+	public ArrayList<PlayerVO> getLoctionList(String location) {
+		ArrayList<PlayerVO> locPlayerList = new ArrayList<>();
+		for (int i = 0; i < playerList.size(); i++) {
+			if(playerList.get(i).getLocation().equals(location))
+				locPlayerList.add(playerList.get(i));
+		}
+		
+		return locPlayerList;
+	}
+	
 	public String getIp() {
 		return ip;
 	}

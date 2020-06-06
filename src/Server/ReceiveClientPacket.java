@@ -10,6 +10,7 @@ import java.net.Socket;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javazoom.jl.player.Player;
+import vo.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Room;
@@ -40,7 +41,7 @@ public class ReceiveClientPacket extends Thread {
 
 	public void analysisPacket(Packet packet) {
 		switch (packet.getAction()) {
-		case OrderType.MESSAGE:
+		case Protocol.MESSAGE:
 			try {
 //				RoomOperator operator = RoomOperator.getRoomOperator();
 //				Room room = operator.getRoom(packet.getRoomNo());

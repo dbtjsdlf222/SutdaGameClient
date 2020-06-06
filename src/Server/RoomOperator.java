@@ -20,6 +20,11 @@ public class RoomOperator {
 		return roomList.get(roomNo);
 	}
 	
+	public ArrayList<Room> getAllRoom() {
+		return roomList;
+	}
+	
+	
 	public void makeRoom(PlayerVO pVO) {
 		Room room = new Room();
 		room.joinPlayer(pVO);

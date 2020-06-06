@@ -20,22 +20,4 @@ public class Client {
 		this.socket = socket;
 	}
 	
-	public void sendServer(Packet packet) {
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-			
-			ObjectMapper mapper = new ObjectMapper();
-
-				Packet pac = new Packet("message", msg);	
-				String m = mapper.writeValueAsString(pac);
-				pw.println(m);
-				pw.flush();
-			
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
