@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Statement;
 
 import connection.DBCon;
-import vo.PlayerVOsunil;
+import vo.PlayerVO;
 
 public class PlayerDAO {
 
@@ -152,7 +152,7 @@ public class PlayerDAO {
 		return true;
 	}
 
-	public PlayerVOsunil login(String id, String pw) {
+	public PlayerVO login(String id, String pw) {
 		String sql = "SELECT * FROM player WHERE id=? AND password=?";
 		ResultSet rs = null;
 
@@ -179,7 +179,7 @@ public class PlayerDAO {
 				pstmt.setString(1, id);
 //				pstmt.executeUpdate();
 
-				return new PlayerVOsunil(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
+				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character);
 			} catch (SQLException e) {
 				return null;
 			}

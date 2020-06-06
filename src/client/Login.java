@@ -8,11 +8,11 @@ import javax.swing.*;
 
 import dao.PlayerDAO;
 import dao.PlayerVO;
-import vo.PlayerVOsunil;
+import vo.PlayerVO;
 
 public class Login extends JFrame {
 	private PlayerDAO playerDAO = new PlayerDAO();
-	private PlayerVOsunil playerVO = null;
+	private PlayerVO playerVO = null;
 	Pattern idPt = null;
 	Matcher match;
 

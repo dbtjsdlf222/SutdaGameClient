@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 import vo.PlayerVO;
-import vo.PlayerVOsunil;
+import vo.PlayerVO;
 import vo.Room;
 
 public class CardLevel extends Room {

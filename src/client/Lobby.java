@@ -24,14 +24,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import Server.OrderType;
 import vo.Packet;
-import vo.PlayerVOsunil;
+import vo.PlayerVO;
 
 public class Lobby {
 	private JTextField textField;
-	private PlayerVOsunil pvo;
-	private ArrayList<PlayerVOsunil> playerList = new ArrayList<>();
+	private PlayerVO pvo;
+	private ArrayList<PlayerVO> playerList = new ArrayList<>();
 	
-	public Lobby(PlayerVOsunil vo) {
+	public Lobby(PlayerVO vo) {
 		this.pvo = vo;
 		try {
 			vo.setSocketWithBrPw(new Socket("192.168.55.246", 4888));
@@ -43,7 +43,7 @@ public class Lobby {
 		roomList(vo);
 	}
 	
-	public void roomList(PlayerVOsunil vo) {
+	public void roomList(PlayerVO vo) {
 		this.pvo = vo;
 		
 		
@@ -87,7 +87,7 @@ public class Lobby {
 						
 						//어떤 택배인지 옷인지 컴퓨터인지 가정제품인지 표기
 						Packet pac = new Packet(OrderType.MESSAGE, msg, pvo);	
-						 String m = mapper.writeValueAsString(pac);
+						String m = mapper.writeValueAsString(pac);
 						
 						//packet 싣고 > 네비 찍는놈
 						pw.println(m);

@@ -2,7 +2,7 @@ package Server;
 
 import java.util.ArrayList;
 
-import vo.PlayerVOsunil;
+import vo.PlayerVO;
 import vo.Room;
 
 public class RoomOperator {
@@ -20,13 +20,13 @@ public class RoomOperator {
 		return roomList.get(roomNo);
 	}
 	
-	public void makeRoom(PlayerVOsunil pVO) {
+	public void makeRoom(PlayerVO pVO) {
 		Room room = new Room();
 		room.joinPlayer(pVO);
 		roomList.add(room);
 	}
 	
-	public void joinRoom(int roomNo,PlayerVOsunil playerVO) {
+	public void joinRoom(int roomNo,PlayerVO playerVO) {
 		roomList.get(roomNo).joinPlayer(playerVO);
 	}
 	

@@ -8,15 +8,15 @@ public class Packet {
 	private String action;
 	private String motion;
 	private Integer roomNo=null;
-	private PlayerVOsunil playerVO;
+	private PlayerVO playerVO;
 	
-	public Packet(String action, String motion, int roomNo, PlayerVOsunil playerVO) {
+	public Packet(String action, String motion, int roomNo, PlayerVO playerVO) {
 		this.action = action;
 		this.motion = motion;
 		this.roomNo = roomNo;
 		this.playerVO = playerVO;
 	}
-	public Packet(String action, String motion, PlayerVOsunil playerVO) {
+	public Packet(String action, String motion, PlayerVO playerVO) {
 		this.action = action;
 		this.motion = motion;
 		this.playerVO = playerVO;
@@ -26,11 +26,11 @@ public class Packet {
 		this.motion = motion;
 	}
 
-	public PlayerVOsunil getPlayerVO() {
+	public PlayerVO getPlayerVO() {
 		return playerVO;
 	}
 
-	public void setPlayerVO(PlayerVOsunil playerVO) {
+	public void setPlayerVO(PlayerVO playerVO) {
 		this.playerVO = playerVO;
 	}
 
