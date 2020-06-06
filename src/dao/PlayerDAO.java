@@ -69,9 +69,9 @@ public class PlayerDAO {
 		String ip = local.getHostAddress();
 		int result = 0;
 
-		id = vo.getID();
-		pw = vo.getPW();
-		nick = vo.getNICKNAME();
+		id = vo.getId();
+		pw = vo.getPassword();
+		nick = vo.getNic();
 
 		String sql = "INSERT INTO player(id,password,nickname, ip) VALUES (?,?,?,?)";
 		Connection conn = new DBCon().getMysqlConn();

@@ -175,11 +175,11 @@ public class PlayerVO {
 		this.cha = cha;
 	}
 
-	public String getId() {
+	public String getID() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setID(String id) {
 		this.id = id;
 	}
 
