@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import client.Login;
 import client.ReceiveServerPacket;
 
 public class Accept extends Thread {
@@ -12,6 +13,7 @@ public class Accept extends Thread {
 
 	public static void main(String[] args) {
 		new Thread(new Accept()).start();
+		new Login().login();
 	}
 
 	@Override
