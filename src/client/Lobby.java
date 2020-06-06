@@ -34,7 +34,7 @@ public class Lobby {
 	public Lobby(PlayerVO vo) {
 		this.pvo = vo;
 		try {
-			vo.setSocketWithBrPw(new Socket("192.168.55.246", 4888));
+			vo.setSocketWithBrPw(new Socket("127.0.0.1", 4888));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -46,8 +46,8 @@ public class Lobby {
 	public void roomList(PlayerVO vo) {
 		this.pvo = vo;
 		
-		
 		JFrame roList = new JFrame();
+		roList.setResizable(false);
 		roList.setSize(800, 950);
 		roList.setLocation(600, 50);
 		roList.setLayout(null);

@@ -7,14 +7,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
-
+	private static ArrayList<PlayerVO> playerList = new ArrayList<>();
+	
 	private int no;
 	private String id = null;
 	private String password = null;
@@ -28,6 +30,7 @@ public class PlayerVO {
 	private boolean live = false;
 	private float card1, card2;
 	private int cardLevel;
+	private String location;
 	
 	@JsonIgnore
 	private Socket socket;
@@ -37,6 +40,14 @@ public class PlayerVO {
 	private PrintWriter pwSocket;
 	
 	public PlayerVO() {
+		playerList.add(this);
+	}
+	
+	public PlayerVO(String id, String pw, String nic) {
+		this.id = id;
+		this.password = pw;
+		this.nic = nic;
+		playerList.add(this);
 	}
 	
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
@@ -51,12 +62,12 @@ public class PlayerVO {
 		this.lose = lose;
 		this.online = online;
 		this.cha = cha;
+		playerList.add(this);
 	}
 	
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin,
 			int win, int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel,
 			BufferedReader brSocket, PrintWriter pwSocket) {
-		super();
 		this.socket = socket;
 		this.no = no;
 		this.id = id;
@@ -74,6 +85,15 @@ public class PlayerVO {
 		this.cardLevel = cardLevel;
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
+		playerList.add(this);
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public void setSocketWithBrPw(Socket socket) {

@@ -7,7 +7,6 @@ import java.util.regex.*;
 import javax.swing.*;
 
 import dao.PlayerDAO;
-import dao.PlayerVO;
 import vo.PlayerVO;
 
 public class Login extends JFrame {
@@ -27,7 +26,7 @@ public class Login extends JFrame {
 		logJF.setSize(416, 220);
 		logJF.setLocation(550, 300);
 		logJF.setLayout(null);
-
+		logJF.setResizable(false);
 		JLabel lbl = new JLabel("아이디와 비밀번호를 입력해주세요");
 		lbl.setBounds(100, 0, 1100, 30);
 		logJF.add(lbl);
@@ -45,7 +44,8 @@ public class Login extends JFrame {
 					adminJF.setSize(300, 200);
 					adminJF.setLocation(610, 280);
 					adminJF.setLayout(null);
-
+					adminJF.setResizable(false);
+					
 					JLabel adminLbl = new JLabel("관리자 모드");
 					adminJF.add(adminLbl);
 					adminLbl.setBounds(100, 10, 100, 20);
@@ -136,6 +136,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == joinBtn) {
 					JFrame joinJF = new JFrame("회 원 가 입");
+					joinJF.setResizable(false);
 					joinJF.setSize(350, 380);
 					joinJF.setLocation(600, 200);
 					joinJF.setLayout(null);

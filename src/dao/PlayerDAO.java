@@ -69,7 +69,7 @@ public class PlayerDAO {
 		String ip = local.getHostAddress();
 		int result = 0;
 
-		id = vo.getId();
+		id = vo.getID();
 		pw = vo.getPassword();
 		nick = vo.getNic();
 

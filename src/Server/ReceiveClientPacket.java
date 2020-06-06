@@ -38,9 +38,9 @@ public class ReceiveClientPacket extends Thread {
 		switch (packet.getAction()) {
 		case OrderType.MESSAGE:
 			try {
-//				RoomOperator operator = RoomOperator.getRoomOperator();
-//				Room room = operator.getRoom(packet.getRoomNo());
-//				room.roomChat(packet);
+				RoomOperator operator = RoomOperator.getRoomOperator();
+				Room room = operator.getRoom(packet.getRoomNo());
+				room.roomChat(packet);
 				System.out.println(packet);
 			} catch (Exception e) {
 				e.printStackTrace();
