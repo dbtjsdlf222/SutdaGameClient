@@ -48,15 +48,20 @@ public class Jokbo {
 	public void gusa() {
 		if ((card1 == 4 && card2 == 9.5) || ((card1 == 4.5) && (Math.abs(card2) == 9)) || (card1 == 9.5 && card2 == 4)
 				|| ((Math.abs(card1) == 9) && (card2 == 4.5))) {
-			return rematch();
+			if (getCardLevel <= 90) {
+				return rematch();
+			}
 		}
+
 	} // 구사 재경기
 
 	public void mungsa() {
 		if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2 == 4)) {
-			return rematch();
-		}
-	} // 멍텅구리 구사 재경기
+			if (getCardLevel <= 900) {
+				return rematch();
+			}
+		} // 멍텅구리 구사 재경기
+	}
 
 	public int getCardLevel(float card1, float card2) {
 		int getCardLevel = 0;
@@ -68,6 +73,8 @@ public class Jokbo {
 		} else if ((card1 == 1 && card2 == 3) || (card1 == 3 && card2 == 1)) { // 13광땡
 			getCardLevel = 1300;
 		}
+		return getCardLevel;
+	}
 
 	@Override
 	public String toString() {

@@ -15,7 +15,7 @@ public class CardLevel extends Room {
 		super();
 	}
 
-	public void CardLevel() {
+	public int CardLevel() {
 
 		if (Math.abs(card1) == Math.abs(card2))
 			getCardLevel = (int) (Math.abs(card1) * 100); // 땡
