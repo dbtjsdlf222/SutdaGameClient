@@ -13,6 +13,7 @@ public class ReceiveServerPacket extends Thread {
 	private Socket socket;
 
 	public ReceiveServerPacket(Socket socket) {
+		System.out.println("socket:"+ socket);
 		this.socket = socket;
 	}
 
@@ -25,14 +26,15 @@ public class ReceiveServerPacket extends Thread {
 			while (true) {
 				String packetStr = br.readLine();
 				Packet packet = mapper.readValue(packetStr, Packet.class);
-
 				switch (packet.getAction()) {
 					case Protocol.MESSAGE:
-						co.chatArea.append(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
+						System.out.println(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
+						ChattingOperator.chatArea.append(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
 					break;
 				}
 			}
 		} catch (Exception e) {
+			//종료시 실행 구역
 			e.printStackTrace();
 		}
 	} // run

@@ -90,13 +90,13 @@ public class PlayerVO {
 		playerList.add(this);
 	}
 
+	//같은 위치에 있는 사람들의 목록 리턴
 	public ArrayList<PlayerVO> getLoctionList(String location) {
 		ArrayList<PlayerVO> locPlayerList = new ArrayList<>();
 		for (int i = 0; i < playerList.size(); i++) {
 			if(playerList.get(i).getLocation().equals(location))
 				locPlayerList.add(playerList.get(i));
 		}
-		
 		return locPlayerList;
 	}
 	

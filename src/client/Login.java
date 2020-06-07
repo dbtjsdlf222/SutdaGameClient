@@ -2,6 +2,9 @@ package client;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.regex.*;
 
 import javax.swing.*;
@@ -114,8 +117,20 @@ public class Login extends JFrame {
 						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
 					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getText())) != null) {
 						if (playerVO.isOnline() == false) {
-							logJF.dispose();
-							Lobby lobby = new Lobby(playerVO);
+							
+							try {
+								logJF.dispose();
+								playerVO.setSocketWithBrPw(new Socket("127.0.0.1", 4888));
+								new Thread(new ReceiveServerPacket(playerVO.getSocket())).start();
+								new Lobby(playerVO);
+								
+							} catch (UnknownHostException e1) {
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+							
+							 
 						} else if (playerVO.isOnline() == true) {
 							logLbl.setText("이미 접속하고 있는 아이디입니다.");
 						}
@@ -124,7 +139,6 @@ public class Login extends JFrame {
 					}
 				}
 			}
-
 		});
 
 		JButton joinBtn = new JButton("회원가입");
@@ -356,13 +370,6 @@ public class Login extends JFrame {
 		});
 		logJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		logJF.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-
-		Login log = new Login();
-		log.login();
-
 	}
 
 }

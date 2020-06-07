@@ -16,7 +16,7 @@ public class ChattingOperator {
 	
 	private ChattingOperator() {}
 	
-	public JTextArea chatArea = new JTextArea();
+	public static JTextArea chatArea = new JTextArea();
 	
 	public static ChattingOperator getInstance() {
 		if(instance == null) instance = new ChattingOperator();
@@ -35,5 +35,4 @@ public class ChattingOperator {
 			e1.printStackTrace();
 		}
 	}
-	
 }

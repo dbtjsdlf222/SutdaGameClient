@@ -61,4 +61,4 @@ public class ReceiveClientPacket extends Thread {
 			break;
 		} // switch
 	} // runMainGame
-} // remote
+} // ReceiveClientPacket
