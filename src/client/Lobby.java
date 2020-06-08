@@ -68,8 +68,7 @@ public class Lobby extends JFrame {
 		add(plScroll);
 
 		for (int i = 0; i < playerList.size(); i++) {
-			JPanel plpanel = new JPanel();
-
+			tArea.setText(vo.getID() + vo.getWin()+"" + vo.getLose()+"" + vo.getMoney()+"");
 		}
 
 	
