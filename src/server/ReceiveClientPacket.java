@@ -28,7 +28,7 @@ public class ReceiveClientPacket extends Thread {
 
 			while (true) {
 				String packetStr = br.readLine();
-				Packet packet = mapper.convertValue(packetStr, Packet.class);
+				Packet packet = mapper.readValue(packetStr, Packet.class);
 				analysisPacket(packet);
 			}
 
