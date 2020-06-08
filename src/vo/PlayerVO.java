@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
@@ -44,19 +46,11 @@ public class PlayerVO {
 	public PlayerVO() {
 	}
 
-	public PlayerVO(String id, String pw, String nic) {
-		this.id = id;
-		this.password = pw;
-		this.nic = nic;
-		playerList.add(this);
-	}
-	
 	public void joinPlayer(String id, String pw, String nic) {
 		this.id = id;
 		this.password = pw;
 		this.nic = nic;
 	}
-
 
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
@@ -71,7 +65,6 @@ public class PlayerVO {
 		this.online = online;
 		this.cha = cha;
 		this.ip = ip;
-		playerList.add(this);
 	}
 
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
@@ -95,11 +88,22 @@ public class PlayerVO {
 		this.cardName = cardName;
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
-		playerList.add(this);
 	}
 
 	public void addPlayer() {
 		playerList.add(this);
+//		ObjectMapper mapper = new ObjectMapper();
+//		try {
+//			String str = mapper.writeValueAsString(this);
+//			Packet packet = new Packet(Protocol.JOINPLAYER, this);
+//			pwSocket.println(packet);
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+	}
+	
+	public void sendToServerPlayerVO() {
+		ObjectMapper mapper = new ObjectMapper();
 		
 	}
 	
@@ -127,8 +131,18 @@ public class PlayerVO {
 
 	public void setLocation(String location) {
 		this.location = location;
+		sendToServerPlayerVO();
 	}
 
+	public boolean checkOnline(String id) {		//로그인시 온라인이면 false 리턴 
+		for (int i = 0; i < playerList.size(); i++) { 
+			if(playerList.get(i).getID().equals(id))
+				return false;
+		}
+		
+		return true;
+	}
+	
 	public void setSocketWithBrPw(Socket socket) {
 		this.socket = socket;
 		try {

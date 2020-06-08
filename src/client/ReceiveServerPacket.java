@@ -13,23 +13,21 @@ public class ReceiveServerPacket extends Thread {
 	private Socket socket;
 
 	public ReceiveServerPacket(Socket socket) {
-		System.out.println("socket:"+ socket);
 		this.socket = socket;
 	}
 
 	@Override
 	public void run() {
+		System.out.println("클라이언트 서버 패킷 받기 시작");
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
 			
 			while (true) {
 				String packetStr = br.readLine();
+//				System.out.println(packetStr);
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				switch (packet.getAction()) {
 					case Protocol.MESSAGE:
-						System.out.println(packet.getMotion()); // 작동확인함
-						
-						//이게 작동안함
 						ChattingOperator.chatArea.append(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
 					break;
 				}

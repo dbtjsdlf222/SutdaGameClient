@@ -10,6 +10,11 @@ public class Packet {
 	private Integer roomNo=null;
 	private PlayerVO playerVO;
 	
+	public Packet(String action, PlayerVO playerVO) {
+		this.action = action;
+		this.playerVO = playerVO;
+	}
+	
 	public Packet(String action, String motion, int roomNo, PlayerVO playerVO) {
 		this.action = action;
 		this.motion = motion;

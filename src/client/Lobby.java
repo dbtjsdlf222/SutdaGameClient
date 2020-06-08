@@ -3,6 +3,7 @@ package client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,14 +24,25 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import server.RoomOperator;
 import vo.Protocol;
+import vo.Packet;
 import vo.PlayerVO;
 
 public class Lobby extends JFrame {
 
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.Lobby);
+
+		// 서버에 로그인된 사람의 정보를 전송
+		try {
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.JOINPLAYER, vo)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		lobbyScreen(vo);
 	}
 
@@ -41,20 +53,25 @@ public class Lobby extends JFrame {
 		setBackground(Color.black);
 		setLayout(null);
 
-		// 로비 접속자 목록
-		vo.getLoctionList(Protocol.Lobby);
-		JPanel plPan = new JPanel();
 		
-		plPan.setBackground(Color.white);
-		plPan.setLayout(null);
-		plPan.setBounds(530, 10, 240, 580);
-		plPan.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
-		add(plPan);
+		
+		// 로비 접속자 목록
+		JTextArea tArea = new JTextArea();
+		JScrollPane plScroll = new JScrollPane(tArea);
+		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
+
+		plScroll.setBackground(Color.white);
+		plScroll.setBounds(530, 10, 240, 580);
+		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
+		add(plScroll);
+
+		for (int i = 0; i < playerList.size(); i++) {
+			tArea.setText("닉네임 : " + vo.getID() + "　승리 : " +  vo.getWin()+"" + "　패배 : " + vo.getLose()+"" + "　돈 : " + vo.getMoney()+"");
+		}
 
 	
-
 		
-
+		
 		// 방 목록
 		RoomOperator.getRoomOperator().getAllRoom();
 		JPanel lobbypan = new JPanel();
@@ -63,9 +80,11 @@ public class Lobby extends JFrame {
 		lobbypan.setBounds(0, 10, 518, 580);
 		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
 		add(lobbypan);
-		
-		
+
 	
+		
+		
+		
 		// 채팅방
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(0, 592, 518, 320);
@@ -97,8 +116,6 @@ public class Lobby extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
-					// 이건 작동함
-					ChattingOperator.chatArea.append(chatText.getText());
 					co.chatting(chatText.getText(), vo);
 					chatText.requestFocus();
 					chatText.setText("");

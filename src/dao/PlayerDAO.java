@@ -92,26 +92,26 @@ public class PlayerDAO {
 		return result;
 	}
 
-	public ArrayList<PlayerVO> listAll() {
-		ResultSet rs;
-		ArrayList<PlayerVO> list = new ArrayList<>();
-		String query = "SELECT * FROM player";
-		try {
-			pstmt = conn.prepareStatement(query);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				String id = rs.getString("id");
-				String pw = rs.getString("password");
-				String nick = rs.getString("nickname");
-
-				list.add(new PlayerVO(id, pw, nick));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+//	public ArrayList<PlayerVO> listAll() {
+//		ResultSet rs;
+//		ArrayList<PlayerVO> list = new ArrayList<>();
+//		String query = "SELECT * FROM player";
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				String id = rs.getString("id");
+//				String pw = rs.getString("password");
+//				String nick = rs.getString("nickname");
+//
+//				list.add(new PlayerVO(id, pw, nick));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 
 	public boolean selectID(String id) {
 		ResultSet rs;
@@ -178,7 +178,7 @@ public class PlayerDAO {
 				int character = rs.getInt(9);
 				String ip = null;
 				try {
-					ip = InetAddress.getLocalHost().toString();
+					ip = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}
