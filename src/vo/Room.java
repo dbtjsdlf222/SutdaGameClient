@@ -122,30 +122,33 @@ public class Room {
 
 	public void bet() {
 		String bet;
-		int total = startMoney;
+		int total = 0;
 		int i;
-		int beforeBet;
 		
-		for(i=0; i<100; i++) {
-		switch (bet) {
-		case "하프":
-			total = ++total/2;
-			break;
-		case "쿼터":
-			total = ++total/4;
-			break;
-		case "체크":
-			total = total;
-			break;
-		case "올인":
-			total = ++money;
-			break;
-		case "콜":
-			total = ++beforeBet;
-		case "다이":
-			System.out.println("관전");
+		for (i = 0; i < 100; i++) {
+			int beforeBet (i =- 1);
 			
-		}
+			
+			switch (bet) {
+			case "하프":
+				total = ++total / 2;
+				break;
+			case "쿼터":
+				total = ++total / 4;
+				break;
+			case "체크":
+				total = total;
+				break;
+			case "올인":
+				total = ++PlayerVO.money;
+				break;
+			case "콜":
+				total = ++beforeBet;
+				break;
+			case "다이":
+				System.out.println("관전");
+				break;
+			}
 		}
 	}
 
