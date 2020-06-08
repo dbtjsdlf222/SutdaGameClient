@@ -63,6 +63,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
+					//이건 작동함
 					ChattingOperator.chatArea.append(chatText.getText());
 					co.chatting(chatText.getText(), vo);
 					chatText.requestFocus();
