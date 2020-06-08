@@ -46,19 +46,11 @@ public class PlayerVO {
 	public PlayerVO() {
 	}
 
-	public PlayerVO(String id, String pw, String nic) {
-		this.id = id;
-		this.password = pw;
-		this.nic = nic;
-		playerList.add(this);
-	}
-	
 	public void joinPlayer(String id, String pw, String nic) {
 		this.id = id;
 		this.password = pw;
 		this.nic = nic;
 	}
-
 
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
@@ -73,7 +65,6 @@ public class PlayerVO {
 		this.online = online;
 		this.cha = cha;
 		this.ip = ip;
-		playerList.add(this);
 	}
 
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
@@ -97,7 +88,6 @@ public class PlayerVO {
 		this.cardName = cardName;
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
-		playerList.add(this);
 	}
 
 	public void addPlayer() {

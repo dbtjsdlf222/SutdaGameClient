@@ -62,6 +62,7 @@ public class ReceiveClientPacket extends Thread { // Server
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE:
 			try {
+				//
 				for (int j = 0; j < playerList.size(); j++) {
 					if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
 						PrintWriter pw = playerList.get(j).getPwSocket();
@@ -73,12 +74,15 @@ public class ReceiveClientPacket extends Thread { // Server
 				e.printStackTrace();
 			}
 			break;
-
+			
 		case Protocol.JOINPLAYER:
 			thisPlayerVO = packet.getPlayerVO();
 			thisPlayerVO.setSocketWithBrPw(socket);
 			playerList.add(thisPlayerVO);
 			break;
+			
+		case Protocol.CHANGELOCATION:
+			
 
 		} // switch
 	} // runMainGame
