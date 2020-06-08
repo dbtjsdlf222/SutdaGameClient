@@ -1,5 +1,7 @@
 package client;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -20,14 +22,21 @@ import server.RoomOperator;
 import vo.Protocol;
 import vo.PlayerVO;
 
-public class Lobby {
-
+public class Lobby extends JFrame {
+	
+	
+	Container content;
+	Background imgP;
+	
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.Lobby);
 		lobbyScreen(vo);
 	}
 
 	public void lobbyScreen(PlayerVO vo) {
+		
+		
+		
 		//로비 접속자 목록
 		vo.getLoctionList(Protocol.Lobby);
 		
@@ -37,8 +46,10 @@ public class Lobby {
 		JFrame lobbyFrame = new JFrame();
 		lobbyFrame.setResizable(false);
 		lobbyFrame.setSize(800, 950);
-		lobbyFrame.setLocation(600, 50);
 		lobbyFrame.setLayout(null);
+		imgP = new Background();
+		content = getContentPane();    
+		content.add(imgP, BorderLayout.CENTER);
 	 
 		//채팅방
 		JTextField chatText = new JTextField();
