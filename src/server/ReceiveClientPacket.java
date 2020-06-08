@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,7 +19,8 @@ import vo.Room;
 public class ReceiveClientPacket extends Thread {
 
 	private Socket socket;
-
+	public static ArrayList<PlayerVO> playerList = new ArrayList<PlayerVO>();
+	
 	@Override
 	public void run() {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
@@ -40,6 +42,8 @@ public class ReceiveClientPacket extends Thread {
 	}
 
 	public void analysisPacket(Packet packet) {
+		ObjectMapper mapper = new ObjectMapper();
+		
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE:
 			try {
@@ -59,6 +63,11 @@ public class ReceiveClientPacket extends Thread {
 				e.printStackTrace();
 			}
 			break;
+			
+		case Protocol.JOINPLAYER:
+			playerList.add(packet.getPlayerVO());
+			break;
+			
 		} // switch
 	} // runMainGame
 } // ReceiveClientPacket

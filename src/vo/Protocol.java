@@ -2,6 +2,8 @@ package vo;
 
 public class Protocol {
 	public static final String MESSAGE = "message";
+	public static final String JOINPLAYER = "joinPlayer"; 
+	public static final String EXITPLAYER = "exitPlayer"; 
 	
 	//Location
 	public static final String Lobby = "Lobby";

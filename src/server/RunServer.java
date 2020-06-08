@@ -19,10 +19,10 @@ public class RunServer {
 
 	public void run() {
 		ExecutorService executor = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
-		new PlayerDAO().setServerIP();
+		PlayerDAO dao = new PlayerDAO();
 		try {
 			ServerSocket serverSocket = new ServerSocket(4888);
-
+			dao.setServerIP();
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
 				

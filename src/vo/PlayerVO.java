@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
@@ -100,7 +102,14 @@ public class PlayerVO {
 
 	public void addPlayer() {
 		playerList.add(this);
-		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String str = mapper.writeValueAsString(this);
+			Packet packet = new Packet(Protocol.JOINPLAYER,this);
+			pwSocket.println(packet);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 같은 위치에 있는 사람들의 목록 리턴
