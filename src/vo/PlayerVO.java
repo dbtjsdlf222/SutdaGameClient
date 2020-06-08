@@ -143,6 +143,15 @@ public class PlayerVO {
 		sendToServerPlayerVO();
 	}
 
+	public boolean checkOnline(String id) {		//로그인시 온라인이면 false 리턴 
+		for (int i = 0; i < playerList.size(); i++) { 
+			if(playerList.get(i).getID().equals(id))
+				return false;
+		}
+		
+		return true;
+	}
+	
 	public void setSocketWithBrPw(Socket socket) {
 		this.socket = socket;
 		try {

@@ -17,7 +17,7 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Room;
 
-public class ReceiveClientPacket extends Thread { // Sever
+public class ReceiveClientPacket extends Thread { // Server
 
 	private Socket socket;
 	private PlayerVO thisPlayerVO;
@@ -31,7 +31,7 @@ public class ReceiveClientPacket extends Thread { // Sever
 			try {
 				while (true) {
 					String packetStr = br.readLine();
-					System.out.println(packetStr);
+//					System.out.println(packetStr);
 					Packet packet = mapper.readValue(packetStr, Packet.class);
 					analysisPacket(packet); // action에 따라서 동작 실행
 				}
@@ -62,17 +62,13 @@ public class ReceiveClientPacket extends Thread { // Sever
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE:
 			try {
-				// RoomOperator operator = RoomOperator.getRoomOperator();
-				// Room room = operator.getRoom(packet.getRoomNo());
-				// room.roomChat(packet);
-				// System.out.println(packet);
 				for (int j = 0; j < PlayerVO.playerList.size(); j++) {
-					if (packet.getPlayerVO().getLocation().equals(PlayerVO.playerList.get(j).getLocation())) {
-						PrintWriter pw = PlayerVO.playerList.get(j).getPwSocket();
+					if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
+						PrintWriter pw = playerList.get(j).getPwSocket();
+						System.out.println(pw);
 						pw.println(packet.getMotion());
 					} // if
 				} // for
-				packet.getPlayerVO().getLocation();
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -80,8 +76,9 @@ public class ReceiveClientPacket extends Thread { // Sever
 			break;
 
 		case Protocol.JOINPLAYER:
-			playerList.add(packet.getPlayerVO());
 			thisPlayerVO = packet.getPlayerVO();
+			thisPlayerVO.setSocketWithBrPw(socket);
+			playerList.add(thisPlayerVO);
 			break;
 
 		} // switch
