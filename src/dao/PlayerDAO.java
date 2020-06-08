@@ -178,7 +178,7 @@ public class PlayerDAO {
 				int character = rs.getInt(9);
 				String ip = null;
 				try {
-					ip = InetAddress.getLocalHost().toString();
+					ip = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}

@@ -16,7 +16,7 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Room;
 
-public class ReceiveClientPacket extends Thread {
+public class ReceiveClientPacket extends Thread { //Sever
 
 	private Socket socket;
 	public static ArrayList<PlayerVO> playerList = new ArrayList<PlayerVO>();
@@ -27,9 +27,10 @@ public class ReceiveClientPacket extends Thread {
 			ObjectMapper mapper = new ObjectMapper();
 
 			while (true) {
-				String packetStr = br.readLine();
-				Packet packet = mapper.readValue(packetStr, Packet.class);
-				analysisPacket(packet);
+					String packetStr = br.readLine();
+					System.out.println(packetStr);
+//					Packet packet = mapper.readValue(packetStr, Packet.class);
+//					analysisPacket(packet); //action에 따라서 동작 실행
 			}
 
 		} catch (IOException e) {

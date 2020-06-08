@@ -105,8 +105,8 @@ public class PlayerVO {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			String str = mapper.writeValueAsString(this);
-			Packet packet = new Packet(Protocol.JOINPLAYER,this);
-			pwSocket.println(packet);
+//			Packet packet = new Packet(Protocol.JOINPLAYER,this);
+//			pwSocket.println(packet);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
