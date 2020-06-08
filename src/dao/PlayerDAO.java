@@ -43,10 +43,9 @@ public class PlayerDAO {
 	}
 
 	public void setServerIP() {
-		String sql = "UPDATE player SET ip = ? online = ? WHERE id = 'SERVER'";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, InetAddress.getLocalHost().toString());
-			ps.setString(2, InetAddress.getLocalHost().toString());
+		String sql = "UPDATE player SET ip = ? WHERE id = 'SERVER'";
+		try(PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setString(1, InetAddress.getLocalHost().getHostAddress());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
