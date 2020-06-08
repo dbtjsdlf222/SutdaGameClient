@@ -62,11 +62,10 @@ public class ReceiveClientPacket extends Thread { // Server
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE:
 			try {
-				for (int j = 0; j < PlayerVO.playerList.size(); j++) {
+				for (int j = 0; j < playerList.size(); j++) {
 					if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
 						PrintWriter pw = playerList.get(j).getPwSocket();
-						System.out.println(pw);
-						pw.println(packet.getMotion());
+						pw.println(mapper.writeValueAsString(packet));
 					} // if
 				} // for
 

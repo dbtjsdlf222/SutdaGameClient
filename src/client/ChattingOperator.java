@@ -24,6 +24,7 @@ public class ChattingOperator {
 	}
 	
 	public void chatting(String msg,PlayerVO vo) {
+		System.out.println(msg+" " + vo.getPwSocket());
 		PrintWriter pw = vo.getPwSocket();
 		try {
 			ObjectMapper mapper = new ObjectMapper();

@@ -56,20 +56,20 @@ public class Lobby extends JFrame {
 		
 		
 		// 로비 접속자 목록
-		JTextArea tArea = new JTextArea();
-		JScrollPane plScroll = new JScrollPane(tArea);
-		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
-
-		plScroll.setLayout(new GridLayout());
-		plScroll.setBackground(Color.white);
-		plScroll.setLayout(null);
-		plScroll.setBounds(530, 10, 240, 580);
-		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
-		add(plScroll);
-
-		for (int i = 0; i < playerList.size(); i++) {
-			tArea.setText(vo.getID() + vo.getWin()+"" + vo.getLose()+"" + vo.getMoney()+"");
-		}
+//		JTextArea tArea = new JTextArea();
+//		JScrollPane plScroll = new JScrollPane(tArea);
+//		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
+//
+//		plScroll.setLayout(new GridLayout());
+//		plScroll.setBackground(Color.white);
+//		plScroll.setLayout(null);
+//		plScroll.setBounds(530, 10, 240, 580);
+//		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
+//		add(plScroll);
+//
+//		for (int i = 0; i < playerList.size(); i++) {
+//			tArea.setText(vo.getID() + vo.getWin()+"" + vo.getLose()+"" + vo.getMoney()+"");
+//		}
 
 	
 		
