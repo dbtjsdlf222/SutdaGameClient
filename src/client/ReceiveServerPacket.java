@@ -21,14 +21,13 @@ public class ReceiveServerPacket extends Thread {
 	public void run() {
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
-			ChattingOperator co = ChattingOperator.getInstance();
 			
 			while (true) {
 				String packetStr = br.readLine();
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				switch (packet.getAction()) {
 					case Protocol.MESSAGE:
-						System.out.println(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
+						System.out.println(packet.getMotion());
 						ChattingOperator.chatArea.append(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
 					break;
 				}

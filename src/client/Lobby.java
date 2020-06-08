@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import Server.RoomOperator;
+import server.RoomOperator;
 import vo.Protocol;
 import vo.PlayerVO;
 
@@ -39,7 +39,6 @@ public class Lobby {
 		lobbyFrame.setSize(800, 950);
 		lobbyFrame.setLocation(600, 50);
 		lobbyFrame.setLayout(null);
-
 	 
 		//채팅방
 		JTextField chatText = new JTextField();

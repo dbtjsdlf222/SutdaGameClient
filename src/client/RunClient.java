@@ -7,9 +7,8 @@ public class RunClient {
 			new Login().login();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			
 		}
 	}
-
 }

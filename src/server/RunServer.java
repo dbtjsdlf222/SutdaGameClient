@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -26,16 +26,14 @@ public class RunServer {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
 				
 				new Thread (new ReceiveServerPacket(socket)).start(); // 사용자에게서 패킷 받기 시작
-				
 //				Runnable run = new Runnable() {
-//					
 //					@Override
 //					public void run() {
 //						System.out.println(Thread.currentThread().getName());
 //					}
 //				};
 //				executor.submit(run);
-			} //while 
+			} //while
 		} catch (UnknownHostException e) {
 			System.err.println("서버 접속 실패");
 		} catch (IOException e) {
