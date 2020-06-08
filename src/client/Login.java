@@ -120,7 +120,7 @@ public class Login extends JFrame {
 
 							try {
 								logJF.dispose();
-								playerVO.setSocketWithBrPw(new Socket("182.229.5.44", 4888));
+								playerVO.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
 								new Thread(new ReceiveServerPacket(playerVO.getSocket())).start();
 								playerVO.addPlayer();
 								new Lobby(playerVO);
