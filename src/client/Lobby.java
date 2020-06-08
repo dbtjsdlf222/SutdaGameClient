@@ -60,15 +60,13 @@ public class Lobby extends JFrame {
 		JScrollPane plScroll = new JScrollPane(tArea);
 		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
 
-		plScroll.setLayout(new GridLayout());
 		plScroll.setBackground(Color.white);
-		plScroll.setLayout(null);
 		plScroll.setBounds(530, 10, 240, 580);
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
 		add(plScroll);
-
+		tArea.setText("dsfnd");
 		for (int i = 0; i < playerList.size(); i++) {
-			tArea.setText(vo.getID() + vo.getWin()+"" + vo.getLose()+"" + vo.getMoney()+"");
+			tArea.setText("　닉네임 : " + vo.getNic() + "　승리 : " + vo.getWin()+"" + "　패배 : " + vo.getLose()+"" + "　돈 : " + vo.getMoney()+"");
 		}
 
 	
