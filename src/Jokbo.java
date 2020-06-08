@@ -13,6 +13,7 @@ public class Jokbo {
 	private boolean mungsa = false;
 	private boolean amhaeng = false;
 	private int getCardLevel = 0;
+	private String CardName;
 
 	public Jokbo() {
 		super();
@@ -23,8 +24,10 @@ public class Jokbo {
 			for (int i = 0; i < playerVO.size(); i++) {
 				if (Math.abs(playerVO.get(i).getCard1()) == Math.abs(playerVO.get(i).getCard2())) {
 					getCardLevel = 950;
+					CardName = "땡잡이";
 				} else if (Math.abs(card1) != Math.abs(card2)) {
 					getCardLevel = 0;
+					CardName = "망통";
 				}
 			}
 
@@ -37,8 +40,10 @@ public class Jokbo {
 			for (int i = 0; i < playerVO.size(); i++) {
 				if (playerVO.get(i).getCardLevel() == 1800) {
 					getCardLevel = 2000;
+					CardName = "암행어사";
 				} else if (playerVO.get(i).getCardLevel() == 1300) {
 					getCardLevel = 1500;
+					CardName = "암행어사";
 				}
 			}
 		}
@@ -49,6 +54,7 @@ public class Jokbo {
 		if ((card1 == 4 && card2 == 9.5) || ((card1 == 4.5) && (Math.abs(card2) == 9)) || (card1 == 9.5 && card2 == 4)
 				|| ((Math.abs(card1) == 9) && (card2 == 4.5))) {
 			if (getCardLevel <= 90) {
+				CardName = "구사";
 				return rematch();
 			}
 		}
@@ -58,6 +64,7 @@ public class Jokbo {
 	public void mungsa() {
 		if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2 == 4)) {
 			if (getCardLevel <= 900) {
+				CardName = "멍구사";
 				return rematch();
 			}
 		} // 멍텅구리 구사 재경기
@@ -68,10 +75,13 @@ public class Jokbo {
 
 		if ((card1 == 3 && card2 == 8) || (card1 == 8 && card2 == 3)) { // 38광땡
 			getCardLevel = 3800;
+			CardName = "38광땡";
 		} else if ((card1 == 1 && card2 == 8) || (card1 == 8 && card2 == 1)) { // 18광땡
 			getCardLevel = 1800;
+			CardName = "18광땡";
 		} else if ((card1 == 1 && card2 == 3) || (card1 == 3 && card2 == 1)) { // 13광땡
 			getCardLevel = 1300;
+			CardName = "13광땡";
 		}
 		return getCardLevel;
 	}

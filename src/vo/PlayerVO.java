@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
 	public static ArrayList<PlayerVO> playerList = new ArrayList<>();
-	
+
 	private int no;
 	private String id = null;
 	private String password = null;
@@ -30,27 +30,28 @@ public class PlayerVO {
 	private boolean live = false;
 	private float card1, card2;
 	private int cardLevel;
+	private String cardName;
 	private String location;
 	private String ip;
-	
+
 	@JsonIgnore
 	private Socket socket;
 	@JsonIgnore
 	private BufferedReader brSocket;
 	@JsonIgnore
 	private PrintWriter pwSocket;
-	
+
 	public PlayerVO() {
 		playerList.add(this);
 	}
-	
+
 	public PlayerVO(String id, String pw, String nic) {
 		this.id = id;
 		this.password = pw;
 		this.nic = nic;
 		playerList.add(this);
 	}
-	
+
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
 		this.no = no;
@@ -66,9 +67,9 @@ public class PlayerVO {
 		this.ip = ip;
 		playerList.add(this);
 	}
-	
-	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin,
-			int win, int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel,
+
+	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
+			int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel, String cardName,
 			BufferedReader brSocket, PrintWriter pwSocket) {
 		this.socket = socket;
 		this.no = no;
@@ -85,21 +86,22 @@ public class PlayerVO {
 		this.card1 = card1;
 		this.card2 = card2;
 		this.cardLevel = cardLevel;
+		this.cardName = cardName;
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
 		playerList.add(this);
 	}
 
-	//같은 위치에 있는 사람들의 목록 리턴
+	// 같은 위치에 있는 사람들의 목록 리턴
 	public ArrayList<PlayerVO> getLoctionList(String location) {
 		ArrayList<PlayerVO> locPlayerList = new ArrayList<>();
 		for (int i = 0; i < playerList.size(); i++) {
-			if(playerList.get(i).getLocation().equals(location))
+			if (playerList.get(i).getLocation().equals(location))
 				locPlayerList.add(playerList.get(i));
 		}
 		return locPlayerList;
 	}
-	
+
 	public String getIp() {
 		return ip;
 	}
@@ -119,19 +121,19 @@ public class PlayerVO {
 	public void setSocketWithBrPw(Socket socket) {
 		this.socket = socket;
 		try {
-			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
-			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()),true);
+			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "PlayerVOsunil [socket=" + socket + ", no=" + no + ", id=" + id + ", password=" + password + ", nic="
 				+ nic + ", money=" + money + ", admin=" + admin + ", win=" + win + ", lose=" + lose + ", online="
 				+ online + ", cha=" + cha + ", live=" + live + ", card1=" + card1 + ", card2=" + card2 + ", cardLevel="
-				+ cardLevel + ", brSocket=" + brSocket + ", pwSocket=" + pwSocket + "]";
+				+ cardLevel + ", cardName=" + cardName + ", brSocket=" + brSocket + ", pwSocket=" + pwSocket + "]";
 	}
 
 	public String getPassword() {
@@ -148,6 +150,14 @@ public class PlayerVO {
 
 	public void setCardLevel(int cardLevel) {
 		this.cardLevel = cardLevel;
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
 	}
 
 	public BufferedReader getBrSocket() {
@@ -197,7 +207,6 @@ public class PlayerVO {
 	public void setCard2(float card2) {
 		this.card2 = card2;
 	}
-
 
 	public int getNo() {
 		return this.no;
