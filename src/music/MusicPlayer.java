@@ -4,7 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-import client.Main;
+import client.MainScreen;
 import javazoom.jl.player.Player;
 
 public class MusicPlayer extends Thread {
@@ -13,7 +13,7 @@ public class MusicPlayer extends Thread {
 	boolean loop = true;
 	public MusicPlayer() {
 		try {
-			File file = new File(Main.class.getResource("../Music/BigSleep.mp3").getFile());
+			File file = new File(MainScreen.class.getResource("../Music/BigSleep.mp3").getFile());
 			this.player = new Player(new BufferedInputStream(new FileInputStream(file)));
 		} catch (Exception e) {
 			e.printStackTrace();
