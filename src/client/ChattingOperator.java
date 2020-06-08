@@ -16,7 +16,7 @@ public class ChattingOperator {
 	
 	private ChattingOperator() {}
 	
-	public static JTextArea chatArea = new JTextArea();
+	public static JTextArea chatArea = new JTextArea(); //지금 사용하는 static area 
 	
 	public static ChattingOperator getInstance() {
 		if(instance == null) instance = new ChattingOperator();
