@@ -14,7 +14,7 @@ import vo.PlayerVO;
 
 public class Login extends JFrame {
 	private PlayerDAO playerDAO = new PlayerDAO();
-	private PlayerVO playerVO = null;
+	private PlayerVO playerVO = new PlayerVO();
 	Pattern idPt = null;
 	Matcher match;
 
@@ -48,7 +48,7 @@ public class Login extends JFrame {
 					adminJF.setLocation(610, 280);
 					adminJF.setLayout(null);
 					adminJF.setResizable(false);
-					
+
 					JLabel adminLbl = new JLabel("관리자 모드");
 					adminJF.add(adminLbl);
 					adminLbl.setBounds(100, 10, 100, 20);
@@ -105,9 +105,9 @@ public class Login extends JFrame {
 		JButton logBtn = new JButton("로그인");
 		logBtn.setBounds(210, 40, 70, 100);
 		logJF.add(logBtn);
-		JRootPane  rootPane  =  logJF.getRootPane();
-        rootPane.setDefaultButton(logBtn);  
-		
+		JRootPane rootPane = logJF.getRootPane();
+		rootPane.setDefaultButton(logBtn);
+
 		logBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -117,20 +117,19 @@ public class Login extends JFrame {
 						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
 					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getText())) != null) {
 						if (playerVO.isOnline() == false) {
-							
+
 							try {
 								logJF.dispose();
 								playerVO.setSocketWithBrPw(new Socket("127.0.0.1", 4888));
 								new Thread(new ReceiveServerPacket(playerVO.getSocket())).start();
 								new Lobby(playerVO);
-								
+
 							} catch (UnknownHostException e1) {
 								e1.printStackTrace();
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
-							
-							 
+
 						} else if (playerVO.isOnline() == true) {
 							logLbl.setText("이미 접속하고 있는 아이디입니다.");
 						}
@@ -317,7 +316,7 @@ public class Login extends JFrame {
 								if (match.find()) {
 									if (joNickTxt.getText().equals("")) {
 										joLbl4.setText("닉네임을 입력해주세요.");
-									} else if (joNickTxt.getText().length() < 2 || joNickTxt.getText().length() > 7) {
+									} else if (joNickTxt.getText().length() > 7 && joNickTxt.getText().length() < 2) {
 										joLbl4.setText("2 ~ 6자리 미만만 가능합니다.");
 									} else if (playerDAO.selectNick(joNickTxt.getText())) {
 										joLbl4.setText("이미 생성된 닉네임 입니다.");
@@ -349,67 +348,68 @@ public class Login extends JFrame {
 								}
 								if (idCheck && pwCheck && pwCheck2 && nickCheck) {
 
-									try {
-										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
-												joNickTxt.getText()))) {
+									JFrame sexJF = new JFrame("캐릭터 선택창");
+									sexJF.setSize(500, 700);
+									sexJF.setLayout(null);
+									sexJF.setVisible(true);
 
-											JFrame sexJF = new JFrame("캐릭터 선택창");
-											sexJF.setSize(500, 700);
-											sexJF.setLayout(null);
-											sexJF.setVisible(true);
+									JLabel sexLbl = new JLabel("캐릭을 선택하세요.");
+									sexLbl.setFont(new Font("d2coding", Font.BOLD, 20));
+									sexLbl.setBounds(150, 20, 200, 20);
+									sexJF.add(sexLbl);
 
-											JLabel sexLbl = new JLabel("캐릭을 선택하세요.");
-											sexLbl.setFont(new Font("d2coding", Font.BOLD, 20));
-											sexLbl.setBounds(150, 20, 200, 20);
-											sexJF.add(sexLbl);
+									JRadioButton men = new JRadioButton("남자");
+									JRadioButton women = new JRadioButton("여자");
+									sexJF.add(men);
+									sexJF.add(women);
 
-											JRadioButton men = new JRadioButton("남자");
-											JRadioButton women = new JRadioButton("여자");
-											sexJF.add(men);
-											sexJF.add(women);
+									ButtonGroup bg = new ButtonGroup();
+									bg.add(men);
+									bg.add(women);
 
-											ButtonGroup bg = new ButtonGroup();
-											bg.add(men);
-											bg.add(women);
+									men.setBounds(120, 520, 50, 50);
+									women.setBounds(340, 520, 50, 50);
 
-											men.setBounds(120, 520, 50, 50);
-											women.setBounds(340, 520, 50, 50);
+									JPanel sexPal = new JPanel();
+									JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/men.png")));
+									JLabel wLbl = new JLabel(
+											new ImageIcon(Login.class.getResource("../img/women.png")));
+									sexJF.add(mLbl);
+									sexJF.add(wLbl);
+									mLbl.setBounds(40, 80, 190, 430);
+									wLbl.setBounds(260, 80, 190, 430);
 
-											JPanel sexPal = new JPanel();
-											JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/men.jpg")));
-											JLabel wLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/women.jpg")));
-											sexJF.add(mLbl);
-											sexJF.add(wLbl);
-											mLbl.setBounds(40, 80, 190, 430);
-											wLbl.setBounds(260, 80, 190, 430);
+									JButton okBtn = new JButton("선택");
+									okBtn.setBounds(200, 580, 100, 40);
+									sexJF.add(okBtn);
 
-											JButton okBtn = new JButton("선택");
-											okBtn.setBounds(200, 580, 100, 40);
-											sexJF.add(okBtn);
+									okBtn.addActionListener(new ActionListener() {
 
-											okBtn.addActionListener(new ActionListener() {
-
-												@Override
-												public void actionPerformed(ActionEvent e) {
-													if (e.getSource() == okBtn) {
-														if (men.isSelected()) {
-															playerVO.setCha(1);
-														} else if (women.isSelected()) {
-															playerVO.setCha(2);
-														}
-
+										@Override
+										public void actionPerformed(ActionEvent e) {
+											if (e.getSource() == okBtn) {
+												if (men.isSelected()) {
+													playerVO.setCha(0);
+												} else if (women.isSelected()) {
+													playerVO.setCha(1);
+												}
+												try {
+													playerVO.joinPlayer(joIdTxt.getText(), joPwTxt.getText(),
+															joNickTxt.getText());
+													if (1 == playerDAO.playerJoin(playerVO)) {
 														JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
 														sexJF.dispose();
 														joinJF.dispose();
 
 													}
+												} catch (ClassNotFoundException e1) {
+													e1.printStackTrace();
 												}
-											});
+											}
 
 										}
-									} catch (ClassNotFoundException e1) {
-										e1.printStackTrace();
-									}
+									});
+
 								} else
 									JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호 또는 닉네임을 입력해주세요.");
 							}

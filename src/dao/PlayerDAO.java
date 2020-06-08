@@ -25,7 +25,7 @@ public class PlayerDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getServerIP() {
 		String sql = "SELECT ip FROM player WHERE id = 'SERVER'";
 		PreparedStatement ps;
@@ -34,17 +34,17 @@ public class PlayerDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			String ip = rs.getString(1);
-			
+
 			return ip;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public void setServerIP() {
 		String sql = "UPDATE player SET ip = ? online = ? WHERE id = 'SERVER'";
-		try(PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, InetAddress.getLocalHost().toString());
 			ps.setString(2, InetAddress.getLocalHost().toString());
 			ps.executeUpdate();
@@ -56,6 +56,7 @@ public class PlayerDAO {
 	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
+		System.out.println("dvo");
 		InetAddress local = null;
 		try {
 			local = InetAddress.getLocalHost();
@@ -67,22 +68,25 @@ public class PlayerDAO {
 		String pw = null;
 		String nick = null;
 		String ip = local.getHostAddress();
+		int character = 0;
 		int result = 0;
 
 		id = vo.getID();
 		pw = vo.getPassword();
 		nick = vo.getNic();
+		character = vo.getCha();
 
-		String sql = "INSERT INTO player(id,password,nickname, ip) VALUES (?,?,?,?)";
-		Connection conn = new DBCon().getMysqlConn();
+		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `ip`, `character`) VALUES (?,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			pstmt.setString(3, nick);
 			pstmt.setString(4, ip);
-			result = pstmt.executeUpdate();
+			pstmt.setInt(5, character);
 
+			result = pstmt.executeUpdate();
+			System.out.println(result);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -192,15 +196,15 @@ public class PlayerDAO {
 		}
 		return null;
 	}
-	
+
 	public boolean selectPW(String pw) {
 		ResultSet rs;
 		String query = "select EXISTS (select * from player where password= ? ) as success";
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, pw);
-			
+
 			rs = pstmt.executeQuery();
 			rs.next();
 			if (rs.getInt(1) == 1) {
@@ -210,9 +214,8 @@ public class PlayerDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return true;
 	}
-
 
 }

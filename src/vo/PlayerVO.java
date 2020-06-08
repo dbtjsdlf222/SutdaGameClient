@@ -51,6 +51,13 @@ public class PlayerVO {
 		this.nic = nic;
 		playerList.add(this);
 	}
+	
+	public void joinPlayer(String id, String pw, String nic) {
+		this.id = id;
+		this.password = pw;
+		this.nic = nic;
+	}
+
 
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
