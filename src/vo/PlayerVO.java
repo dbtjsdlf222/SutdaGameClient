@@ -42,7 +42,6 @@ public class PlayerVO {
 	private PrintWriter pwSocket;
 
 	public PlayerVO() {
-		playerList.add(this);
 	}
 
 	public PlayerVO(String id, String pw, String nic) {
@@ -99,6 +98,11 @@ public class PlayerVO {
 		playerList.add(this);
 	}
 
+	public void addPlayer() {
+		playerList.add(this);
+		
+	}
+	
 	// 같은 위치에 있는 사람들의 목록 리턴
 	public ArrayList<PlayerVO> getLoctionList(String location) {
 		ArrayList<PlayerVO> locPlayerList = new ArrayList<>();

@@ -47,10 +47,12 @@ public class Lobby {
 		chatText.requestFocus();
 		
 		ChattingOperator co = ChattingOperator.getInstance();
-		
 		ChattingOperator.chatArea.setEditable(false);
+		
 		JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
+	
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		scrollPane.setBounds(0, 609, 518, 280);
 		lobbyFrame.add(scrollPane);
 		
@@ -61,6 +63,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
+					ChattingOperator.chatArea.append(chatText.getText());
 					co.chatting(chatText.getText(), vo);
 					chatText.requestFocus();
 					chatText.setText("");
