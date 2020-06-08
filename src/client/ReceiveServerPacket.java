@@ -27,9 +27,7 @@ public class ReceiveServerPacket extends Thread {
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				switch (packet.getAction()) {
 					case Protocol.MESSAGE:
-						System.out.println(packet.getMotion()); // 작동확인함
-						
-						//이게 작동안함
+						System.out.println("ReceiveServerPacket: "+packet.getMotion()); // 작동확인함
 						ChattingOperator.chatArea.append(packet.getPlayerVO().getNic()+": "+ packet.getMotion()+"\n");
 					break;
 				}

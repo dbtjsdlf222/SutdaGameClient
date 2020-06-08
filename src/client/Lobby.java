@@ -23,14 +23,25 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import server.RoomOperator;
 import vo.Protocol;
+import vo.Packet;
 import vo.PlayerVO;
 
 public class Lobby extends JFrame {
 
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.Lobby);
+		
+		//서버에 로그인된 사람의 정보를 전송
+		try {
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.JOINPLAYER,vo)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		lobbyScreen(vo);
 	}
 
@@ -97,8 +108,6 @@ public class Lobby extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
-					// 이건 작동함
-					ChattingOperator.chatArea.append(chatText.getText());
 					co.chatting(chatText.getText(), vo);
 					chatText.requestFocus();
 					chatText.setText("");

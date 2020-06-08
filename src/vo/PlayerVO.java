@@ -102,14 +102,18 @@ public class PlayerVO {
 
 	public void addPlayer() {
 		playerList.add(this);
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			String str = mapper.writeValueAsString(this);
-//			Packet packet = new Packet(Protocol.JOINPLAYER,this);
+//		ObjectMapper mapper = new ObjectMapper();
+//		try {
+//			String str = mapper.writeValueAsString(this);
+//			Packet packet = new Packet(Protocol.JOINPLAYER, this);
 //			pwSocket.println(packet);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+	}
+	
+	public void sendToServerPlayerVO() {
+		ObjectMapper mapper = new ObjectMapper();
 	}
 	
 	// 같은 위치에 있는 사람들의 목록 리턴
@@ -136,6 +140,7 @@ public class PlayerVO {
 
 	public void setLocation(String location) {
 		this.location = location;
+		sendToServerPlayerVO();
 	}
 
 	public void setSocketWithBrPw(Socket socket) {
