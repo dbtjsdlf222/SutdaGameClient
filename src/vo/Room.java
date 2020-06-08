@@ -81,7 +81,7 @@ public class Room {
 			}
 		}
 	} // exitPlayer
-
+	
 	public static int getIncreaseRoomNo() {
 		return increaseRoomNo;
 	}
@@ -105,6 +105,18 @@ public class Room {
 	public void setStartMoney(int startMoney) {
 		this.startMoney = startMoney;
 	}
+	
+	public void moneyCheck() {
+		if(money >= roomMoney) {
+			System.out.println("입장");
+		}else if(list.money < startMoney) {
+			System.out.println("입장 불가");
+		}
+	}	// 판돈 체크 후 입장 여부 확인
+	
+	public void gameStart() {
+		
+	}	// 방장이 게임 시작
 
 	public ArrayList<PlayerVO> getList() {
 		return list;

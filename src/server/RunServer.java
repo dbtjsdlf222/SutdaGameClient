@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 
 import client.Login;
 import client.ReceiveServerPacket;
+import dao.PlayerDAO;
 
 public class RunServer {
 	
@@ -18,7 +19,7 @@ public class RunServer {
 
 	public void run() {
 		ExecutorService executor = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
-		
+		new PlayerDAO().setServerIP();
 		try {
 			ServerSocket serverSocket = new ServerSocket(4888);
 
