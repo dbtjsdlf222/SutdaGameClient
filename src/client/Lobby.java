@@ -52,9 +52,8 @@ public class Lobby extends JFrame {
 		setSize(800, 950);
 		setBackground(Color.black);
 		setLayout(null);
+		
 
-		
-		
 		// 로비 접속자 목록
 		JTextArea tArea = new JTextArea();
 		JScrollPane plScroll = new JScrollPane(tArea);
@@ -68,9 +67,6 @@ public class Lobby extends JFrame {
 		for (int i = 0; i < playerList.size(); i++) {
 			tArea.setText("　닉네임 : " + vo.getNic() + "　승리 : " + vo.getWin()+"" + "　패배 : " + vo.getLose()+"" + "　돈 : " + vo.getMoney()+"");
 		}
-
-	
-		
 		
 		
 		
