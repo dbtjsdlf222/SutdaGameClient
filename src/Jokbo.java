@@ -56,6 +56,9 @@ public class Jokbo {
 			if (getCardLevel <= 90) {
 				CardName = "구사";
 				return rematch();
+			} else if (getCardLevel >= 100) {
+				getCardLevel = 3;
+				CardName = "3끗";
 			}
 		}
 
@@ -66,9 +69,12 @@ public class Jokbo {
 			if (getCardLevel <= 900) {
 				CardName = "멍구사";
 				return rematch();
+			} else if (getCardLevel >= 1000) {
+				getCardLevel = 3;
+				CardName = "3끗";
 			}
-		} // 멍텅구리 구사 재경기
-	}
+		}
+	}// 멍텅구리 구사 재경기
 
 	public int getCardLevel(float card1, float card2) {
 		int getCardLevel = 0;

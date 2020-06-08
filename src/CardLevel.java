@@ -18,8 +18,6 @@ public class CardLevel extends Room {
 
 	public int CardLevel() {
 		
-//		Jokbo jokbo = new Jokbo();
-
 		if (Math.abs(card1) == Math.abs(card2))
 			getCardLevel = (int) (Math.abs(card1) * 100); // 땡
 
