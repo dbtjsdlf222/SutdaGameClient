@@ -352,8 +352,60 @@ public class Login extends JFrame {
 									try {
 										if (1 == playerDAO.playerJoin(new PlayerVO(joIdTxt.getText(), joPwTxt.getText(),
 												joNickTxt.getText()))) {
-											JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
-											joinJF.dispose();
+
+											JFrame sexJF = new JFrame("캐릭터 선택창");
+											sexJF.setSize(500, 700);
+											sexJF.setLayout(null);
+											sexJF.setVisible(true);
+
+											JLabel sexLbl = new JLabel("캐릭을 선택하세요.");
+											sexLbl.setFont(new Font("d2coding", Font.BOLD, 20));
+											sexLbl.setBounds(150, 20, 200, 20);
+											sexJF.add(sexLbl);
+
+											JRadioButton men = new JRadioButton("남자");
+											JRadioButton women = new JRadioButton("여자");
+											sexJF.add(men);
+											sexJF.add(women);
+
+											ButtonGroup bg = new ButtonGroup();
+											bg.add(men);
+											bg.add(women);
+
+											men.setBounds(120, 520, 50, 50);
+											women.setBounds(340, 520, 50, 50);
+
+											JPanel sexPal = new JPanel();
+											JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/men.jpg")));
+											JLabel wLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/women.jpg")));
+											sexJF.add(mLbl);
+											sexJF.add(wLbl);
+											mLbl.setBounds(40, 80, 190, 430);
+											wLbl.setBounds(260, 80, 190, 430);
+
+											JButton okBtn = new JButton("선택");
+											okBtn.setBounds(200, 580, 100, 40);
+											sexJF.add(okBtn);
+
+											okBtn.addActionListener(new ActionListener() {
+
+												@Override
+												public void actionPerformed(ActionEvent e) {
+													if (e.getSource() == okBtn) {
+														if (men.isSelected()) {
+															playerVO.setCha(1);
+														} else if (women.isSelected()) {
+															playerVO.setCha(2);
+														}
+
+														JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
+														sexJF.dispose();
+														joinJF.dispose();
+
+													}
+												}
+											});
+
 										}
 									} catch (ClassNotFoundException e1) {
 										e1.printStackTrace();
