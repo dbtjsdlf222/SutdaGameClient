@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -42,21 +43,29 @@ public class Lobby extends JFrame {
 
 		// 로비 접속자 목록
 		vo.getLoctionList(Protocol.Lobby);
-
-		JPanel lobbypan = new JPanel();
-		lobbypan.setBackground(Color.white);
-		lobbypan.setBounds(0, 10, 518, 580);
-		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
-
-		add(lobbypan);
-
-		// 방 목록
-
-		RoomOperator.getRoomOperator().getAllRoom();
+		JPanel plPan = new JPanel();
+		
+		plPan.setBackground(Color.white);
+		plPan.setLayout(null);
+		plPan.setBounds(530, 10, 240, 580);
+		plPan.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
+		add(plPan);
 
 	
+
 		
 
+		// 방 목록
+		RoomOperator.getRoomOperator().getAllRoom();
+		JPanel lobbypan = new JPanel();
+		lobbypan.setBackground(Color.white);
+		lobbypan.setLayout(null);
+		lobbypan.setBounds(0, 10, 518, 580);
+		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
+		add(lobbypan);
+		
+		
+	
 		// 채팅방
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(0, 592, 518, 320);
