@@ -104,6 +104,7 @@ public class PlayerVO {
 	
 	public void sendToServerPlayerVO() {
 		ObjectMapper mapper = new ObjectMapper();
+		
 	}
 	
 	// 같은 위치에 있는 사람들의 목록 리턴
