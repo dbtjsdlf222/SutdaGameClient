@@ -8,6 +8,8 @@ import java.util.Random;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import client.MainScreen;
+
 public class Room {
 	private static int increaseRoomNo = 0;
 	private int roomNo; // 방 번호
@@ -60,10 +62,10 @@ public class Room {
 
 	public void roomChat(Packet packet) {
 		for (int i = 0; i < list.size(); i++) {
-				list.get(i).getPwSocket().println(packet);
+			list.get(i).getPwSocket().println(packet);
 		} // for
 	} // roomChat
-	
+
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];
 		arr[i] = arr[j];
@@ -81,7 +83,7 @@ public class Room {
 			}
 		}
 	} // exitPlayer
-	
+
 	public static int getIncreaseRoomNo() {
 		return increaseRoomNo;
 	}
@@ -105,18 +107,47 @@ public class Room {
 	public void setStartMoney(int startMoney) {
 		this.startMoney = startMoney;
 	}
-	
+
 	public void moneyCheck() {
-		if(money >= roomMoney) {
+		if (money >= startMoney) {
 			System.out.println("입장");
-		}else if(list.money < startMoney) {
+		} else if (list.money < startMoney) {
 			System.out.println("입장 불가");
 		}
-	}	// 판돈 체크 후 입장 여부 확인
-	
+	} // 판돈 체크 후 입장 여부 확인
+
 	public void gameStart() {
+
+	} // 방장이 게임 시작
+
+	public void bet() {
+		String bet;
+		int total = startMoney;
+		int i;
+		int beforeBet;
 		
-	}	// 방장이 게임 시작
+		for(i=0; i<100; i++) {
+		switch (bet) {
+		case "하프":
+			total = ++total/2;
+			break;
+		case "쿼터":
+			total = ++total/4;
+			break;
+		case "체크":
+			total = total;
+			break;
+		case "올인":
+			total = ++money;
+			break;
+		case "콜":
+			total = ++beforeBet;
+		case "다이":
+			System.out.println("관전");
+			
+		}
+		}
+	}
 
 	public ArrayList<PlayerVO> getList() {
 		return list;
