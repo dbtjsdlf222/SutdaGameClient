@@ -4,18 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javazoom.jl.player.Player;
 import vo.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Room;
 
 public class ReceiveClientPacket extends Thread { // Server
 
@@ -65,7 +62,7 @@ public class ReceiveClientPacket extends Thread { // Server
 				for (int j = 0; j < playerList.size(); j++) {
 					if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
 						PrintWriter pw = playerList.get(j).getPwSocket();
-						pw.println(packet.getMotion());
+						pw.println(mapper.writeValueAsString(packet));
 					} // if
 				} // for
 
