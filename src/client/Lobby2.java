@@ -38,7 +38,7 @@ public class Lobby2 {
 
 		// 서버에 로그인된 사람의 정보를 전송
 		try {
-			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.JOINPLAYER, vo)));
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.CHANGELOCATION, vo)));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -103,21 +103,28 @@ public class Lobby2 {
 			}
 		});
 
-//		// 로비 접속자 목록
-//		JTextArea tArea = new JTextArea();
-//		JScrollPane plScroll = new JScrollPane(tArea);
-//		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
-//
-//		plScroll.setBackground(Color.white);
-//		plScroll.setBounds(730, 10, 525, 380);
-//		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
-//		lobbyJF.add(plScroll);
-//
-//		for (int i = 0; i < playerList.size(); i++) {
-//			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose() + vo.getLose()) + "" + "　승리 : "
-//					+ vo.getWin() + "" + "　돈 : " + vo.getMoney() + "");
-//
-//		}
+		// 로비 라벨
+				JLabel playerLbl = new JLabel("P l A Y E R");
+				playerLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+				playerLbl.setForeground(new Color(255, 255, 255, 150));
+				playerLbl.setBounds(970, 20, 200, 30);
+				lobbyJF.add(playerLbl);
+		
+		// 로비 접속자 목록
+		JTextArea tArea = new JTextArea();
+		JScrollPane plScroll = new JScrollPane(tArea);
+		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
+		plScroll.setLayout(null);
+		plScroll.setBackground(new Color(0, 0, 0, 125));
+		plScroll.setBounds(850, 60, 390, 290);
+		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		lobbyJF.add(plScroll);
+
+		for (int i = 0; i < playerList.size(); i++) {
+			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose() + vo.getLose()) + "" + "　승리 : "
+					+ vo.getWin() + "" + "　돈 : " + vo.getMoney() + "");
+
+		}
 
 		// JFrame 정보
 		imgP = new Background();
