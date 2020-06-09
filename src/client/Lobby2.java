@@ -82,7 +82,6 @@ public class Lobby2 {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		chatPan.add(ReceiveServerPacket.scrollPane);
-		co.chatArea.setBackground(new Color(0, 0, 0, 0));
 		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(638, 225, 70, 25);
@@ -104,7 +103,7 @@ public class Lobby2 {
 		});
 
 		// 로비 라벨
-				JLabel playerLbl = new JLabel("P l A Y E R");
+				JLabel playerLbl = new JLabel("P L A Y E R");
 				playerLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
 				playerLbl.setForeground(new Color(255, 255, 255, 150));
 				playerLbl.setBounds(970, 20, 200, 30);

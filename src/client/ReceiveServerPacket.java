@@ -25,7 +25,6 @@ public class ReceiveServerPacket extends Thread {
 	public void run() {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 15, 698, 195);
-		scrollPane.setBackground(new Color(0, 0, 0, 0));
 		scrollPane.setBorder(null);
 		
 		ObjectMapper mapper = new ObjectMapper();

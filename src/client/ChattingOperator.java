@@ -13,6 +13,7 @@ import vo.PlayerVO;
 
 public class ChattingOperator {
 	private static ChattingOperator instance;
+	private	ObjectMapper mapper = new ObjectMapper();
 	
 	private ChattingOperator() {}
 	
@@ -26,7 +27,6 @@ public class ChattingOperator {
 	public void chatting(String msg,PlayerVO vo) {
 		PrintWriter pw = vo.getPwSocket();
 		try {
-			ObjectMapper mapper = new ObjectMapper();
 			Packet pac = new Packet(Protocol.MESSAGE, msg, vo);	
 			String m = mapper.writeValueAsString(pac);
 			pw.println(m);
