@@ -40,7 +40,7 @@ public class Lobby extends JFrame implements ActionListener {
 	
 	
 	public Lobby(PlayerVO vo) {
-		vo.setLocation(Protocol.Lobby);
+		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
 		try {
@@ -80,7 +80,7 @@ public class Lobby extends JFrame implements ActionListener {
 		// 로비 접속자 목록
 		JTextArea tArea = new JTextArea();
 		JScrollPane plScroll = new JScrollPane(tArea);
-		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
+		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
 
 		plScroll.setBackground(Color.white);
 		plScroll.setBounds(730, 10, 525, 380);
