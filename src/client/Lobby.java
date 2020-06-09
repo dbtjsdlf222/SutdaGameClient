@@ -117,6 +117,7 @@ public class Lobby extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					co.chatting(chatText.getText(), vo);
+					scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 					chatText.requestFocus();
 					chatText.setText("");
 				}
