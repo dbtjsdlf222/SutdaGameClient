@@ -100,12 +100,9 @@ public class Lobby extends JFrame {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 
-		JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-		scrollPane.setBounds(6, 15, 508, 275);
-		chatPan.add(scrollPane);
+		
+		chatPan.add(ReceiveServerPacket.scrollPane);
 
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(443, 291, 70, 25);
@@ -117,7 +114,6 @@ public class Lobby extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					co.chatting(chatText.getText(), vo);
-					scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 					chatText.requestFocus();
 					chatText.setText("");
 				}
