@@ -43,7 +43,7 @@ public class ReceiveClientPacket extends Thread { // Server
 					}
 				} // while
 			} catch (SocketException e) {
-				this.exitPlayer(thisPlayerVO);
+//				this.exitPlayer(thisPlayerVO);
 			} // try~catch
 
 		} catch (IOException e) {
@@ -120,8 +120,6 @@ public class ReceiveClientPacket extends Thread { // Server
 			
 		case Protocol.LISTROOMPLAYER:
 			packet.getPlayerVO().getPwSocket().println(mapper);
-			
-			
 			
 			break;
 			
