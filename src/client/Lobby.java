@@ -35,7 +35,8 @@ import vo.PlayerVO;
 public class Lobby extends JFrame implements ActionListener {
 		private JButton newBtn;
 		private JButton exitBtn;
-	
+		private Background back = new Background();
+		private Container content;
 	
 	
 	public Lobby(PlayerVO vo) {
@@ -51,7 +52,9 @@ public class Lobby extends JFrame implements ActionListener {
 	}
 
 	public void lobbyScreen(PlayerVO vo) {
-
+		back.lobbyImage();
+		content = getContentPane();    
+		content.add(back, BorderLayout.CENTER);
 		setResizable(false);
 		setSize(1280, 720);
 		setBackground(Color.black);
