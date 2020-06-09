@@ -34,7 +34,7 @@ public class ReceiveClientPacket extends Thread { // Server
 			try {
 				while (true) {
 					String packetStr = br.readLine();
-//					System.out.println(packetStr);
+					System.out.println(packetStr);
 					Packet packet = mapper.readValue(packetStr, Packet.class);
 					try {
 						analysisPacket(packet); // action에 따라서 동작 실행
@@ -43,7 +43,7 @@ public class ReceiveClientPacket extends Thread { // Server
 					}
 				} // while
 			} catch (SocketException e) {
-//				this.exitPlayer(thisPlayerVO);
+				this.exitPlayer(thisPlayerVO);
 			} // try~catch
 
 		} catch (IOException e) {

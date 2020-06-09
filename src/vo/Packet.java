@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class Packet<T> {
+public class Packet {
    private String action;
    private String motion;
    private PlayerVO playerVO;
+   @JsonIgnore
    private ArrayList<Room> room;
+   @JsonIgnore
    private ArrayList<PlayerVO> playerList;
    
    public Packet() { }
