@@ -8,6 +8,7 @@ import vo.Room;
 public class RoomOperator {
 	private ArrayList<Room> roomList = new ArrayList<>();
 	private static RoomOperator ro;
+	
 	private RoomOperator() {}
 
 	public static RoomOperator getRoomOperator() {

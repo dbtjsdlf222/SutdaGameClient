@@ -22,7 +22,7 @@ public class ReceiveClientPacket extends Thread { // Server
 	private PlayerVO thisPlayerVO;
 	public static ArrayList<PlayerVO> playerList = new ArrayList<PlayerVO>();
 	private ObjectMapper mapper = new ObjectMapper();
-
+	private RoomOperator ro = RoomOperator.getRoomOperator();
 	public ReceiveClientPacket(Socket socket) {
 		this.socket = socket;
 	}
@@ -72,6 +72,7 @@ public class ReceiveClientPacket extends Thread { // Server
 				playerList.add(thisPlayerVO);
 
 			} else {
+				//방 입실 및 퇴실 처리 브로드케스트 
 				Packet enterPacket = packet;
 				enterPacket.setAction(Protocol.EXITPLAYER); // 방에 입장시 사람들에게 알림
 				Packet exitPacket = packet; // 방에서 나간곳에 있는 사람들에게 알림
@@ -88,9 +89,9 @@ public class ReceiveClientPacket extends Thread { // Server
 								loctionPlayerList.add(playerList.get(i));
 							} // if
 						} // for
-//						packet.getPlayerVO().println(loctionPlayerList);
+						
 						if(packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)){
-							
+							packet.getRoomNo();
 						}
 					}
 						if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {

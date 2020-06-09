@@ -12,7 +12,16 @@ public class Packet<T> {
 	private PlayerVO playerVO;
 	private ArrayList<Room> room;
 	private ArrayList<PlayerVO> playerList;
+	private int roomNo;
 	
+	public int getRoomNo() {
+		return roomNo;
+	}
+
+	public void setRoomNo(int roomNo) {
+		this.roomNo = roomNo;
+	}
+
 	public Packet() { }
 	
 	public Packet(String action, PlayerVO playerVO) {
