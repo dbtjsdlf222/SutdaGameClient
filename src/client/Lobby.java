@@ -49,7 +49,7 @@ public class Lobby extends JFrame {
 	public void lobbyScreen(PlayerVO vo) {
 
 		setResizable(false);
-		setSize(800, 950);
+		setSize(1280, 720);
 		setBackground(Color.black);
 		setLayout(null);
 
@@ -61,51 +61,43 @@ public class Lobby extends JFrame {
 		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.Lobby);
 
 		plScroll.setBackground(Color.white);
-		plScroll.setBounds(530, 10, 240, 580);
+		plScroll.setBounds(730, 10, 525, 380);
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
 		add(plScroll);
 
 		for (int i = 0; i < playerList.size(); i++) {
-			tArea.setText("닉네임 : " + vo.getID() + "　승리 : " +  vo.getWin()+"" + "　패배 : " + vo.getLose()+"" + "　돈 : " + vo.getMoney()+"");
+			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose()+vo.getLose()) + "" + "　승리 : " + vo.getWin() + "" + "　돈 : "
+					+ vo.getMoney() + "");
 		}
 
-	
-		
-		
 		// 방 목록
 		RoomOperator.getRoomOperator().getAllRoom();
 		JPanel lobbypan = new JPanel();
 		lobbypan.setBackground(Color.white);
 		lobbypan.setLayout(null);
-		lobbypan.setBounds(0, 10, 518, 580);
+		lobbypan.setBounds(5, 10, 718, 440);
 		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
 		add(lobbypan);
 
-	
-		
-		
-		
 		// 채팅방
 		JPanel chatPan = new JPanel();
-		chatPan.setBounds(0, 592, 518, 320);
+		chatPan.setBounds(5, 455, 718, 220);
 		chatPan.setLayout(null);
 		add(chatPan);
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.red), "채 팅"));
 
 		JTextField chatText = new JTextField();
-		chatText.setBounds(6, 291, 435, 25);
+		chatText.setBounds(6, 191, 635, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
 
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 
-
-		
 		chatPan.add(ReceiveServerPacket.scrollPane);
 
 		JButton chatBtn = new JButton("보내기");
-		chatBtn.setBounds(443, 291, 70, 25);
+		chatBtn.setBounds(643, 191, 70, 25);
 		chatPan.add(chatBtn);
 		JRootPane rootPane = getRootPane();
 		rootPane.setDefaultButton(chatBtn);
@@ -113,13 +105,26 @@ public class Lobby extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
-					co.chatting(chatText.getText(), vo);
-					chatText.requestFocus();
-					chatText.setText("");
+					if (!(chatText.getText().equals(""))) {
+						co.chatting(chatText.getText(), vo);
+						chatText.requestFocus();
+						chatText.setText("");
+					}
 				}
 			}
 		});
 
+		//방만들기 버튼
+		JButton newBtn = new JButton("방만들기");
+		newBtn.setBounds(1103, 564, 150, 50);
+		add(newBtn);
+		
+		//나가기 버튼
+		JButton exitBtn = new JButton("나가기");
+		exitBtn.setBounds(1103, 624, 150, 50);
+		add(exitBtn);
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}

@@ -22,7 +22,7 @@ public class ReceiveServerPacket extends Thread {
 	@Override
 	public void run() {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(6, 15, 508, 275);
+		scrollPane.setBounds(6, 15, 708, 175);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
