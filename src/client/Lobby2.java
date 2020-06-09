@@ -31,7 +31,7 @@ public class Lobby2 {
 	JButton newBtn;
 
 	public Lobby2(PlayerVO vo) {
-		vo.setLocation(Protocol.Lobby);
+		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
 		try {
