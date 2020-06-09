@@ -18,7 +18,13 @@ public class RoomOperator {
 	}
 
 	public Room getRoom(int roomNo) {
-		return roomList.get(roomNo);
+		for (int i = 0; i < roomList.size(); i++) {
+			if(roomList.get(i).getRoomNo()==roomNo) {
+				return roomList.get(i);
+			}
+		} //for
+		return null;
+	
 	}
 	
 	public ArrayList<Room> getAllRoom() {

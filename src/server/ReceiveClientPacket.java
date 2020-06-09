@@ -7,12 +7,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.concurrent.BrokenBarrierException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vo.Protocol;
+import vo.Room;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -70,53 +70,48 @@ public class ReceiveClientPacket extends Thread { // Server
 				thisPlayerVO = packet.getPlayerVO();
 				thisPlayerVO.setSocketWithBrPw(socket);
 				playerList.add(thisPlayerVO);
-
-			} else {
+			}
 				//방 입실 및 퇴실 처리 브로드케스트 
-				Packet enterPacket = packet;
-				enterPacket.setAction(Protocol.EXITPLAYER); // 방에 입장시 사람들에게 알림
+				Packet joinPacket = packet;
+				joinPacket.setAction(Protocol.JOINPLAYER); // 방에 입장시 사람들에게 알림
 				Packet exitPacket = packet; // 방에서 나간곳에 있는 사람들에게 알림
-				exitPacket.setAction(Protocol.JOINPLAYER);
+				exitPacket.setAction(Protocol.EXITPLAYER);
 				String beforeLoction = thisPlayerVO.getLocation();
 				thisPlayerVO.setLocation(packet.getPlayerVO().getLocation());
-
+				
+				ArrayList<PlayerVO> localPlayerList = new ArrayList<>();
 				
 				for (int j = 0; j < playerList.size(); j++) {
-					if (playerList.get(j).getNo() != thisPlayerVO.getNo()) { //자기 자신에게는 자신의 이동정보를 안보냄
-						ArrayList<PlayerVO> loctionPlayerList = new ArrayList<>();
-						for (int i = 0; i < playerList.size(); i++) {
-							
-							if (packet.getPlayerVO().getLocation().equals(playerList.get(i).getLocation())) {
-								loctionPlayerList.add(playerList.get(i));
-							} // if
-						} // for
-						
-						if(packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)){
-							
-						}
+					//자신의 소켓을 제외함
+					if (playerList.get(j).getNo() == thisPlayerVO.getNo()) {
+						localPlayerList.add(packet.getPlayerVO());
+						playerList.get(j).setLocation(packet.getPlayerVO().getLocation());
+						continue;
 					}
+						
 						if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
-
-							PrintWriter pw = playerList.get(j).getPwSocket();
-							if(packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)) {
-								
-							} else {
-								
-							}
-							pw.println(mapper.writeValueAsString(enterPacket));
+							
+							localPlayerList.add(playerList.get(j));
+							
+							playerList.get(j).getPwSocket().println(mapper.writeValueAsString(joinPacket));
 
 						} else if (beforeLoction.equals(playerList.get(j).getLocation())) {
-
-							PrintWriter pw = playerList.get(j).getPwSocket();
-							pw.println(mapper.writeValueAsString(exitPacket));
+							//나간 방안에 사람들한테 나간 쿼리 보냄
+							playerList.get(j).getPwSocket().println(mapper.writeValueAsString(exitPacket));
 
 						} // if~else
+						
 				} //for
-			} //if~else
+				if(packet.getPlayerVO().getLocation().equals(Protocol.ROOM)) {
+					packet.setRoom(ro.getAllRoom());
+				}
+				packet.setPlayerList(localPlayerList);
+				thisPlayerVO.getPwSocket().println(mapper.writeValueAsString(packet));
+				
 			break;
 
 		case Protocol.MAKEROOM:
-			
+			ro.makeRoom(packet.getPlayerVO());
 			
 		case Protocol.LISTROOMPLAYER:
 			packet.getPlayerVO().getPwSocket().println(mapper);

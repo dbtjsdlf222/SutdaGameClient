@@ -35,6 +35,7 @@ public class PlayerVO {
    private String cardName;
    private String location;
    private String ip;
+   private int roomNo;
 
    @JsonIgnore
    private Socket socket;
@@ -42,10 +43,16 @@ public class PlayerVO {
    private BufferedReader brSocket;
    @JsonIgnore
    private PrintWriter pwSocket;
+   
+   public int getRoomNo() {
+	return roomNo;
+}
 
-   
-   
-   public ArrayList<PlayerVO> getPlayerList() {
+public void setRoomNo(int roomNo) {
+	this.roomNo = roomNo;
+}
+
+public ArrayList<PlayerVO> getPlayerList() {
       return playerList;
    }
 
