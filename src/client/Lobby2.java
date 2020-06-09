@@ -6,12 +6,15 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -43,14 +46,14 @@ public class Lobby2 {
 	}
 
 	public void lobbyScreen(PlayerVO vo) {
-		//로비 라벨
+		// 로비 라벨
 		JLabel lobbyLbl = new JLabel("L O B B Y");
 		lobbyLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
 		lobbyLbl.setForeground(new Color(255, 255, 255, 150));
 		lobbyLbl.setBounds(340, 20, 200, 30);
 		lobbyJF.add(lobbyLbl);
-		
-		//로비 판넬
+
+		// 로비 판넬
 		JPanel lobbyPan = new JPanel();
 		lobbyPan.setBackground(new Color(0, 0, 0, 120));
 		lobbyPan.setLayout(null);
@@ -58,37 +61,36 @@ public class Lobby2 {
 		lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		lobbyJF.add(lobbyPan);
 
-		//채팅 라벨
+		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
 		lbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
 		lbl.setForeground(new Color(255, 255, 255, 150));
 		lbl.setBounds(300, 370, 280, 30);
 		lobbyJF.add(lbl);
-		
+		// 채팅 판넬
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(5, 410, 718, 260);
 		chatPan.setBackground(new Color(0, 0, 0, 120));
 		chatPan.setLayout(null);
 		lobbyJF.add(chatPan);
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-
+		// 채팅 필드
 		JTextField chatText = new JTextField();
 		chatText.setBounds(10, 225, 620, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
-
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
-
 		chatPan.add(ReceiveServerPacket.scrollPane);
-		co.chatArea.setBackground(new Color(0, 0, 0, 125));
-
+		co.chatArea.setBackground(new Color(0, 0, 0, 0));
+		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(638, 225, 70, 25);
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
 		chatBtn.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
@@ -100,18 +102,23 @@ public class Lobby2 {
 				}
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+//		// 로비 접속자 목록
+//		JTextArea tArea = new JTextArea();
+//		JScrollPane plScroll = new JScrollPane(tArea);
+//		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
+//
+//		plScroll.setBackground(Color.white);
+//		plScroll.setBounds(730, 10, 525, 380);
+//		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
+//		lobbyJF.add(plScroll);
+//
+//		for (int i = 0; i < playerList.size(); i++) {
+//			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose() + vo.getLose()) + "" + "　승리 : "
+//					+ vo.getWin() + "" + "　돈 : " + vo.getMoney() + "");
+//
+//		}
+
 		// JFrame 정보
 		imgP = new Background();
 		imgP.lobbyImage();
@@ -121,10 +128,6 @@ public class Lobby2 {
 		lobbyJF.setVisible(true);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	
-	
-	
-	
 	}
 
 }

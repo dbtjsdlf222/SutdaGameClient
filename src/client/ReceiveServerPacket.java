@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -23,7 +24,9 @@ public class ReceiveServerPacket extends Thread {
 	@Override
 	public void run() {
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(6, 15, 708, 175);
+		scrollPane.setBounds(10, 15, 698, 195);
+		scrollPane.setBackground(new Color(0, 0, 0, 0));
+		scrollPane.setBorder(null);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
