@@ -32,8 +32,12 @@ import vo.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
 
-public class Lobby extends JFrame {
-
+public class Lobby extends JFrame implements ActionListener {
+		private JButton newBtn;
+		private JButton exitBtn;
+	
+	
+	
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.Lobby);
 
@@ -53,7 +57,22 @@ public class Lobby extends JFrame {
 		setBackground(Color.black);
 		setLayout(null);
 
-		
+				//방만들기 버튼
+				newBtn = new JButton("방만들기");
+				newBtn.setBounds(1103, 564, 150, 50);
+				add(newBtn);
+				
+				newBtn.addActionListener(this);
+				
+				//나가기 버튼
+				exitBtn = new JButton("나가기");
+				exitBtn.setBounds(1103, 624, 150, 50);
+				add(exitBtn);
+				
+				exitBtn.addActionListener(this);
+					
+				
+				
 		
 		// 로비 접속자 목록
 		JTextArea tArea = new JTextArea();
@@ -78,6 +97,10 @@ public class Lobby extends JFrame {
 		lobbypan.setBounds(5, 10, 718, 440);
 		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
 		add(lobbypan);
+		
+		
+		
+		
 
 		// 채팅방
 		JPanel chatPan = new JPanel();
@@ -114,18 +137,21 @@ public class Lobby extends JFrame {
 			}
 		});
 
-		//방만들기 버튼
-		JButton newBtn = new JButton("방만들기");
-		newBtn.setBounds(1103, 564, 150, 50);
-		add(newBtn);
 		
-		//나가기 버튼
-		JButton exitBtn = new JButton("나가기");
-		exitBtn.setBounds(1103, 624, 150, 50);
-		add(exitBtn);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == exitBtn) {
+			dispose();
+		}else if (e.getSource() == newBtn) {
+			
+		}
+		
+		
 	}
 }
