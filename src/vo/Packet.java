@@ -1,26 +1,25 @@
 package vo;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class Packet {
+public class Packet<T> {
 	private String action;
 	private String motion;
-	private Integer roomNo=null;
 	private PlayerVO playerVO;
+	private ArrayList<Room> room;
+	private ArrayList<PlayerVO> playerList;
+	
+	public Packet() { }
 	
 	public Packet(String action, PlayerVO playerVO) {
 		this.action = action;
 		this.playerVO = playerVO;
 	}
 	
-	public Packet(String action, String motion, int roomNo, PlayerVO playerVO) {
-		this.action = action;
-		this.motion = motion;
-		this.roomNo = roomNo;
-		this.playerVO = playerVO;
-	}
 	public Packet(String action, String motion, PlayerVO playerVO) {
 		this.action = action;
 		this.motion = motion;
@@ -31,6 +30,22 @@ public class Packet {
 		this.motion = motion;
 	}
 
+	public ArrayList<Room> getRoom() {
+		return room;
+	}
+
+	public void setRoom(ArrayList<Room> room) {
+		this.room = room;
+	}
+
+	public ArrayList<PlayerVO> getPlayerList() {
+		return playerList;
+	}
+
+	public void setPlayerList(ArrayList<PlayerVO> playerList) {
+		this.playerList = playerList;
+	}
+
 	public PlayerVO getPlayerVO() {
 		return playerVO;
 	}
@@ -39,8 +54,6 @@ public class Packet {
 		this.playerVO = playerVO;
 	}
 
-	public Packet() { }
-	
 	public String getAction() {
 		return action;
 	}
@@ -57,13 +70,6 @@ public class Packet {
 		this.motion = motion;
 	}
 
-	public Integer getRoomNo() {
-		return roomNo;
-	}
-
-	public void setRoomNo(int roomNo) {
-		this.roomNo = roomNo;
-	}
 	@Override
 	public String toString() {
 		return action +": "+ motion;

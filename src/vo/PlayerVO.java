@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
-	public static ArrayList<PlayerVO> playerList = new ArrayList<>();
+	private ArrayList<PlayerVO> playerList = new ArrayList<>();
 
 	private int no;
 	private String id = null;
@@ -42,6 +42,16 @@ public class PlayerVO {
 	private BufferedReader brSocket;
 	@JsonIgnore
 	private PrintWriter pwSocket;
+
+	
+	
+	public ArrayList<PlayerVO> getPlayerList() {
+		return playerList;
+	}
+
+	public void setPlayerList(ArrayList<PlayerVO> playerList) {
+		this.playerList = playerList;
+	}
 
 	public PlayerVO() {
 	}
@@ -92,6 +102,9 @@ public class PlayerVO {
 
 	public void addPlayer() {
 		playerList.add(this);
+		for (int i = 0; i < playerList.size(); i++) {
+			System.out.println(playerList.get(i));
+		}
 //		ObjectMapper mapper = new ObjectMapper();
 //		try {
 //			String str = mapper.writeValueAsString(this);
