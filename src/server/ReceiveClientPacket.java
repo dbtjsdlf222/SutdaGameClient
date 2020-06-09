@@ -85,13 +85,14 @@ public class ReceiveClientPacket extends Thread { // Server
 					if (playerList.get(j).getNo() != thisPlayerVO.getNo()) { //자기 자신에게는 자신의 이동정보를 안보냄
 						ArrayList<PlayerVO> loctionPlayerList = new ArrayList<>();
 						for (int i = 0; i < playerList.size(); i++) {
+							
 							if (packet.getPlayerVO().getLocation().equals(playerList.get(i).getLocation())) {
 								loctionPlayerList.add(playerList.get(i));
 							} // if
 						} // for
 						
 						if(packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)){
-							packet.getRoomNo();
+							
 						}
 					}
 						if (packet.getPlayerVO().getLocation().equals(playerList.get(j).getLocation())) {
