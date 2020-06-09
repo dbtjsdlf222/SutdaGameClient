@@ -7,20 +7,25 @@ public class Protocol {
 	public static final String JOINPLAYER = "joinPlayer";
 	public static final String EXITPLAYER = "exitPlayer";
 	public static final String CHANGELOCATION = "changeLocation";
+	public static final String MAKEROOM = "makeRoom";
+	public static final String LISTROOMPLAYER = "listRoomPlayer";
+	public static final String ROOMLIST = "roomList";
+	public static final String PLAYERLIST = "playerList";
 	
 	
 	//Location
-	public static final String Lobby = "lobby";
-	public static final String Room = "room";
+	public static final String LOBBY = "lobby";
+	public static final String ROOM = "room";
 	
 	
 	//Game
 	public static final String GAMESTART = "gameStart";
-	public static final String Half = "하프";
-	public static final String Quater = "쿼터";
-	public static final String Check = "체크";
-	public static final String Allin = "올인";
-	public static final String Call = "콜";
-	public static final String Die = "다이";
+	public static final String Half = "half";
+	public static final String Quater = "quater";
+	public static final String Check = "checkt";
+	public static final String Allin = "allIn";
+	public static final String Call = "call";
+	public static final String Die = "die";
+	public static final String Pping = "pping";
 	
 }
