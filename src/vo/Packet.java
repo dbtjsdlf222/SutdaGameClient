@@ -7,80 +7,71 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet<T> {
-	private String action;
-	private String motion;
-	private PlayerVO playerVO;
-	private ArrayList<Room> room;
-	private ArrayList<PlayerVO> playerList;
-	private int roomNo;
-	
-	public int getRoomNo() {
-		return roomNo;
-	}
+   private String action;
+   private String motion;
+   private PlayerVO playerVO;
+   private ArrayList<Room> room;
+   private ArrayList<PlayerVO> playerList;
+   
+   public Packet() { }
+   
+   public Packet(String action, PlayerVO playerVO) {
+      this.action = action;
+      this.playerVO = playerVO;
+   }
+   
+   public Packet(String action, String motion, PlayerVO playerVO) {
+      this.action = action;
+      this.motion = motion;
+      this.playerVO = playerVO;
+   }
+   public Packet(String action, String motion) {
+      this.action = action;
+      this.motion = motion;
+   }
 
-	public void setRoomNo(int roomNo) {
-		this.roomNo = roomNo;
-	}
+   public ArrayList<Room> getRoom() {
+      return room;
+   }
 
-	public Packet() { }
-	
-	public Packet(String action, PlayerVO playerVO) {
-		this.action = action;
-		this.playerVO = playerVO;
-	}
-	
-	public Packet(String action, String motion, PlayerVO playerVO) {
-		this.action = action;
-		this.motion = motion;
-		this.playerVO = playerVO;
-	}
-	public Packet(String action, String motion) {
-		this.action = action;
-		this.motion = motion;
-	}
+   public void setRoom(ArrayList<Room> room) {
+      this.room = room;
+   }
 
-	public ArrayList<Room> getRoom() {
-		return room;
-	}
+   public ArrayList<PlayerVO> getPlayerList() {
+      return playerList;
+   }
 
-	public void setRoom(ArrayList<Room> room) {
-		this.room = room;
-	}
+   public void setPlayerList(ArrayList<PlayerVO> playerList) {
+      this.playerList = playerList;
+   }
 
-	public ArrayList<PlayerVO> getPlayerList() {
-		return playerList;
-	}
+   public PlayerVO getPlayerVO() {
+      return playerVO;
+   }
 
-	public void setPlayerList(ArrayList<PlayerVO> playerList) {
-		this.playerList = playerList;
-	}
+   public void setPlayerVO(PlayerVO playerVO) {
+      this.playerVO = playerVO;
+   }
 
-	public PlayerVO getPlayerVO() {
-		return playerVO;
-	}
+   public String getAction() {
+      return action;
+   }
 
-	public void setPlayerVO(PlayerVO playerVO) {
-		this.playerVO = playerVO;
-	}
+   public void setAction(String action) {
+      this.action = action;
+   }
 
-	public String getAction() {
-		return action;
-	}
+   public String getMotion() {
+      return motion;
+   }
 
-	public void setAction(String action) {
-		this.action = action;
-	}
+   public void setMotion(String motion) {
+      this.motion = motion;
+   }
 
-	public String getMotion() {
-		return motion;
-	}
-
-	public void setMotion(String motion) {
-		this.motion = motion;
-	}
-
-	@Override
-	public String toString() {
-		return action +": "+ motion;
-	}
+   @Override
+   public String toString() {
+      return action +": "+ motion;
+   }
 }
