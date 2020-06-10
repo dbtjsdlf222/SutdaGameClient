@@ -41,10 +41,12 @@ public class LoginService {
 			return;
 		}
 		
+		resultHandler.loginSuccess(player);
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
 		new ReceiveServerPacket(player.getSocket()).start();
-		resultHandler.loginSuccess(player);
 		
 	} //login();
+	
+	public PlayerDAO getPlayerDAO() { return playerDAO; }
 	
 } //class Login();
