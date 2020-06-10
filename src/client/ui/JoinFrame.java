@@ -54,7 +54,6 @@ public class JoinFrame {
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 444, 444);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{16, 0, 0, 64, 0, 16};
 		gridBagLayout.rowHeights = new int[]{32, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 64, 16};
