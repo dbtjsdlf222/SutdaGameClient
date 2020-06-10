@@ -48,9 +48,9 @@ public class ReceiveServerPacket extends Thread {
 				case Protocol.JOINPLAYER: // 플레이어가 입장시
 					if (packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)) {
 						// 로비 입장시
-						for (PlayerVO playervo: packet.getPlayerList()) {
-							Lobby.tArea.append(("닉네임 : " + packet.getPlayerVO().getNic() + "　판수 : " + (packet.getPlayerVO().getWin()+packet.getPlayerVO().getLose())+ "　머니 : " + packet.getPlayerVO().getMoney())+ "\n");
-						}
+//						for (PlayerVO playervo: packet.getPlayerList()) {
+//							Lobby.tArea.append(("닉네임 : " + packet.getPlayerVO().getNic() + "　판수 : " + (packet.getPlayerVO().getWin()+packet.getPlayerVO().getLose())+ "　머니 : " + packet.getPlayerVO().getMoney())+ "\n");
+//						}
 					} else {
 						// 룸 입장시
 					}
@@ -66,6 +66,10 @@ public class ReceiveServerPacket extends Thread {
 					if (packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)) {
 						ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerVO().getPlayerList();
 						//로비 접속중 사람 리스트
+						for (PlayerVO playervo: lobbyPlayerList) {
+							Lobby.tArea.append(("닉네임 : " + playervo.getNic() + "　판수 : " + (playervo.getWin()+playervo.getLose())+ "　머니 : " + playervo.getMoney())+ "\n");
+						}
+						
 						
 						ArrayList<Room> lobbyRoomList = packet.getRoom();
 						//로비 룸 리스트

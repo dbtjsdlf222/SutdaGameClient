@@ -128,8 +128,6 @@ public class Lobby {
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		playerPan.add(plScroll);
 
-		tArea.append(
-				("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getWin() + vo.getLose()) + "　머니 : " + vo.getMoney()) + "\n");
 
 		// JFrame 정보
 		imgP = new Background();
