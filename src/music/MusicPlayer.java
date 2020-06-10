@@ -13,8 +13,8 @@ public class MusicPlayer extends Thread {
 	boolean loop = true;
 	public MusicPlayer() {
 		try {
-			File file = new File(MainScreen.class.getResource("../Music/BigSleep.mp3").getFile());
-			this.player = new Player(new BufferedInputStream(new FileInputStream(file)));
+//			File file = new File(MainScreen.class.getResource("../Music/BigSleep.mp3").getFile());
+//			this.player = new Player(new BufferedInputStream(new FileInputStream(file)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
