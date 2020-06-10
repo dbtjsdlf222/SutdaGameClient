@@ -28,13 +28,14 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
-public class Lobby2 {
+public class Lobby {
+	public static JTextArea tArea = new JTextArea();
 	JFrame lobbyJF = new JFrame();
 	Background imgP;
 	Container con;
 	JButton newBtn;
 
-	public Lobby2(PlayerVO vo) {
+	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
@@ -111,27 +112,24 @@ public class Lobby2 {
 		playerLbl.setBounds(970, 20, 200, 30);
 		lobbyJF.add(playerLbl);
 
-		
-		
 		JPanel playerPan = new JPanel();
 		playerPan.setBounds(850, 60, 390, 290);
 		playerPan.setBackground(new Color(0, 0, 0, 120));
 		playerPan.setLayout(null);
 		lobbyJF.add(playerPan);
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		
-		
+
 		// 로비 접속자 목록
-		JTextArea tArea = new JTextArea();
+
 		JScrollPane plScroll = new JScrollPane(tArea);
-		
-		plScroll.setLayout(null);
-	//	plScroll.setBackground(Color.black);
+		tArea.setEditable(false);
+
 		plScroll.setBounds(10, 10, 370, 270);
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		playerPan.add(plScroll);
 
-
+		tArea.append(
+				("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getWin() + vo.getLose()) + "　머니 : " + vo.getMoney()) + "\n");
 
 		// JFrame 정보
 		imgP = new Background();
