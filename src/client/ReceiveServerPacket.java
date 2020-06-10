@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import operator.ChattingOperator;
 import vo.Protocol;
 import vo.Room;
 import vo.Packet;
@@ -45,6 +46,8 @@ public class ReceiveServerPacket extends Thread {
 				case Protocol.JOINPLAYER: // 플레이어가 입장시
 					if (packet.getPlayerVO().getLocation().equals(Protocol.LOBBY)) {
 						// 로비 입장시
+					tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose() + vo.getLose()) + "" + "　승리 : "
+						+ vo.getWin() + "" + "　돈 : " + vo.getMoney() + "");
 					} else {
 						// 룸 입장시
 					}

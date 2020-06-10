@@ -22,7 +22,8 @@ import javax.swing.border.TitledBorder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import server.RoomOperator;
+import operator.ChattingOperator;
+import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -82,6 +83,7 @@ public class Lobby2 {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		chatPan.add(ReceiveServerPacket.scrollPane);
+		ReceiveServerPacket.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(638, 225, 70, 25);
@@ -103,27 +105,33 @@ public class Lobby2 {
 		});
 
 		// 로비 라벨
-				JLabel playerLbl = new JLabel("P L A Y E R");
-				playerLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-				playerLbl.setForeground(new Color(255, 255, 255, 150));
-				playerLbl.setBounds(970, 20, 200, 30);
-				lobbyJF.add(playerLbl);
+		JLabel playerLbl = new JLabel("P L A Y E R");
+		playerLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		playerLbl.setForeground(new Color(255, 255, 255, 150));
+		playerLbl.setBounds(970, 20, 200, 30);
+		lobbyJF.add(playerLbl);
+
+		
+		
+		JPanel playerPan = new JPanel();
+		playerPan.setBounds(850, 60, 390, 290);
+		playerPan.setBackground(new Color(0, 0, 0, 120));
+		playerPan.setLayout(null);
+		lobbyJF.add(playerPan);
+		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		
 		
 		// 로비 접속자 목록
 		JTextArea tArea = new JTextArea();
 		JScrollPane plScroll = new JScrollPane(tArea);
-		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
+		
 		plScroll.setLayout(null);
-		plScroll.setBackground(new Color(0, 0, 0, 125));
-		plScroll.setBounds(850, 60, 390, 290);
+	//	plScroll.setBackground(Color.black);
+		plScroll.setBounds(10, 10, 370, 270);
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		lobbyJF.add(plScroll);
+		playerPan.add(plScroll);
 
-		for (int i = 0; i < playerList.size(); i++) {
-			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose() + vo.getLose()) + "" + "　승리 : "
-					+ vo.getWin() + "" + "　돈 : " + vo.getMoney() + "");
 
-		}
 
 		// JFrame 정보
 		imgP = new Background();
