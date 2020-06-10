@@ -78,7 +78,7 @@ public class Room {
 
 	public void exitPlayer(PlayerVO vo) {
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getNic().equals(vo.getNic())) {
+			if (list.get(i).getNo()==(vo.getNo())) {
 				list.remove(i);
 			}
 		}

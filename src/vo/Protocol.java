@@ -3,14 +3,20 @@ package vo;
 public class Protocol {
 	
 	//Server
-	public static final String MESSAGE = "message";
-	public static final String JOINPLAYER = "joinPlayer";
-	public static final String EXITPLAYER = "exitPlayer";
-	public static final String CHANGELOCATION = "changeLocation";
-	public static final String MAKEROOM = "makeRoom";
-	public static final String LISTROOMPLAYER = "listRoomPlayer";
-	public static final String ROOMLIST = "roomList";
-	public static final String PLAYERLIST = "playerList";
+	public static final String FIRSTENTER = "0";	//첫 로비 입장
+	public static final String MESSAGE = "1";		//메세지
+	public static final String JOINPLAYER = "2";	//타 플레이어 입실
+	public static final String EXITPLAYER = "3";	//타 플레이어 퇴실
+	public static final String ENTERLOBBY = "4";		//로비입장
+	public static final String MAKEROOM = "5";		//방만들기
+	public static final String LISTROOMPLAYER = "6";
+	public static final String ROOMLIST = "7";
+	public static final String PLAYERLIST = "8";
+	
+	public static final String LOBBYENTER = "9";	//로비 입장
+	public static final String ROOMENTER = "10";	//방 입실		입실시 vo에 roomNo 수정
+	public static final String EXITROOM = "11";		//방 퇴실		
+	public static final String EXIT = "12";
 	
 	
 	//Location
