@@ -55,7 +55,7 @@ public class Jokbo {
 				|| ((Math.abs(card1) == 9) && (card2 == 4.5))) {
 			if (getCardLevel <= 90) {
 				CardName = "구사";
-				return rematch();
+//				return rematch();
 			} else if (getCardLevel >= 100) {
 				getCardLevel = 3;
 				CardName = "3끗";
@@ -68,7 +68,7 @@ public class Jokbo {
 		if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2 == 4)) {
 			if (getCardLevel <= 900) {
 				CardName = "멍구사";
-				return rematch();
+//				return rematch();
 			} else if (getCardLevel >= 1000) {
 				getCardLevel = 3;
 				CardName = "3끗";
