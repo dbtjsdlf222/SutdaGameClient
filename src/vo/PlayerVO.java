@@ -67,6 +67,12 @@ public ArrayList<PlayerVO> getPlayerList() {
       this.password = pw;
       this.nic = nic;
    }
+   
+   public void enterPlayer(String nic, int cha, int money) {
+	   this.nic = nic;
+	   this.cha = cha;
+	   this.money = money;
+   }
 
    public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha, String ip) {
@@ -106,7 +112,13 @@ public ArrayList<PlayerVO> getPlayerList() {
       this.pwSocket = pwSocket;
    }
 
-   public void addPlayer() {
+   public PlayerVO(String string, int i, int j) {
+	   this.nic =string;
+	   this.cha = i;
+	   this.money = j;
+   }
+
+public void addPlayer() {
       playerList.add(this);
       for (int i = 0; i < playerList.size(); i++) {
          System.out.println(playerList.get(i));
