@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
-   private ArrayList<PlayerVO> playerList = new ArrayList<>();
+//   private ArrayList<PlayerVO> playerList = new ArrayList<>();
 
    private int no;
    private String id = null;
@@ -34,7 +34,7 @@ public class PlayerVO {
    private String cardName;
    private String location;
    private String ip;
-   private int roomNo;
+   private int roomNo; 	//0이면 로비
 
    @JsonIgnore
    private Socket socket;
