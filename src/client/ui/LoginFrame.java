@@ -3,6 +3,8 @@ package client.ui;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
+
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -33,6 +35,8 @@ public class LoginFrame implements LoginResultHandler {
 	private JLabel lblErrorMessage;
 	private JTextField textFieldId;
 	private JPasswordField passwordField;
+	
+	private JoinFrame joinFrame;
 	
 	public LoginFrame() {
 		initialize();
@@ -73,7 +77,7 @@ public class LoginFrame implements LoginResultHandler {
 		gbc_panelErrorMessage.gridy = 2;
 		frame.getContentPane().add(panelErrorMessage, gbc_panelErrorMessage);
 		
-		lblErrorMessage = new JLabel("아이디 또는 비밀번호를 입력하세요.");
+		lblErrorMessage = new JLabel("");
 		lblErrorMessage.setForeground(Color.RED);
 		lblErrorMessage.setFont(new Font("돋움", Font.PLAIN, 24));
 		panelErrorMessage.add(lblErrorMessage);
@@ -138,18 +142,28 @@ public class LoginFrame implements LoginResultHandler {
 					try {
 						loginService.login(textFieldId.getText(), new String(passwordField.getPassword()));
 					}catch (IOException e1) { e1.printStackTrace(); }
-				else
-					System.out.println("Join");
+				else {
+					
+					EventQueue.invokeLater(() -> joinFrame = new JoinFrame(loginService.getPlayerDAO()));
+					
+				}
 				
 			}
 		});
 		
 	} //initialize();
-
+	
+	public void dispose() {
+		
+		if(joinFrame != null)
+			joinFrame.dispose();
+		frame.dispose();
+	}
+	
 	@Override
 	public void loginSuccess(PlayerVO player) {
 		
-		frame.dispose();
+		dispose();
 		new Lobby(player);
 		
 	} //loginSuccess();

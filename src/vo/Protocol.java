@@ -12,9 +12,7 @@ public class Protocol {
 	public static final String LISTROOMPLAYER = "6";
 	public static final String ROOMLIST = "7";
 	public static final String PLAYERLIST = "8";
-	
-	public static final String LOBBYENTER = "9";	//로비 입장
-	public static final String ROOMENTER = "10";	//방 입실		입실시 vo에 roomNo 수정
+	public static final String ENTERROOM = "10";	//방 입실		입실시 vo에 roomNo 수정
 	public static final String EXITROOM = "11";		//방 퇴실		
 	public static final String EXIT = "12";
 	
