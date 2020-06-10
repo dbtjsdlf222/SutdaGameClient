@@ -122,7 +122,7 @@ public class Login extends JFrame {
 								logJF.dispose();
 								playerVO.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
 								new Thread(new ReceiveServerPacket(playerVO.getSocket())).start();
-								new Lobby2(playerVO);
+								new Lobby(playerVO);
 
 							} catch (UnknownHostException e1) {
 								e1.printStackTrace();

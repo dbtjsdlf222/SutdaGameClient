@@ -3,12 +3,9 @@ package client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -17,34 +14,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import server.RoomOperator;
-import vo.Protocol;
+import operator.ChattingOperator;
+import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
+import vo.Protocol;
 
-public class Lobby extends JFrame implements ActionListener {
-		private JButton newBtn;
-		private JButton exitBtn;
-		private Background back = new Background();
-		private Container content;
-	
-	
-	public Lobby(PlayerVO vo) {
+public class Lobby2 {
+	JFrame lobbyJF = new JFrame();
+	Background imgP;
+	Container con;
+	JButton newBtn;
+
+	public Lobby2(PlayerVO vo) {
 		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
 		try {
-			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.JOINPLAYER, vo)));
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.CHANGELOCATION, vo)));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -52,82 +47,51 @@ public class Lobby extends JFrame implements ActionListener {
 	}
 
 	public void lobbyScreen(PlayerVO vo) {
-		back.lobbyImage();
-		content = getContentPane();    
-		content.add(back, BorderLayout.CENTER);
-		setResizable(false);
-		setSize(1280, 720);
-		setBackground(Color.black);
-		setLayout(null);
+		// 로비 라벨
+		JLabel lobbyLbl = new JLabel("L O B B Y");
+		lobbyLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		lobbyLbl.setForeground(new Color(255, 255, 255, 150));
+		lobbyLbl.setBounds(340, 20, 200, 30);
+		lobbyJF.add(lobbyLbl);
 
-				//방만들기 버튼
-				newBtn = new JButton("방만들기");
-				newBtn.setBounds(1103, 564, 150, 50);
-				add(newBtn);
-				
-				newBtn.addActionListener(this);
-				
-				//나가기 버튼
-				exitBtn = new JButton("나가기");
-				exitBtn.setBounds(1103, 624, 150, 50);
-				add(exitBtn);
-				
-				exitBtn.addActionListener(this);
-					
-				
-				
-		
-		// 로비 접속자 목록
-		JTextArea tArea = new JTextArea();
-		JScrollPane plScroll = new JScrollPane(tArea);
-		ArrayList<PlayerVO> playerList = vo.getLoctionList(Protocol.LOBBY);
+		// 로비 판넬
+		JPanel lobbyPan = new JPanel();
+		lobbyPan.setBackground(new Color(0, 0, 0, 120));
+		lobbyPan.setLayout(null);
+		lobbyPan.setBounds(5, 60, 818, 290);
+		lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		lobbyJF.add(lobbyPan);
 
-		plScroll.setBackground(Color.white);
-		plScroll.setBounds(730, 10, 525, 380);
-		plScroll.setBorder(new TitledBorder(new LineBorder(Color.red), "플 레 이 어 리 스 트"));
-		add(plScroll);
-
-		for (int i = 0; i < playerList.size(); i++) {
-			tArea.setText("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getLose()+vo.getLose()) + "" + "　승리 : " + vo.getWin() + "" + "　돈 : "
-					+ vo.getMoney() + "");
-		}
-
-		// 방 목록
-		RoomOperator.getRoomOperator().getAllRoom();
-		JPanel lobbypan = new JPanel();
-		lobbypan.setBackground(Color.white);
-		lobbypan.setLayout(null);
-		lobbypan.setBounds(5, 10, 718, 440);
-		lobbypan.setBorder(new TitledBorder(new LineBorder(Color.red), "로 비 리 스 트"));
-		add(lobbypan);
-		
-		
-		
-		
-
-		// 채팅방
+		// 채팅 라벨
+		JLabel lbl = new JLabel("C H A T T I N G");
+		lbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		lbl.setForeground(new Color(255, 255, 255, 150));
+		lbl.setBounds(300, 370, 280, 30);
+		lobbyJF.add(lbl);
+		// 채팅 판넬
 		JPanel chatPan = new JPanel();
-		chatPan.setBounds(5, 455, 718, 220);
+		chatPan.setBounds(5, 410, 718, 260);
+		chatPan.setBackground(new Color(0, 0, 0, 120));
 		chatPan.setLayout(null);
-		add(chatPan);
-		chatPan.setBorder(new TitledBorder(new LineBorder(Color.red), "채 팅"));
-
+		lobbyJF.add(chatPan);
+		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		// 채팅 필드
 		JTextField chatText = new JTextField();
-		chatText.setBounds(6, 191, 635, 25);
+		chatText.setBounds(10, 225, 620, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
-
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
-
 		chatPan.add(ReceiveServerPacket.scrollPane);
-
+		ReceiveServerPacket.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
-		chatBtn.setBounds(643, 191, 70, 25);
+		chatBtn.setBounds(638, 225, 70, 25);
 		chatPan.add(chatBtn);
-		JRootPane rootPane = getRootPane();
+		JRootPane rootPane = lobbyJF.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
 		chatBtn.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
@@ -140,21 +104,44 @@ public class Lobby extends JFrame implements ActionListener {
 			}
 		});
 
+		// 로비 라벨
+		JLabel playerLbl = new JLabel("P L A Y E R");
+		playerLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		playerLbl.setForeground(new Color(255, 255, 255, 150));
+		playerLbl.setBounds(970, 20, 200, 30);
+		lobbyJF.add(playerLbl);
+
 		
 		
+		JPanel playerPan = new JPanel();
+		playerPan.setBounds(850, 60, 390, 290);
+		playerPan.setBackground(new Color(0, 0, 0, 120));
+		playerPan.setLayout(null);
+		lobbyJF.add(playerPan);
+		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		
+		// 로비 접속자 목록
+		JTextArea tArea = new JTextArea();
+		JScrollPane plScroll = new JScrollPane(tArea);
+		
+		plScroll.setLayout(null);
+	//	plScroll.setBackground(Color.black);
+		plScroll.setBounds(10, 10, 370, 270);
+		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		playerPan.add(plScroll);
+
+
+
+		// JFrame 정보
+		imgP = new Background();
+		imgP.lobbyImage();
+		con = lobbyJF.getContentPane();
+		con.add(imgP, BorderLayout.CENTER);
+		lobbyJF.setSize(1280, 720);
+		lobbyJF.setVisible(true);
+		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == exitBtn) {
-			dispose();
-		}else if (e.getSource() == newBtn) {
-			
-		}
-		
-		
-	}
 }
