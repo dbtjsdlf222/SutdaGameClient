@@ -46,11 +46,13 @@ public class PacketController {
 			
 			//로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:
-			for (int i = 0; i < lobbyPlayerList.size(); i++) 
-				lobbyPlayerList.get(i).getPwSocket().println(thisPlayerVO);
+			for (int i = 0; i < lobbyPlayerList.size(); i++)
+				
+				lobbyPlayerList.get(i).getPwSocket().println(new Packet(Protocol.OTHERPLAYERENTHER,thisVoToString()));
 			
 			packet.setPlayerList(lobbyPlayerList);
 			thisPlayerVO.getPwSocket().println(packet);
+			
 			break;
 
 		case Protocol.MAKEROOM:
@@ -60,29 +62,46 @@ public class PacketController {
 		case Protocol.LISTROOMPLAYER:
 			packet.getPlayerVO().getPwSocket().println(mapper);
 			break;
-			
+		
 		case Protocol.ENTERROOM:
 			packet.getRoom();
 			break;
 		} // switch
 	} // runMainGame
 	
-//	public void exitPlayer() {
-//		
-//		System.err.println(thisPlayerVO.getNic() + "님이 나가셨습니다.");
-//		
-//		for (int j = 0; j < ; j++) {
-//			if (playerList.get(j).getNo() == thisPlayerVO.getNo())
-//				playerList.remove(j);
-//		}
-//	}
-//
-//	public void localBroadcasting(Packet packet) throws JsonProcessingException {
-//		for (int i = 0; i < playerList.size(); i++) {
-//			if (packet.getPlayerVO().getLocation().equals(playerList.get(i).getLocation()))
-//				playerList.get(i).getPwSocket().println(mapper.writeValueAsString(packet));
-//		}
-//	}
+	public void exitPlayer() {
+		
+		if(thisPlayerVO.getRoomNo()!=0) {
+			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.MESSAGE,"["+thisPlayerVO.getNic()+"]님이 퇴실하셨습니다."));
+			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.EXITROOM,thisVoToString()));
+			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
+		} else {
+			for (int i = 0; i < lobbyPlayerList.size(); i++) {
+				lobbyPlayerList.get(i).getPwSocket().println(new Packet(Protocol.EXITLOBBY,thisPlayerVO));
+				if(lobbyPlayerList.get(i).getNo()==thisPlayerVO.getNo()){
+					lobbyPlayerList.remove(i);
+					break;
+				}
+			}
+		} // if~else
+		System.err.println(thisPlayerVO.getNic() + "님이 나가셨습니다.");
+	}
+
+	public void lobbyBroadcast(Packet packet) {
+		for (int i = 0; i < lobbyPlayerList.size(); i++) {
+			lobbyPlayerList.get(i).getPwSocket().println(packet);
+		}
+	}
+	
+	public String thisVoToString() {
+		try {
+			return mapper.writeValueAsString(thisPlayerVO);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} 
+		return null;
+		
+	}
 
 	
 }
