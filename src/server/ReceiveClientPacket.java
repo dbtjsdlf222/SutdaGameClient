@@ -37,7 +37,7 @@ public class ReceiveClientPacket extends Thread { // Server
 					}
 				} // while
 			} catch (SocketException e) {
-				packetController.exitPlayer();
+//				packetController.exitPlayer();
 			} // try~catch
 
 		} catch (IOException e) {
