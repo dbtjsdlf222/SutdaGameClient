@@ -1,15 +1,15 @@
 package client;
 
+import java.awt.EventQueue;
+
+import client.ui.LoginFrame;
 
 public class RunClient {
 	
 	public static void main(String[] args) {
-		try {
-			new Login().login();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			
-		}
-	}
-}
+		
+		EventQueue.invokeLater(() -> new LoginFrame());
+		
+	} //main();
+	
+} //class RunClient;

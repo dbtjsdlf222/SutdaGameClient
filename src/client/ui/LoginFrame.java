@@ -1,7 +1,5 @@
 package client.ui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -15,32 +13,30 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.border.MatteBorder;
+
+import client.service.LoginService;
+import vo.PlayerVO;
+import client.Lobby;
+import client.service.LoginResultHandler;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
-public class LoginFrame {
+public class LoginFrame implements LoginResultHandler {
+	
+	private LoginService loginService = new LoginService(this);
 	
 	private JFrame frame;
-	private JTextField textField;
+	private JLabel lblErrorMessage;
+	private JTextField textFieldId;
 	private JPasswordField passwordField;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginFrame window = new LoginFrame();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	} //main();
 	
 	public LoginFrame() {
 		initialize();
+		frame.setVisible(true);
 	} //LoginFrame();
 	
 	private void initialize() {
@@ -52,18 +48,35 @@ public class LoginFrame {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 640, 192, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 128, 64, 64, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/Logo.jpg")));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 1;
-		frame.getContentPane().add(lblNewLabel, gbc_lblNewLabel);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/Logo.jpg")));
+		GridBagConstraints gbc_lblLogo = new GridBagConstraints();
+		gbc_lblLogo.gridwidth = 2;
+		gbc_lblLogo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLogo.gridx = 1;
+		gbc_lblLogo.gridy = 1;
+		frame.getContentPane().add(lblLogo, gbc_lblLogo);
+		
+		JPanel panelErrorMessage = new JPanel();
+		panelErrorMessage.setBorder(new EmptyBorder(0, 0, 5, 0));
+		panelErrorMessage.setOpaque(false);
+		GridBagConstraints gbc_panelErrorMessage = new GridBagConstraints();
+		gbc_panelErrorMessage.anchor = GridBagConstraints.SOUTH;
+		gbc_panelErrorMessage.gridwidth = 2;
+		gbc_panelErrorMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_panelErrorMessage.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelErrorMessage.gridx = 1;
+		gbc_panelErrorMessage.gridy = 2;
+		frame.getContentPane().add(panelErrorMessage, gbc_panelErrorMessage);
+		
+		lblErrorMessage = new JLabel("아이디 또는 비밀번호를 입력하세요.");
+		lblErrorMessage.setForeground(Color.RED);
+		lblErrorMessage.setFont(new Font("돋움", Font.PLAIN, 24));
+		panelErrorMessage.add(lblErrorMessage);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
@@ -75,38 +88,38 @@ public class LoginFrame {
 		frame.getContentPane().add(panel, gbc_panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		textField = new JTextField();
-		textField.setForeground(Color.WHITE);
-		textField.setFont(new Font("바탕", Font.BOLD, 32));
-		textField.setCaretColor(Color.WHITE);
-		textField.setBorder(new EmptyBorder(0, 8, 0, 0));
-		textField.setBackground(Color.BLACK);
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldId = new JTextField();
+		textFieldId.setForeground(Color.WHITE);
+		textFieldId.setFont(new Font("바탕", Font.BOLD, 32));
+		textFieldId.setCaretColor(Color.WHITE);
+		textFieldId.setBorder(new EmptyBorder(0, 8, 0, 0));
+		textFieldId.setBackground(Color.BLACK);
+		panel.add(textFieldId);
+		textFieldId.setColumns(10);
 		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setMargin(new Insets(-3, -3, -3, -3));
-		btnNewButton.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/BtnLoginJoin.png")));
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setBorderPainted(false);
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton.gridheight = 2;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 2;
-		gbc_btnNewButton.gridy = 3;
-		frame.getContentPane().add(btnNewButton, gbc_btnNewButton);
+		JButton btnLoginJoin = new JButton("");
+		btnLoginJoin.setMargin(new Insets(-3, -3, -3, -3));
+		btnLoginJoin.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/BtnLoginJoin.png")));
+		btnLoginJoin.setFocusPainted(false);
+		btnLoginJoin.setContentAreaFilled(false);
+		btnLoginJoin.setBorderPainted(false);
+		GridBagConstraints gbc_btnLoginJoin = new GridBagConstraints();
+		gbc_btnLoginJoin.fill = GridBagConstraints.BOTH;
+		gbc_btnLoginJoin.gridheight = 2;
+		gbc_btnLoginJoin.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLoginJoin.gridx = 2;
+		gbc_btnLoginJoin.gridy = 3;
+		frame.getContentPane().add(btnLoginJoin, gbc_btnLoginJoin);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 1;
-		gbc_panel_1.gridy = 4;
-		frame.getContentPane().add(panel_1, gbc_panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		JPanel panelPaswwordField = new JPanel();
+		panelPaswwordField.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
+		GridBagConstraints gbc_panelPaswwordField = new GridBagConstraints();
+		gbc_panelPaswwordField.insets = new Insets(0, 0, 5, 5);
+		gbc_panelPaswwordField.fill = GridBagConstraints.BOTH;
+		gbc_panelPaswwordField.gridx = 1;
+		gbc_panelPaswwordField.gridy = 4;
+		frame.getContentPane().add(panelPaswwordField, gbc_panelPaswwordField);
+		panelPaswwordField.setLayout(new BorderLayout(0, 0));
 		
 		passwordField = new JPasswordField();
 		passwordField.setBackground(Color.BLACK);
@@ -114,15 +127,17 @@ public class LoginFrame {
 		passwordField.setFont(new Font("바탕", Font.BOLD, 32));
 		passwordField.setCaretColor(Color.WHITE);
 		passwordField.setBorder(new EmptyBorder(0, 8, 0, 0));
-		panel_1.add(passwordField);
+		panelPaswwordField.add(passwordField);
 		
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		btnLoginJoin.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				if((int)(e.getPoint().getX() / 186. * 108) + 7 < e.getPoint().getY())
-					System.out.println("Login");
+					try {
+						loginService.login(textFieldId.getText(), new String(passwordField.getPassword()));
+					}catch (IOException e1) { e1.printStackTrace(); }
 				else
 					System.out.println("Join");
 				
@@ -130,5 +145,36 @@ public class LoginFrame {
 		});
 		
 	} //initialize();
+
+	@Override
+	public void loginSuccess(PlayerVO player) {
+		
+		frame.dispose();
+		new Lobby(player);
+		
+	} //loginSuccess();
+
+	@Override
+	public void loginFailure(Focus focus, String reason) {
+		
+		if(focus != null) {
+			
+			passwordField.setText("");
+			
+			switch (focus) {
+			case ID:
+				textFieldId.setText("");
+				textFieldId.requestFocus();
+				break;
+			case PASSWORD:
+				passwordField.requestFocus();
+				break;
+			}
+			
+		}
+		
+		lblErrorMessage.setText(reason);
+		
+	} //loginFailure();
 
 } //class LoginFrame;
