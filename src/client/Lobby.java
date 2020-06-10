@@ -33,7 +33,10 @@ public class Lobby {
 	JFrame lobbyJF = new JFrame();
 	Background imgP;
 	Container con;
+	JButton exitBtn;
 	JButton newBtn;
+	JButton gBtn;
+	
 
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.LOBBY);
@@ -71,14 +74,14 @@ public class Lobby {
 		lobbyJF.add(lbl);
 		// 채팅 판넬
 		JPanel chatPan = new JPanel();
-		chatPan.setBounds(5, 410, 718, 260);
+		chatPan.setBounds(5, 410, 658, 260);
 		chatPan.setBackground(new Color(0, 0, 0, 120));
 		chatPan.setLayout(null);
 		lobbyJF.add(chatPan);
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		// 채팅 필드
 		JTextField chatText = new JTextField();
-		chatText.setBounds(10, 225, 620, 25);
+		chatText.setBounds(10, 225, 560, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
 		ChattingOperator co = ChattingOperator.getInstance();
@@ -87,7 +90,7 @@ public class Lobby {
 		ReceiveServerPacket.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
-		chatBtn.setBounds(638, 225, 70, 25);
+		chatBtn.setBounds(578, 225, 70, 25);
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
@@ -111,9 +114,9 @@ public class Lobby {
 		playerLbl.setForeground(new Color(255, 255, 255, 150));
 		playerLbl.setBounds(970, 20, 200, 30);
 		lobbyJF.add(playerLbl);
-
+		//로비 판넬
 		JPanel playerPan = new JPanel();
-		playerPan.setBounds(850, 60, 390, 290);
+		playerPan.setBounds(850, 60, 390, 610);
 		playerPan.setBackground(new Color(0, 0, 0, 120));
 		playerPan.setLayout(null);
 		lobbyJF.add(playerPan);
@@ -124,10 +127,28 @@ public class Lobby {
 		JScrollPane plScroll = new JScrollPane(tArea);
 		tArea.setEditable(false);
 
-		plScroll.setBounds(10, 10, 370, 270);
+		plScroll.setBounds(10, 10, 370, 590);
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		playerPan.add(plScroll);
 
+		//귓속말 버튼
+		gBtn = new JButton("귓속말");
+		gBtn.setBounds(681, 410, 150, 50);
+		lobbyJF.add(gBtn);
+		
+		//방만들기 버튼
+		newBtn = new JButton("방만들기");
+		newBtn.setBounds(681, 515, 150, 50);
+		lobbyJF.add(newBtn);
+		
+		
+		//나가기 버튼
+		exitBtn = new JButton("나가기");
+		exitBtn.setBounds(681, 620, 150, 50);
+		lobbyJF.add(exitBtn);
+		
+		
+		
 
 		// JFrame 정보
 		imgP = new Background();
@@ -136,6 +157,8 @@ public class Lobby {
 		con.add(imgP, BorderLayout.CENTER);
 		lobbyJF.setSize(1280, 720);
 		lobbyJF.setVisible(true);
+		lobbyJF.setResizable(false);
+		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
