@@ -14,6 +14,12 @@ public class ClientPacketController {
 	public ClientPacketController() { }
 
 	public void packetController(Packet packet) {
+		
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 15, 638, 195);
+		scrollPane.setBorder(null);
+
+		
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE: // 채팅
 			ChattingOperator.chatArea.append(packet.getPlayerVO().getNic() + ": " + packet.getMotion() + "\n");

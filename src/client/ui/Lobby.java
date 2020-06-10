@@ -1,4 +1,4 @@
-package client;
+package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +29,9 @@ import javax.swing.text.PlainDocument;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import client.Background;
+import client.ClientPacketController;
+import client.ReceiveServerPacket;
 import operator.ChattingOperator;
 import operator.RoomOperator;
 import vo.Packet;
@@ -97,8 +100,8 @@ public class Lobby {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
-		chatPan.add(ReceiveServerPacket.scrollPane);
-		ReceiveServerPacket.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		chatPan.add(ClientPacketController.scrollPane);
+		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		
 		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");

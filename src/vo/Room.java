@@ -8,7 +8,7 @@ import java.util.Random;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import client.MainScreen;
+import client.ui.MainScreen;
 
 public class Room {
 	private static int increaseRoomNo = 1;

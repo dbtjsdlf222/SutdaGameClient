@@ -51,14 +51,6 @@ public void setRoomNo(int roomNo) {
 	this.roomNo = roomNo;
 }
 
-public ArrayList<PlayerVO> getPlayerList() {
-      return playerList;
-   }
-
-   public void setPlayerList(ArrayList<PlayerVO> playerList) {
-      this.playerList = playerList;
-   }
-
    public PlayerVO() {
    }
 
@@ -117,37 +109,12 @@ public ArrayList<PlayerVO> getPlayerList() {
 	   this.cha = i;
 	   this.money = j;
    }
-
-public void addPlayer() {
-      playerList.add(this);
-      for (int i = 0; i < playerList.size(); i++) {
-         System.out.println(playerList.get(i));
-      }
-//      ObjectMapper mapper = new ObjectMapper();
-//      try {
-//         String str = mapper.writeValueAsString(this);
-//         Packet packet = new Packet(Protocol.JOINPLAYER, this);
-//         pwSocket.println(packet);
-//      } catch (JsonProcessingException e) {
-//         e.printStackTrace();
-//      }
-   }
    
    public void sendToServerPlayerVO() {
       ObjectMapper mapper = new ObjectMapper();
       
    }
    
-   // 같은 위치에 있는 사람들의 목록 리턴
-   public ArrayList<PlayerVO> getLoctionList(String location) {
-      ArrayList<PlayerVO> locPlayerList = new ArrayList<>();
-      for (int i = 0; i < playerList.size(); i++) {
-         if (playerList.get(i).getLocation().equals(location))
-            locPlayerList.add(playerList.get(i));
-      }
-      return locPlayerList;
-   }
-
    public String getIp() {
       return ip;
    }
@@ -165,15 +132,6 @@ public void addPlayer() {
       sendToServerPlayerVO();
    }
 
-   public boolean checkOnline(String id) {      //로그인시 온라인이면 false 리턴 
-      for (int i = 0; i < playerList.size(); i++) { 
-         if(playerList.get(i).getID().equals(id))
-            return false;
-      }
-      
-      return true;
-   }
-   
    public void setSocketWithBrPw(Socket socket) {
       this.socket = socket;
       try {

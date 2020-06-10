@@ -52,17 +52,12 @@ public class PacketController {
 			
 			packet.setPlayerList(lobbyPlayerList);
 			thisPlayerVO.getPwSocket().println(packet);
-			
 			break;
 
 		case Protocol.MAKEROOM:
 			ro.makeRoom(packet.getPlayerVO());
 			break;
 			
-		case Protocol.LISTROOMPLAYER:
-			packet.getPlayerVO().getPwSocket().println(mapper);
-			break;
-		
 		case Protocol.ENTERROOM:
 			packet.getRoom();
 			break;
@@ -102,6 +97,4 @@ public class PacketController {
 		return null;
 		
 	}
-
-	
 }

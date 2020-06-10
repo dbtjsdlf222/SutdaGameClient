@@ -1,4 +1,4 @@
-package client;
+package client.ui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +9,7 @@ import java.util.regex.*;
 
 import javax.swing.*;
 
+import client.ReceiveServerPacket;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 

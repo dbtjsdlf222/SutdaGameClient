@@ -7,8 +7,8 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.Login;
 import client.ReceiveServerPacket;
+import client.ui.Login;
 import dao.PlayerDAO;
 
 public class RunServer {

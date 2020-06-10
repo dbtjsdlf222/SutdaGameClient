@@ -18,7 +18,6 @@ import javax.swing.border.MatteBorder;
 
 import client.service.LoginService;
 import vo.PlayerVO;
-import client.Lobby;
 import client.service.LoginResultHandler;
 
 import javax.swing.border.EmptyBorder;
