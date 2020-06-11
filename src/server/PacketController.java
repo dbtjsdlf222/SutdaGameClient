@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.PlayerDAO;
 import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
@@ -16,6 +17,7 @@ public class PacketController {
 	private static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
 	private ObjectMapper mapper = new ObjectMapper();
 	private RoomOperator ro = RoomOperator.getRoomOperator();
+	private PlayerDAO dao = new PlayerDAO();
 	
 	public PacketController() { }
 	
@@ -32,11 +34,22 @@ public class PacketController {
 			
 			break;
 
-		case Protocol.FIRSTENTER:
-			thisPlayerVO = packet.getPlayerVO();
+		case Protocol.LOGIN:
 			lobbyPlayerList.add(thisPlayerVO);
 			packet.setAction(Protocol.ENTERLOBBY);
 			this.packetAnalysiser(packet);
+			
+
+			String id = packet.getPlayerVO().getID();
+			String pw = packet.getPlayerVO().getPassword();
+			
+			PlayerVO vo = dao.login(id, pw);
+			
+			if(vo!=null) {
+				thisPlayerVO = vo;
+			}
+			packet.setPlayerVO(vo);
+			
 			break;
 
 		case Protocol.EXITROOM:
@@ -51,6 +64,8 @@ public class PacketController {
 				lobbyPlayerList.get(i).getPwSocket().println(new Packet(Protocol.OTHERPLAYERENTHER,thisVoToString()));
 			
 			packet.setPlayerList(lobbyPlayerList);
+			lobbyPlayerList.add(thisPlayerVO);
+			
 			thisPlayerVO.getPwSocket().println(packet);
 			break;
 
@@ -61,6 +76,7 @@ public class PacketController {
 		case Protocol.ENTERROOM:
 			packet.getRoom();
 			break;
+			
 		} // switch
 	} // runMainGame
 	

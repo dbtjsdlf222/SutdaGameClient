@@ -1,4 +1,4 @@
-package vo;
+package server;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.ui.MainScreen;
+import vo.Packet;
+import vo.PlayerVO;
 
 public class Room {
 	private static int increaseRoomNo = 1;

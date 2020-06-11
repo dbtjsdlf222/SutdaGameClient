@@ -9,7 +9,7 @@ import java.util.regex.*;
 
 import javax.swing.*;
 
-import client.ReceiveServerPacket;
+import client.listener.ReceiveServerPacket;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 

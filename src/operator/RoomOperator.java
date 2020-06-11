@@ -3,8 +3,8 @@ package operator;
 import java.util.HashMap;
 import java.util.Map;
 
+import server.Room;
 import vo.PlayerVO;
-import vo.Room;
 
 public class RoomOperator {
 	private Map<Integer, Room> roomMap = new HashMap<Integer, Room>();

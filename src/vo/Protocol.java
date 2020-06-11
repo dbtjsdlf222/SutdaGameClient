@@ -17,6 +17,7 @@ public class Protocol {
 	public static final String EXITROOM = "11";		//방 퇴실		
 	public static final String EXIT = "12";
 	public static final String EXITLOBBY = "13";		//방 퇴실
+	public static final String LOGIN = "14";
 	
 	
 	//Location

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
-import client.ClientPacketController;
+import client.service.ClientPacketController;
 import operator.ChattingOperator;
 import vo.Packet;
 import vo.PlayerVO;

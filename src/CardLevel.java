@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
+import server.Room;
 import vo.PlayerVO;
 import vo.PlayerVO;
-import vo.Room;
 
 public class CardLevel extends Room {
 	int card[] = new int[20];

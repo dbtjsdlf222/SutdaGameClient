@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import client.ReceiveServerPacket;
+import client.listener.ReceiveServerPacket;
 import operator.RoomOperator;
 import vo.PlayerVO;
 

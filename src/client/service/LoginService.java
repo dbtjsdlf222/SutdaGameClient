@@ -3,7 +3,7 @@ package client.service;
 import java.io.IOException;
 import java.net.Socket;
 
-import client.ReceiveServerPacket;
+import client.listener.ReceiveServerPacket;
 import client.service.LoginResultHandler.Focus;
 import dao.PlayerDAO;
 import vo.PlayerVO;

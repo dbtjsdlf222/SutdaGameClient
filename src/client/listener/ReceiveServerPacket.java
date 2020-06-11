@@ -1,4 +1,4 @@
-package client;
+package client.listener;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import client.service.ClientPacketController;
 import operator.ChattingOperator;
 import vo.Packet;
 
