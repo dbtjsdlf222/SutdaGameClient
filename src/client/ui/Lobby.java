@@ -49,7 +49,11 @@ public class Lobby {
 	
 	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
 		try {
-			System.out.println(vo);
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
 			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -131,10 +135,14 @@ public class Lobby {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
-		chatPan.add(ClientPacketController.scrollPane);
 		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		
-		// 채팅 보내기 버튼
+		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		ClientPacketController.scrollPane.setBounds(10, 15, 638, 195);
+		ClientPacketController.scrollPane.setBorder(null);
+		chatPan.add(ClientPacketController.scrollPane);
+
+	
+	      // 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(578, 225, 70, 25);
 		chatPan.add(chatBtn);
