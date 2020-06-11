@@ -47,13 +47,17 @@ public class ClientPacketController {
          }
          break;
          
-      case Protocol.ENTERROOM:
+      case Protocol.ENTERLOBBY:
+    	  
          ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
+         ArrayList<Room> roomList = new ArrayList<>();
+         
          Map<Integer, Room> map = packet.getRoomMap();
              Iterator<Integer> keys = map.keySet().iterator();
                  while(keys.hasNext() ){
                      int key = keys.next();
                      Room value = map.get(key);
+                     roomList.add(value);
                      System.out.println("키 : "+key+", 값 : "+value);
                  }
                  break;
