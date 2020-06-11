@@ -34,6 +34,15 @@ public class ClientPacketController {
 
       case Protocol.ENTERLOBBY:
          ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
+         
+         String[][] n = new String[99][99];
+         
+         for (int i = 0; i < lobbyPlayerList.size(); i++) {
+ 			n[i][0] = lobbyPlayerList.get(i).getNic();
+ 			n[i][1]	= (lobbyPlayerList.get(i).getWin()+lobbyPlayerList.get(i).getLose())+"";
+ 			n[i][2] = lobbyPlayerList.get(i).getMoney()+"";
+ 		}
+         
          ArrayList<Room> roomList = new ArrayList<>();
          
          Map<Integer, Room> map = packet.getRoomMap();

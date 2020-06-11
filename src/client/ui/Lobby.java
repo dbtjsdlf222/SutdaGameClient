@@ -43,6 +43,7 @@ public class Lobby {
 	private JButton gBtn;
 	public static JTable jT;
 	public static JScrollPane plScroll;
+	public static DefaultTableModel model;
 	public JButton[] bt1 = new JButton[10];
 
 	
@@ -174,18 +175,17 @@ public class Lobby {
 		// 로비에 플레이어 접속자 목록
 
 		String b[] =  {"닉네임", "판수", "돈"};
-		Vector a = new Vector<>();
-		a.add(vo.getNic());
-		a.add((vo.getWin()+vo.getLose()+""));
-		a.add(vo.getMoney());
-		for (int i = 0; i < 10; i++) {
+		String n[][] = new String[99][99];
+ 		
 		
-		}
 		
-		DefaultTableModel model = new DefaultTableModel(b, 0);
-		model.addRow(a);
-		jT = new JTable(model);
-		plScroll = new JScrollPane(jT);
+		model = new DefaultTableModel(b, 0);
+		
+		
+	
+//		model.addRow();
+//		jT = new JTable(model);
+//		plScroll = new JScrollPane(jT);
 		
 		plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
 		jT.getTableHeader().setReorderingAllowed(false); 
