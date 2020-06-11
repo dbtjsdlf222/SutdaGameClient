@@ -24,10 +24,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.service.ClientPacketController;
 import operator.ChattingOperator;
+import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
@@ -55,14 +57,13 @@ public class Lobby {
 	
 	
 	public Lobby(PlayerVO vo) {
-		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
-	//	try {
-//			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.FIRSTENTER, vo)));
-//		} catch (JsonProcessingException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		lobbyScreen(vo);
 	}
 
