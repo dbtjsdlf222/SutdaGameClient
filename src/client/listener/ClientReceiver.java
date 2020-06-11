@@ -32,7 +32,6 @@ public class ClientReceiver extends Thread {
 				cpc.packetController(packet);
 			}
 		} catch (Exception e) {
-			// 종료시 실행 구역
 			e.printStackTrace();
 		}
 	} // run

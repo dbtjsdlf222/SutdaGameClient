@@ -14,7 +14,6 @@ public class Packet {
 	private String action;
 	private String motion;
 	private PlayerVO playerVO;
-	@JsonIgnore
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
 
