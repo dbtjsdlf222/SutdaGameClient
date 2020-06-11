@@ -20,10 +20,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.ClientPacketController;
 import operator.ChattingOperator;
+import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
@@ -52,8 +55,8 @@ public class Lobby {
 		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
-//		try {
-//			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.CHANGELOCATION, vo)));
+	//	try {
+//			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.FIRSTENTER, vo)));
 //		} catch (JsonProcessingException e) {
 //			e.printStackTrace();
 //		}
@@ -183,12 +186,7 @@ public class Lobby {
 		lobbyJF.add(newBtn);
 		
 		
-		JButton lobby1 = new JButton();
-		lobbyPan.add(lobby1);
-		JButton lobby2 = new JButton();
-		lobbyPan.add(lobby2);
-		JButton lobby3 = new JButton();
-		lobbyPan.add(lobby3);
+		
 		
 		
 		newBtn.addActionListener(new ActionListener() {
