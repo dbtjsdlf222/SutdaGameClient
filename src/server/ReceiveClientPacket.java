@@ -28,12 +28,11 @@ public class ReceiveClientPacket extends Thread { // Server
 			try {
 				while (true) {
 					String packetStr = br.readLine();
-					System.out.println(packetStr);
-					Packet packet = mapper.readValue(packetStr, Packet.class);
 					try {
+						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 					} catch (Exception e) {
-						e.printStackTrace();
+						System.out.println(e.getMessage());
 					}
 				} // while
 			} catch (SocketException e) {

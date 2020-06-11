@@ -28,7 +28,6 @@ public class ReceiveServerPacket extends Thread {
 
 			while (true) {
 				String packetStr = br.readLine();
-//				System.out.println(packetStr);
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				cpc.packetController(packet);
 			}

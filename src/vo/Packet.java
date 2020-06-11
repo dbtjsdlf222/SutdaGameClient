@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 import server.Room;
@@ -13,6 +14,7 @@ public class Packet {
    private String action;
    private String motion;
    private PlayerVO playerVO;
+   @JsonIgnore
    private Map<Integer,Room> roomMap;
    private ArrayList<PlayerVO> playerList;
    
@@ -71,10 +73,5 @@ public ArrayList<PlayerVO> getPlayerList() {
 
    public void setMotion(String motion) {
       this.motion = motion;
-   }
-
-   @Override
-   public String toString() {
-      return action +": "+ motion;
    }
 }

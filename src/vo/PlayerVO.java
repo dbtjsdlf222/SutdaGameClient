@@ -135,24 +135,23 @@ public void setRoomNo(int roomNo) {
    public void setSocketWithBrPw(Socket socket) {
       this.socket = socket;
       try {
-    	  System.out.println("여기가 널이니?");
          brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
          pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-         System.out.println("아니면 여기가 널이니?");
       } catch (IOException e) {
          e.printStackTrace();
       }
    }
 
    @Override
-   public String toString() {
-      return "PlayerVOsunil [socket=" + socket + ", no=" + no + ", id=" + id + ", password=" + password + ", nic="
-            + nic + ", money=" + money + ", admin=" + admin + ", win=" + win + ", lose=" + lose + ", online="
-            + online + ", cha=" + cha + ", live=" + live + ", card1=" + card1 + ", card2=" + card2 + ", cardLevel="
-            + cardLevel + ", cardName=" + cardName + ", brSocket=" + brSocket + ", pwSocket=" + pwSocket + "]";
-   }
+public String toString() {
+	return "PlayerVO [no=" + no + ", id=" + id + ", password=" + password + ", nic=" + nic + ", money=" + money
+			+ ", admin=" + admin + ", win=" + win + ", lose=" + lose + ", online=" + online + ", cha=" + cha + ", live="
+			+ live + ", card1=" + card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName
+			+ ", location=" + location + ", ip=" + ip + ", roomNo=" + roomNo + ", socket=" + socket + ", brSocket="
+			+ brSocket + ", pwSocket=" + pwSocket + "]";
+}
 
-   public String getPassword() {
+public String getPassword() {
       return password;
    }
 
