@@ -32,7 +32,9 @@ public class ServerPacketController {
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 
 		switch (packet.getAction()) {
+		
 		case Protocol.MESSAGE:
+			
 			if (thisPlayerVO.getRoomNo()==0) {
 				for (PlayerVO playerVO : lobbyPlayerList) {
 					playerVO.getPwSocket().println(mapper.writeValueAsString(packet));
@@ -63,19 +65,25 @@ public class ServerPacketController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 			break;
-
+			
 		case Protocol.EXITROOM:
 			ro.getRoom(packet.getPlayerVO().getRoomNo()).exitPlayer(thisPlayerVO);
 			ro.getRoom(packet.getPlayerVO().getRoomNo()).roomSpeaker(packet);
 			thisPlayerVO.setRoomNo(0);
 			if(ro.getRoom(packet.getPlayerVO().getRoomNo()).getList().size() <= 0) {
 				ro.removeRoom(packet.getPlayerVO().getRoomNo());
+			} else {
+				
+				
 			}
 			
 			//로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:
+			if(thisPlayerVO == null) {
+				thisPlayerVO = packet.getPlayerVO();
+			}
+			
 			for (int i = 0; i < lobbyPlayerList.size(); i++)
 				lobbyPlayerList.get(i).getPwSocket().println(new Packet(Protocol.ENTEROTHERLOBBY,thisPlayerVO));
 			
@@ -93,6 +101,7 @@ public class ServerPacketController {
 			break;
 			
 		case Protocol.ENTERROOM:
+			
 			int roomNo = packet.getPlayerVO().getRoomNo();
 			ro.getRoom(roomNo).roomSpeaker(new Packet(Protocol.ENTEROTHERROOM,thisPlayerVO));
 			ro.joinRoom(roomNo, thisPlayerVO);

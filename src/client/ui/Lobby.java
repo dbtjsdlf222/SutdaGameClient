@@ -5,9 +5,13 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,10 +24,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.service.ClientPacketController;
 import operator.ChattingOperator;
+import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
@@ -34,29 +41,18 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
+	public static JTable jT;
+	public static JScrollPane plScroll;
+	public JButton[] bt1 = new JButton[10];
 
 	
-	public static void main(String[] args) {
-		
-		PlayerVO vo = new PlayerVO();
-		vo.setNic("Ddd");
-		vo.setWin(2);
-		vo.setLose(2);
-		vo.setMoney(10000);
-		
-		new Lobby(vo);
-	}
-	
-	
-	public Lobby(PlayerVO vo) {
-		vo.setLocation(Protocol.LOBBY);
-
-		// 서버에 로그인된 사람의 정보를 전송
-	//	try {
-//			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.FIRSTENTER, vo)));
-//		} catch (JsonProcessingException e) {
-//			e.printStackTrace();
-//		}
+	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
+		try {
+			System.out.println(vo);
+			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		lobbyScreen(vo);
 	}
 
@@ -74,9 +70,42 @@ public class Lobby {
 		lobbyPan.setBackground(new Color(0, 0, 0, 120));
 		lobbyPan.setBounds(5, 60, 818, 290);
 		lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		lobbyPan.setLayout(new FlowLayout(FlowLayout.RIGHT, 30, 40));
+		lobbyPan.setLayout(new GridLayout(5,0));
 		lobbyJF.add(lobbyPan);
+		
+		
+		
+			
+		
+		// 방만들기 버튼
+				newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
+				newBtn.setBounds(681, 515, 150, 50);
+				lobbyJF.add(newBtn);
+				
+				newBtn.addActionListener(new ActionListener() {
 
+			
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (e.getSource() == newBtn) {
+							int i = 0; 
+						bt1[i] = new JButton(i+"번 방　　　　　4/5　　　　　　　입장");
+						bt1[i].setSize(200, 200);
+						lobbyPan.add(bt1[i]);
+							i++;
+							new MainScreen();
+						//	lobbyJF.dispose();
+						}
+
+					}
+				
+				});
+
+
+
+		
+		
+		
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
 		lbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
@@ -91,7 +120,7 @@ public class Lobby {
 		chatPan.setLayout(null);
 		lobbyJF.add(chatPan);
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-	
+		
 		// 채팅 필드
 		JTextField chatText = new JTextField();
 		chatText.setBounds(10, 225, 560, 25);
@@ -141,67 +170,42 @@ public class Lobby {
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 	
-//		JTable list = new JTable();
-//		playerPan.add(list);
-		
 		
 		// 로비에 플레이어 접속자 목록
 
 		String b[] =  {"닉네임", "판수", "돈"};
-		
+		Vector a = new Vector<>();
+		a.add(vo.getNic());
+		a.add((vo.getWin()+vo.getLose()+""));
+		a.add(vo.getMoney());
 		for (int i = 0; i < 10; i++) {
-			String a[] = 
-					{vo.getNic(),(vo.getWin()+vo.getLose())+"",vo.getMoney()+""};
 		
 		}
 		
-	
+		DefaultTableModel model = new DefaultTableModel(b, 0);
+		model.addRow(a);
+		jT = new JTable(model);
+		plScroll = new JScrollPane(jT);
 		
-		
-		DefaultTableModel defaultTableModel = new DefaultTableModel(b, 0);
-		JTable jT = new JTable(defaultTableModel);
-		JScrollPane plScroll = new JScrollPane(jT);
 		plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
 		jT.getTableHeader().setReorderingAllowed(false); 
 		jT.getTableHeader().setResizingAllowed(false);
 		plScroll.setOpaque(false);
 		plScroll.setBounds(10, 10, 370, 590);
-		
-	
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		playerPan.add(plScroll);
+		initialize();
 		
 				
 		// 귓속말 버튼
-		gBtn = new JButton("귓속말");
+		gBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gBtn.PNG")));
 		gBtn.setBounds(681, 410, 150, 50);
 		lobbyJF.add(gBtn);
 
-		// 방만들기 버튼
-		newBtn = new JButton("방만들기");
-		newBtn.setBounds(681, 515, 150, 50);
-		lobbyJF.add(newBtn);
 		
-		
-		
-		
-		
-		newBtn.addActionListener(new ActionListener() {
-
-	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == newBtn) {
-					new MainScreen();
-					lobbyJF.dispose();
-				}
-
-			}
-		
-		});
 
 		// 나가기 버튼
-		exitBtn = new JButton("나가기");
+		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
 
@@ -218,6 +222,12 @@ public class Lobby {
 		lobbyJF.setLayout(null);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	}
+
+
+	private void initialize() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
