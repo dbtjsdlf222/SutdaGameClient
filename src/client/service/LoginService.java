@@ -3,7 +3,7 @@ package client.service;
 import java.io.IOException;
 import java.net.Socket;
 
-import client.listener.ReceiveServerPacket;
+import client.listener.ClientReceiver;
 import client.service.LoginResultHandler.Focus;
 import dao.PlayerDAO;
 import vo.PlayerVO;
@@ -42,7 +42,7 @@ public class LoginService {
 		}
 		
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
-		new ReceiveServerPacket(player.getSocket()).start();
+		new ClientReceiver(player.getSocket()).start();
 		resultHandler.loginSuccess(player);
 		
 	} //login();

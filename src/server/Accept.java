@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import client.listener.ReceiveServerPacket;
+import client.listener.ClientReceiver;
 import operator.RoomOperator;
 import vo.PlayerVO;
 
@@ -25,7 +25,7 @@ public class Accept extends Thread {
 
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
-				new Thread(new ReceiveServerPacket(socket)).start(); // 사용자에게서 패킷 받기 시작
+				new Thread(new ClientReceiver(socket)).start(); // 사용자에게서 패킷 받기 시작
 				
 			}
 		} catch (UnknownHostException e) {

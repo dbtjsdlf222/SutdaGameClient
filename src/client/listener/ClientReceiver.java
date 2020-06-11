@@ -12,10 +12,10 @@ import client.service.ClientPacketController;
 import operator.ChattingOperator;
 import vo.Packet;
 
-public class ReceiveServerPacket extends Thread {
+public class ClientReceiver extends Thread {
 
 	private Socket socket;
-	public ReceiveServerPacket(Socket socket) {
+	public ClientReceiver(Socket socket) {
 		this.socket = socket;
 	}
 

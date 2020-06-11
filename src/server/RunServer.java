@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import client.listener.ReceiveServerPacket;
+import client.listener.ClientReceiver;
 import client.ui.Login;
 import dao.PlayerDAO;
 
@@ -26,7 +26,7 @@ public class RunServer {
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
 				
-				new Thread (new ReceiveClientPacket(socket)).start(); // 사용자에게서 패킷 받기 시작
+				new Thread (new ServerReceiver(socket)).start(); // 사용자에게서 패킷 받기 시작
 //				Runnable run = new Runnable() {
 //					@Override
 //					public void run() {

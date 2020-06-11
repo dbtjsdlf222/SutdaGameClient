@@ -9,7 +9,7 @@ import java.util.regex.*;
 
 import javax.swing.*;
 
-import client.listener.ReceiveServerPacket;
+import client.listener.ClientReceiver;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
@@ -122,7 +122,7 @@ public class Login extends JFrame {
 							try {
 								logJF.dispose();
 								playerVO.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
-								new Thread(new ReceiveServerPacket(playerVO.getSocket())).start();
+								new Thread(new ClientReceiver(playerVO.getSocket())).start();
 								new Lobby(playerVO);
 
 							} catch (UnknownHostException e1) {

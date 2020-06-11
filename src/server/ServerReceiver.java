@@ -10,11 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vo.Packet;
 
-public class ReceiveClientPacket extends Thread { // Server
+public class ServerReceiver extends Thread { // Server
 
 	private Socket socket;
 
-	public ReceiveClientPacket(Socket socket) {
+	public ServerReceiver(Socket socket) {
 		this.socket = socket;
 	}
 
