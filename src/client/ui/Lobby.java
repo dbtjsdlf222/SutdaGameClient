@@ -5,41 +5,29 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.PlainDocument;
+import javax.swing.table.DefaultTableModel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.ClientPacketController;
-import client.ReceiveServerPacket;
 import operator.ChattingOperator;
-import operator.RoomOperator;
-import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
 public class Lobby {
-	public static JTextArea tArea = new JTextArea();
 	private JFrame lobbyJF = new JFrame();
 	private Background imgP;
 	private Container con;
@@ -47,15 +35,28 @@ public class Lobby {
 	private JButton newBtn;
 	private JButton gBtn;
 
+	
+	public static void main(String[] args) {
+		
+		PlayerVO vo = new PlayerVO();
+		vo.setNic("Ddd");
+		vo.setWin(2);
+		vo.setLose(2);
+		vo.setMoney(10000);
+		
+		new Lobby(vo);
+	}
+	
+	
 	public Lobby(PlayerVO vo) {
 		vo.setLocation(Protocol.LOBBY);
 
 		// 서버에 로그인된 사람의 정보를 전송
-		try {
-			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.FIRSTENTER, vo)));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.CHANGELOCATION, vo)));
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
 		lobbyScreen(vo);
 	}
 
@@ -139,14 +140,38 @@ public class Lobby {
 		lobbyJF.add(playerPan);
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
+	
+//		JTable list = new JTable();
+//		playerPan.add(list);
+		
+		
 		// 로비에 플레이어 접속자 목록
-		tArea.setEditable(false);
-		JScrollPane plScroll = new JScrollPane(tArea);
+
+		String b[] =  {"닉네임", "판수", "돈"};
+		
+		for (int i = 0; i < 10; i++) {
+			String a[] = 
+					{vo.getNic(),(vo.getWin()+vo.getLose())+"",vo.getMoney()+""};
+		
+		}
+		
+	
+		
+		
+		DefaultTableModel defaultTableModel = new DefaultTableModel(b, 0);
+		JTable jT = new JTable(defaultTableModel);
+		JScrollPane plScroll = new JScrollPane(jT);
+		plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+		jT.getTableHeader().setReorderingAllowed(false); 
+		jT.getTableHeader().setResizingAllowed(false);
+		plScroll.setOpaque(false);
 		plScroll.setBounds(10, 10, 370, 590);
+		
+	
 		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		playerPan.add(plScroll);
-		//Lobby.tArea.append(("닉네임 : " + vo.getNic() + "　판수 : " + (vo.getWin()+vo.getLose())+ "　머니 : " + vo.getMoney())+ "\n");
 		
+				
 		// 귓속말 버튼
 		gBtn = new JButton("귓속말");
 		gBtn.setBounds(681, 410, 150, 50);
@@ -158,6 +183,13 @@ public class Lobby {
 		lobbyJF.add(newBtn);
 		
 		
+		JButton lobby1 = new JButton();
+		lobbyPan.add(lobby1);
+		JButton lobby2 = new JButton();
+		lobbyPan.add(lobby2);
+		JButton lobby3 = new JButton();
+		lobbyPan.add(lobby3);
+		
 		
 		newBtn.addActionListener(new ActionListener() {
 
@@ -165,11 +197,12 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					
-				
+					new MainScreen();
+					lobbyJF.dispose();
 				}
 
 			}
+		
 		});
 
 		// 나가기 버튼
@@ -177,6 +210,7 @@ public class Lobby {
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
 
+		
 		// JFrame 정보
 		imgP = new Background();
 		imgP.lobbyImage();
