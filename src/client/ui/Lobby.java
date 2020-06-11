@@ -24,6 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
@@ -43,23 +44,11 @@ public class Lobby {
 	public static JTable jT;
 	public static JScrollPane plScroll;
 	public JButton[] bt1 = new JButton[10];
-	
-	public static void main(String[] args) {
-		
-		PlayerVO vo = new PlayerVO();
-		vo.setNic("Ddd");
-		vo.setWin(2);
-		vo.setLose(2);
-		vo.setMoney(10000);
-		
-		new Lobby(vo);
-	}
-	
-	
-	public Lobby(PlayerVO vo) {
 
-		// 서버에 로그인된 사람의 정보를 전송
+	
+	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
 		try {
+			System.out.println(vo);
 			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

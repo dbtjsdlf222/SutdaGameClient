@@ -17,8 +17,8 @@ public class ClientPacketSender {
 	private PrintWriter pw;
 			
 	public void makeRoom() {
-		pw.println(mapper.writeValueAsString(Protocol.MAKEROOM,
-				vo));
+//		pw.println(mapper.writeValueAsString(Protocol.MAKEROOM,
+//				vo));
 	}
 	
 	public ClientPacketSender(Socket socket, PlayerVO vo) {
