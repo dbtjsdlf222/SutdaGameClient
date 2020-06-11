@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
+import client.ui.Lobby;
 import operator.ChattingOperator;
 import server.Room;
 import vo.Packet;
@@ -36,8 +38,11 @@ public class ClientPacketController {
          ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
          
          String[][] n = new String[99][99];
-         
-         for (int i = 0; i < lobbyPlayerList.size(); i++) {
+         Lobby.model.addRow(n);
+ 		Lobby.jT = new JTable(Lobby.model);
+ 		Lobby.plScroll = new JScrollPane(Lobby.jT);
+       
+ 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
  			n[i][0] = lobbyPlayerList.get(i).getNic();
  			n[i][1]	= (lobbyPlayerList.get(i).getWin()+lobbyPlayerList.get(i).getLose())+"";
  			n[i][2] = lobbyPlayerList.get(i).getMoney()+"";
