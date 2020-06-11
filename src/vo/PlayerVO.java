@@ -135,8 +135,10 @@ public void setRoomNo(int roomNo) {
    public void setSocketWithBrPw(Socket socket) {
       this.socket = socket;
       try {
+    	  System.out.println("여기가 널이니?");
          brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
          pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+         System.out.println("아니면 여기가 널이니?");
       } catch (IOException e) {
          e.printStackTrace();
       }

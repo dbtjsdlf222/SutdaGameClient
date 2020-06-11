@@ -49,7 +49,11 @@ public class Lobby {
 	
 	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
 		try {
-			System.out.println(vo);
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
+			System.out.println(vo.getBrSocket());
 			vo.getPwSocket().println(new ObjectMapper().writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

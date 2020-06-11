@@ -25,7 +25,11 @@ public class ServerPacketController {
 	private Socket socket;
 	
 	public ServerPacketController(Socket socket) {
-		this.socket = socket;
+		try {
+		thisPlayerVO.setSocketWithBrPw(socket);
+		} catch (Exception e) {
+			System.err.println(socket);
+		}
 	}
 	
 	
@@ -80,7 +84,7 @@ public class ServerPacketController {
 			
 			//로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:
-			if(thisPlayerVO == null) {
+			if(thisPlayerVO.getNo() == 0) {
 				thisPlayerVO = packet.getPlayerVO();
 			}
 			
