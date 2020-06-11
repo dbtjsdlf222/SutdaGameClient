@@ -41,8 +41,8 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	public static JTable jT;
-	public static JScrollPane plScroll;
+	public static JTable jT = new JTable();
+	public static JScrollPane plScroll = new JScrollPane(jT);
 	public static DefaultTableModel model;
 	public JButton[] bt1 = new JButton[10];
 
