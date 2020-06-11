@@ -84,13 +84,13 @@ public class ServerPacketController {
 			}
 
 			for (int i = 0; i < lobbyPlayerList.size(); i++)
-				lobbyPlayerList.get(i).getPwSocket().println(new Packet(Protocol.ENTEROTHERLOBBY, thisPlayerVO));
+				lobbyPlayerList.get(i).getPwSocket().println(mapper.writeValueAsString(new Packet(Protocol.ENTEROTHERLOBBY, thisPlayerVO)));
 
 			packet.setPlayerList(lobbyPlayerList); // 자신에게 로비에 출력할 입장된 사람 보냄
 			lobbyPlayerList.add(thisPlayerVO); // 로비 리스트에 자신 추가
 			packet.setRoomMap(ro.getAllRoom());
 
-			thisPlayerVO.getPwSocket().println(packet);
+			thisPlayerVO.getPwSocket().println(mapper.writeValueAsString(packet));
 			break;
 
 		case Protocol.MAKEROOM:
@@ -140,7 +140,11 @@ public class ServerPacketController {
 
 	public void lobbyBroadcast(Packet packet) {
 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			lobbyPlayerList.get(i).getPwSocket().println(packet);
+			try {
+				lobbyPlayerList.get(i).getPwSocket().println(mapper.writeValueAsString(packet));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

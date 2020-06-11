@@ -49,12 +49,10 @@ public class Lobby {
 	
 	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
 		try {
-			System.out.println(vo);
-			System.out.println(vo);
 			ObjectMapper map = new ObjectMapper();
 			vo.getPwSocket().println(map.writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			System.out.println("Dwdwadawdafasfas");
 		}
 		lobbyScreen(vo);
 	}

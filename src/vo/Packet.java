@@ -11,67 +11,76 @@ import server.Room;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet {
-   private String action;
-   private String motion;
-   private PlayerVO playerVO;
-   @JsonIgnore
-   private Map<Integer,Room> roomMap;
-   private ArrayList<PlayerVO> playerList;
-   
-   public Packet() { }
-   
-   public Packet(String action, PlayerVO playerVO) {
-      this.action = action;
-      this.playerVO = playerVO;
-   }
-   
-   public Packet(String action, String motion, PlayerVO playerVO) {
-      this.action = action;
-      this.motion = motion;
-      this.playerVO = playerVO;
-   }
-   public Packet(String action, String motion) {
-      this.action = action;
-      this.motion = motion;
-   }
-   
-   public Map<Integer, Room> getRoomMap() {
-	return roomMap;
-}
+	private String action;
+	private String motion;
+	private PlayerVO playerVO;
+	@JsonIgnore
+	private Map<Integer, Room> roomMap;
+	private ArrayList<PlayerVO> playerList;
 
-public void setRoomMap(Map<Integer, Room> room) {
-	this.roomMap = room;
-}
+	public Packet() {
+	}
 
-public ArrayList<PlayerVO> getPlayerList() {
-      return playerList;
-   }
+	public Packet(String action, PlayerVO playerVO) {
+		this.action = action;
+		this.playerVO = playerVO;
+	}
 
-   public void setPlayerList(ArrayList<PlayerVO> playerList) {
-      this.playerList = playerList;
-   }
+	public Packet(String action, String motion, PlayerVO playerVO) {
+		this.action = action;
+		this.motion = motion;
+		this.playerVO = playerVO;
+	}
 
-   public PlayerVO getPlayerVO() {
-      return playerVO;
-   }
+	public Packet(String action, String motion) {
+		this.action = action;
+		this.motion = motion;
+	}
 
-   public void setPlayerVO(PlayerVO playerVO) {
-      this.playerVO = playerVO;
-   }
+	public Map<Integer, Room> getRoomMap() {
+		return roomMap;
+	}
 
-   public String getAction() {
-      return action;
-   }
+	public void setRoomMap(Map<Integer, Room> room) {
+		this.roomMap = room;
+	}
 
-   public void setAction(String action) {
-      this.action = action;
-   }
+	public ArrayList<PlayerVO> getPlayerList() {
+		return playerList;
+	}
 
-   public String getMotion() {
-      return motion;
-   }
+	public void setPlayerList(ArrayList<PlayerVO> playerList) {
+		this.playerList = playerList;
+	}
 
-   public void setMotion(String motion) {
-      this.motion = motion;
-   }
+	public PlayerVO getPlayerVO() {
+		return playerVO;
+	}
+
+	public void setPlayerVO(PlayerVO playerVO) {
+		this.playerVO = playerVO;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getMotion() {
+		return motion;
+	}
+
+	public void setMotion(String motion) {
+		this.motion = motion;
+	}
+
+	@Override
+	public String toString() {
+		return "Packet [action=" + action + ", motion=" + motion + ", playerVO=" + playerVO + ", roomMap=" + roomMap
+				+ ", playerList=" + playerList + "]";
+	}
+
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import client.ui.Lobby;
 import operator.ChattingOperator;
 import server.Room;
@@ -20,11 +22,8 @@ public class ClientPacketController {
    public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
    
    public ClientPacketController() { }
-   
+   private ObjectMapper mapper = new ObjectMapper();
    public void packetController(Packet packet) {
-      
-      
-      
       switch (packet.getAction()) {
       case Protocol.MESSAGE: // 채팅
          ChattingOperator.chatArea.append(packet.getPlayerVO().getNic() + ": " + packet.getMotion() + "\n");
@@ -47,7 +46,7 @@ public class ClientPacketController {
          
          ArrayList<Room> roomList = new ArrayList<>();
          
-         Map<Integer, Room> map = packet.getRoomMap();
+         Map<Integer, Room> map =  packet.getRoomMap();
              Iterator<Integer> keys = map.keySet().iterator();
                  while(keys.hasNext() ){
                      int key = keys.next();

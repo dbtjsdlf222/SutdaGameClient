@@ -10,7 +10,6 @@ import java.util.concurrent.Executors;
 import client.listener.ClientReceiver;
 import client.ui.Login;
 import dao.PlayerDAO;
-
 public class RunServer {
 	
 	public static void main(String[] args) {
