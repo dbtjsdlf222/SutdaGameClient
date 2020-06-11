@@ -1,5 +1,5 @@
 package client.ui;
-
+ 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -20,13 +20,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.service.ClientPacketController;
 import operator.ChattingOperator;
-import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
