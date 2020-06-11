@@ -5,8 +5,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +32,7 @@ public class ServerPacketController {
 
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE:
-			if (thisPlayerVO.getLocation().equals(Protocol.LOBBY)) {
+			if (thisPlayerVO.getRoomNo()==0) {
 				for (PlayerVO playerVO : lobbyPlayerList) {
 					playerVO.getPwSocket().println(mapper.writeValueAsString(packet));
 				}
@@ -61,7 +59,7 @@ public class ServerPacketController {
 				PrintWriter socketPw;
 				socketPw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 				socketPw.println(mapper.writeValueAsString(new Packet(Protocol.LOGIN,vo)));
-			} catch (IOException e) { 
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
