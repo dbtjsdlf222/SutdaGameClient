@@ -13,15 +13,15 @@ import operator.ChattingOperator;
 import vo.Packet;
 
 public class ReceiveServerPacket extends Thread {
-	private Socket socket;
-	ClientPacketController cpc = new ClientPacketController();
 
+	private Socket socket;
 	public ReceiveServerPacket(Socket socket) {
 		this.socket = socket;
 	}
 
 	@Override
 	public void run() {
+		ClientPacketController cpc = new ClientPacketController();
 
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {

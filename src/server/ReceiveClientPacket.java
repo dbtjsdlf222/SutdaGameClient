@@ -20,7 +20,7 @@ public class ReceiveClientPacket extends Thread { // Server
 
 	@Override
 	public void run() {
-		PacketController packetController = new PacketController();
+		ServerPacketController packetController = new ServerPacketController(socket);
 		ObjectMapper mapper = new ObjectMapper();
 
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {

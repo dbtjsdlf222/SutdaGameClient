@@ -1,22 +1,19 @@
 package vo;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 import server.Room;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet {
    private String action;
    private String motion;
    private PlayerVO playerVO;
-   @JsonIgnore
-   private ArrayList<Room> room;
-   @JsonIgnore
+   private Map<Integer,Room> roomMap;
    private ArrayList<PlayerVO> playerList;
    
    public Packet() { }
@@ -35,16 +32,16 @@ public class Packet {
       this.action = action;
       this.motion = motion;
    }
+   
+   public Map<Integer, Room> getRoomMap() {
+	return roomMap;
+}
 
-   public ArrayList<Room> getRoom() {
-      return room;
-   }
+public void setRoomMap(Map<Integer, Room> room) {
+	this.roomMap = room;
+}
 
-   public void setRoom(ArrayList<Room> room) {
-      this.room = room;
-   }
-
-   public ArrayList<PlayerVO> getPlayerList() {
+public ArrayList<PlayerVO> getPlayerList() {
       return playerList;
    }
 

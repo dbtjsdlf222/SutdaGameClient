@@ -9,16 +9,15 @@ public class Protocol {
 	public static final String EXITPLAYER = "3";	//타 플레이어 퇴실
 	public static final String ENTERLOBBY = "4";		//로비입장
 	public static final String MAKEROOM = "5";		//방만들기
-	public static final String LISTROOMPLAYER = "6";
-	public static final String ROOMLIST = "7";
-	public static final String PLAYERLIST = "8";
-	public static final String OTHERPLAYERENTHER = "9";
 	public static final String ENTERROOM = "10";	//방 입실		입실시 vo에 roomNo 수정
-	public static final String EXITROOM = "11";		//방 퇴실		
-	public static final String EXIT = "12";
+	public static final String EXITROOM = "11";		//방 퇴실		vo roomNo = 널
 	public static final String EXITLOBBY = "13";		//방 퇴실
 	public static final String LOGIN = "14";
 	
+	public static final String ENTEROTHERROOM = "9";  	//다른 사람이 룸에 입실
+	public static final String ENTEROTHERLOBBY = "15";	//다른 사람이 로비 입실
+	public static final String EXITOTHERROOM = "9";  	//다른 사람이 룸에 퇴실
+	public static final String EXITOTHERLOBBY = "15";	//다른 사람이 로비 퇴실
 	
 	//Location
 	public static final String LOBBY = "lobby";
@@ -26,7 +25,7 @@ public class Protocol {
 	
 	
 	//Game
-	public static final String GAMESTART = "gameStart";
+	public static final String GAMESTART = "gameStart";	//game 시작 상태 만들기
 	public static final String Half = "half";
 	public static final String Quater = "quater";
 	public static final String Check = "checkt";
