@@ -23,6 +23,7 @@ public class Protocol {
 	//Game
 	public static final String GAMESTART = "12";	//game 시작 상태 만들기
 	public static final String DRAW = "13";	//game 시작 상태 만들기
+	public static final String CHANGEMASTER = "21";	//선 변경
 	
 	
 	public static final String Half = "14";

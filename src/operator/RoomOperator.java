@@ -18,6 +18,9 @@ public class RoomOperator {
 		return ro;
 	}
 
+	public void removeRoom(int roomNo) {
+		roomMap.remove(roomNo);
+	}
 	public Room getRoom(int roomNo) {
 		return roomMap.get(roomNo);
 	} // for

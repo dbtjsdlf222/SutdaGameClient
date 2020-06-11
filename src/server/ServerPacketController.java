@@ -28,6 +28,7 @@ public class ServerPacketController {
 		this.socket = socket;
 	}
 	
+	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 
 		switch (packet.getAction()) {
@@ -69,6 +70,9 @@ public class ServerPacketController {
 			ro.getRoom(packet.getPlayerVO().getRoomNo()).exitPlayer(thisPlayerVO);
 			ro.getRoom(packet.getPlayerVO().getRoomNo()).roomSpeaker(packet);
 			thisPlayerVO.setRoomNo(0);
+			if(ro.getRoom(packet.getPlayerVO().getRoomNo()).getList().size() <= 0) {
+				ro.removeRoom(packet.getPlayerVO().getRoomNo());
+			}
 			
 			//로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:

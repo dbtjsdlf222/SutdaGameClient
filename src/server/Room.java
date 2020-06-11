@@ -1,14 +1,14 @@
 package server;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import client.ui.MainScreen;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -16,7 +16,7 @@ public class Room {
 	private static int increaseRoomNo = 1;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
-	private ArrayList<PlayerVO> list = new ArrayList<>(); // 방안에 있는 사람 리스트
+	private Map<Integer, PlayerVO> list = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private String master; // 방장 or 선판 이긴거
@@ -75,7 +75,12 @@ public class Room {
 	}
 
 	public void joinPlayer(PlayerVO vo) {
-		list.add(vo);
+		for (int i = 0; i < 5; i++) {
+			if(list.get(i)==null) {
+				list.put(i, vo);
+			}
+		}
+		
 	}
 
 	public void exitPlayer(PlayerVO vo) {
@@ -154,12 +159,12 @@ public class Room {
 //		}
 //	}
 
-	public ArrayList<PlayerVO> getList() {
+	public Map<Integer,PlayerVO> getList() {
 		return list;
 	}
 
-	public void setList(ArrayList<PlayerVO> list) {
-		this.list = list;
+	public void setList(Map<Integer,PlayerVO> map) {
+		this.list = map;
 	}
 
 	public float[] getCardArr() {
