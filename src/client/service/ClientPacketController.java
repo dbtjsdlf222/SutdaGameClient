@@ -18,7 +18,7 @@ public class ClientPacketController {
    public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
    
    public ClientPacketController() { }
-
+   
    public void packetController(Packet packet) {
       
       scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
