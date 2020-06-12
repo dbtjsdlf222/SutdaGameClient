@@ -151,6 +151,7 @@ public class Lobby {
 
 		ClientPacketController cl = new ClientPacketController();
 
+		ClientPacketController.jT.setBackground(Color.orange);
 		playerPan.add(ClientPacketController.plScroll);
 		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
 		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);

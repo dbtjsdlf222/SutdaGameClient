@@ -42,11 +42,15 @@ public class ClientPacketController {
 			ChattingOperator.chatArea.append(packet.getPlayerVO().getNic() + ": " + packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
-
+		case Protocol.EXITOTHERLOBBY:
+		case Protocol.ENTEROTHERLOBBY:		
+		case Protocol.EXITLOBBY:
 		case Protocol.ENTERLOBBY:
+			
 			model = (DefaultTableModel)jT.getModel();
 			model.setNumRows(0);
 			lobbyPlayerList = packet.getPlayerList();
+			System.out.println(packet.getPlayerList());
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
 				n[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
