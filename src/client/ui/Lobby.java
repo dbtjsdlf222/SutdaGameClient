@@ -41,9 +41,7 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	public static JTable jT = new JTable();
-	public static JScrollPane plScroll = new JScrollPane(jT);
-	public static DefaultTableModel model;
+	
 	public JButton[] bt1 = new JButton[10];
 
 	
@@ -178,26 +176,18 @@ public class Lobby {
 		
 		// 로비에 플레이어 접속자 목록
 
-		String b[] =  {"닉네임", "판수", "돈"};
-		String n[][] = new String[99][99];
- 		
 		
 		
-		model = new DefaultTableModel(b, 0);
+		ClientPacketController cl = new ClientPacketController();
+
 		
-		
-	
-//		model.addRow();
-//		jT = new JTable(model);
-//		plScroll = new JScrollPane(jT);
-		
-		plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
-		jT.getTableHeader().setReorderingAllowed(false); 
-		jT.getTableHeader().setResizingAllowed(false);
-		plScroll.setOpaque(false);
-		plScroll.setBounds(10, 10, 370, 590);
-		plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		playerPan.add(plScroll);
+		playerPan.add(ClientPacketController.plScroll);
+		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+		ClientPacketController.	jT.getTableHeader().setReorderingAllowed(false); 
+		ClientPacketController.jT.getTableHeader().setResizingAllowed(false);
+		ClientPacketController.plScroll.setOpaque(false);
+		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
+		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		initialize();
 		
 				
