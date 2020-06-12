@@ -105,12 +105,12 @@ public class ServerPacketController {
 			ro.getRoom(roomNo).roomSpeaker(new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO));
 			ro.joinRoom(roomNo, thisPlayerVO);
 			thisPlayerVO.setRoomNo(roomNo);
+			
 
 		case Protocol.EXITLOBBY:
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo())
 					lobbyPlayerList.remove(i);
-
 				this.lobbyBroadcast(new Packet(Protocol.EXITOTHERLOBBY, thisPlayerVO));
 			}
 

@@ -5,8 +5,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import util.Packing;
+import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
@@ -15,12 +18,7 @@ public class ClientPacketSender {
 	private PlayerVO vo;
 	private ObjectMapper mapper = new ObjectMapper();
 	private PrintWriter pw;
-			
-	public void makeRoom() {
-//		pw.println(mapper.writeValueAsString(Protocol.MAKEROOM,
-//				vo));
-	}
-	
+
 	public ClientPacketSender(Socket socket, PlayerVO vo) {
 		this.socket = socket;
 		this.vo = vo;
@@ -29,6 +27,9 @@ public class ClientPacketSender {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-	}
-}
+	} //con
+
+	public void makeRoom() {
+		Packing.sender(pw, Protocol.MAKEROOM, vo);
+	} //makeRoom
+} //class
