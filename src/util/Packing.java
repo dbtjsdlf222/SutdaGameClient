@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
 
