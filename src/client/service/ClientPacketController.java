@@ -33,15 +33,15 @@ public class ClientPacketController {
 	@SuppressWarnings("serial")
 	public static DefaultTableModel model = new DefaultTableModel(b, 0) {
 		public boolean isCellEditable(int row, int column) {
-		      return false;
-		    }
-		};
+			return false;
+		}
+	};
 	public static JTable jT = new JTable(model);
 	public static JScrollPane plScroll = new JScrollPane(jT);
 	public static JPanel lobbyPan = new JPanel();
 	ArrayList<PlayerVO> lobbyPlayerList;
 	DecimalFormat fm = new DecimalFormat("###,###");
-	
+
 	public ClientPacketController() {
 	}
 
@@ -55,17 +55,23 @@ public class ClientPacketController {
 		case Protocol.RELOADPLAYERLIST:
 			System.out.println("나가요?");
 		case Protocol.ENTERLOBBY:
-			
+
 			lobbyPlayerList = packet.getPlayerList();
-			model = (DefaultTableModel)jT.getModel();
-			model.setNumRows(0);
+			
+			
+			for (int i = 0; i < ((DefaultTableModel) jT.getModel()).getRowCount(); i++) {
+				((DefaultTableModel) jT.getModel()).removeRow(i);
+			}
+			model.getDataVector().removeAllElements();
+			model.fireTableDataChanged();
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
 				n[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
-				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()))+"";
+				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
 				model.addRow(n[i]);
 			}
-			model = null;
+			
+//	model = null;
 //			model = new DefaultTableModel(b, 0) {
 //				public boolean isCellEditable(int row, int column) {
 //					return false;
@@ -73,7 +79,6 @@ public class ClientPacketController {
 //			};
 //			jT = new JTable(model);
 //			plScroll = new JScrollPane(jT);
-			System.out.println("1");
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
 			while (keys.hasNext()) {

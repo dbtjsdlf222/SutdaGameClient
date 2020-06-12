@@ -113,7 +113,7 @@ public class Lobby {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		JButton chatBtn = new JButton("보내기");
+		JButton chatBtn = new JButton("../../img/Send.PNG");
 		chatBtn.setBounds(578, 225, 70, 25);
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
@@ -173,7 +173,7 @@ public class Lobby {
 		
 		
 		
-		ClientPacketController.jT.setRowHeight(20);
+		ClientPacketController.jT.setRowHeight(40);
 		ClientPacketController.jT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.jT.getTableHeader().setResizingAllowed(false);
