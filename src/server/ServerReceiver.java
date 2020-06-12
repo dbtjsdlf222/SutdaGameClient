@@ -33,11 +33,10 @@ public class ServerReceiver extends Thread { // Server
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 					} catch (Exception e) {
 						System.out.println("제발제발 35번째다 서버리시버");
-						packetController.exitPlayer();
 					}
 				} // while
 			} catch (SocketException e) {
-//				packetController.exitPlayer();
+				packetController.exitPlayer();
 			} // try~catch
 
 		} catch (IOException e) {

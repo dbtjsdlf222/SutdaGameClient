@@ -29,7 +29,7 @@ public class ListViewOperator {
 	}
 	
 	public void list(PlayerVO vo) {
-		Packet pac = new Packet(Protocol.JOINPLAYER,vo);
+//		Packet pac = new Packet(Protocol.JOINPLAYER,vo);
 	}
 		
 	
