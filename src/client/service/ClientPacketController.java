@@ -44,15 +44,15 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.ENTERLOBBY:
+			model = (DefaultTableModel)jT.getModel();
+			model.setNumRows(0);
 			lobbyPlayerList = packet.getPlayerList();
-			model = new DefaultTableModel(b,lobbyPlayerList.size()+1);
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
 				n[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
 				n[i][2] = lobbyPlayerList.get(i).getMoney() + "";
 				model.addRow(n[i]);
 			}
-			model.removeRow(0);
 
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
