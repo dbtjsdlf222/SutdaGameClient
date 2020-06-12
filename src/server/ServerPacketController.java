@@ -71,7 +71,6 @@ public class ServerPacketController {
 
 			thisPlayerVO.setRoomNo(ro.makeRoom(packet.getPlayerVO()));
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), Protocol.RELOADPLAYERLIST, thisPlayerVO);
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 					lobbyPlayerList.remove(i);
 					break;
@@ -133,12 +132,12 @@ public class ServerPacketController {
 			}
 			
 			packet.setPlayerList(lobbyPlayerList);
-			lobbyBroadcastReload();
 
 			packet.setPlayerList(lobbyPlayerList); // 자신에게 로비에 출력할 입장된 사람 보냄
 			lobbyPlayerList.add(thisPlayerVO); // 로비 리스트에 자신 추가
 			packet.setRoomMap(ro.getAllRoom());
 
+			lobbyBroadcastReload();
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			break;
 
