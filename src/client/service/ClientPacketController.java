@@ -53,6 +53,7 @@ public class ClientPacketController {
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
 		case Protocol.RELOADPLAYERLIST:
+			System.out.println("나가요?");
 		case Protocol.ENTERLOBBY:
 			
 			lobbyPlayerList = packet.getPlayerList();
@@ -64,13 +65,14 @@ public class ClientPacketController {
 				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()))+"";
 				model.addRow(n[i]);
 			}
-			model = new DefaultTableModel(b, 0) {
-				public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			};
-			jT = new JTable(model);
-			plScroll = new JScrollPane(jT);
+			model = null;
+//			model = new DefaultTableModel(b, 0) {
+//				public boolean isCellEditable(int row, int column) {
+//					return false;
+//				}
+//			};
+//			jT = new JTable(model);
+//			plScroll = new JScrollPane(jT);
 			System.out.println("1");
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
