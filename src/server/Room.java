@@ -91,9 +91,15 @@ public class Room {
 	
 	public void exitPlayer(PlayerVO vo) {
 		for (int i = 0; i < playerMap.size(); i++) {
-			if (playerMap.get(i).getNo()==(vo.getNo())) {
-				playerMap.remove(i);
+			try {
+				if (playerMap.get(i).getNo()==(vo.getNo())) {
+					playerMap.remove(i);
+				}
+				
+			} catch (IndexOutOfBoundsException|NullPointerException e) {
+				System.out.println("Room.exitPlayer:"+e.getMessage());
 			}
+			
 		}
 	} // exitPlayer
 
