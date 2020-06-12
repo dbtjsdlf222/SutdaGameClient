@@ -16,8 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,9 +65,9 @@ public class Lobby {
 		ClientPacketController.lobbyPan.setBackground(new Color(0, 0, 0, 120));
 		ClientPacketController.lobbyPan.setBounds(5, 60, 818, 290);
 		ClientPacketController.lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		ClientPacketController.lobbyPan.setLayout(new GridLayout(99,1,0,0));
+		ClientPacketController.lobbyPan.setLayout(new GridLayout(99, 1, 0, 0));
 		lobbyJF.add(ClientPacketController.lobbyPan);
-		
+
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
 		newBtn.setBounds(681, 515, 150, 50);
@@ -74,7 +80,7 @@ public class Lobby {
 				if (e.getSource() == newBtn) {
 					cp.makeRoom();
 					new MainScreen();
-					 lobbyJF.dispose();
+					lobbyJF.dispose();
 				}
 
 			}
@@ -149,17 +155,34 @@ public class Lobby {
 
 		// 로비에 플레이어 접속자 목록
 
-		ClientPacketController cl = new ClientPacketController();
+		//JTable column을 for문을 이용해 계속 텍스트를 중앙에 배치
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmSchedule = ClientPacketController.jT.getColumnModel();
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+		}
 
-		ClientPacketController.jT.setBackground(Color.orange);
-		playerPan.add(ClientPacketController.plScroll);
-		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+		//Header을 중앙에 배치
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) ClientPacketController.jT.getTableHeader()
+				.getDefaultRenderer();
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		ClientPacketController.jT.getTableHeader().setDefaultRenderer(renderer);
+		ClientPacketController cl = new ClientPacketController();
+		ClientPacketController.jT.getTableHeader().setBackground(Color.orange);
+		ClientPacketController.jT.setBackground(Color.black);
+		ClientPacketController.jT.setShowVerticalLines(false);
+		ClientPacketController.jT.setRowHeight(20);
+		ClientPacketController.jT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.jT.getTableHeader().setResizingAllowed(false);
+		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
 		ClientPacketController.plScroll.setOpaque(false);
 		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
 		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		initialize(); //초기화
+		ClientPacketController.plScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		playerPan.add(ClientPacketController.plScroll);
+		initialize(); // 초기화
 
 		// 귓속말 버튼
 		gBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gBtn.PNG")));
