@@ -159,12 +159,12 @@ public class ServerPacketController {
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.EXITROOM, thisVoToString()));
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
 		} else {
-			lobbyBroadcastReload();
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 					lobbyPlayerList.remove(i);
 					break;
 				}
+				lobbyBroadcastReload();
 			}
 		} // if~else
 		System.err.println(thisPlayerVO.getNic() + "님이 나가셨습니다.");
