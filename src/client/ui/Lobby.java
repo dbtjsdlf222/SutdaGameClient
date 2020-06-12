@@ -170,8 +170,10 @@ public class Lobby {
 		ClientPacketController.jT.getTableHeader().setDefaultRenderer(renderer);
 		ClientPacketController cl = new ClientPacketController();
 		ClientPacketController.jT.getTableHeader().setBackground(Color.orange);
-		ClientPacketController.jT.setBackground(Color.black);
 		ClientPacketController.jT.setShowVerticalLines(false);
+		ClientPacketController.jT.setSelectionBackground(new Color(232,57,95));
+		
+		
 		ClientPacketController.jT.setRowHeight(20);
 		ClientPacketController.jT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);

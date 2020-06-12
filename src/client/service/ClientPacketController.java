@@ -41,8 +41,6 @@ public class ClientPacketController {
 	public ClientPacketController() {
 	}
 
-	private ObjectMapper mapper = new ObjectMapper();
-
 	public void packetController(Packet packet) {
 
 		switch (packet.getAction()) {
@@ -52,15 +50,14 @@ public class ClientPacketController {
 			break;
 		case Protocol.RELOADPLAYERLIST:
 		case Protocol.ENTERLOBBY:
-			System.out.println();
 			model = (DefaultTableModel) jT.getModel();
-			model.setNumRows(0);
 			lobbyPlayerList = packet.getPlayerList();
+			model.rowsRemoved(null);
 			System.out.println(lobbyPlayerList);
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
 				n[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
-				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()+ ""));
+				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()))+"";
 				model.addRow(n[i]);
 			}
 
