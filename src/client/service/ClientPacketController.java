@@ -11,7 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -50,9 +53,7 @@ public class ClientPacketController {
 			break;
 		case Protocol.RELOADPLAYERLIST:
 		case Protocol.ENTERLOBBY:
-			model = (DefaultTableModel) jT.getModel();
 			lobbyPlayerList = packet.getPlayerList();
-			model.rowsRemoved(null);
 			System.out.println(lobbyPlayerList);
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
@@ -60,7 +61,8 @@ public class ClientPacketController {
 				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()))+"";
 				model.addRow(n[i]);
 			}
-
+			jT = new JTable(model);
+			
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
 			while (keys.hasNext()) {

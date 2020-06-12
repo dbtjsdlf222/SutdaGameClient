@@ -20,20 +20,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
 import util.Packing;
-import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
@@ -155,20 +149,23 @@ public class Lobby {
 
 		// 로비에 플레이어 접속자 목록
 
-		//JTable column을 for문을 이용해 계속 텍스트를 중앙에 배치
+		
+		
+		ClientPacketController cl = new ClientPacketController();
+		
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmSchedule = ClientPacketController.jT.getColumnModel();
 		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
-			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
-
+		
 		//Header을 중앙에 배치
-		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) ClientPacketController.jT.getTableHeader()
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)ClientPacketController.jT.getTableHeader()
 				.getDefaultRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientPacketController.jT.getTableHeader().setDefaultRenderer(renderer);
-		ClientPacketController cl = new ClientPacketController();
+		
 		ClientPacketController.jT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.jT.setShowVerticalLines(false);
 		ClientPacketController.jT.setSelectionBackground(new Color(232,57,95));
