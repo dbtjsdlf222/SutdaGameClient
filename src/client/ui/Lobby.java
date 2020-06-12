@@ -1,16 +1,13 @@
 package client.ui;
- 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,18 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.Background;
 import client.service.ClientPacketController;
+import client.service.ClientPacketSender;
 import operator.ChattingOperator;
+import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -41,17 +38,12 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	
+	private ClientPacketSender cp;
 	public JButton[] bt1 = new JButton[10];
 
-	
-	public Lobby(PlayerVO vo) {  // 서버에 로그인된 사람의 정보를 전송
-		try {
-			ObjectMapper map = new ObjectMapper();
-			vo.getPwSocket().println(map.writeValueAsString(new Packet(Protocol.ENTERLOBBY, vo)));
-		} catch (JsonProcessingException e) {
-			System.out.println("Dwdwadawdafasfas");
-		}
+	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
+		cp = new ClientPacketSender(vo.getSocket(), vo);
+		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
 	}
 
@@ -63,55 +55,39 @@ public class Lobby {
 		lobbyLbl.setBounds(340, 20, 200, 30);
 		lobbyJF.add(lobbyLbl);
 
-		// 로비 판넬
-		JPanel lobbyPan = new JPanel();
-		
-		lobbyPan.setBackground(new Color(0, 0, 0, 120));
-		lobbyPan.setBounds(5, 60, 818, 290);
-		lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		lobbyPan.setLayout(new GridLayout(5,0));
-		lobbyJF.add(lobbyPan);
-		
-		
-		
-			
+		// 로비 판넬 [방리스트]
+		ClientPacketController.lobbyPan.setBackground(new Color(0, 0, 0, 120));
+		ClientPacketController.lobbyPan.setBounds(5, 60, 818, 290);
+		ClientPacketController.lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ClientPacketController.lobbyPan.setLayout(new GridLayout(99,1,0,0));
+		lobbyJF.add(ClientPacketController.lobbyPan);
 		
 		// 방만들기 버튼
-				newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
-				newBtn.setBounds(681, 515, 150, 50);
-				lobbyJF.add(newBtn);
-				
-				newBtn.addActionListener(new ActionListener() {
+		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
+		newBtn.setBounds(681, 515, 150, 50);
+		lobbyJF.add(newBtn);
 
-			
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (e.getSource() == newBtn) {
-							int i = 0; 
-						bt1[i] = new JButton(i+"번 방　　　　　4/5　　　　　　　입장");
-						bt1[i].setSize(200, 200);
-						lobbyPan.add(bt1[i]);
-							i++;
-							new MainScreen();
-						//	lobbyJF.dispose();
-						}
+		newBtn.addActionListener(new ActionListener() {
 
-					}
-				
-				});
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == newBtn) {
+					cp.makeRoom();
+					new MainScreen();
+					 lobbyJF.dispose();
+				}
 
+			}
 
+		});
 
-		
-		
-		
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
 		lbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
 		lbl.setForeground(new Color(255, 255, 255, 150));
 		lbl.setBounds(300, 370, 280, 30);
 		lobbyJF.add(lbl);
-	
+
 		// 채팅 판넬
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(5, 410, 658, 260);
@@ -119,7 +95,7 @@ public class Lobby {
 		chatPan.setLayout(null);
 		lobbyJF.add(chatPan);
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		
+
 		// 채팅 필드
 		JTextField chatText = new JTextField();
 		chatText.setBounds(10, 225, 560, 25);
@@ -135,8 +111,7 @@ public class Lobby {
 		ClientPacketController.scrollPane.setBorder(null);
 		chatPan.add(ClientPacketController.scrollPane);
 
-	
-	      // 채팅 보내기 버튼
+		// 채팅 보내기 버튼
 		JButton chatBtn = new JButton("보내기");
 		chatBtn.setBounds(578, 225, 70, 25);
 		chatPan.add(chatBtn);
@@ -163,7 +138,7 @@ public class Lobby {
 		playerLbl.setForeground(new Color(255, 255, 255, 150));
 		playerLbl.setBounds(970, 20, 200, 30);
 		lobbyJF.add(playerLbl);
-	
+
 		// 플레이어 판넬
 		JPanel playerPan = new JPanel();
 		playerPan.setBounds(850, 60, 390, 610);
@@ -172,38 +147,29 @@ public class Lobby {
 		lobbyJF.add(playerPan);
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
-	
-		
 		// 로비에 플레이어 접속자 목록
 
-		
-		
 		ClientPacketController cl = new ClientPacketController();
 
-		
 		playerPan.add(ClientPacketController.plScroll);
 		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
-		ClientPacketController.	jT.getTableHeader().setReorderingAllowed(false); 
+		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.jT.getTableHeader().setResizingAllowed(false);
 		ClientPacketController.plScroll.setOpaque(false);
 		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
 		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		initialize();
-		
-				
+		initialize(); //초기화
+
 		// 귓속말 버튼
 		gBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gBtn.PNG")));
 		gBtn.setBounds(681, 410, 150, 50);
 		lobbyJF.add(gBtn);
-
-		
 
 		// 나가기 버튼
 		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
 
-		
 		// JFrame 정보
 		imgP = new Background();
 		imgP.lobbyImage();
@@ -218,10 +184,9 @@ public class Lobby {
 
 	}
 
-
 	private void initialize() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

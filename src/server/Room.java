@@ -16,7 +16,7 @@ public class Room {
 	private static int increaseRoomNo = 1;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
-	private Map<Integer, PlayerVO> list = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
+	private Map<Integer, PlayerVO> playerMap = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private String master; // 방장 or 선판 이긴거
@@ -31,6 +31,10 @@ public class Room {
 		}
 	} // Room()
 
+	public int getPlayerSize() {
+		return playerMap.size();
+	}
+	
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -53,9 +57,9 @@ public class Room {
 
 	public void roomSpeaker(Packet pac) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < playerMap.size(); i++) {
 			try {
-				list.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
+				playerMap.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
@@ -63,8 +67,8 @@ public class Room {
 	} // roomSpeaker
 
 	public void roomChat(Packet packet) {
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).getPwSocket().println(packet);
+		for (int i = 0; i < playerMap.size(); i++) {
+			playerMap.get(i).getPwSocket().println(packet);
 		} // for
 	} // roomChat
 
@@ -76,17 +80,19 @@ public class Room {
 
 	public void joinPlayer(PlayerVO vo) {
 		for (int i = 0; i < 5; i++) {
-			if(list.get(i)==null) {
-				list.put(i, vo);
-			}
-		}
-		
-	}
-
+			if(playerMap.get(i)==null) {
+				playerMap.put(i, vo);
+				if(master==null) {
+					master = vo.getNic();
+				}
+			} //if
+		} //for
+	} //join
+	
 	public void exitPlayer(PlayerVO vo) {
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getNo()==(vo.getNo())) {
-				list.remove(i);
+		for (int i = 0; i < playerMap.size(); i++) {
+			if (playerMap.get(i).getNo()==(vo.getNo())) {
+				playerMap.remove(i);
 			}
 		}
 	} // exitPlayer
@@ -160,11 +166,11 @@ public class Room {
 //	}
 
 	public Map<Integer,PlayerVO> getList() {
-		return list;
+		return playerMap;
 	}
 
 	public void setList(Map<Integer,PlayerVO> map) {
-		this.list = map;
+		this.playerMap = map;
 	}
 
 	public float[] getCardArr() {
