@@ -29,10 +29,12 @@ public class RoomOperator {
 		return roomMap;
 	}
 
-	public void makeRoom(PlayerVO pVO) {
+	public int makeRoom(PlayerVO pVO) {
 		Room room = new Room();
 		room.joinPlayer(pVO);
 		roomMap.put(room.getRoomNo(), room);
+		return room.getRoomNo();
+		
 	}
 
 	public void joinRoom(int roomNo, PlayerVO playerVO) {
