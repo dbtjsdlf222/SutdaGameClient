@@ -30,6 +30,7 @@ public class ClientPacketController {
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	static String b[] = { "닉네임", "판수", "돈" };
 	static String[][] n = new String[99][99];
+	@SuppressWarnings("serial")
 	public static DefaultTableModel model = new DefaultTableModel(b, 0) {
 		public boolean isCellEditable(int row, int column) {
 		      return false;
@@ -53,16 +54,24 @@ public class ClientPacketController {
 			break;
 		case Protocol.RELOADPLAYERLIST:
 		case Protocol.ENTERLOBBY:
+			
 			lobbyPlayerList = packet.getPlayerList();
-			System.out.println(lobbyPlayerList);
+			model = (DefaultTableModel)jT.getModel();
+			model.setNumRows(0);
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				n[i][0] = lobbyPlayerList.get(i).getNic();
 				n[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
 				n[i][2] = fm.format((lobbyPlayerList.get(i).getMoney()))+"";
 				model.addRow(n[i]);
 			}
+			model = new DefaultTableModel(b, 0) {
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
 			jT = new JTable(model);
-			
+			plScroll = new JScrollPane(jT);
+			System.out.println("1");
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
 			while (keys.hasNext()) {

@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 
@@ -169,6 +170,7 @@ public class Lobby {
 		ClientPacketController.jT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.jT.setShowVerticalLines(false);
 		ClientPacketController.jT.setSelectionBackground(new Color(232,57,95));
+		
 		
 		
 		ClientPacketController.jT.setRowHeight(20);
