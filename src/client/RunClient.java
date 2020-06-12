@@ -20,9 +20,7 @@ public class RunClient {
 				e1.printStackTrace();
 			}
 		}
-		
 		EventQueue.invokeLater(() -> new LoginFrame());
-		
 	} //main();
 	
 } //class RunClient;

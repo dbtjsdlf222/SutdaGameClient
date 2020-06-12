@@ -31,6 +31,8 @@ public class ClientReceiver extends Thread {
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				cpc.packetController(packet);
 			}
+		}catch(java.net.SocketException e1){
+			System.out.println("나갔냐? ㅏㄴ갔다");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
