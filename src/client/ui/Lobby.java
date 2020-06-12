@@ -113,7 +113,7 @@ public class Lobby {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		JButton chatBtn = new JButton("../../img/Send.PNG");
+		JButton chatBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/Send.PNG")));
 		chatBtn.setBounds(578, 225, 70, 25);
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
