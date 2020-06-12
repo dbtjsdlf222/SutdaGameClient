@@ -159,8 +159,8 @@ public class ServerPacketController {
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.EXITROOM, thisVoToString()));
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
 		} else {
+			lobbyBroadcastReload();
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), Protocol.EXITLOBBY, thisPlayerVO);
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 					lobbyPlayerList.remove(i);
 					break;
