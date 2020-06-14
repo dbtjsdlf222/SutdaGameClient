@@ -65,7 +65,6 @@ public void setRoomNo(int roomNo) {
 	   this.cha = cha;
 	   this.money = money;
    }
-
    public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
          boolean online, int cha, String ip) {
       this.no = no;

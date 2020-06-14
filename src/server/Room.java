@@ -58,9 +58,11 @@ public class Room {
 
 	public void roomSpeaker(Packet pac) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		for (int i = 0; i < playerMap.size(); i++) {
+		for (int i = 0; i < 5; i++) {
 			try {
-				playerMap.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
+				try {
+					playerMap.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
+				} catch (NullPointerException e) { }
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
@@ -86,6 +88,7 @@ public class Room {
 				if(master==null) {
 					master = vo.getNic();
 				}
+				break;
 			} //if
 		} //for
 	} //join
@@ -97,19 +100,18 @@ public class Room {
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i) != null) {
-				master = playerMap.get(i).getNic();
-				Packet packet = new Packet(Protocol.CHANGEMASTER, playerMap.get(i));
-				this.roomSpeaker(packet);
-			}
+//			if(playerMap.get(i) != null) {
+//				master = playerMap.get(i).getNic();
+//				Packet packet = new Packet(Protocol.CHANGEMASTER, playerMap.get(i));
+//				this.roomSpeaker(packet);
+//			}
 			try {
-				if (playerMap.get(i).getNo()==(vo.getNo())) {
+				if (playerMap.get(i).getNo()==vo.getNo()) {
 					playerMap.remove(i);
 				}
 			} catch (IndexOutOfBoundsException|NullPointerException e) {
-				System.out.println("Room.exitPlayer:"+e.getMessage());
 			}
-		}
+		} //for
 	} // exitPlayer
 
 	public static int getIncreaseRoomNo() {

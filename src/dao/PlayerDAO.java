@@ -175,7 +175,8 @@ public class PlayerDAO {
 				int win = rs.getInt(6);
 				int lose = rs.getInt(7);
 				boolean online = rs.getBoolean(8);
-				int character = rs.getInt(9);
+				int character = rs.getInt(10);
+				System.out.println();
 				String ip = null;
 				try {
 					ip = InetAddress.getLocalHost().getHostAddress();

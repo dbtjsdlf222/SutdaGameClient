@@ -28,9 +28,7 @@ public class ClientReceiver extends Thread {
 
 			while (true) {
 				String packetStr = br.readLine();
-				System.out.println(packetStr);
 				Packet packet = mapper.readValue(packetStr, Packet.class);
-				System.out.println(packet);
 				cpc.packetController(packet);
 			}
 		} catch(java.net.SocketException e1) {

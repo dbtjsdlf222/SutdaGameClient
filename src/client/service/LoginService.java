@@ -53,7 +53,7 @@ public class LoginService {
 		new ClientReceiver(player.getSocket()).start();
 		new Packing().sender(player.getPwSocket(),Protocol.ENTERLOBBY, player);
 		new Packing().sender(player.getPwSocket(),Protocol.ENTERROOM, player);
-		MainScreen.getMainScreen();
+		MainScreen.ms.mainScreen();
 		
 		resultHandler.loginSuccess(player);
 		

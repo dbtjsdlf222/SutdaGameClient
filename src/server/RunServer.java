@@ -16,10 +16,8 @@ public class RunServer {
 		
 		new RunServer().run();
 		
-		
 	}
 	
-
 	public void run() {
 		ExecutorService executor = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
 		PlayerDAO dao = new PlayerDAO();
