@@ -53,7 +53,7 @@ public class ClientPacketController {
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
 		case Protocol.RELOADPLAYERLIST:
-			System.out.println("나가요?");
+			System.out.println(packet.getPlayerList());
 		case Protocol.ENTERLOBBY:
 
 			lobbyPlayerList = packet.getPlayerList();

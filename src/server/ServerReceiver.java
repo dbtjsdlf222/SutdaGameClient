@@ -32,7 +32,7 @@ public class ServerReceiver extends Thread { // Server
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 					} catch (Exception e) {
-						System.out.println("제발제발 35번째다 서버리시버");
+						e.printStackTrace();
 					}
 				} // while
 			} catch (SocketException e) {
