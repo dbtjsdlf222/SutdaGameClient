@@ -57,11 +57,11 @@ public class Lobby {
 		lobbyJF.add(lobbyLbl);
 
 		// 로비 판넬 [방리스트]
-		ClientPacketController.lobbyPan.setBackground(new Color(0, 0, 0, 120));
-		ClientPacketController.lobbyPan.setBounds(5, 60, 818, 290);
-		ClientPacketController.lobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		ClientPacketController.lobbyPan.setLayout(new GridLayout(99, 1, 0, 0));
-		lobbyJF.add(ClientPacketController.lobbyPan);
+		ClientPacketController.plobbyPan.setBackground(new Color(0, 0, 0, 120));
+		ClientPacketController.plobbyPan.setBounds(5, 60, 818, 290);
+		ClientPacketController.plobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ClientPacketController.plobbyPan.setLayout(new GridLayout(99, 1, 0, 0));
+		lobbyJF.add(ClientPacketController.plobbyPan);
 
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
@@ -156,27 +156,27 @@ public class Lobby {
 		
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		TableColumnModel tcmSchedule = ClientPacketController.jT.getColumnModel();
+		TableColumnModel tcmSchedule = ClientPacketController.playerJT.getColumnModel();
 		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
 		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
 		
 		//Header을 중앙에 배치
-		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)ClientPacketController.jT.getTableHeader()
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)ClientPacketController.playerJT.getTableHeader()
 				.getDefaultRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
-		ClientPacketController.jT.getTableHeader().setDefaultRenderer(renderer);
+		ClientPacketController.playerJT.getTableHeader().setDefaultRenderer(renderer);
 		
-		ClientPacketController.jT.getTableHeader().setBackground(Color.orange);
-		ClientPacketController.jT.setShowVerticalLines(false);
-		ClientPacketController.jT.setSelectionBackground(new Color(232,57,95));
+		ClientPacketController.playerJT.getTableHeader().setBackground(Color.orange);
+		ClientPacketController.playerJT.setShowVerticalLines(false);
+		ClientPacketController.playerJT.setSelectionBackground(new Color(232,57,95));
 		
 		
 		
-		ClientPacketController.jT.setRowHeight(40);
-		ClientPacketController.jT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
-		ClientPacketController.jT.getTableHeader().setReorderingAllowed(false);
-		ClientPacketController.jT.getTableHeader().setResizingAllowed(false);
+		ClientPacketController.playerJT.setRowHeight(40);
+		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
+		ClientPacketController.playerJT.getTableHeader().setReorderingAllowed(false);
+		ClientPacketController.playerJT.getTableHeader().setResizingAllowed(false);
 		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
 		ClientPacketController.plScroll.setOpaque(false);
 		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
