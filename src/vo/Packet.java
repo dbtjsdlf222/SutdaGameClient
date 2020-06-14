@@ -16,6 +16,7 @@ public class Packet {
 	private PlayerVO playerVO;
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
+	private Map<Integer, PlayerVO> roomPlayerList;
 
 	public Packet() {
 	}
@@ -34,6 +35,15 @@ public class Packet {
 	public Packet(String action, String motion) {
 		this.action = action;
 		this.motion = motion;
+	}
+
+	
+	public Map<Integer, PlayerVO> getRoomPlayerList() {
+		return roomPlayerList;
+	}
+
+	public void setRoomPlayerList(Map<Integer, PlayerVO> roomPlayerList) {
+		this.roomPlayerList = roomPlayerList;
 	}
 
 	public Map<Integer, Room> getRoomMap() {

@@ -25,7 +25,6 @@ public class Protocol {
 	public static final String DRAW = "13";	//game 시작 상태 만들기
 	public static final String CHANGEMASTER = "21";	//선 변경
 	
-	
 	public static final String Half = "14";
 	public static final String Quater = "15";
 	public static final String Check = "16";

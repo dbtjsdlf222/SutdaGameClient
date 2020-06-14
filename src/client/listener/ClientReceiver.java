@@ -28,11 +28,13 @@ public class ClientReceiver extends Thread {
 
 			while (true) {
 				String packetStr = br.readLine();
+				System.out.println(packetStr);
 				Packet packet = mapper.readValue(packetStr, Packet.class);
+				System.out.println(packet);
 				cpc.packetController(packet);
 			}
 		} catch(java.net.SocketException e1) {
-			System.out.println("나갔냐? ㅏㄴ갔다");
+			e1.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

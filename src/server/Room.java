@@ -6,11 +6,14 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class Room {
 	private static int increaseRoomNo = 1;
@@ -26,11 +29,9 @@ public class Room {
 	public Room() {
 		roomNo = increaseRoomNo++;
 		cardShuffle();
-		for (int i = 0; i < cardArr.length - 1; i++) {
-			System.out.println(rollCard());
-		}
 	} // Room()
 
+	@JsonIgnore
 	public int getPlayerSize() {
 		return playerMap.size();
 	}
@@ -80,7 +81,7 @@ public class Room {
 
 	public void joinPlayer(PlayerVO vo) {
 		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i)==null) {
+			if(playerMap.get(i) == null) {
 				playerMap.put(i, vo);
 				if(master==null) {
 					master = vo.getNic();
@@ -90,16 +91,24 @@ public class Room {
 	} //join
 	
 	public void exitPlayer(PlayerVO vo) {
-		for (int i = 0; i < playerMap.size(); i++) {
+		boolean masterExit = false;
+		if(vo.getNic().equals(master)) {
+			masterExit = true;
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			if(playerMap.get(i) != null) {
+				master = playerMap.get(i).getNic();
+				Packet packet = new Packet(Protocol.CHANGEMASTER, playerMap.get(i));
+				this.roomSpeaker(packet);
+			}
 			try {
 				if (playerMap.get(i).getNo()==(vo.getNo())) {
 					playerMap.remove(i);
 				}
-				
 			} catch (IndexOutOfBoundsException|NullPointerException e) {
 				System.out.println("Room.exitPlayer:"+e.getMessage());
 			}
-			
 		}
 	} // exitPlayer
 

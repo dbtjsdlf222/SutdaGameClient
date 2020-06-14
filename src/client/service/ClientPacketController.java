@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import client.ui.Lobby;
+import client.ui.MainScreen;
 import operator.ChattingOperator;
 import server.Room;
 import vo.Packet;
@@ -46,7 +47,6 @@ public class ClientPacketController {
 	public static JScrollPane rlScroll = new JScrollPane(roomJT);
 	public static JPanel rlobbyPan = new JPanel();
 	
-	ArrayList<PlayerVO> lobbyPlayerList;
 	DecimalFormat fm = new DecimalFormat("###,###");
 
 	public ClientPacketController() {
@@ -59,53 +59,48 @@ public class ClientPacketController {
 			ChattingOperator.chatArea.append(packet.getPlayerVO().getNic() + ": " + packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
+			
 		case Protocol.RELOADPLAYERLIST:
 		case Protocol.ENTERLOBBY:
-
-			lobbyPlayerList = packet.getPlayerList();
 			
-			//playerList
-			for (int i = 0; i < ((DefaultTableModel) playerJT.getModel()).getRowCount(); i++) {
-				((DefaultTableModel) playerJT.getModel()).removeRow(i);
-			}
-			pLmodel.getDataVector().removeAllElements();
-			pLmodel.fireTableDataChanged();
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				pn[i][0] = lobbyPlayerList.get(i).getNic();
-				pn[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
-				pn[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
-				pLmodel.addRow(pn[i]);
-			}
-			
-			
-			//roomList
-			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
-				((DefaultTableModel) roomJT.getModel()).removeRow(i);
-			}
-			
-			rLmodel.getDataVector().removeAllElements();
-			rLmodel.fireTableDataChanged();
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-
-			}
-			
-			Map<Integer, Room> map = packet.getRoomMap();
-			Iterator<Integer> keys = map.keySet().iterator();
-			int i = 0;
-			while (keys.hasNext()) {
-				int key = keys.next();
-				Room value = map.get(key);
-				
-				pn[i][0] = value.getRoomNo()+"";
-				pn[i][1] = value.getPlayerSize() + "/5";
-				
-				
-				//pn[i][2] = new JButton(value.getRoomNo()+"");
-				JButton jb = new JButton(value.getRoomNo()+"");
-				
-				pLmodel.addRow(pn[i]);
-				i++;
-			}
+//			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
+//			//playerList
+//			for (int i = 0; i < ((DefaultTableModel) playerJT.getModel()).getRowCount(); i++) {
+//				((DefaultTableModel) playerJT.getModel()).removeRow(i);
+//			}
+//			pLmodel.getDataVector().removeAllElements();
+//			pLmodel.fireTableDataChanged();
+//			for (int i = 0; i < lobbyPlayerList.size(); i++) {
+//				pn[i][0] = lobbyPlayerList.get(i).getNic();
+//				pn[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
+//				pn[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
+//				pLmodel.addRow(pn[i]);
+//			}
+//			
+//			
+//			//roomList
+//			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
+//				((DefaultTableModel) roomJT.getModel()).removeRow(i);
+//			}
+//			
+//			rLmodel.getDataVector().removeAllElements();
+//			rLmodel.fireTableDataChanged();
+//			Map<Integer, Room> map = packet.getRoomMap();
+//			Iterator<Integer> keys = map.keySet().iterator();
+//			int i = 0;
+//			while (keys.hasNext()) {
+//				int key = keys.next();
+//				Room value = map.get(key);
+//				
+//				pn[i][0] = value.getRoomNo()+"";
+//				pn[i][1] = value.getPlayerSize() + "/5";
+//				
+//				//pn[i][2] = new JButton(value.getRoomNo()+"");
+//				JButton jb = new JButton(value.getRoomNo()+"");
+//				
+//				pLmodel.addRow(pn[i]);
+//				i++;
+//			}
 
 			break;
 
@@ -116,7 +111,24 @@ public class ClientPacketController {
 				new Lobby(packet.getPlayerVO());
 			}
 			break;
-
+			
+		case Protocol.ENTEROTHERROOM:
+			MainScreen ms1 = MainScreen.getMainScreen();
+			ms1.enterPlayerOther(packet.getPlayerVO());
+			
+			System.out.println("ENTEROTHERROOM"+packet.getPlayerVO());
+			break;
+			
+		case Protocol.EXITOTHERROOM:
+			MainScreen ms3 = MainScreen.getMainScreen();
+			ms3.exitPlayer(packet.getPlayerVO());
+			break;
+			
+		case Protocol.ENTERROOM:
+			MainScreen ms2 = MainScreen.getMainScreen();
+			ms2.enterPlayerList(packet.getRoomPlayerList());
+			System.out.println("ENTERROOM:  "+packet.getRoomPlayerList());
+			break;
 		} // switch
 	} // method
 

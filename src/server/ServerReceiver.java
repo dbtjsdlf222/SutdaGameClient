@@ -32,7 +32,9 @@ public class ServerReceiver extends Thread { // Server
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 					} catch (Exception e) {
+						System.out.println(packetStr);
 						e.printStackTrace();
+						break;
 					}
 				} // while
 			} catch (SocketException e) {

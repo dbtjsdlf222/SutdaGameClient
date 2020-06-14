@@ -3,10 +3,16 @@ package client.service;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import client.listener.ClientReceiver;
 import client.service.LoginResultHandler.Focus;
+import client.ui.MainScreen;
 import dao.PlayerDAO;
+import util.Packing;
+import vo.Packet;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class LoginService {
 	
@@ -19,6 +25,7 @@ public class LoginService {
 	} //Login();
 	
 	
+	@SuppressWarnings("static-access")
 	public void login(String id, String password) throws IOException {
 		
 		if(id == null || id.trim().isEmpty()) {
@@ -42,7 +49,12 @@ public class LoginService {
 		}
 		
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
+		player.setRoomNo(1);
 		new ClientReceiver(player.getSocket()).start();
+		new Packing().sender(player.getPwSocket(),Protocol.ENTERLOBBY, player);
+		new Packing().sender(player.getPwSocket(),Protocol.ENTERROOM, player);
+		MainScreen.getMainScreen();
+		
 		resultHandler.loginSuccess(player);
 		
 	} //login();

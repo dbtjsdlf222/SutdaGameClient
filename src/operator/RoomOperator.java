@@ -7,16 +7,15 @@ import server.Room;
 import vo.PlayerVO;
 
 public class RoomOperator {
+	public static RoomOperator ro = new RoomOperator();
 	private Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
-	private static RoomOperator ro;
-
-	private RoomOperator() {}
-
-	public static RoomOperator getRoomOperator() {
-		if (ro == null)
-			ro = new RoomOperator();
-		return ro;
+	
+	static {
+		Room room = new Room();
+		ro.roomMap.put(1, room);
 	}
+	
+	private RoomOperator() {}
 
 	public void removeRoom(int roomNo) {
 		roomMap.remove(roomNo);
@@ -38,7 +37,9 @@ public class RoomOperator {
 	}
 
 	public void joinRoom(int roomNo, PlayerVO playerVO) {
+		
 		roomMap.get(roomNo).joinPlayer(playerVO);
+		
 	}
 
 }

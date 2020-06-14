@@ -43,18 +43,20 @@ public class Lobby {
 	public JButton[] bt1 = new JButton[10];
 
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
+		System.err.println(vo);
+		System.err.println(vo);
+		System.err.println(vo);
 		cp = new ClientPacketSender(vo.getSocket(), vo);
-		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
+//		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
 	}
 
 	public void lobbyScreen(PlayerVO vo) {
 		// 로비 라벨
-		JLabel lobbyLbl = new JLabel("L O B B Y");
-		lobbyLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-		lobbyLbl.setForeground(new Color(255, 255, 255, 150));
-		lobbyLbl.setBounds(340, 20, 200, 30);
-		lobbyJF.add(lobbyLbl);
+		ClientPacketController.rlobbyPan.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		ClientPacketController.rlobbyPan.setForeground(new Color(255, 255, 255, 150));
+		ClientPacketController.rlobbyPan.setBounds(340, 20, 200, 30);
+		lobbyJF.add(ClientPacketController.rlobbyPan);
 
 		// 로비 판넬 [방리스트]
 		ClientPacketController.plobbyPan.setBackground(new Color(0, 0, 0, 120));
@@ -68,19 +70,19 @@ public class Lobby {
 		newBtn.setBounds(681, 515, 150, 50);
 		lobbyJF.add(newBtn);
 
-		newBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == newBtn) {
-					cp.makeRoom();
-					new MainScreen();
-					lobbyJF.dispose();
-				}
-
-			}
-
-		});
+//		newBtn.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (e.getSource() == newBtn) {
+//					cp.makeRoom();
+//					new MainScreen();
+//					lobbyJF.dispose();
+//				}
+//
+//			}
+//
+//		});
 
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");

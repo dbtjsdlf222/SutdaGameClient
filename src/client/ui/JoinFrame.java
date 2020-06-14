@@ -238,7 +238,7 @@ public class JoinFrame {
 					if (text.equals("")) {
 						lblNicknameErrorMessage.setForeground(Color.RED);
 						lblNicknameErrorMessage.setText("닉네임을 입력해주세요.");
-					} else if (text.length() > 7 && text.length() < 2) {
+					} else if (2 > text.length() || text.length() > 6) {
 						lblNicknameErrorMessage.setForeground(Color.RED);
 						lblNicknameErrorMessage.setText("2 ~ 6자리 미만만 가능합니다.");
 					} else if (playerDAO.selectNick(text)) {
@@ -271,7 +271,7 @@ public class JoinFrame {
 					if (text.equals("")) {
 						lblIdErrorMessage.setForeground(Color.RED);
 						lblIdErrorMessage.setText("아이디를 입력해주세요.");
-					} else if (text.length() > 10 || text.length() < 5) {
+					} else if (text.length() > 10 && text.length() < 5) {
 						lblIdErrorMessage.setForeground(Color.RED);
 						lblIdErrorMessage.setText("5 ~ 10자리 이하만 가능합니다.");
 					} else if (playerDAO.selectID(text)) {
