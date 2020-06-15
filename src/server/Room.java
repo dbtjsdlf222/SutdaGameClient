@@ -81,16 +81,18 @@ public class Room {
 		arr[j] = temp;
 	}
 
-	public void joinPlayer(PlayerVO vo) {
+	public int joinPlayer(PlayerVO vo) {
 		for (int i = 0; i < 5; i++) {
 			if(playerMap.get(i) == null) {
 				playerMap.put(i, vo);
 				if(master==null) {
 					master = vo.getNic();
 				}
-				break;
+				return i;
 			} //if
 		} //for
+		System.err.println("room.joinPlayer 오류");
+		return 0;
 	} //join
 	
 	public void exitPlayer(PlayerVO vo) {

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import clientScreen.EnterRoom;
 import dao.PlayerDAO;
 import operator.RoomOperator;
 import util.Packing;
@@ -91,7 +90,7 @@ public class ServerPacketController {
 		case Protocol.ENTERROOM:
 			int roomNo = packet.getPlayerVO().getRoomNo();
 			ro.getRoom(roomNo).roomSpeaker(new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO));
-			ro.joinRoom(roomNo, thisPlayerVO);
+			thisPlayerVO.setIndex(ro.joinRoom(roomNo, thisPlayerVO));	//자신이 몇번쨰 index인지 저장
 			thisPlayerVO.setRoomNo(roomNo);
 			packet.setRoomPlayerList(ro.getRoom(roomNo).getList());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);

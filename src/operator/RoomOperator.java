@@ -32,9 +32,9 @@ public class RoomOperator {
 		return room.getRoomNo();
 	}
 
-	public void joinRoom(int roomNo, PlayerVO playerVO) {
+	public int joinRoom(int roomNo, PlayerVO playerVO) {
 		
-		roomMap.get(roomNo).joinPlayer(playerVO);
+		return roomMap.get(roomNo).joinPlayer(playerVO);
 		
 	}
 

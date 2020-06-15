@@ -32,7 +32,7 @@ public class PlayerVO {
    private float card1, card2;
    private int cardLevel;
    private String cardName;
-   private String location;
+   private int index;
    private String ip;
    private int roomNo; 	//0이면 로비
 
@@ -109,11 +109,6 @@ public void setRoomNo(int roomNo) {
 	   this.money = j;
    }
    
-   public void sendToServerPlayerVO() {
-      ObjectMapper mapper = new ObjectMapper();
-      
-   }
-   
    public String getIp() {
       return ip;
    }
@@ -122,13 +117,12 @@ public void setRoomNo(int roomNo) {
       this.ip = ip;
    }
 
-   public String getLocation() {
-      return location;
+   public int getIndex() {
+      return index;
    }
 
-   public void setLocation(String location) {
-      this.location = location;
-      sendToServerPlayerVO();
+   public void setIndex(int index) {
+      this.index = index;
    }
 
    public void setSocketWithBrPw(Socket socket) {
@@ -146,7 +140,7 @@ public String toString() {
 	return "PlayerVO [no=" + no + ", id=" + id + ", password=" + password + ", nic=" + nic + ", money=" + money
 			+ ", admin=" + admin + ", win=" + win + ", lose=" + lose + ", online=" + online + ", cha=" + cha + ", live="
 			+ live + ", card1=" + card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName
-			+ ", location=" + location + ", ip=" + ip + ", roomNo=" + roomNo + ", socket=" + socket + ", brSocket="
+			+ ", location=" + index + ", ip=" + ip + ", roomNo=" + roomNo + ", socket=" + socket + ", brSocket="
 			+ brSocket + ", pwSocket=" + pwSocket + "]";
 }
 
