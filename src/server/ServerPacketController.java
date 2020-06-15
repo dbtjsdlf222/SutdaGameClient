@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import clientScreen.EnterRoom;
 import dao.PlayerDAO;
 import operator.RoomOperator;
 import util.Packing;
@@ -71,6 +72,8 @@ public class ServerPacketController {
 			thisPlayerVO.setRoomNo(ro.makeRoom(packet.getPlayerVO()));
 			lobbyExitBroadcast();
 			System.out.println("makce Reload 출력 size():"+lobbyPlayerList.size());
+			packet.setRoomPlayerList(ro.getRoom(packet.getPlayerVO().getRoomNo()).getList());
+			Packing.sender(thisPlayerVO.getPwSocket(),Protocol.ENTERROOM);
 			lobbyReloadBroadcast();
 
 			break;

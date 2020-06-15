@@ -38,4 +38,15 @@ public class Packing {
 			e.printStackTrace();
 		}
 	}
+
+	public static void sender(PrintWriter pw, String pro) {
+		ObjectMapper mapper = new ObjectMapper();
+		Packet packet = new Packet();
+		packet.setAction(pro);
+		try {
+			pw.println(mapper.writeValueAsString(packet));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 }

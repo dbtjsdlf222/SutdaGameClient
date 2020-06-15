@@ -30,7 +30,6 @@ public class RoomOperator {
 		room.joinPlayer(pVO);
 		roomMap.put(room.getRoomNo(), room);
 		return room.getRoomNo();
-		
 	}
 
 	public void joinRoom(int roomNo, PlayerVO playerVO) {
