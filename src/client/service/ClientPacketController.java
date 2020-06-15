@@ -90,7 +90,7 @@ public class ClientPacketController {
 			while (keys.hasNext()) {
 				int key = keys.next();
 				Room value = map.get(key);
-				
+				System.out.println("getRoomNo(): "+value.getRoomNo());
 				rn[i][0] = value.getRoomNo()+"";
 				rn[i][1] = value.getMaster();
 				rn[i][2] = value.getPlayerSize() + "/5";

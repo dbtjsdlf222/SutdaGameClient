@@ -22,7 +22,7 @@ public class ServerReceiver extends Thread { // Server
 	public void run() {
 		ServerPacketController packetController = new ServerPacketController(socket);
 		ObjectMapper mapper = new ObjectMapper();
-
+		System.out.println("서버리시버 socket: "+socket);
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
 			try {
@@ -31,10 +31,11 @@ public class ServerReceiver extends Thread { // Server
 					try {
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
-					}catch(NullPointerException e){
+						System.out.println("packet: " + packet);
+					} catch (NullPointerException e) {
 						e.printStackTrace();
-						System.err.println("packetStr: "+packetStr);
-				}catch (Exception e) {
+						System.err.println("packetStr: " + packetStr);
+					} catch (Exception e) {
 						System.out.println(packetStr);
 						e.printStackTrace();
 						break;

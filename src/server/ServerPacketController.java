@@ -68,7 +68,10 @@ public class ServerPacketController {
 			break;
 
 		case Protocol.MAKEROOM:
-
+			System.out.println("MAKEROOM");
+			System.out.println("MAKEROOM");
+			System.out.println("MAKEROOM");
+			System.out.println("MAKEROOM");
 			thisPlayerVO.setRoomNo(ro.makeRoom(packet.getPlayerVO()));
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
@@ -76,6 +79,7 @@ public class ServerPacketController {
 					break;
 				}
 			}
+			System.out.println("makce Reload 출력 size():"+lobbyPlayerList.size());
 			lobbyBroadcastReload();
 
 			break;
@@ -90,7 +94,6 @@ public class ServerPacketController {
 			break;
 
 		case Protocol.ENTERROOM:
-			System.out.println("EnterRoom"+thisPlayerVO);
 			int roomNo = packet.getPlayerVO().getRoomNo();
 			ro.getRoom(roomNo).roomSpeaker(new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO));
 			ro.joinRoom(roomNo, thisPlayerVO);
@@ -111,24 +114,19 @@ public class ServerPacketController {
 
 		case Protocol.EXITLOBBY:
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo())
-					lobbyPlayerList.remove(i);
-				this.lobbyBroadcast(new Packet(Protocol.RELOADPLAYERLIST, thisPlayerVO));
-			}
-			
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), Protocol.RELOADPLAYERLIST, thisPlayerVO);
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 					lobbyPlayerList.remove(i);
 					break;
 				}
-			}
+				lobbyBroadcastReload();				
+			} //for
 			
 			break;
 
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:
 			if (thisPlayerVO.getNic() == null) {
+				System.out.println("enterlobby 받았음 사람 초기화중 thisPlayerVO:" + thisPlayerVO);
 				thisPlayerVO = packet.getPlayerVO();
 				thisPlayerVO.setSocketWithBrPw(socket);
 			}

@@ -40,12 +40,12 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	private ClientPacketSender cp;
 	public JButton[] bt1 = new JButton[10];
 
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
-		cp = new ClientPacketSender(vo.getSocket(), vo);
-		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
+		
+		ClientPacketSender.cps.enterLobby();
+//		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
 	}
 
@@ -110,7 +110,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					cp.makeRoom();
+					ClientPacketSender.cps.makeRoom();
 					MainScreen.ms.mainScreen();
 					lobbyJF.dispose();
 				}
