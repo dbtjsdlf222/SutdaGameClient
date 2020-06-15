@@ -43,11 +43,8 @@ public class Lobby {
 	public JButton[] bt1 = new JButton[10];
 
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
-		System.err.println(vo);
-		System.err.println(vo);
-		System.err.println(vo);
 		cp = new ClientPacketSender(vo.getSocket(), vo);
-//		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
+		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
 	}
 
@@ -70,19 +67,17 @@ public class Lobby {
 		newBtn.setBounds(681, 515, 150, 50);
 		lobbyJF.add(newBtn);
 
-//		newBtn.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (e.getSource() == newBtn) {
-//					cp.makeRoom();
-//					new MainScreen();
-//					lobbyJF.dispose();
-//				}
-//
-//			}
-//
-//		});
+		newBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == newBtn) {
+					cp.makeRoom();
+					MainScreen.ms.mainScreen();
+					lobbyJF.dispose();
+				}
+			} //action
+		}); //listener
 
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
@@ -151,9 +146,6 @@ public class Lobby {
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 로비에 플레이어 접속자 목록
-
-		
-		
 		ClientPacketController cl = new ClientPacketController();
 		
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();

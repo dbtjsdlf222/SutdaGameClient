@@ -163,7 +163,7 @@ public class LoginFrame implements LoginResultHandler {
 	public void loginSuccess(PlayerVO player) {
 		
 		dispose();
-//		new Lobby(player);
+		new Lobby(player);
 		
 	} //loginSuccess();
 

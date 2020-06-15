@@ -49,12 +49,7 @@ public class LoginService {
 		}
 		
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
-		player.setRoomNo(1);
 		new ClientReceiver(player.getSocket()).start();
-		new Packing().sender(player.getPwSocket(),Protocol.ENTERLOBBY, player);
-		new Packing().sender(player.getPwSocket(),Protocol.ENTERROOM, player);
-		MainScreen.ms.mainScreen();
-		
 		resultHandler.loginSuccess(player);
 		
 	} //login();
