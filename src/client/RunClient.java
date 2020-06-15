@@ -20,7 +20,8 @@ public class RunClient {
 				e1.printStackTrace();
 			}
 		}
-		EventQueue.invokeLater(() -> new LoginFrame());
+		EventQueue.invokeLater(() -> new LoginFrame());	//쓰레드 충돌 방지
+		
 	} //main();
 	
 } //class RunClient;

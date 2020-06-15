@@ -13,9 +13,7 @@ import dao.PlayerDAO;
 public class RunServer {
 	
 	public static void main(String[] args) {
-		
 		new RunServer().run();
-		
 	}
 	
 	public void run() {
