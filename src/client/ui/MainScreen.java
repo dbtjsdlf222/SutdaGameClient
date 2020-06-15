@@ -154,23 +154,25 @@ public class MainScreen extends JFrame {
 
          // 채팅 필드
          JTextField chatText = new JTextField();
-         chatText.setBounds(5, 5, 410, 210);
+         chatText.setBounds(10, 186, 320, 25);
          chatPan.add(chatText);
          chatText.requestFocus();
          chatText.setFont(new Font("Rosewood Std", Font.PLAIN, 12));
+         chatText.setBorder(new LineBorder(Color.orange, 3));
          ChattingOperator co = ChattingOperator.getInstance();
          
          ChattingOperator.chatArea.setEditable(false);
          ChattingOperator.chatArea.setLineWrap(true);
+         ChattingOperator.chatArea.setBorder(new LineBorder(Color.orange, 3));
          ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
          ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-         ClientPacketController.scrollPane.setBounds(10, 10, 10, 10);
+         ClientPacketController.scrollPane.setBounds(10, 10, 400, 165);
          ClientPacketController.scrollPane.setBorder(null);
          chatPan.add(ClientPacketController.scrollPane);
 
          // 채팅 보내기 버튼
          JButton chatBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/Send.PNG")));
-         chatBtn.setBounds(578, 225, 70, 25);
+         chatBtn.setBounds(340, 186, 70, 25);
          chatPan.add(chatBtn);
          JRootPane rootPane = this.getRootPane();
          rootPane.setDefaultButton(chatBtn);
