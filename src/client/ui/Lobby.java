@@ -245,13 +245,25 @@ public class Lobby {
 		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
-
+		
+		exitBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == exitBtn) {
+					System.exit(0);
+				}
+			}
+		});
+			
+		
 		// JFrame 정보
 		imgP = new Background();
 		imgP.lobbyImage();
 		con = lobbyJF.getContentPane();
 		con.add(imgP, BorderLayout.CENTER);
 		lobbyJF.setSize(1280, 720);
+		lobbyJF.setUndecorated(true);
 		lobbyJF.setVisible(true);
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);
