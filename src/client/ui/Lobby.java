@@ -263,6 +263,7 @@ public class Lobby {
 		con = lobbyJF.getContentPane();
 		con.add(imgP, BorderLayout.CENTER);
 		lobbyJF.setSize(1280, 720);
+		lobbyJF.setUndecorated(true);
 		lobbyJF.setVisible(true);
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);
