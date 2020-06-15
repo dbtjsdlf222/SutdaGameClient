@@ -92,7 +92,7 @@ public class JoinFrame {
 		
 		textFieldNickname = new JTextField();
 		GridBagConstraints gbc_textFieldNickname = new GridBagConstraints();
-		gbc_textFieldNickname.gridwidth = 2;
+		gbc_textFieldNickname.gridwidth = 3;
 		gbc_textFieldNickname.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNickname.fill = GridBagConstraints.BOTH;
 		gbc_textFieldNickname.gridx = 2;
@@ -100,13 +100,6 @@ public class JoinFrame {
 		frame.getContentPane().add(textFieldNickname, gbc_textFieldNickname);
 		textFieldNickname.setColumns(10);
 		
-		JButton btnNicknameDuplicateCheck = new JButton("중복체크");
-		GridBagConstraints gbc_btnNicknameDuplicateCheck = new GridBagConstraints();
-		gbc_btnNicknameDuplicateCheck.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNicknameDuplicateCheck.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNicknameDuplicateCheck.gridx = 4;
-		gbc_btnNicknameDuplicateCheck.gridy = 4;
-		frame.getContentPane().add(btnNicknameDuplicateCheck, gbc_btnNicknameDuplicateCheck);
 		
 		JLabel lblNicknameErrorMessage = new JLabel("");
 		lblNicknameErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
@@ -130,7 +123,7 @@ public class JoinFrame {
 		
 		textFieldId = new JTextField();
 		GridBagConstraints gbc_textFieldId = new GridBagConstraints();
-		gbc_textFieldId.gridwidth = 2;
+		gbc_textFieldId.gridwidth = 3;
 		gbc_textFieldId.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldId.fill = GridBagConstraints.BOTH;
 		gbc_textFieldId.gridx = 2;
@@ -138,13 +131,6 @@ public class JoinFrame {
 		frame.getContentPane().add(textFieldId, gbc_textFieldId);
 		textFieldId.setColumns(10);
 		
-		JButton btnIdDuplicateCheck = new JButton("중복체크");
-		GridBagConstraints gbc_btnIdDuplicateCheck = new GridBagConstraints();
-		gbc_btnIdDuplicateCheck.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnIdDuplicateCheck.insets = new Insets(0, 0, 5, 5);
-		gbc_btnIdDuplicateCheck.gridx = 4;
-		gbc_btnIdDuplicateCheck.gridy = 6;
-		frame.getContentPane().add(btnIdDuplicateCheck, gbc_btnIdDuplicateCheck);
 		
 		JLabel lblIdErrorMessage = new JLabel("");
 		lblIdErrorMessage.setForeground(Color.RED);

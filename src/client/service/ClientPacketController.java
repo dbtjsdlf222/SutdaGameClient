@@ -25,16 +25,7 @@ public class ClientPacketController {
 	private static String pb[] = { "닉네임", "판수", "돈" };
 	private static String[][] pn = new String[99][99];
 	
-	private static String rb[] = { "방번호", "인원", "입장" };
-	private static String[][] rn = new String[99][99];
-	
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
-		public boolean isCellEditable(int row, int column) {
-			return false;
-		}
-	};
-	
-	public static DefaultTableModel rLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
@@ -42,8 +33,17 @@ public class ClientPacketController {
 	public static JTable playerJT = new JTable(pLmodel);
 	public static JScrollPane plScroll = new JScrollPane(playerJT);
 	public static JPanel plobbyPan = new JPanel();
+
 	
-	public static JTable roomJT = new JTable(pLmodel);
+	private static String rb[] = { "방번호", "방장 닉네임", "인원"};
+	private static String[][] rn = new String[99][99];
+	
+	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+	public static JTable roomJT = new JTable(rLmodel);
 	public static JScrollPane rlScroll = new JScrollPane(roomJT);
 	public static JPanel rlobbyPan = new JPanel();
 	
@@ -91,13 +91,15 @@ public class ClientPacketController {
 				int key = keys.next();
 				Room value = map.get(key);
 				
-				pn[i][0] = value.getRoomNo()+"";
-				pn[i][1] = value.getPlayerSize() + "/5";
+				rn[i][0] = value.getRoomNo()+"";
+				rn[i][1] = value.getMaster();
+				rn[i][2] = value.getPlayerSize() + "/5";
+				//rn[i][2] = 
 				
 				//pn[i][2] = new JButton(value.getRoomNo()+"");
 				JButton jb = new JButton(value.getRoomNo()+"");
 				
-				pLmodel.addRow(pn[i]);
+				rLmodel.addRow(rn[i]);
 				i++;
 			}
 

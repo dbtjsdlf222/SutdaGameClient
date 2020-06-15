@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 
@@ -50,18 +51,55 @@ public class Lobby {
 
 	public void lobbyScreen(PlayerVO vo) {
 		// 로비 라벨
-		ClientPacketController.rlobbyPan.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-		ClientPacketController.rlobbyPan.setForeground(new Color(255, 255, 255, 150));
-		ClientPacketController.rlobbyPan.setBounds(340, 20, 200, 30);
-		lobbyJF.add(ClientPacketController.rlobbyPan);
+		JLabel lobLbl = new JLabel("L O B B Y");
+		lobLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		lobLbl.setForeground(new Color(255, 255, 255, 150));
+		lobLbl.setBounds(340, 20, 200, 30);
+		lobbyJF.add(lobLbl);
 
 		// 로비 판넬 [방리스트]
-		ClientPacketController.plobbyPan.setBackground(new Color(0, 0, 0, 120));
-		ClientPacketController.plobbyPan.setBounds(5, 60, 818, 290);
-		ClientPacketController.plobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-		ClientPacketController.plobbyPan.setLayout(new GridLayout(99, 1, 0, 0));
-		lobbyJF.add(ClientPacketController.plobbyPan);
+		ClientPacketController.rlobbyPan.setBackground(new Color(0, 0, 0, 120));
+		ClientPacketController.rlobbyPan.setBounds(5, 60, 818, 290);
+		ClientPacketController.rlobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ClientPacketController.rlobbyPan.setLayout(null);
+		lobbyJF.add(ClientPacketController.rlobbyPan);
+		
+		
+//		String[] lob = { "방 번호", "방장 NIC", "인원수", "입장" };
+//	      String[][] lobb = new String[99][99];
+//	      DefaultTableModel lobModel = new DefaultTableModel(lob, 0);
+//	      JTable lobjT = new JTable(lobModel);
+//	      JScrollPane lobJScroll = new JScrollPane(lobjT);
 
+	      // 중앙으로 배치
+	      DefaultTableCellRenderer lobRenderer = new DefaultTableCellRenderer();
+	      lobRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	      TableColumnModel lobTcmSchedule = ClientPacketController.roomJT.getColumnModel();
+	      for (int i = 0; i < lobTcmSchedule.getColumnCount(); i++) {
+	         lobTcmSchedule.getColumn(i).setCellRenderer(lobRenderer);
+	      }
+
+	      // Header을 중앙에 배치
+	      DefaultTableCellRenderer lobHRenderer = (DefaultTableCellRenderer)ClientPacketController.roomJT.getTableHeader()
+	            .getDefaultRenderer();
+	      lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	      ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
+
+	      ClientPacketController.roomJT.getTableHeader().setBackground(new Color(32, 136, 203));
+	      ClientPacketController.roomJT.setShowVerticalLines(false);
+	      ClientPacketController.roomJT.setSelectionBackground(new Color(232, 57, 95));
+	      ClientPacketController.roomJT.setRowHeight(40);
+	      ClientPacketController.roomJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
+	      ClientPacketController.roomJT.getTableHeader().setReorderingAllowed(false);
+	      ClientPacketController.roomJT.getTableHeader().setResizingAllowed(false);
+	      ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+	      ClientPacketController.rlScroll.setOpaque(false);
+	      ClientPacketController.rlScroll.setBounds(10, 10, 798, 270);
+	      ClientPacketController.rlScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+	      ClientPacketController.rlScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	      ClientPacketController.rlobbyPan.add(ClientPacketController.rlScroll);
+		
+		
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
 		newBtn.setBounds(681, 515, 150, 50);
@@ -146,7 +184,7 @@ public class Lobby {
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 로비에 플레이어 접속자 목록
-		ClientPacketController cl = new ClientPacketController();
+		
 		
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
