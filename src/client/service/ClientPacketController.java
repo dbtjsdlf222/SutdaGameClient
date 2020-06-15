@@ -1,5 +1,6 @@
 package client.service;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
@@ -40,7 +41,7 @@ public class ClientPacketController {
 
 	
 	private static String rb[] = { "방번호", "방장 닉네임", "인원", "상태"};
-	private static String[][] rn = new String[99][99];
+	public static String[][] rn = new String[99][99];
 	
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -100,7 +101,6 @@ public class ClientPacketController {
 				rn[i][2] = value.getPlayerSize() + "/5";
 
 				JButton jb = new JButton(value.getRoomNo()+"");
-				
 				rLmodel.addRow(rn[i]);
 				i++;
 			

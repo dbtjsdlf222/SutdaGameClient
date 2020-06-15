@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -88,36 +89,15 @@ public class Lobby {
 	      lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 	      ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
 	      
-	      ClientPacketController.roomJT.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+	      ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount()==1) {
-					ClientPacketSender.cps.enterRoom(ClientPacketController.rLmodel.getRowCount());
-					System.out.println(ClientPacketController.rLmodel.getRowCount());
+					
+					ClientPacketSender.cps.enterRoom(Integer.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+					
+					System.out.println("들어가는숫자 : " + (Integer.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
 					MainScreen.ms.mainScreen();
 					lobbyJF.dispose();
 				}
