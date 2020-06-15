@@ -31,6 +31,10 @@ public class ServerReceiver extends Thread { // Server
 					try {
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
+						if(packet==null) {
+							System.err.println("NUll packetStr:"+ packetStr);
+							break;
+						}
 						System.out.println("packet: " + packet);
 					} catch (NullPointerException e) {
 						e.printStackTrace();

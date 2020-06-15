@@ -60,7 +60,7 @@ public class ClientPacketController {
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
 			
-		case Protocol.RELOADPLAYERLIST:
+		case Protocol.RELOADLOBBYLIST:
 		case Protocol.ENTERLOBBY:
 			
 			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();

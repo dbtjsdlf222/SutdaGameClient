@@ -32,7 +32,6 @@ public class Protocol {
 	public static final String Call = "18";
 	public static final String Die = "19";
 	public static final String Pping = "20";
-	public static final String RELOADPLAYERLIST = "22";
-	public static final String RELOADROOMLIST = "23";
+	public static final String RELOADLOBBYLIST = "22";
 	
 }
