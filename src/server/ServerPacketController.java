@@ -158,12 +158,13 @@ public class ServerPacketController {
 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
 			if(lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 				lobbyPlayerList.remove(i);
+			} else {
+				Packet packet = new Packet();
+				packet.setAction(Protocol.RELOADLOBBYLIST);
+				packet.setPlayerList(lobbyPlayerList);
+				packet.setRoomMap(ro.getAllRoom());
+				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
 			}
-			Packet packet = new Packet();
-			packet.setAction(Protocol.RELOADLOBBYLIST);
-			packet.setPlayerList(lobbyPlayerList);
-			packet.setRoomMap(ro.getAllRoom());
-			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
 		} //for
 	}
 	
