@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +31,7 @@ import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
+import server.Room;
 import util.Packing;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -40,8 +43,8 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	public JButton[] bt1 = new JButton[10];
-
+	Room value;
+	
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
 		
 		ClientPacketSender.cps.enterLobby();
@@ -84,6 +87,41 @@ public class Lobby {
 	            .getDefaultRenderer();
 	      lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 	      ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
+	      
+	      ClientPacketController.roomJT.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==1) {
+					ClientPacketSender.cps.enterRoom();
+					MainScreen.ms.mainScreen();
+					lobbyJF.dispose();
+				}
+			}
+		});
 
 	      ClientPacketController.roomJT.getTableHeader().setBackground(new Color(32, 136, 203));
 	      ClientPacketController.roomJT.setShowVerticalLines(false);
@@ -92,7 +130,7 @@ public class Lobby {
 	      ClientPacketController.roomJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 	      ClientPacketController.roomJT.getTableHeader().setReorderingAllowed(false);
 	      ClientPacketController.roomJT.getTableHeader().setResizingAllowed(false);
-	      ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+	      ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0));
 	      ClientPacketController.rlScroll.setOpaque(false);
 	      ClientPacketController.rlScroll.setBounds(10, 10, 798, 270);
 	      ClientPacketController.rlScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
@@ -209,7 +247,7 @@ public class Lobby {
 		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.playerJT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.playerJT.getTableHeader().setResizingAllowed(false);
-		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0, 0));
+		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0));
 		ClientPacketController.plScroll.setOpaque(false);
 		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
 		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));

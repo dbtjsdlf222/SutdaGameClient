@@ -1,5 +1,7 @@
 package client.service;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import client.ui.Lobby;
@@ -20,7 +24,7 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ClientPacketController {
-
+	
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
 	private static String[][] pn = new String[99][99];
@@ -101,8 +105,8 @@ public class ClientPacketController {
 				
 				rLmodel.addRow(rn[i]);
 				i++;
+			
 			}
-
 			break;
 
 		case Protocol.LOGIN:
