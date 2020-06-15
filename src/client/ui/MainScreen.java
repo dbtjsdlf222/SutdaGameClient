@@ -43,8 +43,9 @@ public class MainScreen extends JFrame {
 	private JTextField tf;
 	private JPanel[] masterlist = new JPanel[5];
 	private int master;
-	private JButton btn1, btn2, btn3, btn4, btn5, btn6;
+	private JButton[] btn = new JButton[6];
 	private Map<Integer, PlayerVO> playerListMap = new HashMap<>();
+	private JPanel mat = new JPanel();
 
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
@@ -122,108 +123,42 @@ public class MainScreen extends JFrame {
 		pan.setBounds(0, 620, 1265, 60);
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
-		add(pan); // 배팅 버튼 패널
+		add(pan);
 
-//	       if (k == 0) {
-		JButton btn1 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Allin.PNG")));
-		btn1.setOpaque(false);
-		pan.add(btn1);
-		JButton btn2 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Half.PNG")));
-		btn2.setOpaque(false);
-		pan.add(btn2);
-		JButton btn3 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Quater.PNG")));
-		btn3.setOpaque(false);
-		pan.add(btn3);
-		JButton btn4 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Bbing.PNG")));
-		btn4.setOpaque(false);
-		pan.add(btn4);
-		JButton btn5 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Call.PNG")));
-		btn5.setOpaque(false);
-		pan.add(btn5);
-		JButton btn6 = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/Die.PNG")));
-		btn6.setOpaque(false);
-		pan.add(btn6);
-		// } else {
-		// JButton btn1 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Allin_.PNG")));
-		// btn1.setOpaque(false);
-		// pan.add(btn1);
-		// JButton btn2 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Half_.PNG")));
-		// btn2.setOpaque(false);
-		// pan.add(btn2);
-		// JButton btn3 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Quater_.PNG")));
-		// btn3.setOpaque(false);
-		// pan.add(btn3);
-		// JButton btn4 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Bbing_.PNG")));
-		// btn4.setOpaque(false);
-		// pan.add(btn4);
-		// JButton btn5 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Call_.PNG")));
-		// btn5.setOpaque(false);
-		// pan.add(btn5);
-		// JButton btn6 = new JButton(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Die_.PNG")));
-		// btn6.setOpaque(false);
-		// pan.add(btn6);
-		// }
+		String[] resourceArray = { "Allin", "Half", "Quater", "Bbing", "Call", "Die" };
+
+		for (int i = 0; i < btn.length; i++) {
+			btn[i] = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/" + resourceArray[i] + ".PNG")));
+			btn[i].setOpaque(false);
+			pan.add(btn[i]);
+		}
+
 		ActionListener action = new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(e.getSource());
-				System.out.println(btn1);
-				if (e.getSource() == btn1) {
+				if (e.getSource() == btn[0]) {
 					tf.setText("올인");
-				} else if (e.getSource() == btn2) {
+				} else if (e.getSource() == btn[1]) {
 					tf.setText("하프");
-				} else if (e.getSource() == btn3) {
+				} else if (e.getSource() == btn[2]) {
 					tf.setText("쿼터");
-				} else if (e.getSource() == btn4) {
+				} else if (e.getSource() == btn[3]) {
 					tf.setText("삥");
-				} else if (e.getSource() == btn5) {
+				} else if (e.getSource() == btn[4]) {
 					tf.setText("콜");
-				} else if (e.getSource() == btn6) {
+				} else if (e.getSource() == btn[5]) {
 					tf.setText("다이");
 				}
 			}
 		};
 
-		btn1.addActionListener(action);
-		btn2.addActionListener(action);
-		btn3.addActionListener(action);
-		btn4.addActionListener(action);
-		btn5.addActionListener(action);
-		btn6.addActionListener(action); // 버튼 클릭 시 텍스트 표시
-
-		// }else {
-		// JLabel btn1 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Allin_.PNG")));
-		// btn1.setOpaque(false);
-		// pan.add(btn1);
-		// JLabel btn2 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Half_.PNG")));
-		// btn2.setOpaque(false);
-		// pan.add(btn2);
-		// JLabel btn3 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Quater_.PNG")));
-		// btn3.setOpaque(false);
-		// pan.add(btn3);
-		// JLabel btn4 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Bbing_.PNG")));
-		// btn4.setOpaque(false);
-		// pan.add(btn4);
-		// JLabel btn5 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Call_.PNG")));
-		// btn5.setOpaque(false);
-		// pan.add(btn5);
-		// JLabel btn6 = new JLabel(new
-		// ImageIcon(MainScreen.class.getResource("../../img/Die_.PNG")));
-		// btn6.setOpaque(false);
-		// pan.add(btn6);
-		// } //비활성화 버튼
+		btn[0].addActionListener(action);
+		btn[1].addActionListener(action);
+		btn[2].addActionListener(action);
+		btn[3].addActionListener(action);
+		btn[4].addActionListener(action);
+		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 
 		setTitle("섯다 온라인");
 
@@ -235,7 +170,7 @@ public class MainScreen extends JFrame {
 		setResizable(false);
 		setVisible(true); // 배경화면
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(MainScreen.class.getResource("../../img/titleIcon.jpg"));
 		setIconImage(img);
@@ -245,15 +180,13 @@ public class MainScreen extends JFrame {
 		groupLayout
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
-
 	}
 
 	public void mat() {
-		JPanel pan6 = new JPanel();
-		pan6.setBounds(410, 100, 440, 300);
-		pan6.setBackground(new Color(0, 0, 0, 122));
+		mat.setBounds(410, 100, 440, 300);
+		mat.setBackground(new Color(0, 0, 0, 122));
 
-		add(pan6); // 배팅 금액 패널
+		add(mat); // 배팅 금액 패널
 
 		JLabel littleMoney = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/littleMoney.PNG")));
 		JLabel manyMoney = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/manyMoney.PNG")));
@@ -265,10 +198,9 @@ public class MainScreen extends JFrame {
 		// if(stackMoney >= 10000000) {
 		// pan6.add(littleMoney);
 		// }else {
-		pan6.add(manyMoney);
+		mat.add(manyMoney);
 		// }
-		pan6.add(tf);
-//	      pan.add(tf);
+		mat.add(tf);
 	}
 
 	public void mainScreen() {
@@ -336,7 +268,7 @@ public class MainScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					if (!(chatText.getText().equals(""))) {
-						co.chatting(chatText.getText(), vo);
+//						co.chatting(chatText.getText(), vo);
 						chatText.requestFocus();
 
 						chatText.setText("");
@@ -359,9 +291,9 @@ public class MainScreen extends JFrame {
 				}
 			}
 		});
-		
+
 		new Thread(new MusicPlayer()).start(); // 배경음악
-		
+
 	}
 
 	public void enterPlayerList(Map<Integer, PlayerVO> voList) {
@@ -685,8 +617,8 @@ public class MainScreen extends JFrame {
 
 		MainScreen ms = new MainScreen();
 		ms.mainScreen();
-		ms.enterPlayerList(voList);
 		ms.buttonSet();
+		ms.enterPlayerList(voList);
 		ms.mat();
 	}
 }
