@@ -10,10 +10,7 @@ public class RoomOperator {
 	public static RoomOperator ro = new RoomOperator();
 	private Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
 	
-	static {
-		Room room = new Room();
-		ro.roomMap.put(1, room);
-	}
+	static {}
 	
 	private RoomOperator() {}
 
