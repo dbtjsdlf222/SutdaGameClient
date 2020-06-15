@@ -123,6 +123,7 @@ public class ClientPacketController {
 			MainScreen.ms.exitPlayer(packet.getPlayerVO());
 			break;
 			
+		case Protocol.MAKEROOM:
 		case Protocol.ENTERROOM:
 			MainScreen.ms.enterPlayerList(packet.getRoomPlayerList());
 			System.out.println("ENTERROOM:  "+packet.getRoomPlayerList());

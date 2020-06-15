@@ -69,11 +69,12 @@ public class ServerPacketController {
 			break;
 
 		case Protocol.MAKEROOM:
-			thisPlayerVO.setRoomNo(ro.makeRoom(packet.getPlayerVO()));
+			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
+			packet.getPlayerVO().setRoomNo(thisPlayerVO.getRoomNo());
 			lobbyExitBroadcast();
 			System.out.println("makce Reload 출력 size():"+lobbyPlayerList.size());
-			packet.setRoomPlayerList(ro.getRoom(packet.getPlayerVO().getRoomNo()).getList());
-			Packing.sender(thisPlayerVO.getPwSocket(),Protocol.ENTERROOM);
+			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
+			Packing.sender(thisPlayerVO.getPwSocket(), packet, Protocol.ENTERROOM);
 			lobbyReloadBroadcast();
 
 			break;

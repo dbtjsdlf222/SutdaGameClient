@@ -506,6 +506,9 @@ public class MainScreen extends JFrame {
             break;
          } //if
       } //for
+      
+      playerListMap.put(i, vo);
+      
       try {
 
          card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
