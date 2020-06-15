@@ -39,7 +39,7 @@ public class ClientPacketController {
 	public static JPanel plobbyPan = new JPanel();
 
 	
-	private static String rb[] = { "방번호", "방장 닉네임", "인원"};
+	private static String rb[] = { "방번호", "방장 닉네임", "인원", "상태"};
 	private static String[][] rn = new String[99][99];
 	
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
@@ -98,9 +98,7 @@ public class ClientPacketController {
 				rn[i][0] = value.getRoomNo()+"";
 				rn[i][1] = value.getMaster();
 				rn[i][2] = value.getPlayerSize() + "/5";
-				//rn[i][2] = 
-				
-				//pn[i][2] = new JButton(value.getRoomNo()+"");
+
 				JButton jb = new JButton(value.getRoomNo()+"");
 				
 				rLmodel.addRow(rn[i]);

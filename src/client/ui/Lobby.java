@@ -116,7 +116,8 @@ public class Lobby {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount()==1) {
-					ClientPacketSender.cps.enterRoom(value.getRoomNo());
+					ClientPacketSender.cps.enterRoom(ClientPacketController.rLmodel.getRowCount());
+					System.out.println(ClientPacketController.rLmodel.getRowCount());
 					MainScreen.ms.mainScreen();
 					lobbyJF.dispose();
 				}
