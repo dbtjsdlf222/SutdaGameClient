@@ -69,15 +69,7 @@ public class ServerPacketController {
 
 		case Protocol.MAKEROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(packet.getPlayerVO()));
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				}
-				int roomNo = thisPlayerVO.getRoomNo();
-				
-				
-			}
+			lobbyExitBroadcast();
 			System.out.println("makce Reload 출력 size():"+lobbyPlayerList.size());
 			lobbyReloadBroadcast();
 
@@ -100,14 +92,7 @@ public class ServerPacketController {
 			packet.setRoomPlayerList(ro.getRoom(roomNo).getList());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-
-				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), Protocol.RELOADLOBBYLIST, thisPlayerVO);
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				}
-			}
+			lobbyExitBroadcast();
 
 			break;
 
@@ -158,13 +143,7 @@ public class ServerPacketController {
 					.roomSpeaker(new Packet(Protocol.MESSAGE, "[" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.EXITROOM, thisVoToString()));
 		} else {
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				} //if
-			} //for
-			lobbyReloadBroadcast();
+			lobbyExitBroadcast();
 		} // if~else
 		System.err.println(thisPlayerVO.getNic() + "님이 나가셨습니다.");
 	} //exitPlayer
@@ -175,9 +154,9 @@ public class ServerPacketController {
 		} //for
 	} //broadcast
 
-	public void lobbyExitBroadcast(int playerNum) {
+	public void lobbyExitBroadcast() {
 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			if(lobbyPlayerList.get(i).getNo() == playerNum) {
+			if(lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 				lobbyPlayerList.remove(i);
 			}
 			Packet packet = new Packet();

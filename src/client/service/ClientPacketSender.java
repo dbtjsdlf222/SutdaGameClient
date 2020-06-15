@@ -33,7 +33,8 @@ public class ClientPacketSender {
 		Packing.sender(pw, Protocol.MAKEROOM, vo);
 	} // makeRoom();
 
-	public void enterRoom() {
+	public void enterRoom(int roomNo) {
+		vo.setRoomNo(roomNo);
 		Packing.sender(pw, Protocol.ENTERROOM, vo);
 	} // enterRoom();
 
