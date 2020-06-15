@@ -103,7 +103,6 @@ public class ClientPacketController {
 				JButton jb = new JButton(value.getRoomNo()+"");
 				rLmodel.addRow(rn[i]);
 				i++;
-			
 			}
 			break;
 
