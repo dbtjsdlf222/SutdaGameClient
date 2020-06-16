@@ -1,8 +1,5 @@
 package client.service;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import client.ui.Lobby;
@@ -54,10 +49,9 @@ public class ClientPacketController {
    
    DecimalFormat fm = new DecimalFormat("###,###");
 
-   public ClientPacketController() {
-   }
+   public ClientPacketController() {}
 
-   public void packetController(Packet packet) {
+   public void controller(Packet packet) {
 
       switch (packet.getAction()) {
       case Protocol.MESSAGE: // 채팅
@@ -121,12 +115,17 @@ public class ClientPacketController {
          break;
          
       case Protocol.EXITOTHERROOM:
-         MainScreen.instance.exitPlayer(packet.getPlayerVO());
+    	 System.out.println("Protocol.EXITOTHERROOM: getIndex ["+ packet.getPlayerVO().getIndex()+"]");
+         MainScreen.instance.exitPlayer(Integer.parseInt(packet.getMotion()));
          break;
          
       case Protocol.ENTERROOM:
          MainScreen.instance.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
          break;
+        
+      case Protocol.CHANGEMASTER:
+//    	  MainScreen.instance.changeMaster(Integer.parseInt(packet.getMotion()));
+    	  break;
       } // switch
    } // method
 } // class

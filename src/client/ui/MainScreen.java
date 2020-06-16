@@ -58,18 +58,23 @@ public class MainScreen extends JFrame {
 	JTextField[] nicText = new JTextField[5];
 	JTextField[] moneyText = new JTextField[5];
 	JLabel[] profile = new JLabel[5];
-
-	public void exitPlayer(PlayerVO vo) {
-		for (int i = 0; i < 5; i++) {
-			if (playerListMap.get(i).getNo() == vo.getNo()) {
-				playerListMap.remove(i);
-				break;
-			} // if
-		} // for
+	
+	public void exitPlayer(int index) {
+		int myIndex;
+		
+		if((myIndex = index-this.index) < 0) {
+			myIndex+=5;
+		}
+		
+		System.out.println("public void exitPlayer"+ index);
+		panlist[myIndex] = null;
+		
+//		if (playerListMap.get(index).getNo() == playerVO.getNo()) {
+//			playerListMap.remove(index);
+//		} // if
 	} // exitPlayer
 
-	private MainScreen() {
-	}
+	private MainScreen() {}
 
 	// public static void removeMainScreen() {
 	// if(ms1.isDisplayable()) {
@@ -115,7 +120,6 @@ public class MainScreen extends JFrame {
 		// try {
 		// Thread.sleep(3000);
 		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// } //시간 제한
 	} // 게임 진행 순서
@@ -273,9 +277,9 @@ public class MainScreen extends JFrame {
 
 		setTitle("섯다 온라인");
 
-		buttonSet();	//버튼 출력
-		mat();			//돈판 출력
-		
+		buttonSet(); // 버튼 출력
+		mat(); // 돈판 출력
+
 		back.mainImage();
 		content = getContentPane();
 		content.add(back, BorderLayout.CENTER);
@@ -294,25 +298,25 @@ public class MainScreen extends JFrame {
 		groupLayout
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
-		
+
 	}
 
 	public void setSit(int i, PlayerVO setVO) {
-		
+
 		try {
 			card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
 			card2[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
 			nicText[i] = new JTextField(setVO.getNic());
 			moneyText[i] = new JTextField(setVO.getMoney() + "");
-			
+
 			if (i == 1 || i == 2) {
-				profile[i] = new JLabel(new ImageIcon(MainScreen.class
-						.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
+				profile[i] = new JLabel(new ImageIcon(
+						MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
 				profile[i] = new JLabel(new ImageIcon(
 						MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
-			
+
 			if (i == 1) {
 				panlist[i].add(nicText[i]);
 				panlist[i].add(moneyText[i]);
@@ -429,44 +433,44 @@ public class MainScreen extends JFrame {
 				moneyText[i].setOpaque(true);
 
 			}
-	
 
-			} catch (Exception e) {
-				System.out.println("빈자리 감지|MainScreen 324");
-			}
-	} //setSit();
+		} catch (Exception e) {
+			System.out.println("빈자리 감지|MainScreen 324");
+		}
+	} // setSit();
 
-	
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
-		
+
 		this.index = index;
 		playerListMap = voList;
-		
+
 		for (int i = 0; i < 5; i++) {
-			
 			int j;
-			if((j=index+i) >= 5) {
-				j-=5;
-			}
-			PlayerVO setVO = voList.get(j);
 			
+			if ((j = index + i) >= 5) 
+				j -= 5;
+			
+			PlayerVO setVO = voList.get(j);
+
 			if (setVO == null)
 				continue;
-			
+
 			setSit(i, setVO);
-			
-		} //for
-	} //enterPlayerList();
-	
+
+		} // for
+	} // enterPlayerList();
+
 	public void enterPlayerOther(PlayerVO vo, int index) {
-		
+		if(playerVO == null) {
+			playerVO = vo;
+		}
 		playerListMap.put(index, vo);
-		
+
 		index -= this.index;
-		
-		if(index < 0) 
+
+		if (index < 0)
 			index += 5;
-		
+
 		setSit(index, vo);
 
 	} // enterPlayerList();

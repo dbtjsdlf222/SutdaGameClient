@@ -42,7 +42,7 @@ public class Lobby {
 	Room value;
 
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
-
+		System.out.println("lobby 만들어졌따");
 		ClientPacketSender.instance.enterLobby();
 //		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);

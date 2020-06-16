@@ -14,7 +14,7 @@ import vo.PlayerVO;
 
 public class ChattingOperator {
 	private static ChattingOperator instance;
-
+	
 	private ChattingOperator() {
 	}
 
@@ -30,6 +30,5 @@ public class ChattingOperator {
 		PrintWriter pw = vo.getPwSocket();
 		Packet pac = new Packet(Protocol.MESSAGE, msg, vo);
 		Packing.sender(pw, pac);
-
 	}
 }

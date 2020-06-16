@@ -23,11 +23,11 @@ public class ServerReceiver extends Thread { // Server
 		ServerPacketController packetController = new ServerPacketController(socket);
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
+			String packetStr = "";
 			try {
-				String packetStr = br.readLine();
 				try {
 					while (true) {
+						packetStr = br.readLine();
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 						System.out.println("packet: " + packet);
@@ -35,12 +35,12 @@ public class ServerReceiver extends Thread { // Server
 				} catch (NullPointerException e) {
 					packetController.exitPlayer();
 					System.err.println("packetStr: " + packetStr);
-				}catch (Exception e) {
-					e.printStackTrace();
+				} catch (SocketException e) {
+					packetController.exitPlayer();
 					System.err.println("packetStr: " + packetStr);
 				}
-			} catch (SocketException e) {
-				packetController.exitPlayer();
+			} catch (Exception e) {
+				e.printStackTrace();
 			} // try~catch
 
 		} catch (IOException e) {

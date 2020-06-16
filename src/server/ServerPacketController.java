@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.event.ChangeEvent;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -71,16 +73,21 @@ public class ServerPacketController {
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
 			packet.getPlayerVO().setRoomNo(thisPlayerVO.getRoomNo());
 			lobbyExitBroadcast();
-			System.out.println("makce Reload 출력 size():"+lobbyPlayerList.size());
 			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
-			Packing.sender(thisPlayerVO.getPwSocket(), packet, Protocol.ENTERROOM);
+			thisPlayerVO.setIndex(0);
+			packet.setPlayerVO(thisPlayerVO);
+			packet.setAction(Protocol.ENTEROTHERROOM);
+			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
+			
+//			this.packetAnalysiser(packet.setAction(Protocol.CHANGEMASTER));
 
 			break;
 
 		case Protocol.EXITROOM:
-			ro.getRoom(packet.getPlayerVO().getRoomNo()).exitPlayer(thisPlayerVO);
-			ro.getRoom(packet.getPlayerVO().getRoomNo()).roomSpeaker(packet);
+			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
+			room.exitPlayer(thisPlayerVO);
+			room.roomSpeaker(packet);
 			thisPlayerVO.setRoomNo(0);
 			if (ro.getRoom(packet.getPlayerVO().getRoomNo()).getList().size() <= 0) {
 				ro.removeRoom(packet.getPlayerVO().getRoomNo());
@@ -88,10 +95,13 @@ public class ServerPacketController {
 			break;
 
 		case Protocol.ENTERROOM:
-			int roomNo = packet.getPlayerVO().getRoomNo();
-			ro.getRoom(roomNo).roomSpeaker(new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO));
-			thisPlayerVO.setIndex(ro.joinRoom(roomNo, thisPlayerVO));	//자신이 몇번쨰 index인지 저장
+			int roomNo = packet.getPlayerVO().getRoomNo();	//입장할 방 번호 받음
 			thisPlayerVO.setRoomNo(roomNo);
+			Packet pak = new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO);
+			int index = ro.joinRoom(roomNo, thisPlayerVO);
+			thisPlayerVO.setIndex(index);	//자신이 몇번쨰 index인지 저장
+			pak.setMotion(index +"");
+			ro.getRoom(roomNo).roomSpeaker(pak);
 			packet.setRoomPlayerList(ro.getRoom(roomNo).getList());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
@@ -124,7 +134,7 @@ public class ServerPacketController {
 			
 			lobbyReloadBroadcast();
 
-			Packing.sender(thisPlayerVO.getPwSocket(), packet);
+//			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			break;
 
 		case Protocol.RELOADLOBBYLIST:
@@ -137,14 +147,16 @@ public class ServerPacketController {
 			
 		} // switch
 	} // runMainGame
-
+ 
 	public void exitPlayer() {
 
 		if (thisPlayerVO.getRoomNo() != 0) {
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
-			ro.getRoom(thisPlayerVO.getRoomNo())
-					.roomSpeaker(new Packet(Protocol.MESSAGE, "[" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
-			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.EXITROOM, thisVoToString()));
+			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.MESSAGE, "알림 [" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
+			Packet packet = new Packet();
+			packet.setAction(Protocol.EXITOTHERROOM);
+			packet.setMotion(thisPlayerVO.getIndex()+"");
+			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
@@ -179,14 +191,5 @@ public class ServerPacketController {
 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
 			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
 		} //for
-	}
-
-	public String thisVoToString() {
-		try {
-			return mapper.writeValueAsString(thisPlayerVO);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

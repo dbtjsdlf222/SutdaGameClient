@@ -21,15 +21,14 @@ public class ClientReceiver extends Thread {
 
 	@Override
 	public void run() {
-		ClientPacketController cpc = new ClientPacketController();
+		ClientPacketController packetController = new ClientPacketController();
 
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
-
 			while (true) {
 				String packetStr = br.readLine();
 				Packet packet = mapper.readValue(packetStr, Packet.class);
-				cpc.packetController(packet);
+				packetController.controller(packet);
 			}
 		} catch(java.net.SocketException e1) {
 			e1.printStackTrace();

@@ -39,6 +39,8 @@ public class LoginService {
 		
 		PlayerVO player = playerDAO.login(id, password);
 		
+		
+		
 		if(player == null) {
 			resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
 			return;
@@ -49,6 +51,7 @@ public class LoginService {
 		}
 		
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
+		PlayerVO.myVO = player;
 		new Thread(new ClientReceiver(player.getSocket())).start();
 		ClientPacketSender.instance.setClientPacketSender(player);
 		resultHandler.loginSuccess(player);
