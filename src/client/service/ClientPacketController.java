@@ -116,16 +116,16 @@ public class ClientPacketController {
          break;
          
       case Protocol.ENTEROTHERROOM:
-         MainScreen.ms.enterPlayerOther(packet.getPlayerVO());
+         MainScreen.instance.enterPlayerOther(packet.getPlayerVO());
          System.out.println("ENTEROTHERROOM"+packet.getPlayerVO());
          break;
          
       case Protocol.EXITOTHERROOM:
-         MainScreen.ms.exitPlayer(packet.getPlayerVO());
+         MainScreen.instance.exitPlayer(packet.getPlayerVO());
          break;
          
       case Protocol.ENTERROOM:
-         MainScreen.ms.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
+         MainScreen.instance.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
          break;
       } // switch
    } // method

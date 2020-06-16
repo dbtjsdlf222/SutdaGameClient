@@ -50,7 +50,7 @@ public class LoginService {
 		
 		player.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
 		new Thread(new ClientReceiver(player.getSocket())).start();
-		ClientPacketSender.cps.setClientPacketSender(player);
+		ClientPacketSender.instance.setClientPacketSender(player);
 		resultHandler.loginSuccess(player);
 		
 	} //login();

@@ -25,25 +25,20 @@ public class ServerReceiver extends Thread { // Server
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
 			try {
-				while (true) {
-					String packetStr = br.readLine();
-					try {
+				String packetStr = br.readLine();
+				try {
+					while (true) {
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
-						if(packet==null) {
-							System.err.println("NUll packetStr:"+ packetStr);
-							break;
-						}
 						System.out.println("packet: " + packet);
-					} catch (NullPointerException e) {
-						e.printStackTrace();
-						System.err.println("packetStr: " + packetStr);
-					} catch (Exception e) {
-						System.out.println(packetStr);
-						e.printStackTrace();
-						break;
-					}
-				} // while
+					} // while
+				} catch (NullPointerException e) {
+					packetController.exitPlayer();
+					System.err.println("packetStr: " + packetStr);
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("packetStr: " +packetStr);
+				}
 			} catch (SocketException e) {
 				packetController.exitPlayer();
 			} // try~catch

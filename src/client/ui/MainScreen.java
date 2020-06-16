@@ -36,7 +36,7 @@ public class MainScreen extends JFrame {
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
 
-	public static MainScreen ms = new MainScreen();
+	public static MainScreen instance = new MainScreen();
 
 	private Container content;
 	private Background back = new Background();

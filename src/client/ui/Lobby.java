@@ -28,7 +28,9 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
 import server.Room;
+import util.Packing;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class Lobby {
 	private JFrame lobbyJF = new JFrame();
@@ -41,7 +43,7 @@ public class Lobby {
 
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
 
-		ClientPacketSender.cps.enterLobby();
+		ClientPacketSender.instance.enterLobby();
 //		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
 	}
@@ -81,12 +83,12 @@ public class Lobby {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 
-					ClientPacketSender.cps.enterRoom(Integer
+					ClientPacketSender.instance.enterRoom(Integer
 							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
 
 					System.out.println("들어가는숫자 : " + (Integer
 							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
-					MainScreen.ms.mainScreen();
+					MainScreen.instance.mainScreen();
 					lobbyJF.dispose();
 				}
 			}
@@ -116,8 +118,8 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					ClientPacketSender.cps.makeRoom();
-					MainScreen.ms.mainScreen();
+					ClientPacketSender.instance.makeRoom();
+					MainScreen.instance.mainScreen();
 					lobbyJF.dispose();
 				}
 			} // action

@@ -9,7 +9,7 @@ import vo.Protocol;
 
 public class ClientPacketSender {
 
-	public static ClientPacketSender cps = new ClientPacketSender();
+	public static ClientPacketSender instance = new ClientPacketSender();
 	private Socket socket;
 	private PlayerVO vo;
 	private PrintWriter pw;
