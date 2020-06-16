@@ -284,7 +284,7 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == exitBtn) {
-					System.exit(0);
+					new Lobby().lobbyScreen();
 				}
 			}
 		});
