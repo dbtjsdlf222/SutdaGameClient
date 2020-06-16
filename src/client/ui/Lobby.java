@@ -156,10 +156,12 @@ public class Lobby {
 		chatText.setBounds(10, 225, 560, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
-		chatText.setFont(new Font("Rosewood Std", Font.PLAIN, 12));
+		chatText.setFont(new Font("휴먼옛체", Font.PLAIN, 13));
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
+		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+		
 		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.scrollPane.setBounds(10, 15, 638, 195);
