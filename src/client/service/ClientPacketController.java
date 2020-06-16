@@ -125,8 +125,7 @@ public class ClientPacketController {
          break;
          
       case Protocol.ENTERROOM:
-         MainScreen.ms.enterPlayerList(packet.getRoomPlayerList());
-         System.out.println("ENTERROOM:  "+packet.getRoomPlayerList());
+         MainScreen.ms.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
          break;
       } // switch
    } // method
