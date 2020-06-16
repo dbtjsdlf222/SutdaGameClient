@@ -3,6 +3,7 @@ package server;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
 
@@ -22,7 +23,7 @@ public class Room {
 	private Map<Integer, PlayerVO> playerMap = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
-	private String master; // 방장 or 선판 이긴거
+	private Integer master; // 방장 or 선판 이긴거
 	private boolean gameStarted = false;
 
 	// 생성자
@@ -35,7 +36,7 @@ public class Room {
 	public int getPlayerSize() {
 		return playerMap.size();
 	}
-	
+
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -62,7 +63,8 @@ public class Room {
 			try {
 				try {
 					playerMap.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
-				} catch (NullPointerException e) { }
+				} catch (NullPointerException e) {
+				}
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
@@ -83,37 +85,33 @@ public class Room {
 
 	public int joinPlayer(PlayerVO vo) {
 		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i) == null) {
+			if (playerMap.get(i) == null) {
 				playerMap.put(i, vo);
-				if(master==null) {
-					master = vo.getNic();
-				}
+
 				return i;
-			} //if
-		} //for
+			} // if
+		} // for
 		System.err.println("room.joinPlayer 오류");
 		return 0;
-	} //join
-	
+	} // join
+
 	public void exitPlayer(PlayerVO vo) {
-		boolean masterExit = false;
-		if(vo.getNic().equals(master)) {
-			masterExit = true;
-		}
-		
-		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i) != null) {
-				master = playerMap.get(i).getNic();
-				Packet packet = new Packet(Protocol.CHANGEMASTER, i+"");
-				this.roomSpeaker(packet);
-			}
-			try {
-				if (playerMap.get(i).getNo()==vo.getNo()) {
-					playerMap.remove(i);
+
+		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
+			int i = set.getKey();
+
+			if (set.getValue().getNo() == vo.getNo()) {
+				playerMap.remove(i);
+				if (master == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+					return;
 				}
-			} catch (IndexOutOfBoundsException|NullPointerException e) {
+				continue;
 			}
-		} //for
+			
+			master = set.getKey();
+			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, master + ""));
+			return;
+		} // for
 	} // exitPlayer
 
 	public static int getIncreaseRoomNo() {
@@ -140,55 +138,55 @@ public class Room {
 		this.startMoney = startMoney;
 	}
 
-//	public void moneyCheck() {
-//		if (money >= startMoney) {
-//			System.out.println("입장");
-//		} else if (list.money < startMoney) {
-//			System.out.println("입장 불가");
-//		}
-//	} // 판돈 체크 후 입장 여부 확인
+	// public void moneyCheck() {
+	// if (money >= startMoney) {
+	// System.out.println("입장");
+	// } else if (list.money < startMoney) {
+	// System.out.println("입장 불가");
+	// }
+	// } // 판돈 체크 후 입장 여부 확인
 
 	public void gameStart() {
 
 	} // 방장이 게임 시작
 
-//	public void bet() {
-//		String bet;
-//		int total = 0;
-//		int i;
-//		
-//		for (i = 0; i < 100; i++) {
-//			int beforeBet (i =- 1);
-//			
-//			
-//			switch (bet) {
-//			case "하프":
-//				total = ++total / 2;
-//				break;
-//			case "쿼터":
-//				total = ++total / 4;
-//				break;
-//			case "체크":
-//				total = total;
-//				break;
-//			case "올인":
-//				total = ++PlayerVO.money;
-//				break;
-//			case "콜":
-//				total = ++beforeBet;
-//				break;
-//			case "다이":
-//				System.out.println("관전");
-//				break;
-//			}
-//		}
-//	}
+	// public void bet() {
+	// String bet;
+	// int total = 0;
+	// int i;
+	//
+	// for (i = 0; i < 100; i++) {
+	// int beforeBet (i =- 1);
+	//
+	//
+	// switch (bet) {
+	// case "하프":
+	// total = ++total / 2;
+	// break;
+	// case "쿼터":
+	// total = ++total / 4;
+	// break;
+	// case "체크":
+	// total = total;
+	// break;
+	// case "올인":
+	// total = ++PlayerVO.money;
+	// break;
+	// case "콜":
+	// total = ++beforeBet;
+	// break;
+	// case "다이":
+	// System.out.println("관전");
+	// break;
+	// }
+	// }
+	// }
 
-	public Map<Integer,PlayerVO> getList() {
+	public Map<Integer, PlayerVO> getList() {
 		return playerMap;
 	}
 
-	public void setList(Map<Integer,PlayerVO> map) {
+	public void setList(Map<Integer, PlayerVO> map) {
 		this.playerMap = map;
 	}
 
@@ -208,11 +206,11 @@ public class Room {
 		this.shuffledCard = shuffledCard;
 	}
 
-	public String getMaster() {
+	public int getMaster() {
 		return master;
 	}
 
-	public void setMaster(String master) {
+	public void setMaster(int master) {
 		this.master = master;
 	}
 
