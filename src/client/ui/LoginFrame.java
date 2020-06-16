@@ -162,7 +162,7 @@ public class LoginFrame implements LoginResultHandler {
 	@Override
 	public void loginSuccess(PlayerVO player) {
 		dispose();
-		new Lobby(player);
+		new Lobby();
 	} //loginSuccess();
 
 	@Override

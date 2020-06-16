@@ -104,7 +104,7 @@ public class ClientPacketController {
          if (packet.getPlayerVO().getNic() == null) {
             System.out.println("아이디나 비밀번호가 틀렸습니다.");
          } else {
-            new Lobby(packet.getPlayerVO());
+            new Lobby();
          }
          break;
          

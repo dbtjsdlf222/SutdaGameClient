@@ -41,14 +41,13 @@ public class Lobby {
 	private JButton gBtn;
 	Room value;
 
-	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
+	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
 		System.out.println("lobby 만들어졌따");
 		ClientPacketSender.instance.enterLobby();
-//		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
-		lobbyScreen(vo);
+		lobbyScreen();
 	}
 
-	public void lobbyScreen(PlayerVO vo) {
+	public void lobbyScreen() {
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
 		lobLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));

@@ -102,11 +102,11 @@ public class Room {
 		}
 		
 		for (int i = 0; i < 5; i++) {
-//			if(playerMap.get(i) != null) {
-//				master = playerMap.get(i).getNic();
-//				Packet packet = new Packet(Protocol.CHANGEMASTER, playerMap.get(i));
-//				this.roomSpeaker(packet);
-//			}
+			if(playerMap.get(i) != null) {
+				master = playerMap.get(i).getNic();
+				Packet packet = new Packet(Protocol.CHANGEMASTER, i+"");
+				this.roomSpeaker(packet);
+			}
 			try {
 				if (playerMap.get(i).getNo()==vo.getNo()) {
 					playerMap.remove(i);
