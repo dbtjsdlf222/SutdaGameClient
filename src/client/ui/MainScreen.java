@@ -46,6 +46,8 @@ public class MainScreen extends JFrame {
 	private JButton[] btn = new JButton[6];
 	private Map<Integer, PlayerVO> playerListMap = new HashMap<>();
 	private JPanel mat = new JPanel();
+	private int index;
+	private PlayerVO playerVO;
 
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
@@ -268,7 +270,7 @@ public class MainScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					if (!(chatText.getText().equals(""))) {
-//						co.chatting(chatText.getText(), vo);
+						co.chatting(chatText.getText(), playerVO);
 						chatText.requestFocus();
 
 						chatText.setText("");
@@ -296,30 +298,36 @@ public class MainScreen extends JFrame {
 
 	}
 
-	public void enterPlayerList(Map<Integer, PlayerVO> voList) {
-		System.out.println("voList" + voList);
-		System.out.println("voList" + voList);
+	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
+		
+		this.index = index;
 		playerListMap = voList;
+		
 		for (int i = 0; i < 5; i++) {
-			if (voList.get(i) == null) {
-				continue;
+			int j;
+			if((j=index+i) >= 5) {
+				j-=5;
 			}
+			
+			PlayerVO setVO = voList.get(j);
+			
+			if (setVO == null) 
+				continue;
+			
 			try {
-				// JTextField nicText = new JTextField(voList.get(i).getNic());
-				// JTextField nicText2 = new JTextField(voList.get(i).getNic());
-				// JTextField nicText3 = new JTextField(voList.get(i).getNic());
-				// JTextField nicText4 = new JTextField(voList.get(i).getNic());
 				card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
 				card2[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
-				nicText[i] = new JTextField(voList.get(i).getNic());
-				moneyText[i] = new JTextField(voList.get(i).getMoney() + "");
+				nicText[i] = new JTextField(setVO.getNic());
+				moneyText[i] = new JTextField(setVO.getMoney() + "");
+				
 				if (i == 1 || i == 2) {
 					profile[i] = new JLabel(new ImageIcon(MainScreen.class
-							.getResource("../../img/character/cha" + voList.get(i).getCha() + "_.PNG")));
+							.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 				} else {
 					profile[i] = new JLabel(new ImageIcon(
-							MainScreen.class.getResource("../../img/character/cha" + voList.get(i).getCha() + ".PNG")));
+							MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 				}
+				
 				if (i == 1) {
 					panlist[i].add(nicText[i]);
 					panlist[i].add(moneyText[i]);
@@ -618,7 +626,7 @@ public class MainScreen extends JFrame {
 		MainScreen ms = new MainScreen();
 		ms.mainScreen();
 		ms.buttonSet();
-		ms.enterPlayerList(voList);
+//		ms.enterPlayerList(voList,voList);
 		ms.mat();
 	}
 }

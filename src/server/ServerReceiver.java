@@ -22,7 +22,6 @@ public class ServerReceiver extends Thread { // Server
 	public void run() {
 		ServerPacketController packetController = new ServerPacketController(socket);
 		ObjectMapper mapper = new ObjectMapper();
-		System.out.println("서버리시버 socket: "+socket);
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
 			try {
