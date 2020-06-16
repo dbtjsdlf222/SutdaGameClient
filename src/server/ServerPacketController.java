@@ -91,10 +91,11 @@ public class ServerPacketController {
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
 			room.exitPlayer(thisPlayerVO);
 			room.roomSpeaker(packet);
-			thisPlayerVO.setRoomNo(0);
-			if (ro.getRoom(packet.getPlayerVO().getRoomNo()).getList().size() <= 0) {
-				ro.removeRoom(packet.getPlayerVO().getRoomNo());
+			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
+				ro.removeRoom(thisPlayerVO.getRoomNo());
 			}
+			thisPlayerVO.setRoomNo(0);
+			
 			break;
 
 		case Protocol.ENTERROOM:

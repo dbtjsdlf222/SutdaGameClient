@@ -25,7 +25,7 @@ public class Room {
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
 	private String master; // 방장 or 선판 이긴거
-	
+
 	private boolean gameStarted = false;
 
 	// 생성자
@@ -61,16 +61,13 @@ public class Room {
 
 	public void roomSpeaker(Packet pac) {
 		ObjectMapper objectMapper = new ObjectMapper();
-		for (int i = 0; i < 5; i++) {
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			try {
-				try {
-					playerMap.get(i).getPwSocket().println(objectMapper.writeValueAsString(pac));
-				} catch (NullPointerException e) {
-				}
+				playerMap.get(s.getKey()).getPwSocket().println(objectMapper.writeValueAsString(pac));
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
-		} // for
+		}
 	} // roomSpeaker
 
 	public void roomChat(Packet packet) {
@@ -108,7 +105,9 @@ public class Room {
 					if (masterIndex == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
 						return;
 					}
-				} catch (NullPointerException e) {System.out.println("room: " + e.getMessage());}
+				} catch (NullPointerException e) {
+					System.out.println("room: " + e.getMessage());
+				}
 				continue;
 			}
 
