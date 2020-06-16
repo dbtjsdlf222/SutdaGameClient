@@ -284,6 +284,7 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
+				ClientPacketSender.instance.exitRoom();
 				new Lobby();
 			}
 		});
@@ -464,15 +465,6 @@ public class RoomScreen extends JFrame {
 			}
 			
 		}
-		
-		try {
-			System.out.println("0:"+voList.get(0).getNic());
-			System.out.println("1:"+voList.get(1).getNic());
-			System.out.println("2:"+voList.get(2).getNic());
-			System.out.println("3:"+voList.get(3).getNic());
-			System.out.println("4:"+voList.get(4).getNic());
-			System.out.println("==========================");
-		} catch (Exception e) {}
 		
 		this.index = index;
 		playerListMap = voList;

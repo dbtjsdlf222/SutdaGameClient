@@ -73,8 +73,9 @@ public class ServerPacketController {
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
 			packet.getPlayerVO().setRoomNo(thisPlayerVO.getRoomNo());
 			lobbyExitBroadcast();
-			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
-			thisPlayerVO.setIndex(0);
+			
+			ro.getRoom(thisPlayerVO.getRoomNo()).setMaster(thisPlayerVO.getNic());
+			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setAction(Protocol.ENTEROTHERROOM);
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);

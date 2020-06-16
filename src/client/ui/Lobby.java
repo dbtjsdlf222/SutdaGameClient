@@ -27,10 +27,6 @@ import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
-import server.Room;
-import util.Packing;
-import vo.PlayerVO;
-import vo.Protocol;
 
 public class Lobby {
 	private JFrame lobbyJF = new JFrame();
@@ -39,10 +35,8 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-	Room value;
 
 	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
-		System.out.println("lobby 만들어졌따");
 		ClientPacketSender.instance.enterLobby();
 		lobbyScreen();
 	}

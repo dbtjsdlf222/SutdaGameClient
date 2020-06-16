@@ -8,46 +8,33 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ClientPacketSender {
-
 	public static ClientPacketSender instance = new ClientPacketSender();
-	private Socket socket;
-	private PlayerVO vo;
-	private PrintWriter pw;
 
 	private ClientPacketSender() {}
 
-	public void setClientPacketSender(PlayerVO vo) {
-		System.out.println("setClientPacketSender: " + vo);
-		this.socket = vo.getSocket();
-		this.vo = vo;
-		this.pw = vo.getPwSocket();
-	} // setClientPacketSender();
-
 	public void enterLobby() {
-		System.out.println("enterLobby작동함 pw : " + pw);
-		Packing.sender(pw, Protocol.ENTERLOBBY, vo);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTERLOBBY, PlayerVO.myVO);
 	} // enterLobby();
 
 	public void makeRoom() {
-		System.out.println("makeroom작동함 pw : " + pw);
-		Packing.sender(pw, Protocol.MAKEROOM, vo);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKEROOM, PlayerVO.myVO);
 	} // makeRoom();
 
 	public void enterRoom(int roomNo) {
-		vo.setRoomNo(roomNo);
-		Packing.sender(pw, Protocol.ENTERROOM, vo);
+		PlayerVO.myVO.setRoomNo(roomNo);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTERROOM, PlayerVO.myVO);
 	} // enterRoom();
 
 	public void exitRoom() {
-		Packing.sender(pw, Protocol.EXITROOM, vo);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXITROOM, PlayerVO.myVO);
 	} // exitRoom();
 
 	public void login(String id, String pw) {
-		vo.setID(id);
-		vo.setPassword(pw);
-		Packing.sender(this.pw, Protocol.LOGIN, vo);
+		PlayerVO.myVO.setID(id);
+		PlayerVO.myVO.setPassword(pw);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
 	} // login();
 	
-	public PlayerVO getVo() { return vo; }
+	public PlayerVO getVo() { return PlayerVO.myVO; }
 	
 } // class
