@@ -52,7 +52,7 @@ public class RoomScreen extends JFrame {
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
 	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
-	private static JPanel[] panlist = new JPanel[5];
+	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
 	JTextField[] nicText = new JTextField[5];
@@ -65,7 +65,12 @@ public class RoomScreen extends JFrame {
 		if(index < 0)
 			index += 5;
 		
-		panlist[index] = null;
+		profile[index].setBounds(0, 0, 0, 0);
+		moneyText[index].setBounds(0, 0, 0, 0);
+		nicText[index].setBounds(0, 0, 0, 0);
+		card1[index].setBounds(0, 0, 0, 0);
+		card2[index].setBounds(0, 0, 0, 0);
+		
 		
 //		if (playerListMap.get(index).getNo() == playerVO.getNo()) {
 //			playerListMap.remove(index);
@@ -89,30 +94,30 @@ public class RoomScreen extends JFrame {
 	// return ms1;
 	// }
 
-	public void turn(int k) {
+	public void changeMaster(int k) {
 		if (k == 0) {
-			// frame.setBounds(450, 430, 370, 190);
+//			 frame.setBounds(450, 430, 370, 190);
 			masterSticker.setBounds(430, 440, 15, 15);
 			masterSticker.setOpaque(true);
 		} else if (k == 1) {
-			// frame.setBounds(-5, 205, 370, 190);
+//			 frame.setBounds(-5, 205, 370, 190);
 			masterSticker.setBounds(370, 220, 15, 15);
 			masterSticker.setOpaque(true);
 		} else if (k == 2) {
-			// frame.setBounds(-5, 20, 370, 190);
+//			 frame.setBounds(-5, 20, 370, 190);
 			masterSticker.setBounds(370, 30, 15, 15);
 			masterSticker.setOpaque(true);
 		} else if (k == 3) {
-			// frame.setBounds(905, 20, 370, 190);
+//			 frame.setBounds(905, 20, 370, 190);
 			masterSticker.setBounds(890, 30, 15, 15);
 			masterSticker.setOpaque(true);
 		} else if (k == 4) {
-			// frame.setBounds(905, 205, 370, 190);
+//			 frame.setBounds(905, 205, 370, 190);
 			masterSticker.setBounds(890, 220, 15, 15);
 			masterSticker.setOpaque(true);
 		}
-		// frame.setOpaque(false);
-		// add(frame);
+//		 frame.setOpaque(false);
+//		 add(frame);
 		add(masterSticker);
 
 		// try {
