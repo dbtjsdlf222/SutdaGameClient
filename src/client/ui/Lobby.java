@@ -88,7 +88,7 @@ public class Lobby {
 
 					System.out.println("들어가는숫자 : " + (Integer
 							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
-					MainScreen.instance.mainScreen();
+					RoomScreen.instance.mainScreen();
 					lobbyJF.dispose();
 				}
 			}
@@ -119,7 +119,7 @@ public class Lobby {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
 					ClientPacketSender.instance.makeRoom();
-					MainScreen.instance.mainScreen();
+					RoomScreen.instance.mainScreen();
 					lobbyJF.dispose();
 				}
 			} // action

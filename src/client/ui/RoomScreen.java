@@ -31,12 +31,12 @@ import music.MusicPlayer;
 import operator.ChattingOperator;
 import vo.PlayerVO;
 
-public class MainScreen extends JFrame {
+public class RoomScreen extends JFrame {
 
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
 
-	public static MainScreen instance = new MainScreen();
+	public static RoomScreen instance = new RoomScreen();
 
 	private Container content;
 	private Background back = new Background();
@@ -51,7 +51,7 @@ public class MainScreen extends JFrame {
 
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
-	JLabel masterSticker = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/master.PNG")));
+	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
@@ -74,7 +74,7 @@ public class MainScreen extends JFrame {
 //		} // if
 	} // exitPlayer
 
-	private MainScreen() {}
+	private RoomScreen() {}
 
 	// public static void removeMainScreen() {
 	// if(ms1.isDisplayable()) {
@@ -134,7 +134,7 @@ public class MainScreen extends JFrame {
 		String[] resourceArray = { "Allin", "Half", "Quater", "Bbing", "Call", "Die" };
 
 		for (int i = 0; i < btn.length; i++) {
-			btn[i] = new JButton(new ImageIcon(MainScreen.class.getResource("../../img/" + resourceArray[i] + ".PNG")));
+			btn[i] = new JButton(new ImageIcon(RoomScreen.class.getResource("../../img/" + resourceArray[i] + ".PNG")));
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
 		}
@@ -174,8 +174,8 @@ public class MainScreen extends JFrame {
 
 		add(mat); // 배팅 금액 패널
 
-		JLabel littleMoney = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/littleMoney.PNG")));
-		JLabel manyMoney = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/manyMoney.PNG")));
+		JLabel littleMoney = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/littleMoney.PNG")));
+		JLabel manyMoney = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/manyMoney.PNG")));
 		littleMoney.setBounds(10, 10, 420, 280);
 		manyMoney.setBounds(10, 10, 420, 280);
 		tf = new JTextField(15);
@@ -290,7 +290,7 @@ public class MainScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(MainScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
 		setIconImage(img);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -302,19 +302,19 @@ public class MainScreen extends JFrame {
 	}
 
 	public void setSit(int i, PlayerVO setVO) {
-
+		
 		try {
-			card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
-			card2[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
+			card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
+			card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
 			nicText[i] = new JTextField(setVO.getNic());
 			moneyText[i] = new JTextField(setVO.getMoney() + "");
 
 			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(
-						MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
+						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
 				profile[i] = new JLabel(new ImageIcon(
-						MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
+						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
 
 			if (i == 1) {
@@ -447,7 +447,7 @@ public class MainScreen extends JFrame {
 		for (int i = 0; i < 5; i++) {
 			int j;
 			
-			if ((j = index + i) >= 5) 
+			if ((j = index + i) >= 5)
 				j -= 5;
 			
 			PlayerVO setVO = voList.get(j);
@@ -484,7 +484,7 @@ public class MainScreen extends JFrame {
 		voList.put(3, new PlayerVO("4hyo", 3, 120000));
 		voList.put(4, new PlayerVO("5hyo", 3, 4000));
 
-		MainScreen ms = new MainScreen();
+		RoomScreen ms = new RoomScreen();
 		ms.mainScreen();
 
 //		ms.enterPlayerList(voList,voList);

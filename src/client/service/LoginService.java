@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.listener.ClientReceiver;
 import client.service.LoginResultHandler.Focus;
-import client.ui.MainScreen;
+import client.ui.RoomScreen;
 import dao.PlayerDAO;
 import util.Packing;
 import vo.Packet;

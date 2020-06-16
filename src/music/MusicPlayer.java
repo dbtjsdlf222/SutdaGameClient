@@ -4,7 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-import client.ui.MainScreen;
+import client.ui.RoomScreen;
 import javazoom.jl.player.Player;
 
 public class MusicPlayer extends Thread {

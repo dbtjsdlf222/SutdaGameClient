@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import client.ui.Lobby;
-import client.ui.MainScreen;
+import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
 import vo.Packet;
@@ -110,17 +110,17 @@ public class ClientPacketController {
          break;
          
       case Protocol.ENTEROTHERROOM:
-         MainScreen.instance.enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
+         RoomScreen.instance.enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
          System.out.println("ENTEROTHERROOM"+packet.getPlayerVO());
          break;
          
       case Protocol.EXITOTHERROOM:
     	 System.out.println("Protocol.EXITOTHERROOM: getIndex ["+ packet.getPlayerVO().getIndex()+"]");
-         MainScreen.instance.exitPlayer(Integer.parseInt(packet.getMotion()));
+         RoomScreen.instance.exitPlayer(Integer.parseInt(packet.getMotion()));
          break;
          
       case Protocol.ENTERROOM:
-         MainScreen.instance.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
+         RoomScreen.instance.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
          break;
         
       case Protocol.CHANGEMASTER:
