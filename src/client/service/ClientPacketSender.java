@@ -47,4 +47,7 @@ public class ClientPacketSender {
 		vo.setPassword(pw);
 		Packing.sender(this.pw, Protocol.LOGIN, vo);
 	} // login();
+	
+	public PlayerVO getVo() { return vo; }
+	
 } // class

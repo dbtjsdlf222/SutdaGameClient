@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,6 +28,7 @@ import javax.swing.border.TitledBorder;
 
 import client.Background;
 import client.service.ClientPacketController;
+import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
 import vo.PlayerVO;
@@ -48,7 +50,9 @@ public class RoomScreen extends JFrame {
 	private JPanel mat = new JPanel();
 	private int index;
 	private PlayerVO playerVO;
-
+	
+	private int mySit;
+	
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
 	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
@@ -60,21 +64,28 @@ public class RoomScreen extends JFrame {
 	JLabel[] profile = new JLabel[5];
 	
 	public void exitPlayer(int index) {
-		index = index - this.index;
 		
-		if(index < 0)
-			index += 5;
+		index = (index - mySit + 5) % 5;
 		
-		profile[index].setBounds(0, 0, 0, 0);
-		moneyText[index].setBounds(0, 0, 0, 0);
-		nicText[index].setBounds(0, 0, 0, 0);
-		card1[index].setBounds(0, 0, 0, 0);
-		card2[index].setBounds(0, 0, 0, 0);
+		remove(panlist[index]);
+		panlist[index] = new JPanel();
 		
+		int[] x = { 460, 0, 0, 915, 915 };
+		int[] y = { 440, 215, 30, 30, 215 };
+		
+		panlist[index].setBounds(x[index], y[index], 350, 180);
+		panlist[index].setLayout(null);
+		panlist[index].setBackground(new Color(0, 0, 0, 122));
+		add(panlist[index]);
+		
+		getContentPane().add(back, BorderLayout.CENTER);
+		revalidate();
+		repaint();
 		
 //		if (playerListMap.get(index).getNo() == playerVO.getNo()) {
 //			playerListMap.remove(index);
 //		} // if
+		
 	} // exitPlayer();
 
 	private RoomScreen() {}
@@ -119,6 +130,8 @@ public class RoomScreen extends JFrame {
 //		 frame.setOpaque(false);
 //		 add(frame);
 		add(masterSticker);
+		revalidate();
+		repaint();
 
 		// try {
 		// Thread.sleep(3000);
@@ -304,6 +317,8 @@ public class RoomScreen extends JFrame {
 
 	public void setSit(int i, PlayerVO setVO) {
 		
+		i = (i - mySit + 5) % 5;
+		
 		try {
 			card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
 			card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
@@ -442,6 +457,15 @@ public class RoomScreen extends JFrame {
 
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
 		
+		for(Entry<Integer, PlayerVO> set : voList.entrySet()) {
+			
+			if(ClientPacketSender.instance.getVo().getNo() == set.getValue().getNo()) {
+				mySit = set.getValue().getIndex();
+				break;
+			}
+			
+		}
+		
 		try {
 			System.out.println("0:"+voList.get(0).getNic());
 			System.out.println("1:"+voList.get(1).getNic());
@@ -473,6 +497,9 @@ public class RoomScreen extends JFrame {
 	} // enterPlayerList();
 	
 	public void enterPlayerOther(PlayerVO vo, int index) {
+		
+		if(ClientPacketSender.instance.getVo().getNo() == vo.getNo())
+			mySit = vo.getIndex();
 		
 		playerListMap.put(index, vo);
 
