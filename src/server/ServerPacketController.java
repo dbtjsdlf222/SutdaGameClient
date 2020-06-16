@@ -80,6 +80,9 @@ public class ServerPacketController {
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
 			
+			packet.setAction(Protocol.CHANGEMASTER);
+			packet.setMotion(0+"");
+			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 //			this.packetAnalysiser(packet.setAction(Protocol.CHANGEMASTER));
 
 			break;

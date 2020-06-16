@@ -102,12 +102,14 @@ public class Room {
 
 			if (set.getValue().getNo() == vo.getNo()) {
 				playerMap.remove(i);
-				if (master == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
-					return;
-				}
+				try {
+					if (master == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+						return;
+					}
+				} catch (NullPointerException e) {System.out.println("room: " + e.getMessage());}
 				continue;
 			}
-			
+
 			master = set.getKey();
 			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, master + ""));
 			return;
@@ -206,6 +208,7 @@ public class Room {
 		this.shuffledCard = shuffledCard;
 	}
 
+	@JsonIgnore
 	public int getMaster() {
 		return master;
 	}

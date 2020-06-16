@@ -91,7 +91,7 @@ public class ClientPacketController {
             Room value = map.get(key);
             System.out.println("getRoomNo(): "+value.getRoomNo());
             rn[i][0] = value.getRoomNo()+"";
-            rn[i][1] = value.getMaster();
+            rn[i][1] = value.getMaster()+"";
             rn[i][2] = value.getPlayerSize() + "/5";
             rn[i][3] = value.isGameStarted()? "게임중" : "대기중";
             JButton jb = new JButton(value.getRoomNo()+"");
