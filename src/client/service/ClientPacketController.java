@@ -116,7 +116,7 @@ public class ClientPacketController {
          break;
          
       case Protocol.ENTEROTHERROOM:
-         MainScreen.instance.enterPlayerOther(packet.getPlayerVO());
+         MainScreen.instance.enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
          System.out.println("ENTEROTHERROOM"+packet.getPlayerVO());
          break;
          

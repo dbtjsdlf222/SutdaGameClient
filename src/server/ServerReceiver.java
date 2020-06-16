@@ -35,9 +35,9 @@ public class ServerReceiver extends Thread { // Server
 				} catch (NullPointerException e) {
 					packetController.exitPlayer();
 					System.err.println("packetStr: " + packetStr);
-				} catch (Exception e) {
+				}catch (Exception e) {
 					e.printStackTrace();
-					System.out.println("packetStr: " +packetStr);
+					System.err.println("packetStr: " + packetStr);
 				}
 			} catch (SocketException e) {
 				packetController.exitPlayer();

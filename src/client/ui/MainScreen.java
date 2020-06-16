@@ -162,26 +162,6 @@ public class MainScreen extends JFrame {
 		btn[4].addActionListener(action);
 		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 
-		setTitle("섯다 온라인");
-
-		back.mainImage();
-		content = getContentPane();
-		content.add(back, BorderLayout.CENTER);
-		back.setOpaque(false);
-		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-		setResizable(false);
-		setVisible(true); // 배경화면
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(MainScreen.class.getResource("../../img/titleIcon.jpg"));
-		setIconImage(img);
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));
-		groupLayout
-				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
-		getContentPane().setLayout(groupLayout);
 	}
 
 	public void mat() {
@@ -206,11 +186,6 @@ public class MainScreen extends JFrame {
 	}
 
 	public void mainScreen() {
-		// turn(0);
-		// turn(1);
-		// turn(2);
-		// turn(3);
-		// turn(4);
 
 		for (int i = 0; i < panlist.length; i++) {
 			panlist[i] = new JPanel();
@@ -296,194 +271,48 @@ public class MainScreen extends JFrame {
 
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
+		setTitle("섯다 온라인");
+
+		buttonSet();	//버튼 출력
+		mat();			//돈판 출력
+		
+		back.mainImage();
+		content = getContentPane();
+		content.add(back, BorderLayout.CENTER);
+		back.setOpaque(false);
+		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setResizable(false);
+		setVisible(true); // 배경화면
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image img = toolkit.getImage(MainScreen.class.getResource("../../img/titleIcon.jpg"));
+		setIconImage(img);
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));
+		groupLayout
+				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
+		getContentPane().setLayout(groupLayout);
+		
 	}
 
-	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
+	public void setSit(int i, PlayerVO setVO) {
 		
-		this.index = index;
-		playerListMap = voList;
-		
-		for (int i = 0; i < 5; i++) {
-			int j;
-			if((j=index+i) >= 5) {
-				j-=5;
-			}
-			
-			PlayerVO setVO = voList.get(j);
-			
-			if (setVO == null) 
-				continue;
-			
-			try {
-				card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
-				card2[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
-				nicText[i] = new JTextField(setVO.getNic());
-				moneyText[i] = new JTextField(setVO.getMoney() + "");
-				
-				if (i == 1 || i == 2) {
-					profile[i] = new JLabel(new ImageIcon(MainScreen.class
-							.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
-				} else {
-					profile[i] = new JLabel(new ImageIcon(
-							MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
-				}
-				
-				if (i == 1) {
-					panlist[i].add(nicText[i]);
-					panlist[i].add(moneyText[i]);
-					panlist[i].add(card1[i]);
-					panlist[i].add(card2[i]);
-					panlist[i].add(profile[i]);
-
-					profile[i].setBounds(10, 10, 90, 100);
-					profile[i].setBackground(new Color(35, 60, 3, 122));
-					profile[i].setOpaque(true);
-
-					card1[i].setBounds(115, 10, 110, 160);
-					card1[i].setOpaque(false);
-
-					card2[i].setBounds(230, 10, 110, 160);
-					card2[i].setOpaque(false);
-
-					nicText[i].setBounds(10, 125, 90, 20);
-					nicText[i].setOpaque(true);
-
-					moneyText[i].setBounds(10, 150, 90, 20);
-					moneyText[i].setOpaque(true);
-
-				} else if (i == 2) {
-					panlist[i].add(nicText[i]);
-					panlist[i].add(moneyText[i]);
-					panlist[i].add(card1[i]);
-					panlist[i].add(card2[i]);
-					panlist[i].add(profile[i]);
-
-					profile[i].setBounds(10, 10, 90, 100);
-					profile[i].setBackground(new Color(35, 60, 3, 122));
-					profile[i].setOpaque(true);
-
-					card1[i].setBounds(115, 10, 110, 160);
-					card1[i].setOpaque(false);
-
-					card2[i].setBounds(230, 10, 110, 160);
-					card2[i].setOpaque(false);
-
-					nicText[i].setBounds(10, 125, 90, 20);
-					nicText[i].setOpaque(true);
-
-					moneyText[i].setBounds(10, 150, 90, 20);
-					moneyText[i].setOpaque(true);
-
-				} else if (i == 3) {
-					panlist[i].add(nicText[i]);
-					panlist[i].add(moneyText[i]);
-					panlist[i].add(card1[i]);
-					panlist[i].add(card2[i]);
-					panlist[i].add(profile[i]);
-
-					profile[i].setBounds(250, 10, 90, 100);
-					profile[i].setBackground(new Color(35, 60, 3, 122));
-					profile[i].setOpaque(true);
-
-					card1[i].setBounds(10, 10, 110, 160);
-					card1[i].setOpaque(false);
-
-					card2[i].setBounds(125, 10, 110, 160);
-					card2[i].setOpaque(false);
-
-					nicText[i].setBounds(250, 125, 90, 20);
-					nicText[i].setOpaque(true);
-
-					moneyText[i].setBounds(250, 150, 90, 20);
-					moneyText[i].setOpaque(true);
-
-				} else if (i == 4) {
-					panlist[i].add(nicText[i]);
-					panlist[i].add(moneyText[i]);
-					panlist[i].add(card1[i]);
-					panlist[i].add(card2[i]);
-					panlist[i].add(profile[i]);
-
-					profile[i].setBounds(250, 10, 90, 100);
-					profile[i].setBackground(new Color(35, 60, 3, 122));
-					profile[i].setOpaque(true);
-
-					card1[i].setBounds(10, 10, 110, 160);
-					card1[i].setOpaque(false);
-
-					card2[i].setBounds(125, 10, 110, 160);
-					card2[i].setOpaque(false);
-
-					nicText[i].setBounds(250, 125, 90, 20);
-					nicText[i].setOpaque(true);
-
-					moneyText[i].setBounds(250, 150, 90, 20);
-					moneyText[i].setOpaque(true);
-
-				} else if (i == 0) {
-					panlist[i].add(nicText[i]);
-					panlist[i].add(moneyText[i]);
-					panlist[i].add(card1[i]);
-					panlist[i].add(card2[i]);
-					panlist[i].add(profile[i]);
-
-					profile[i].setBounds(10, 10, 90, 100);
-					profile[i].setBackground(new Color(35, 60, 3, 122));
-					profile[i].setOpaque(true);
-
-					card1[i].setBounds(115, 10, 110, 160);
-					card1[i].setOpaque(false);
-
-					card2[i].setBounds(230, 10, 110, 160);
-					card2[i].setOpaque(false);
-
-					nicText[i].setBounds(10, 125, 90, 20);
-					nicText[i].setOpaque(true);
-
-					moneyText[i].setBounds(10, 150, 90, 20);
-					moneyText[i].setOpaque(true);
-
-				}
-
-				// nicText.setHorizontalAlignment(JLabel.CENTER);
-				// moneyText.setHorizontalAlignment(JLabel.CENTER);
-				// nicText.setForeground(Color.white);
-				// moneyText.setForeground(Color.white);
-				// add(panlist[i]);
-
-			} catch (Exception e) {
-				System.out.println("빈자리 감지|MainScreen 324");
-				break;
-			}
-		}
-
-	} // enterPlayerList
-
-	public void enterPlayerOther(PlayerVO vo) {
-		int i = 0;
-
-		for (int j = 0; j < 5; j++) {
-			if (playerListMap.get(j) == null) {
-				i = j;
-				break;
-			} // if
-		} // for
-
-		playerListMap.put(i, vo);
-
 		try {
-
 			card1[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
 			card2[i] = new JLabel(new ImageIcon(MainScreen.class.getResource("../../img/Pae.PNG")));
-			nicText[i] = new JTextField(vo.getNic());
-			moneyText[i] = new JTextField(vo.getMoney() + "");
+			nicText[i] = new JTextField(setVO.getNic());
+			moneyText[i] = new JTextField(setVO.getMoney() + "");
+			
 			if (i == 1 || i == 2) {
-				profile[i] = new JLabel(
-						new ImageIcon(MainScreen.class.getResource("../../img/character/cha" + vo.getCha() + "_.png")));
+				profile[i] = new JLabel(new ImageIcon(MainScreen.class
+						.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
-				profile[i] = new JLabel(
-						new ImageIcon(MainScreen.class.getResource("../../img/character/cha" + vo.getCha() + ".png")));
+				profile[i] = new JLabel(new ImageIcon(
+						MainScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
+			
 			if (i == 1) {
 				panlist[i].add(nicText[i]);
 				panlist[i].add(moneyText[i]);
@@ -600,19 +429,47 @@ public class MainScreen extends JFrame {
 				moneyText[i].setOpaque(true);
 
 			}
+	
 
-			// nicText.setHorizontalAlignment(JLabel.CENTER);
-			// moneyText.setHorizontalAlignment(JLabel.CENTER);
-			// nicText.setForeground(Color.white);
-			// moneyText.setForeground(Color.white);
-			// add(panlist[i]);
+			} catch (Exception e) {
+				System.out.println("빈자리 감지|MainScreen 324");
+			}
+	} //setSit();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("빈자리 감지|MainScreen 324");
-		}
+	
+	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
+		
+		this.index = index;
+		playerListMap = voList;
+		
+		for (int i = 0; i < 5; i++) {
+			
+			int j;
+			if((j=index+i) >= 5) {
+				j-=5;
+			}
+			PlayerVO setVO = voList.get(j);
+			
+			if (setVO == null)
+				continue;
+			
+			setSit(i, setVO);
+			
+		} //for
+	} //enterPlayerList();
+	
+	public void enterPlayerOther(PlayerVO vo, int index) {
+		
+		playerListMap.put(index, vo);
+		
+		index -= this.index;
+		
+		if(index < 0) 
+			index += 5;
+		
+		setSit(index, vo);
 
-	} // enterPlayerList
+	} // enterPlayerList();
 
 	public static void main(String[] args) {
 		Map<Integer, PlayerVO> voList = new HashMap<Integer, PlayerVO>();
@@ -625,8 +482,7 @@ public class MainScreen extends JFrame {
 
 		MainScreen ms = new MainScreen();
 		ms.mainScreen();
-		ms.buttonSet();
+
 //		ms.enterPlayerList(voList,voList);
-		ms.mat();
 	}
 }
