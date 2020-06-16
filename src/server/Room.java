@@ -23,7 +23,9 @@ public class Room {
 	private Map<Integer, PlayerVO> playerMap = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
-	private Integer master; // 방장 or 선판 이긴거
+	private Integer masterIndex; // 방장 or 선판 이긴거
+	private String master; // 방장 or 선판 이긴거
+	
 	private boolean gameStarted = false;
 
 	// 생성자
@@ -103,15 +105,15 @@ public class Room {
 			if (set.getValue().getNo() == vo.getNo()) {
 				playerMap.remove(i);
 				try {
-					if (master == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+					if (masterIndex == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
 						return;
 					}
 				} catch (NullPointerException e) {System.out.println("room: " + e.getMessage());}
 				continue;
 			}
 
-			master = set.getKey();
-			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, master + ""));
+			masterIndex = set.getKey();
+			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
 			return;
 		} // for
 	} // exitPlayer
@@ -208,12 +210,11 @@ public class Room {
 		this.shuffledCard = shuffledCard;
 	}
 
-	@JsonIgnore
-	public Integer getMaster() {
+	public String getMaster() {
 		return master;
 	}
 
-	public void setMaster(int master) {
+	public void setMaster(String master) {
 		this.master = master;
 	}
 
