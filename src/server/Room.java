@@ -1,5 +1,6 @@
 package server;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,9 +22,9 @@ public class Room {
 	private int startMoney; // 시작 금액
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
-	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
+	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
-	private String master; // 방장 or 선판 이긴거
+	private String master;
 
 	private boolean gameStarted = false;
 
@@ -59,6 +60,17 @@ public class Room {
 	}
 
 	public void roomSpeaker(Packet pac) {
+		
+		System.out.print("[Send(roomSpeaker(" + roomNo);
+		Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
+		if(iterator.hasNext()) {
+			System.out.print("(" + iterator.next().getValue().getNic());
+			while(iterator.hasNext())
+				System.out.print(", " + iterator.next().getValue().getNic());
+			System.out.print(")");
+		}
+		System.out.println(", " + Protocol.getName(pac.getAction()) + "))] " + pac);
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			try {
@@ -90,31 +102,53 @@ public class Room {
 				return i;
 			} // if
 		} // for
-		System.err.println("room.joinPlayer 오류");
 		return 0;
 	} // join
 
 	public void exitPlayer(PlayerVO vo) {
-
-		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
-			int i = set.getKey();
-
-			if (set.getValue().getNo() == vo.getNo()) {
-				playerMap.remove(i);
-				try {
-					if (masterIndex == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
-						return;
-					}
-				} catch (NullPointerException e) {
-					System.out.println("room: " + e.getMessage());
-				}
-				continue;
-			}
-
-			masterIndex = set.getKey();
-			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
-			return;
-		} // for
+		
+		int playerIndex = getPlayerIndex(vo.getNo());
+		playerMap.remove(playerIndex);
+		
+		if(masterIndex == playerIndex) {
+			
+			int size = playerMap.size();
+			
+			if(size < 1)
+				return;
+			
+			int random = (int)(Math.random() * size);
+			
+			Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
+			Entry<Integer, PlayerVO> entry;
+			entry = iterator.next();
+			for(int i = 0 ; i < random; i++)
+				entry = iterator.next();
+			
+			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, entry.getKey().toString()));
+			setMasterNo(entry.getValue().getNo());
+			
+		}
+		
+//		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
+//			int i = set.getKey();
+//
+//			if (set.getValue().getNo() == vo.getNo()) {
+//				playerMap.remove(i);
+//				try {
+//					if (masterIndex == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+//						return;
+//					}
+//				} catch (NullPointerException e) {
+//					e.printStackTrace();
+//				}
+//				continue;
+//			}
+//
+//			masterIndex = set.getKey();
+//			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+//			return;
+//		} // for
 	} // exitPlayer
 
 	public static int getIncreaseRoomNo() {
@@ -212,9 +246,28 @@ public class Room {
 	public String getMaster() {
 		return master;
 	}
-
-	public void setMaster(String master) {
-		this.master = master;
+	
+	public int getPlayerIndex(int playerNo) {
+		
+		for(Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
+			if(entry.getValue().getNo() == playerNo) {
+				return entry.getKey();
+			}
+		}
+		return -1;
+		
+	} //getPlayerIndex();
+	
+	public void setMaster(String str) { master = str; }
+	
+	public void setMasterNo(int no) {
+		
+		int index = getPlayerIndex(no);
+		if(index != -1) {
+			masterIndex = index;
+			setMaster(playerMap.get(index).getNic());
+		}
+		
 	}
 
 	public boolean isGameStarted() {

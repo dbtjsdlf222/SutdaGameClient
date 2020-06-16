@@ -1,14 +1,8 @@
 package operator;
- 
-import java.io.PrintWriter;
-
-import javax.swing.JTextArea;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class ListViewOperator {
 

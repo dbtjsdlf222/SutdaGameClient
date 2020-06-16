@@ -55,7 +55,6 @@ public class PlayerDAO {
 	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
-		System.out.println("dvo");
 		InetAddress local = null;
 		try {
 			local = InetAddress.getLocalHost();
@@ -85,7 +84,6 @@ public class PlayerDAO {
 			pstmt.setInt(5, character);
 
 			result = pstmt.executeUpdate();
-			System.out.println(result);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -176,7 +174,6 @@ public class PlayerDAO {
 				int lose = rs.getInt(7);
 				boolean online = rs.getBoolean(8);
 				int character = rs.getInt(10);
-				System.out.println();
 				String ip = null;
 				try {
 					ip = InetAddress.getLocalHost().getHostAddress();

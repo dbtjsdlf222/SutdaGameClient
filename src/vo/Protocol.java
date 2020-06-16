@@ -34,4 +34,35 @@ public class Protocol {
 	public static final String Pping = "20";
 	public static final String RELOADLOBBYLIST = "22";
 	
+	public static String getName(String str) {
+		
+		switch(str) {
+			case "1": str = "MESSAGE"; break;
+			case "2": str = "MAKEROOM"; break;
+			case "3": str = "ENTERROOM"; break;
+			case "4": str = "EXITROOM"; break;
+			case "5": str = "ENTERLOBBY"; break;
+			case "6": str = "EXITLOBBY"; break;
+			case "7": str = "LOGIN"; break;
+			case "8": str = "ENTEROTHERROOM"; break;
+			case "9": str = "ENTEROTHERLOBBY"; break;
+			case "10": str = "EXITOTHERROOM"; break;
+			case "11": str = "EXITOTHERLOBBY"; break;
+			case "12": str = "GAMESTART"; break;
+			case "13": str = "DRAW"; break;
+			case "21": str = "CHANGEMASTER"; break;
+			case "14": str = "Half"; break;
+			case "15": str = "Quater"; break;
+			case "16": str = "Check"; break;
+			case "17": str = "Allin"; break;
+			case "18": str = "Call"; break;
+			case "19": str = "Die"; break;
+			case "20": str = "Pping"; break;
+			case "22": str = "RELOADLOBBYLIST";
+		}
+		
+		return str;
+		
+	}
+	
 }

@@ -3,16 +3,10 @@ package client.service;
 import java.io.IOException;
 import java.net.Socket;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import client.listener.ClientReceiver;
 import client.service.LoginResultHandler.Focus;
-import client.ui.RoomScreen;
 import dao.PlayerDAO;
-import util.Packing;
-import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class LoginService {
 	
@@ -25,7 +19,6 @@ public class LoginService {
 	} //Login();
 	
 	
-	@SuppressWarnings("static-access")
 	public void login(String id, String password) throws IOException {
 		
 		if(id == null || id.trim().isEmpty()) {

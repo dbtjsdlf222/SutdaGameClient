@@ -30,7 +30,9 @@ public class DBCon {
 		try {
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
 		} 
-		catch (SQLException e) { System.err.println("url,id,pw 확인 요망"); } //try~catch
+		catch (SQLException e) {
+			e.printStackTrace();
+		} //try~catch
 		
 		return conn;
 	} //dbconn

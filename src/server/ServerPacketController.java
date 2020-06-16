@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.swing.event.ChangeEvent;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,7 +30,9 @@ public class ServerPacketController {
 	}
 
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
-
+		
+		System.out.println("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		
 		switch (packet.getAction()) {
 
 		case Protocol.MESSAGE:
@@ -74,7 +74,7 @@ public class ServerPacketController {
 			packet.getPlayerVO().setRoomNo(thisPlayerVO.getRoomNo());
 			lobbyExitBroadcast();
 			
-			ro.getRoom(thisPlayerVO.getRoomNo()).setMaster(thisPlayerVO.getNic());
+			ro.getRoom(thisPlayerVO.getRoomNo()).setMasterNo(thisPlayerVO.getNo());
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			roomIndex = 0;
 			packet.setPlayerVO(thisPlayerVO);
@@ -133,7 +133,6 @@ public class ServerPacketController {
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTERLOBBY:
 			if (thisPlayerVO.getNic() == null) {
-				System.out.println("enterlobby 받았음 사람 초기화중 thisPlayerVO:" + thisPlayerVO);
 				thisPlayerVO = packet.getPlayerVO();
 				thisPlayerVO.setSocketWithBrPw(socket);
 			}
@@ -171,7 +170,7 @@ public class ServerPacketController {
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
-		System.err.println(thisPlayerVO.getNic() + "님이 나가셨습니다.");
+		
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {
@@ -184,14 +183,14 @@ public class ServerPacketController {
 		for (int i = 0; i < lobbyPlayerList.size(); i++) {
 			if(lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 				lobbyPlayerList.remove(i);
-			} else {
-				Packet packet = new Packet();
-				packet.setAction(Protocol.RELOADLOBBYLIST);
-				packet.setPlayerList(lobbyPlayerList);
-				packet.setRoomMap(ro.getAllRoom());
-				Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
 			}
 		} //for
+		Packet packet = new Packet();
+		packet.setAction(Protocol.RELOADLOBBYLIST);
+		packet.setPlayerList(lobbyPlayerList);
+		packet.setRoomMap(ro.getAllRoom());
+		for(PlayerVO player : lobbyPlayerList)
+			Packing.sender(player.getPwSocket(), packet);
 	}
 	
 	public void lobbyReloadBroadcast() {
@@ -203,4 +202,7 @@ public class ServerPacketController {
 			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
 		} //for
 	}
+
+	public PlayerVO getThisPlayerVO() { return thisPlayerVO; }
+	
 }

@@ -40,7 +40,9 @@ public class Lobby {
 		ClientPacketSender.instance.enterLobby();
 		lobbyScreen();
 	}
-
+	
+	private static boolean initializeOnce = false;
+	
 	public void lobbyScreen() {
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
@@ -69,19 +71,26 @@ public class Lobby {
 				.getTableHeader().getDefaultRenderer();
 		lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
-
+		
+		if(!initializeOnce) {
+			initializeOnce = true;
+			ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
+	
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 1) {
+						ClientPacketSender.instance.enterRoom(Integer
+								.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+						RoomScreen.getInstance().mainScreen();
+					}
+				}
+			});
+		}
+		
 		ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-
-					ClientPacketSender.instance.enterRoom(Integer
-							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-
-					System.out.println("들어가는숫자 : " + (Integer
-							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
-					RoomScreen.instance.mainScreen();
 					lobbyJF.dispose();
 				}
 			}
@@ -112,7 +121,7 @@ public class Lobby {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
 					ClientPacketSender.instance.makeRoom();
-					RoomScreen.instance.mainScreen();
+					RoomScreen.getInstance().mainScreen();
 					lobbyJF.dispose();
 				}
 			} // action
@@ -252,4 +261,7 @@ public class Lobby {
 
 	private void initialize() {
 	}
+	
+	
+	
 }

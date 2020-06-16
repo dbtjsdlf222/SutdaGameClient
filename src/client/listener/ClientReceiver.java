@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import javax.swing.JScrollPane;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.service.ClientPacketController;
-import operator.ChattingOperator;
 import vo.Packet;
 
 public class ClientReceiver extends Thread {
@@ -32,7 +29,6 @@ public class ClientReceiver extends Thread {
 			}
 		} catch(java.net.SocketException e1) {
 			e1.printStackTrace();
-			System.err.println(packetStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

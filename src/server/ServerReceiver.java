@@ -28,16 +28,18 @@ public class ServerReceiver extends Thread { // Server
 				try {
 					while (true) {
 						packetStr = br.readLine();
+						if(packetStr == null) {
+							System.err.println("[Receive(ERROR(" + packetController.getThisPlayerVO().getNo() + ", " + packetController.getThisPlayerVO().getNic() + "))] NULL Entered");
+							break;
+						}
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 					} // while
 				} catch (NullPointerException e) {
-					packetController.exitPlayer();
-					System.err.println("packetStr: " + packetStr);
 					e.printStackTrace();
 				} catch (SocketException e) {
+					System.err.println("[" + e.getMessage() + "(" + packetController.getThisPlayerVO().getNo() + ", " +packetController.getThisPlayerVO().getNic() + ")]");
 					packetController.exitPlayer();
-					System.err.println("packetStr: " + packetStr);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

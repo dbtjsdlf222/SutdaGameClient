@@ -52,7 +52,9 @@ public class ClientPacketController {
    public ClientPacketController() {}
 
    public void controller(Packet packet) {
-
+		
+		System.out.println("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		
       switch (packet.getAction()) {
       case Protocol.MESSAGE: // 채팅
          ChattingOperator.chatArea.append(packet.getMotion() + "\n");
@@ -89,7 +91,6 @@ public class ClientPacketController {
          while (keys.hasNext()) {
             int key = keys.next();
             Room value = map.get(key);
-            System.out.println("getRoomNo(): "+value.getRoomNo());
             rn[i][0] = value.getRoomNo()+"";
             rn[i][1] = value.getMaster()+"";
             rn[i][2] = value.getPlayerSize() + "/5";
@@ -102,22 +103,24 @@ public class ClientPacketController {
 
       case Protocol.LOGIN:
          if (packet.getPlayerVO().getNic() == null) {
-            System.out.println("아이디나 비밀번호가 틀렸습니다.");
+//            System.out.println("아이디나 비밀번호가 틀렸습니다.");
          } else {
             new Lobby();
          }
          break;
          
       case Protocol.ENTEROTHERROOM:
-         RoomScreen.instance.enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
+    	 RoomScreen.getInstance().mainScreen();
+         RoomScreen.getInstance().enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
          break;
          
       case Protocol.EXITOTHERROOM:
-         RoomScreen.instance.exitPlayer(Integer.parseInt(packet.getMotion()));
+         RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
          break;
          
       case Protocol.ENTERROOM:
-         RoomScreen.instance.enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
+    	 RoomScreen.getInstance().mainScreen();
+         RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(),packet.getPlayerVO().getIndex());
          break;
         
       case Protocol.CHANGEMASTER:

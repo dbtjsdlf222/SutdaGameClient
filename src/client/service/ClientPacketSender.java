@@ -32,6 +32,4 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
 	} // login();
 	
-	public PlayerVO getVo() { return PlayerVO.myVO; }
-	
 } // class

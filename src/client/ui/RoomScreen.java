@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,7 +39,7 @@ public class RoomScreen extends JFrame {
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
 
-	public static RoomScreen instance = new RoomScreen();
+	private static RoomScreen instance;
 
 	private Container content;
 	private Background back = new Background();
@@ -62,6 +63,23 @@ public class RoomScreen extends JFrame {
 	JTextField[] nicText = new JTextField[5];
 	JTextField[] moneyText = new JTextField[5];
 	JLabel[] profile = new JLabel[5];
+	
+	public static synchronized RoomScreen getInstance() {
+		
+		if(instance == null)
+			instance = new RoomScreen();
+		return instance;
+		
+	} //getInstance();
+	
+	@Override
+	public void dispose() {
+		
+		instance = null;
+		ClientPacketSender.instance.exitRoom();
+		super.dispose();
+		
+	} //dispose();
 	
 	public void exitPlayer(int index) {
 		
@@ -158,7 +176,6 @@ public class RoomScreen extends JFrame {
 		ActionListener action = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(e.getSource());
 				if (e.getSource() == btn[0]) {
 					tf.setText("올인");
 				} else if (e.getSource() == btn[1]) {
@@ -204,9 +221,14 @@ public class RoomScreen extends JFrame {
 		// }
 		mat.add(tf);
 	}
-
-	public void mainScreen() {
-
+	
+	private boolean initialized = false;
+	
+	public synchronized void mainScreen() {
+		
+		if(initialized) return;
+		initialized = true;
+		
 		for (int i = 0; i < panlist.length; i++) {
 			panlist[i] = new JPanel();
 
@@ -278,13 +300,12 @@ public class RoomScreen extends JFrame {
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
 		add(exitBtn);
-
+		
 		exitBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				ClientPacketSender.instance.exitRoom();
 				new Lobby();
 			}
 		});
@@ -312,7 +333,7 @@ public class RoomScreen extends JFrame {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
-
+		
 	}
 
 	public void setSit(int i, PlayerVO setVO) {
@@ -332,7 +353,7 @@ public class RoomScreen extends JFrame {
 				profile[i] = new JLabel(new ImageIcon(
 						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
-
+			
 			if (i == 1) {
 				panlist[i].add(nicText[i]);
 				panlist[i].add(moneyText[i]);
@@ -451,7 +472,8 @@ public class RoomScreen extends JFrame {
 			}
 
 		} catch (Exception e) {
-			System.out.println("빈자리 감지|MainScreen 324");
+			System.out.println(Arrays.toString(panlist));
+			e.printStackTrace();
 		}
 	} // setSit();
 
@@ -459,7 +481,7 @@ public class RoomScreen extends JFrame {
 		
 		for(Entry<Integer, PlayerVO> set : voList.entrySet()) {
 			
-			if(ClientPacketSender.instance.getVo().getNo() == set.getValue().getNo()) {
+			if(PlayerVO.myVO.getNo() == set.getValue().getNo()) {
 				mySit = set.getValue().getIndex();
 				break;
 			}
@@ -479,8 +501,6 @@ public class RoomScreen extends JFrame {
 			
 			if (setVO == null)
 				continue;
-			
-			System.out.println(i+"| "+setVO.getNic());
 
 			setSit(i, setVO);
 
@@ -489,7 +509,7 @@ public class RoomScreen extends JFrame {
 	
 	public void enterPlayerOther(PlayerVO vo, int index) {
 		
-		if(ClientPacketSender.instance.getVo().getNo() == vo.getNo())
+		if(PlayerVO.myVO.getNo() == vo.getNo())
 			mySit = vo.getIndex();
 		
 		playerListMap.put(index, vo);

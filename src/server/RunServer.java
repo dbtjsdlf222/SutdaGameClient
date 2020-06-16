@@ -1,8 +1,6 @@
 package server;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -19,8 +17,9 @@ public class RunServer {
 	public void run() {
 		ExecutorService executor = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
 		PlayerDAO dao = new PlayerDAO();
-		try {
-			ServerSocket serverSocket = new ServerSocket(4888);
+		
+		try(ServerSocket serverSocket = new ServerSocket(4888);) {
+			
 			dao.setServerIP();
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
@@ -35,9 +34,9 @@ public class RunServer {
 //				executor.submit(run);
 			} //while
 		} catch (UnknownHostException e) {
-			System.err.println("서버 접속 실패");
+			e.printStackTrace();
 		} catch (IOException e) {
-			System.err.println("서버가 이미 가동중입니다");
+			e.printStackTrace();
 		} finally {
 			executor.shutdown();
 		}
