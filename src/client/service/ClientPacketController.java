@@ -110,11 +110,9 @@ public class ClientPacketController {
          
       case Protocol.ENTEROTHERROOM:
          RoomScreen.instance.enterPlayerOther(packet.getPlayerVO(),packet.getPlayerVO().getIndex());
-         System.out.println("ENTEROTHERROOM"+packet.getPlayerVO());
          break;
          
       case Protocol.EXITOTHERROOM:
-    	 System.out.println("Protocol.EXITOTHERROOM: getIndex ["+ packet.getPlayerVO().getIndex()+"]");
          RoomScreen.instance.exitPlayer(Integer.parseInt(packet.getMotion()));
          break;
          

@@ -26,7 +26,7 @@ public class ServerPacketController {
 	private RoomOperator ro = RoomOperator.ro; 
 	private PlayerDAO dao = new PlayerDAO();
 	private Socket socket;
-
+	private int roomIndex;
 	public ServerPacketController(Socket socket) {
 		this.socket = socket;
 	}
@@ -76,6 +76,7 @@ public class ServerPacketController {
 			
 			ro.getRoom(thisPlayerVO.getRoomNo()).setMaster(thisPlayerVO.getNic());
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
+			roomIndex = 0;
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setAction(Protocol.ENTEROTHERROOM);
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
@@ -91,9 +92,12 @@ public class ServerPacketController {
 		case Protocol.EXITROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
 			room.exitPlayer(thisPlayerVO);
+			packet.setAction(Protocol.EXITOTHERROOM);
+			packet.setMotion(roomIndex+"");
 			room.roomSpeaker(packet);
 			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
 				ro.removeRoom(thisPlayerVO.getRoomNo());
+				this.lobbyReloadBroadcast();
 			}
 			thisPlayerVO.setRoomNo(0);
 			
@@ -104,6 +108,7 @@ public class ServerPacketController {
 			thisPlayerVO.setRoomNo(roomNo);
 			Packet pak = new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO);
 			int index = ro.joinRoom(roomNo, thisPlayerVO);
+			roomIndex = index;	//index 저장
 			thisPlayerVO.setIndex(index);	//자신이 몇번쨰 index인지 저장
 			pak.setMotion(index +"");
 			ro.getRoom(roomNo).roomSpeaker(pak);

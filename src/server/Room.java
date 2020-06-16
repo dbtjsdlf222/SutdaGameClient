@@ -1,17 +1,16 @@
 package server;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import operator.RoomOperator;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -20,7 +19,7 @@ public class Room {
 	private static int increaseRoomNo = 1;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
-	private Map<Integer, PlayerVO> playerMap = new HashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
+	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
