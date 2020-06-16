@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,19 +21,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-
 
 import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
 import server.Room;
-import util.Packing;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class Lobby {
 	private JFrame lobbyJF = new JFrame();
@@ -45,9 +38,9 @@ public class Lobby {
 	private JButton newBtn;
 	private JButton gBtn;
 	Room value;
-	
+
 	public Lobby(PlayerVO vo) { // 서버에 로그인된 사람의 정보를 전송
-		
+
 		ClientPacketSender.cps.enterLobby();
 //		Packing.sender(vo.getPwSocket(), Protocol.ENTERLOBBY, vo);
 		lobbyScreen(vo);
@@ -67,58 +60,52 @@ public class Lobby {
 		ClientPacketController.rlobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.rlobbyPan.setLayout(null);
 		lobbyJF.add(ClientPacketController.rlobbyPan);
-		
-		
-//		String[] lob = { "방 번호", "방장 NIC", "인원수", "입장" };
-//	      String[][] lobb = new String[99][99];
-//	      DefaultTableModel lobModel = new DefaultTableModel(lob, 0);
-//	      JTable lobjT = new JTable(lobModel);
-//	      JScrollPane lobJScroll = new JScrollPane(lobjT);
 
-	      // 중앙으로 배치
-	      DefaultTableCellRenderer lobRenderer = new DefaultTableCellRenderer();
-	      lobRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-	      TableColumnModel lobTcmSchedule = ClientPacketController.roomJT.getColumnModel();
-	      for (int i = 0; i < lobTcmSchedule.getColumnCount(); i++) {
-	         lobTcmSchedule.getColumn(i).setCellRenderer(lobRenderer);
-	      }
+		// 중앙으로 배치
+		DefaultTableCellRenderer lobRenderer = new DefaultTableCellRenderer();
+		lobRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel lobTcmSchedule = ClientPacketController.roomJT.getColumnModel();
+		for (int i = 0; i < lobTcmSchedule.getColumnCount(); i++) {
+			lobTcmSchedule.getColumn(i).setCellRenderer(lobRenderer);
+		}
 
-	      // Header을 중앙에 배치
-	      DefaultTableCellRenderer lobHRenderer = (DefaultTableCellRenderer)ClientPacketController.roomJT.getTableHeader()
-	            .getDefaultRenderer();
-	      lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-	      ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
-	      
-	      ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
-			
+		// Header을 중앙에 배치
+		DefaultTableCellRenderer lobHRenderer = (DefaultTableCellRenderer) ClientPacketController.roomJT
+				.getTableHeader().getDefaultRenderer();
+		lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
+
+		ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount()==1) {
-					
-					ClientPacketSender.cps.enterRoom(Integer.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-					
-					System.out.println("들어가는숫자 : " + (Integer.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
+				if (e.getClickCount() == 1) {
+
+					ClientPacketSender.cps.enterRoom(Integer
+							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+
+					System.out.println("들어가는숫자 : " + (Integer
+							.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])));
 					MainScreen.ms.mainScreen();
 					lobbyJF.dispose();
 				}
 			}
 		});
 
-	      ClientPacketController.roomJT.getTableHeader().setBackground(new Color(32, 136, 203));
-	      ClientPacketController.roomJT.setShowVerticalLines(false);
-	      ClientPacketController.roomJT.setSelectionBackground(new Color(232, 57, 95));
-	      ClientPacketController.roomJT.setRowHeight(40);
-	      ClientPacketController.roomJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
-	      ClientPacketController.roomJT.getTableHeader().setReorderingAllowed(false);
-	      ClientPacketController.roomJT.getTableHeader().setResizingAllowed(false);
-	      ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0));
-	      ClientPacketController.rlScroll.setOpaque(false);
-	      ClientPacketController.rlScroll.setBounds(10, 10, 798, 270);
-	      ClientPacketController.rlScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
-	      ClientPacketController.rlScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	      ClientPacketController.rlobbyPan.add(ClientPacketController.rlScroll);
-		
-		
+		ClientPacketController.roomJT.getTableHeader().setBackground(Color.orange);
+		ClientPacketController.roomJT.setShowVerticalLines(false);
+		ClientPacketController.roomJT.setSelectionBackground(new Color(232, 57, 95));
+		ClientPacketController.roomJT.setRowHeight(40);
+		ClientPacketController.roomJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
+		ClientPacketController.roomJT.getTableHeader().setReorderingAllowed(false);
+		ClientPacketController.roomJT.getTableHeader().setResizingAllowed(false);
+		ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0));
+		ClientPacketController.rlScroll.setOpaque(false);
+		ClientPacketController.rlScroll.setBounds(10, 10, 798, 270);
+		ClientPacketController.rlScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ClientPacketController.rlScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		ClientPacketController.rlobbyPan.add(ClientPacketController.rlScroll);
+
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
 		newBtn.setBounds(681, 515, 150, 50);
@@ -133,8 +120,8 @@ public class Lobby {
 					MainScreen.ms.mainScreen();
 					lobbyJF.dispose();
 				}
-			} //action
-		}); //listener
+			} // action
+		}); // listener
 
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
@@ -156,10 +143,12 @@ public class Lobby {
 		chatText.setBounds(10, 225, 560, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
-		chatText.setFont(new Font("Rosewood Std", Font.PLAIN, 12));
+		chatText.setFont(new Font("휴먼옛체", Font.PLAIN, 13));
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
+		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+
 		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.scrollPane.setBounds(10, 15, 638, 195);
@@ -174,7 +163,6 @@ public class Lobby {
 		rootPane.setDefaultButton(chatBtn);
 
 		chatBtn.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
@@ -203,27 +191,24 @@ public class Lobby {
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 로비에 플레이어 접속자 목록
-		
-		
+
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmSchedule = ClientPacketController.playerJT.getColumnModel();
 		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
-		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
-		
-		//Header을 중앙에 배치
-		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)ClientPacketController.playerJT.getTableHeader()
+
+		// Header을 중앙에 배치
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) ClientPacketController.playerJT.getTableHeader()
 				.getDefaultRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientPacketController.playerJT.getTableHeader().setDefaultRenderer(renderer);
-		
+
 		ClientPacketController.playerJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.playerJT.setShowVerticalLines(false);
-		ClientPacketController.playerJT.setSelectionBackground(new Color(232,57,95));
-		
-		
-		
+		ClientPacketController.playerJT.setSelectionBackground(new Color(232, 57, 95));
+
 		ClientPacketController.playerJT.setRowHeight(40);
 		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.playerJT.getTableHeader().setReorderingAllowed(false);
@@ -245,18 +230,17 @@ public class Lobby {
 		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
-		
+
 		exitBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == exitBtn) {
+				if (e.getSource() == exitBtn) {
 					System.exit(0);
 				}
 			}
 		});
-			
-		
+
 		// JFrame 정보
 		imgP = new Background();
 		imgP.lobbyImage();
@@ -269,12 +253,8 @@ public class Lobby {
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 	}
 
 	private void initialize() {
-		// TODO Auto-generated method stub
-
 	}
-
 }
