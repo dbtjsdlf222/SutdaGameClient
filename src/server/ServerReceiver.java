@@ -30,22 +30,22 @@ public class ServerReceiver extends Thread { // Server
 						packetStr = br.readLine();
 						Packet packet = mapper.readValue(packetStr, Packet.class);
 						packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
-						System.out.println("packet: " + packet);
 					} // while
 				} catch (NullPointerException e) {
 					packetController.exitPlayer();
 					System.err.println("packetStr: " + packetStr);
+					e.printStackTrace();
 				} catch (SocketException e) {
 					packetController.exitPlayer();
 					System.err.println("packetStr: " + packetStr);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			} // try~catch
+			} // try~catch;
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} // try~catch
-	} // run()
+		} // try~catch;
+	} // run();
 
-} // ReceiveClientPacket
+} // ReceiveClientPacket();

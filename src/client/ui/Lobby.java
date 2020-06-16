@@ -169,7 +169,7 @@ public class Lobby {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					if (!(chatText.getText().equals(""))) {
-						co.chatting(chatText.getText(), vo);
+						co.chatting(chatText.getText());
 						chatText.requestFocus();
 						chatText.setText("");
 					}

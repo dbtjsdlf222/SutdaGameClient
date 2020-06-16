@@ -55,7 +55,7 @@ public class ClientPacketController {
 
       switch (packet.getAction()) {
       case Protocol.MESSAGE: // 채팅
-         ChattingOperator.chatArea.append(packet.getPlayerVO().getNic() + ": " + packet.getMotion() + "\n");
+         ChattingOperator.chatArea.append(packet.getMotion() + "\n");
          scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
          break;
          
@@ -97,7 +97,6 @@ public class ClientPacketController {
             JButton jb = new JButton(value.getRoomNo()+"");
             rLmodel.addRow(rn[i]);
             i++;
-         
          }
          break;
 
@@ -127,5 +126,5 @@ public class ClientPacketController {
 //    	  MainScreen.instance.changeMaster(Integer.parseInt(packet.getMotion()));
     	  break;
       } // switch
-   } // method
+   } // controller();
 } // class

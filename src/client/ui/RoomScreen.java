@@ -52,7 +52,7 @@ public class RoomScreen extends JFrame {
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
 	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
-	private JPanel[] panlist = new JPanel[5];
+	private static JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
 	JTextField[] nicText = new JTextField[5];
@@ -60,19 +60,17 @@ public class RoomScreen extends JFrame {
 	JLabel[] profile = new JLabel[5];
 	
 	public void exitPlayer(int index) {
-		int myIndex;
+		index = index - this.index;
 		
-		if((myIndex = index-this.index) < 0) {
-			myIndex+=5;
-		}
+		if(index < 0)
+			index += 5;
 		
-		System.out.println("public void exitPlayer"+ index);
-		panlist[myIndex] = null;
+		panlist[index] = null;
 		
 //		if (playerListMap.get(index).getNo() == playerVO.getNo()) {
 //			playerListMap.remove(index);
 //		} // if
-	} // exitPlayer
+	} // exitPlayer();
 
 	private RoomScreen() {}
 
@@ -249,7 +247,7 @@ public class RoomScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					if (!(chatText.getText().equals(""))) {
-						co.chatting(chatText.getText(), playerVO);
+						co.chatting(chatText.getText());
 						chatText.requestFocus();
 
 						chatText.setText("");
@@ -293,10 +291,8 @@ public class RoomScreen extends JFrame {
 		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
 		setIconImage(img);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));
-		groupLayout
-				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
 
 	}
@@ -440,7 +436,16 @@ public class RoomScreen extends JFrame {
 	} // setSit();
 
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
-
+		
+		try {
+			System.out.println("0:"+voList.get(0).getNic());
+			System.out.println("1:"+voList.get(1).getNic());
+			System.out.println("2:"+voList.get(2).getNic());
+			System.out.println("3:"+voList.get(3).getNic());
+			System.out.println("4:"+voList.get(4).getNic());
+			System.out.println("==========================");
+		} catch (Exception e) {}
+		
 		this.index = index;
 		playerListMap = voList;
 
@@ -451,19 +456,19 @@ public class RoomScreen extends JFrame {
 				j -= 5;
 			
 			PlayerVO setVO = voList.get(j);
-
+			
 			if (setVO == null)
 				continue;
+			
+			System.out.println(i+"| "+setVO.getNic());
 
 			setSit(i, setVO);
 
 		} // for
 	} // enterPlayerList();
-
+	
 	public void enterPlayerOther(PlayerVO vo, int index) {
-		if(playerVO == null) {
-			playerVO = vo;
-		}
+		
 		playerListMap.put(index, vo);
 
 		index -= this.index;
@@ -486,7 +491,7 @@ public class RoomScreen extends JFrame {
 
 		RoomScreen ms = new RoomScreen();
 		ms.mainScreen();
-
-//		ms.enterPlayerList(voList,voList);
+		ms.enterPlayerList(voList,2);
+		ms.exitPlayer(1);
 	}
 }
