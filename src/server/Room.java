@@ -209,7 +209,7 @@ public class Room {
 	}
 
 	@JsonIgnore
-	public int getMaster() {
+	public Integer getMaster() {
 		return master;
 	}
 
