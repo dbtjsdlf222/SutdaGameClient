@@ -62,7 +62,10 @@ public class Protocol {
 			case "18": str = "Call"; break;
 			case "19": str = "Die"; break;
 			case "20": str = "Pping"; break;
-			case "22": str = "RELOADLOBBYLIST";
+			case "22": str = "RELOADLOBBYLIST"; break;
+			case "23": str = "CARD1"; break;
+			case "24": str = "CARD2"; break;
+			case "25": str = "OPENCARD";
 		}
 		
 		return str;

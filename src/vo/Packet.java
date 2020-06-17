@@ -107,7 +107,8 @@ public class Packet {
 	@Override
 	public String toString() {
 		return "Packet [action=" + action + ", motion=" + motion + ", playerVO=" + playerVO + ", roomMap=" + roomMap
-				+ ", playerList=" + playerList + "]";
+				+ ", playerList=" + playerList + ", roomPlayerList=" + roomPlayerList + ", card1=" + card1 + ", card2="
+				+ card2 + "]";
 	}
-
+	
 }

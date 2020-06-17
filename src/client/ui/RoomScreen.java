@@ -371,21 +371,21 @@ public class RoomScreen extends JFrame {
 
 	public void receiveCard1(float card) {
 		System.out.println("receiveCard1: " + card);
-		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
-
+		card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%.0f", card) + ".png")));
+		
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
-				card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
+				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
 			}
 		} // for
 	} // receiveCard1();
 
 	public void receiveCard2(float card) {
-		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
+		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%.0f", card) + ".png")));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
-				card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
+				card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
 			}
 		} // for
 
@@ -537,11 +537,11 @@ public class RoomScreen extends JFrame {
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
 
-//				card1[i].setBounds(115, 10, 110, 160);
-//				card1[i].setOpaque(false);
+				card1[i].setBounds(115, 10, 110, 160);
+				card1[i].setOpaque(false);
 
-//				card2[i].setBounds(230, 10, 110, 160);
-//				card2[i].setOpaque(false);
+				card2[i].setBounds(230, 10, 110, 160);
+				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(10, 125, 90, 20);
 				nicText[i].setOpaque(true);
