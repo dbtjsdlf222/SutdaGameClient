@@ -171,6 +171,10 @@ public class ServerPacketController {
 			packet.setAction(Protocol.EXITOTHERROOM);
 			packet.setMotion(thisPlayerVO.getIndex()+"");
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
+			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
+				ro.removeRoom(thisPlayerVO.getRoomNo());
+				this.lobbyReloadBroadcast();
+			}
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
