@@ -124,7 +124,7 @@ public class ClientPacketController {
          break;
         
       case Protocol.CHANGEMASTER:
-//    	  MainScreen.instance.changeMaster(Integer.parseInt(packet.getMotion()));
+    	  RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
     	  break;
       } // switch
    } // controller();

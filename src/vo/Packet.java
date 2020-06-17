@@ -16,7 +16,8 @@ public class Packet {
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
-
+	private	float card1,card2;
+	
 	public Packet() {
 	}
 
@@ -35,8 +36,23 @@ public class Packet {
 		this.action = action;
 		this.motion = motion;
 	}
-
 	
+	public float getCard1() {
+		return card1;
+	}
+
+	public void setCard1(float card1) {
+		this.card1 = card1;
+	}
+
+	public float getCard2() {
+		return card2;
+	}
+
+	public void setCard2(float card2) {
+		this.card2 = card2;
+	}
+
 	public Map<Integer, PlayerVO> getRoomPlayerList() {
 		return roomPlayerList;
 	}

@@ -18,11 +18,11 @@ public class Protocol {
 	public static final String ENTEROTHERLOBBY = "9";	//다른 사람이 로비 입실
 	public static final String EXITOTHERROOM = "10";  	//다른 사람이 룸에 퇴실
 	public static final String EXITOTHERLOBBY = "11";	//다른 사람이 로비 퇴실
-	
+	public static final String RELOADLOBBYLIST = "22";	//로비가 변했을때 새로고침
 	
 	//Game
 	public static final String GAMESTART = "12";	//game 시작 상태 만들기
-	public static final String DRAW = "13";	//game 시작 상태 만들기
+	public static final String DRAW = "13";			//game 시작 상태 만들기
 	public static final String CHANGEMASTER = "21";	//선 변경
 	
 	public static final String Half = "14";
@@ -32,7 +32,10 @@ public class Protocol {
 	public static final String Call = "18";
 	public static final String Die = "19";
 	public static final String Pping = "20";
-	public static final String RELOADLOBBYLIST = "22";
+	
+	public static final String CARD1 = "23";
+	public static final String CARD2 = "24";
+	
 	
 	public static String getName(String str) {
 		

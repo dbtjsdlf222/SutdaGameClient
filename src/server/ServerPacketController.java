@@ -25,6 +25,7 @@ public class ServerPacketController {
 	private PlayerDAO dao = new PlayerDAO();
 	private Socket socket;
 	private int roomIndex;
+	
 	public ServerPacketController(Socket socket) {
 		this.socket = socket;
 	}
@@ -153,6 +154,9 @@ public class ServerPacketController {
 			lobbyBroadcast(packet);
 
 			break;
+			
+		case Protocol.GAMESTART:
+			ro.getRoom(thisPlayerVO.getRoomNo()).gameStart();
 			
 		} // switch
 	} // runMainGame

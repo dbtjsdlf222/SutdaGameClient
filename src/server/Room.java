@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -39,6 +40,17 @@ public class Room {
 		return playerMap.size();
 	}
 
+	public void rollPlayerCard() {
+		Packet packet = new Packet();
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			if (s.getValue().isLive()) {
+				packet.setAction(Protocol.CARD1);
+				packet.setCard1(pollOneCard());
+				Packing.sender(s.getValue().getPwSocket(), packet);
+			}
+		}
+	} // setPlayerCard();
+
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -53,39 +65,48 @@ public class Room {
 			swap(cardArr, i, ran.nextInt(cardArr.length - i) + i);
 			shuffledCard.offer(cardArr[i]);
 		}
-	}
+	} //cardShuffle();
 
-	public float rollCard() {
+	public float pollOneCard() {
 		return shuffledCard.poll();
 	}
 
-	public void roomSpeaker(Packet pac) {
+	public void gameStart() {
+		cardShuffle(); 					// 카드큐를 섞는다
+		Packet packet = new Packet();
+		packet.setAction(Protocol.CARD1);
+		packet.setCard1(pollOneCard()); // 첫 번째 카드를 배분한다
 		
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			s.getValue().setLive(true);
+			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), packet);
+		} //for
+	} // 방장이 게임 시작
+
+	
+	public void roomSpeaker(Packet pac) {
+
 		System.out.print("[Send(roomSpeaker(" + roomNo);
 		Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
-		if(iterator.hasNext()) {
+		if (iterator.hasNext()) {
 			System.out.print("(" + iterator.next().getValue().getNic());
-			while(iterator.hasNext())
+			while (iterator.hasNext())
 				System.out.print(", " + iterator.next().getValue().getNic());
 			System.out.print(")");
 		}
 		System.out.println(", " + Protocol.getName(pac.getAction()) + "))] " + pac);
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-			try {
-				playerMap.get(s.getKey()).getPwSocket().println(objectMapper.writeValueAsString(pac));
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
+			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
 		}
-	} // roomSpeaker
+	} // roomSpeaker();
 
 	public void roomChat(Packet packet) {
 		for (int i = 0; i < playerMap.size(); i++) {
 			playerMap.get(i).getPwSocket().println(packet);
 		} // for
-	} // roomChat
+	} // roomChat();
 
 	public void swap(float[] arr, int i, int j) {
 		float temp = arr[i];
@@ -94,7 +115,7 @@ public class Room {
 	}
 
 	public int joinPlayer(PlayerVO vo) {
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (playerMap.get(i) == null) {
 				playerMap.put(i, vo);
@@ -106,30 +127,30 @@ public class Room {
 	} // join
 
 	public void exitPlayer(PlayerVO vo) {
-		
+
 		int playerIndex = getPlayerIndex(vo.getNo());
 		playerMap.remove(playerIndex);
-		
-		if(masterIndex == playerIndex) {
-			
+
+		if (masterIndex == playerIndex) {
+
 			int size = playerMap.size();
-			
-			if(size < 1)
+
+			if (size < 1)
 				return;
-			
-			int random = (int)(Math.random() * size);
-			
+
+			int random = (int) (Math.random() * size);
+
 			Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
 			Entry<Integer, PlayerVO> entry;
 			entry = iterator.next();
-			for(int i = 0 ; i < random; i++)
+			for (int i = 0; i < random; i++)
 				entry = iterator.next();
-			
+
 			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, entry.getKey().toString()));
 			setMasterNo(entry.getValue().getNo());
-			
+
 		}
-		
+
 //		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
 //			int i = set.getKey();
 //
@@ -183,9 +204,9 @@ public class Room {
 	// }
 	// } // 판돈 체크 후 입장 여부 확인
 
-	public void gameStart() {
+	public void playerCardSet(int i) {
 
-	} // 방장이 게임 시작
+	}
 
 	// public void bet() {
 	// String bet;
@@ -246,28 +267,30 @@ public class Room {
 	public String getMaster() {
 		return master;
 	}
-	
+
 	public int getPlayerIndex(int playerNo) {
-		
-		for(Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
-			if(entry.getValue().getNo() == playerNo) {
+
+		for (Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
+			if (entry.getValue().getNo() == playerNo) {
 				return entry.getKey();
 			}
 		}
 		return -1;
-		
-	} //getPlayerIndex();
-	
-	public void setMaster(String str) { master = str; }
-	
+
+	} // getPlayerIndex();
+
+	public void setMaster(String str) {
+		master = str;
+	}
+
 	public void setMasterNo(int no) {
-		
+
 		int index = getPlayerIndex(no);
-		if(index != -1) {
+		if (index != -1) {
 			masterIndex = index;
 			setMaster(playerMap.get(index).getNic());
 		}
-		
+
 	}
 
 	public boolean isGameStarted() {
