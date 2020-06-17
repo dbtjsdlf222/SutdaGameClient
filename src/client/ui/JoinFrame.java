@@ -1,6 +1,7 @@
 package client.ui;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,6 +53,7 @@ public class JoinFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 444, 444);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -325,17 +327,26 @@ public class JoinFrame {
 				if (idCheck && passwordCheck && passwordCheck2 && nicknameCheck) {
 					
 					sexJF = new JFrame("캐릭터 선택창");
+					Container con = sexJF.getContentPane();
+					con.setBackground(Color.black);
 					sexJF.setSize(500, 700);
 					sexJF.setLayout(null);
+					sexJF.setLocationRelativeTo(null);
 					sexJF.setVisible(true);
 
 					JLabel sexLbl = new JLabel("캐릭을 선택하세요.");
 					sexLbl.setFont(new Font("d2coding", Font.BOLD, 20));
+					sexLbl.setForeground(Color.white);
+					sexLbl.setBackground(Color.white);
 					sexLbl.setBounds(150, 20, 200, 20);
 					sexJF.add(sexLbl);
 
 					JRadioButton men = new JRadioButton("남자");
+					men.setForeground(Color.white);
+					men.setBackground(Color.black);
 					JRadioButton women = new JRadioButton("여자");
+					women.setForeground(Color.white);
+					women.setBackground(Color.black);
 					sexJF.add(men);
 					sexJF.add(women);
 
@@ -346,9 +357,9 @@ public class JoinFrame {
 					men.setBounds(120, 520, 50, 50);
 					women.setBounds(340, 520, 50, 50);
 					
-					JLabel mLbl = new JLabel(new ImageIcon(JoinFrame.class.getResource("/img/men.png")));
+					JLabel mLbl = new JLabel(new ImageIcon(JoinFrame.class.getResource("../../img/character/cha0.png")));
 					JLabel wLbl = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("/img/women.png")));
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha1.png")));
 					sexJF.add(mLbl);
 					sexJF.add(wLbl);
 					mLbl.setBounds(40, 80, 190, 430);
@@ -370,6 +381,8 @@ public class JoinFrame {
 									playerVO.setCha(0);
 								} else if (women.isSelected()) {
 									playerVO.setCha(1);
+								}else {
+									JOptionPane.showMessageDialog(null, "선택해주세요.");
 								}
 								try {
 									playerVO.joinPlayer(textFieldId.getText(), new String(passwordField.getPassword()),
