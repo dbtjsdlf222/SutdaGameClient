@@ -126,6 +126,19 @@ public class ClientPacketController {
       case Protocol.CHANGEMASTER:
     	  RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
     	  break;
+    	  
+      case Protocol.CARD1:
+    	  RoomScreen.getInstance().receiveCard1(packet.getCard1());
+    	  System.out.println("CARD1:"+packet.getCard1());
+    	  break;
+    	  
+      case Protocol.CARD2:
+    	  RoomScreen.getInstance().receiveCard1(packet.getCard2());
+    	  break;
+    	  
+      case Protocol.OPENCARD:
+    	  
+    	break;  
       } // switch
    } // controller();
 } // class

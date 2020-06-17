@@ -35,7 +35,6 @@ public class RoomOperator {
 	public int joinRoom(int roomNo, PlayerVO playerVO) {
 		
 		return roomMap.get(roomNo).joinPlayer(playerVO);
-		
 	}
 
 }

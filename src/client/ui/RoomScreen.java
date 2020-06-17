@@ -32,7 +32,10 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
+import util.Packing;
+import vo.Packet;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class RoomScreen extends JFrame {
 
@@ -302,14 +305,17 @@ public class RoomScreen extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == chatBtn) {
-					if (!(chatText.getText().equals(""))) {
-						co.chatting(chatText.getText());
-						chatText.requestFocus();
-
-						chatText.setText("");
-					}
-				}
+//				if (e.getSource() == chatBtn) {
+//					if (!(chatText.getText().equals(""))) {
+//						co.chatting(chatText.getText());
+//						chatText.requestFocus();
+//
+//						chatText.setText("");
+//					}
+//				}
+				
+				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
+				
 			}
 		});
 
@@ -359,7 +365,12 @@ public class RoomScreen extends JFrame {
 
 	}
 
+	public void openCard() {
+
+	}
+
 	public void receiveCard1(float card) {
+		System.out.println("receiveCard1: " + card);
 		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
 
 		for (int i = 1; i < 5; i++) {
@@ -367,25 +378,36 @@ public class RoomScreen extends JFrame {
 				card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
 			}
 		} // for
+	} // receiveCard1();
 
-	} // receiveCard2();
-
-	public void receiveCard2(int playerIdx, int whichCard, float card) {
-		playerIdx = (playerIdx - mySit + 5) % 5;
-
-		if (whichCard == 1) {
-			card1[playerIdx] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
-		} else {
-			card2[playerIdx] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
-		}
+	public void receiveCard2(float card) {
+		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
-				card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
+				card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
 			}
 		} // for
 
-	} // receiveCard();
+	} // receiveCard2();
+
+	// 오픈카드
+//	public void openCard(int playerIdx, int whichCard, float card) {
+//		playerIdx = (playerIdx - mySit + 5) % 5;
+//		
+//		if (whichCard == 1) {
+//			card1[playerIdx] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
+//		} else {
+//			card2[playerIdx] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
+//		}
+//		
+//		for (int i = 1; i < 5; i++) {
+//			if (profile[i] != null) {
+//				card1[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
+//			}
+//		} // for
+//		
+//	} // receiveCard();
 
 	/**
 	 * @param i     몇번째 자리

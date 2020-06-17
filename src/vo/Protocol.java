@@ -36,6 +36,7 @@ public class Protocol {
 	public static final String CARD1 = "23";
 	public static final String CARD2 = "24";
 	
+	public static final String OPENCARD = "25";
 	
 	public static String getName(String str) {
 		

@@ -65,25 +65,24 @@ public class Room {
 			swap(cardArr, i, ran.nextInt(cardArr.length - i) + i);
 			shuffledCard.offer(cardArr[i]);
 		}
-	} //cardShuffle();
+	} // cardShuffle();
 
 	public float pollOneCard() {
 		return shuffledCard.poll();
 	}
 
 	public void gameStart() {
-		cardShuffle(); 					// 카드큐를 섞는다
+		cardShuffle(); // 카드큐를 섞는다
 		Packet packet = new Packet();
-		packet.setAction(Protocol.CARD1);
-		packet.setCard1(pollOneCard()); // 첫 번째 카드를 배분한다
-		
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			packet.setAction(Protocol.CARD1);
+			packet.setCard1(pollOneCard()); // 첫 번째 카드를 배분한다
+
 			s.getValue().setLive(true);
-			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), packet);
-		} //for
+			Packing.sender(s.getValue().getPwSocket(), packet);
+		} // for
 	} // 방장이 게임 시작
 
-	
 	public void roomSpeaker(Packet pac) {
 
 		System.out.print("[Send(roomSpeaker(" + roomNo);
