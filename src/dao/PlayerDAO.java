@@ -44,7 +44,7 @@ public class PlayerDAO {
 
 	public void setServerIP() {
 		String sql = "UPDATE player SET ip = ? WHERE id = 'SERVER'";
-		try(PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setString(1, InetAddress.getLocalHost().getHostAddress());
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -213,6 +213,21 @@ public class PlayerDAO {
 		}
 
 		return true;
+	}
+
+	public void playerSave(PlayerVO vo) {
+		String query = "UPDATE player SET money = ?, win = ?, lose = ? WHERE no = ?";
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, vo.getMoney());
+			pstmt.setInt(2, vo.getWin());
+			pstmt.setInt(3, vo.getLose());
+			pstmt.setInt(4, vo.getNo());
+
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
