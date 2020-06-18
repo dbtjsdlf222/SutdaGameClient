@@ -28,28 +28,29 @@ import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class JoinFrame {
-	
+
 	private PlayerDAO playerDAO;
-	
+
 	private boolean nicknameCheck;
 	private boolean idCheck;
 	private boolean passwordCheck;
 	private boolean passwordCheck2;
-	
+	private boolean cha;
+
 	private JFrame frame;
 	private JTextField textFieldNickname;
 	private JTextField textFieldId;
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldCheck;
-	
+
 	private JFrame sexJF;
-	
+
 	public JoinFrame(PlayerDAO playerDAO) {
 		this.playerDAO = playerDAO;
 		initialize();
 		frame.setVisible(true);
-	} //JoinFrame();
-	
+	} // JoinFrame();
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -57,12 +58,13 @@ public class JoinFrame {
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 444, 444);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{16, 0, 0, 64, 0, 16};
-		gridBagLayout.rowHeights = new int[]{32, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 64, 16};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+		gridBagLayout.columnWidths = new int[] { 16, 0, 0, 64, 0, 16 };
+		gridBagLayout.rowHeights = new int[] { 32, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 64, 16 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
+				0.0 };
 		frame.getContentPane().setLayout(gridBagLayout);
-		
+
 		JLabel lblHint1 = new JLabel("새롭게 만들 아이디와 비밀번호를 입력해주세요.");
 		lblHint1.setFont(new Font("굴림", Font.BOLD, 12));
 		lblHint1.setForeground(Color.PINK);
@@ -72,7 +74,7 @@ public class JoinFrame {
 		gbc_lblHint1.gridx = 1;
 		gbc_lblHint1.gridy = 1;
 		frame.getContentPane().add(lblHint1, gbc_lblHint1);
-		
+
 		JLabel lblHint2 = new JLabel("아이디는 5~10자리 비밀번호는 영어 + 숫자로만 가능합니다.");
 		lblHint2.setFont(new Font("굴림", Font.BOLD, 12));
 		lblHint2.setForeground(Color.PINK);
@@ -82,7 +84,7 @@ public class JoinFrame {
 		gbc_lblHint2.gridx = 1;
 		gbc_lblHint2.gridy = 2;
 		frame.getContentPane().add(lblHint2, gbc_lblHint2);
-		
+
 		JLabel lblNickName = new JLabel("닉네임");
 		lblNickName.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblNickName = new GridBagConstraints();
@@ -91,7 +93,7 @@ public class JoinFrame {
 		gbc_lblNickName.gridx = 1;
 		gbc_lblNickName.gridy = 4;
 		frame.getContentPane().add(lblNickName, gbc_lblNickName);
-		
+
 		textFieldNickname = new JTextField();
 		GridBagConstraints gbc_textFieldNickname = new GridBagConstraints();
 		gbc_textFieldNickname.gridwidth = 3;
@@ -101,8 +103,7 @@ public class JoinFrame {
 		gbc_textFieldNickname.gridy = 4;
 		frame.getContentPane().add(textFieldNickname, gbc_textFieldNickname);
 		textFieldNickname.setColumns(10);
-		
-		
+
 		JLabel lblNicknameErrorMessage = new JLabel("");
 		lblNicknameErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
 		lblNicknameErrorMessage.setForeground(Color.RED);
@@ -113,7 +114,7 @@ public class JoinFrame {
 		gbc_lblNicknameErrorMessamge.gridx = 2;
 		gbc_lblNicknameErrorMessamge.gridy = 5;
 		frame.getContentPane().add(lblNicknameErrorMessage, gbc_lblNicknameErrorMessamge);
-		
+
 		JLabel lblId = new JLabel("아이디");
 		lblId.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblId = new GridBagConstraints();
@@ -122,7 +123,7 @@ public class JoinFrame {
 		gbc_lblId.gridx = 1;
 		gbc_lblId.gridy = 6;
 		frame.getContentPane().add(lblId, gbc_lblId);
-		
+
 		textFieldId = new JTextField();
 		GridBagConstraints gbc_textFieldId = new GridBagConstraints();
 		gbc_textFieldId.gridwidth = 3;
@@ -132,8 +133,7 @@ public class JoinFrame {
 		gbc_textFieldId.gridy = 6;
 		frame.getContentPane().add(textFieldId, gbc_textFieldId);
 		textFieldId.setColumns(10);
-		
-		
+
 		JLabel lblIdErrorMessage = new JLabel("");
 		lblIdErrorMessage.setForeground(Color.RED);
 		lblIdErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
@@ -144,7 +144,7 @@ public class JoinFrame {
 		gbc_lblIdErrorMessage.gridx = 2;
 		gbc_lblIdErrorMessage.gridy = 7;
 		frame.getContentPane().add(lblIdErrorMessage, gbc_lblIdErrorMessage);
-		
+
 		JLabel lblPassword = new JLabel("비밀번호");
 		lblPassword.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
@@ -153,7 +153,7 @@ public class JoinFrame {
 		gbc_lblPassword.gridx = 1;
 		gbc_lblPassword.gridy = 8;
 		frame.getContentPane().add(lblPassword, gbc_lblPassword);
-		
+
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.gridwidth = 3;
@@ -162,7 +162,7 @@ public class JoinFrame {
 		gbc_passwordField.gridx = 2;
 		gbc_passwordField.gridy = 8;
 		frame.getContentPane().add(passwordField, gbc_passwordField);
-		
+
 		JLabel lblPasswordErrorMessage = new JLabel("");
 		lblPasswordErrorMessage.setForeground(Color.RED);
 		lblPasswordErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
@@ -173,7 +173,7 @@ public class JoinFrame {
 		gbc_lblPasswordErrorMessage.gridx = 2;
 		gbc_lblPasswordErrorMessage.gridy = 9;
 		frame.getContentPane().add(lblPasswordErrorMessage, gbc_lblPasswordErrorMessage);
-		
+
 		JLabel lblPasswordCheck = new JLabel("비밀번호 확인");
 		lblPasswordCheck.setForeground(Color.WHITE);
 		GridBagConstraints gbc_lblPasswordCheck = new GridBagConstraints();
@@ -182,7 +182,7 @@ public class JoinFrame {
 		gbc_lblPasswordCheck.gridx = 1;
 		gbc_lblPasswordCheck.gridy = 10;
 		frame.getContentPane().add(lblPasswordCheck, gbc_lblPasswordCheck);
-		
+
 		passwordFieldCheck = new JPasswordField();
 		GridBagConstraints gbc_passwordFieldCheck = new GridBagConstraints();
 		gbc_passwordFieldCheck.gridwidth = 3;
@@ -191,7 +191,7 @@ public class JoinFrame {
 		gbc_passwordFieldCheck.gridx = 2;
 		gbc_passwordFieldCheck.gridy = 10;
 		frame.getContentPane().add(passwordFieldCheck, gbc_passwordFieldCheck);
-		
+
 		JLabel lblPasswordCheckErrorMessage = new JLabel("");
 		lblPasswordCheckErrorMessage.setForeground(Color.RED);
 		lblPasswordCheckErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
@@ -202,7 +202,7 @@ public class JoinFrame {
 		gbc_lblPasswordCheckErrorMessage.gridx = 2;
 		gbc_lblPasswordCheckErrorMessage.gridy = 11;
 		frame.getContentPane().add(lblPasswordCheckErrorMessage, gbc_lblPasswordCheckErrorMessage);
-		
+
 		JButton btnJoin = new JButton("회원가입");
 		GridBagConstraints gbc_btnJoin = new GridBagConstraints();
 		gbc_btnJoin.fill = GridBagConstraints.BOTH;
@@ -211,16 +211,16 @@ public class JoinFrame {
 		gbc_btnJoin.gridx = 3;
 		gbc_btnJoin.gridy = 12;
 		frame.getContentPane().add(btnJoin, gbc_btnJoin);
-		
+
 		textFieldNickname.getDocument().addDocumentListener(new DocumentUpdateListener() {
-			
+
 			private Pattern nicknamePattern = Pattern.compile("^[a-zA-Z0-9가-힣]*$");
-			
+
 			@Override
 			public void action(String text) {
-				
+
 				nicknameCheck = false;
-				
+
 				Matcher match = nicknamePattern.matcher(text);
 				if (match.find()) {
 					if (text.equals("")) {
@@ -241,19 +241,19 @@ public class JoinFrame {
 					lblNicknameErrorMessage.setForeground(Color.RED);
 					lblNicknameErrorMessage.setText("특수문자는 불가능합니다.");
 				}
-				
+
 			}
 		});
-		
+
 		textFieldId.getDocument().addDocumentListener(new DocumentUpdateListener() {
-			
+
 			private Pattern idPattern = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
-			
+
 			@Override
 			public void action(String text) {
-				
+
 				idCheck = false;
-				
+
 				Matcher match = idPattern.matcher(text);
 				if (match.find()) {
 					if (text.equals("")) {
@@ -277,60 +277,60 @@ public class JoinFrame {
 					lblIdErrorMessage.setForeground(Color.RED);
 					lblIdErrorMessage.setText("앞자리는 영어만 가능합니다.");
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		passwordField.getDocument().addDocumentListener(new DocumentUpdateListener() {
-			
+
 			@Override
 			public void action(String text) {
-				
+
 				passwordCheck = text.length() >= 4 && text.length() <= 9;
 				lblPasswordErrorMessage.setForeground(passwordCheck ? Color.GREEN : Color.RED);
 				lblPasswordErrorMessage.setText(passwordCheck ? "가능한 비밀번호입니다." : "5 ~ 10자리를 입력하세요.");
-				
+
 			}
-			
+
 		});
-		
+
 		DocumentListener passwordCheckListener = new DocumentUpdateListener() {
-			
+
 			@Override
 			public void action(String text) {
-				
+
 				passwordCheck2 = Arrays.equals(passwordField.getPassword(), passwordFieldCheck.getPassword());
 				lblPasswordCheckErrorMessage.setForeground(passwordCheck2 ? Color.GREEN : Color.RED);
 				lblPasswordCheckErrorMessage.setText(passwordCheck2 ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.");
-				
+
 			}
-			
+
 		};
-		
+
 		passwordFieldCheck.getDocument().addDocumentListener(passwordCheckListener);
 		passwordFieldCheck.getDocument().addDocumentListener(new DocumentUpdateListener() {
 
 			@Override
 			public void action(String text) {
-				
+
 				passwordField.getDocument().addDocumentListener(passwordCheckListener);
 				passwordFieldCheck.getDocument().removeDocumentListener(this);
-				
+
 			}
-			
+
 		});
-		
+
 		btnJoin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (idCheck && passwordCheck && passwordCheck2 && nicknameCheck) {
-					
+
 					sexJF = new JFrame("캐릭터 선택창");
 					Container con = sexJF.getContentPane();
+					con.setLayout(null);
 					con.setBackground(Color.black);
 					sexJF.setSize(500, 700);
-					sexJF.setLayout(null);
 					sexJF.setLocationRelativeTo(null);
 					sexJF.setVisible(true);
 
@@ -341,81 +341,147 @@ public class JoinFrame {
 					sexLbl.setBounds(150, 20, 200, 20);
 					sexJF.add(sexLbl);
 
-					JRadioButton men = new JRadioButton("남자");
-					men.setForeground(Color.white);
-					men.setBackground(Color.black);
-					JRadioButton women = new JRadioButton("여자");
-					women.setForeground(Color.white);
-					women.setBackground(Color.black);
-					sexJF.add(men);
-					sexJF.add(women);
+					JRadioButton cha0Btn = new JRadioButton("남자");
+					cha0Btn.setForeground(Color.white);
+					cha0Btn.setBackground(Color.black);
+					sexJF.add(cha0Btn);
+					cha0Btn.setBounds(120, 160, 70, 50);
+
+					JRadioButton cha1Btn = new JRadioButton("여자");
+					cha1Btn.setForeground(Color.white);
+					cha1Btn.setBackground(Color.black);
+					sexJF.add(cha1Btn);
+					cha1Btn.setBounds(330, 160, 70, 50);
+
+					JRadioButton cha2Btn = new JRadioButton("cha2");
+					cha2Btn.setForeground(Color.white);
+					cha2Btn.setBackground(Color.black);
+					sexJF.add(cha2Btn);
+					cha2Btn.setBounds(120, 340, 70, 50);
+
+					JRadioButton cha3Btn = new JRadioButton("cha3");
+					cha3Btn.setForeground(Color.white);
+					cha3Btn.setBackground(Color.black);
+					sexJF.add(cha3Btn);
+					cha3Btn.setBounds(330, 340, 70, 50);
+
+					JRadioButton cha5Btn = new JRadioButton("cha5");
+					cha5Btn.setForeground(Color.white);
+					cha5Btn.setBackground(Color.black);
+					sexJF.add(cha5Btn);
+					cha5Btn.setBounds(120, 510, 70, 50);
+
+					JRadioButton cha6Btn = new JRadioButton("cha6");
+					cha6Btn.setForeground(Color.white);
+					cha6Btn.setBackground(Color.black);
+					sexJF.add(cha6Btn);
+					cha6Btn.setBounds(330, 510, 70, 50);
 
 					ButtonGroup bg = new ButtonGroup();
-					bg.add(men);
-					bg.add(women);
-					
-					men.setBounds(120, 520, 50, 50);
-					women.setBounds(340, 520, 50, 50);
-					
-					JLabel mLbl = new JLabel(new ImageIcon(JoinFrame.class.getResource("../../img/character/cha0.png")));
-					JLabel wLbl = new JLabel(
+					bg.add(cha1Btn);
+					bg.add(cha0Btn);
+					bg.add(cha2Btn);
+					bg.add(cha3Btn);
+					bg.add(cha5Btn);
+					bg.add(cha6Btn);
+
+					JLabel cha0 = new JLabel(
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha0.png")));
+					cha0.setBounds(80, 50, 130, 100);
+					sexJF.add(cha0);
+
+					JLabel cha1 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha1.png")));
-					sexJF.add(mLbl);
-					sexJF.add(wLbl);
-					mLbl.setBounds(40, 80, 190, 430);
-					wLbl.setBounds(260, 80, 190, 430);
-					
+					cha1.setBounds(290, 50, 130, 100);
+					sexJF.add(cha1);
+
+					JLabel cha2 = new JLabel(
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha2.png")));
+					cha2.setBounds(80, 230, 130, 100);
+					sexJF.add(cha2);
+
+					JLabel cha3 = new JLabel(
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha3.png")));
+					cha3.setBounds(290, 230, 130, 100);
+					sexJF.add(cha3);
+
+					JLabel cha5 = new JLabel(
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha5.png")));
+					cha5.setBounds(80, 400, 130, 100);
+					sexJF.add(cha5);
+
+					JLabel cha6 = new JLabel(
+							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha6.png")));
+					cha6.setBounds(290, 400, 130, 100);
+					sexJF.add(cha6);
+
 					JButton okBtn = new JButton("선택");
 					okBtn.setBounds(200, 580, 100, 40);
 					sexJF.add(okBtn);
-					
+
 					okBtn.addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							
+
 							PlayerVO playerVO = new PlayerVO();
-							
+
 							if (e.getSource() == okBtn) {
-								if (men.isSelected()) {
+								if (bg.isSelected(null)) {
+									JOptionPane.showMessageDialog(null, "캐릭터를 선택해주세요.");
+								} else if (cha0Btn.isSelected()) {
 									playerVO.setCha(0);
-								} else if (women.isSelected()) {
+									cha = true;
+								} else if (cha1Btn.isSelected()) {
 									playerVO.setCha(1);
-								}else {
-									JOptionPane.showMessageDialog(null, "선택해주세요.");
+									cha = true;
+								} else if (cha2Btn.isSelected()) {
+									playerVO.setCha(2);
+									cha = true;
+								} else if (cha3Btn.isSelected()) {
+									playerVO.setCha(3);
+									cha = true;
+								} else if (cha5Btn.isSelected()) {
+									playerVO.setCha(5);
+									cha = true;
+								} else if (cha6Btn.isSelected()) {
+									playerVO.setCha(6);
+									cha = true;
 								}
-								try {
-									playerVO.joinPlayer(textFieldId.getText(), new String(passwordField.getPassword()),
-											textFieldNickname.getText());
-									if (1 == playerDAO.playerJoin(playerVO)) {
-										JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
-										sexJF.dispose();
-										frame.dispose();
-										
-									}
-								} catch (ClassNotFoundException e1) {
-									e1.printStackTrace();
-								}
+
 							}
-							
+							try {
+								playerVO.joinPlayer(textFieldId.getText(), new String(passwordField.getPassword()),
+										textFieldNickname.getText());
+								if (1 == playerDAO.playerJoin(playerVO) && cha == true) {
+									JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
+									sexJF.dispose();
+									frame.dispose();
+
+								}
+							} catch (ClassNotFoundException e1) {
+								e1.printStackTrace();
+							}
+
 						}
 					});
-					
+
 				} else
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호 또는 닉네임을 입력해주세요.");
-				
+
 			}
 		});
-		
-	} //initialize();
-	
-	
+
+	} // initialize();
+
 	public void dispose() {
-		if(sexJF != null && sexJF.isDisplayable())
+		if (sexJF != null && sexJF.isDisplayable())
 			sexJF.dispose();
 		frame.dispose();
 	}
 
-	public JFrame getFrame() { return frame; }
-	
-} //class JoinFrame;
+	public JFrame getFrame() {
+		return frame;
+	}
+
+} // class JoinFrame;
