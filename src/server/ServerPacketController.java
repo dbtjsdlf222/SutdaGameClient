@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,7 +20,9 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerPacketController {
-
+	
+	private static final Logger logger = LogManager.getLogger();
+	
 	private PlayerVO thisPlayerVO = new PlayerVO();
 	private static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
 	private ObjectMapper mapper = new ObjectMapper();
@@ -32,7 +37,7 @@ public class ServerPacketController {
 
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 		
-		System.out.println("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		logger.info("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
 		
 		switch (packet.getAction()) {
 
@@ -66,7 +71,7 @@ public class ServerPacketController {
 				socketPw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 				Packing.sender(socketPw, Protocol.LOGIN, vo);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			break;
 

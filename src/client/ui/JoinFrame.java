@@ -23,11 +23,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import client.listener.DocumentUpdateListener;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class JoinFrame {
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	private PlayerDAO playerDAO;
 
@@ -455,7 +460,7 @@ public class JoinFrame {
 
 								}
 							} catch (ClassNotFoundException e1) {
-								e1.printStackTrace();
+								logger.error(e1.getMessage(), e1);
 							}
 
 						}

@@ -1,19 +1,40 @@
 package client.ui;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import client.listener.ClientReceiver;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class Login extends JFrame {
+	
+	private static final Logger logger = LogManager.getLogger();
+
 	private PlayerDAO playerDAO = new PlayerDAO();
 	private PlayerVO playerVO = new PlayerVO();
 	Pattern idPt = null;
@@ -126,9 +147,9 @@ public class Login extends JFrame {
 								new Lobby();
 
 							} catch (UnknownHostException e1) {
-								e1.printStackTrace();
+								logger.error(e1.getMessage(), e1);
 							} catch (IOException e1) {
-								e1.printStackTrace();
+								logger.error(e1.getMessage(), e1);
 							}
 
 						} else if (playerVO.isOnline() == true) {
@@ -404,7 +425,7 @@ public class Login extends JFrame {
 
 													}
 												} catch (ClassNotFoundException e1) {
-													e1.printStackTrace();
+													logger.error(e1.getMessage(), e1);
 												}
 											}
 

@@ -11,6 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import client.ui.Lobby;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
@@ -20,6 +23,8 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ClientPacketController {
+	
+	private static final Logger logger = LogManager.getLogger();
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
@@ -52,7 +57,7 @@ public class ClientPacketController {
 
 	public void controller(Packet packet) {
 
-		System.out.println("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		logger.info("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
 
 		switch (packet.getAction()) {
 		case Protocol.MESSAGE: // 채팅
@@ -128,7 +133,7 @@ public class ClientPacketController {
 
 		case Protocol.CARD:
 			RoomScreen.getInstance().receiveCard(packet.getCard());
-			System.out.println("CARD:" + packet.getCard());
+			logger.info("CARD:" + packet.getCard());
 			break;
 
 		case Protocol.OPENCARD:

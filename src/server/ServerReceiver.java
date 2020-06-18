@@ -6,12 +6,17 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vo.Packet;
 
 public class ServerReceiver extends Thread { // Server
-
+	
+	private static final Logger logger = LogManager.getLogger();
+	
 	private Socket socket;
 
 	public ServerReceiver(Socket socket) {
@@ -29,7 +34,7 @@ public class ServerReceiver extends Thread { // Server
 				while (true) {
 					packetStr = br.readLine();
 					if (packetStr == null) {
-						System.err.println("[Receive(ERROR(" +
+						logger.error("[Receive(ERROR(" +
 											packetController.getThisPlayerVO().getNo() + ", " +
 											packetController.getThisPlayerVO().getNic() +
 											"))] NULL Entered");
@@ -38,11 +43,11 @@ public class ServerReceiver extends Thread { // Server
 					Packet packet = mapper.readValue(packetStr, Packet.class);
 					packetController.packetAnalysiser(packet); // action에 따라서 동작 실행
 				} // while
-			} catch (NullPointerException e) { 
-				e.printStackTrace();
+			} catch (NullPointerException e) {
+				logger.error(e.getMessage(), e);
 				
 			} catch (SocketException e) {
-				System.err.println("[" + e.getMessage() + 
+				logger.error("[" + e.getMessage() + 
 								   "(" + packetController.getThisPlayerVO().getNo() + ", "
 								   	   + packetController.getThisPlayerVO().getNic() + 
 								   ")]");
@@ -50,12 +55,12 @@ public class ServerReceiver extends Thread { // Server
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} finally {
 			try {
 				socket.close();
 			} catch (IOException e2) {
-				e2.printStackTrace();
+				logger.error(e2.getMessage(), e2);
 			}
 		} // try~catch;
 	} // run();

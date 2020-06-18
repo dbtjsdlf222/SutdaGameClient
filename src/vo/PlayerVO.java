@@ -1,7 +1,6 @@
 package vo;
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -9,12 +8,18 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class PlayerVO {
+
+	private static final Logger logger = LogManager.getLogger();
+	
 	@JsonIgnore
 	public static PlayerVO myVO;
 
@@ -135,7 +140,7 @@ public class PlayerVO {
 			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

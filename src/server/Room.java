@@ -8,6 +8,9 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +21,9 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class Room {
+	
+	private static final Logger logger = LogManager.getLogger();
+	
 	private static int increaseRoomNo = 1;
 	private int roomNo; // 방 번호
 	private int startMoney; // 시작 금액
@@ -89,21 +95,25 @@ public class Room {
 	} // gameStart();
 
 	public void roomSpeaker(Packet pac) {
-
-		System.out.print("[Send(roomSpeaker(" + roomNo);
+		
+		String message = "";
+		
+		message += "[Send(roomSpeaker(" + roomNo;
 		Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
 		if (iterator.hasNext()) {
 
-			System.out.print("(" + iterator.next().getValue().getNic());
+			message +="(" + iterator.next().getValue().getNic();
 
 			while (iterator.hasNext())
-				System.out.print(", " + iterator.next().getValue().getNic());
+				message += ", " + iterator.next().getValue().getNic();
 
-			System.out.print(")");
+			message += ")";
 
 		}
-		System.out.println(", " + Protocol.getName(pac.getAction()) + "))] " + pac);
-
+		message += ", " + Protocol.getName(pac.getAction()) + "))] " + pac;
+		
+		logger.info(message);
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);

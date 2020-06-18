@@ -27,6 +27,9 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
@@ -38,6 +41,8 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class RoomScreen extends JFrame {
+	
+	private final static Logger logger = LogManager.getLogger();
 
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;
@@ -374,7 +379,7 @@ public class RoomScreen extends JFrame {
 	 */
 	
 	public void receiveCard(float[] card) {
-		System.out.println("receiveCards: " + card);
+		logger.info("receiveCards: " + card);
 		
 		if(card[0]!=0)
 			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card[0] + ".png")));
@@ -384,7 +389,7 @@ public class RoomScreen extends JFrame {
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
-				System.out.println("패 돌리기");
+				logger.info("패 돌리기");
 				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
 			}
 		} // for
@@ -551,8 +556,8 @@ public class RoomScreen extends JFrame {
 			}
 
 		} catch (Exception e) {
-			System.out.println(Arrays.toString(panlist));
-			e.printStackTrace();
+			logger.info(Arrays.toString(panlist));
+			logger.error(e.getMessage(), e);
 		}
 	} // setSit();
 

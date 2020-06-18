@@ -1,32 +1,36 @@
 package client.ui;
 
-import javax.swing.JFrame;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.border.MatteBorder;
-
-import client.service.LoginService;
-import vo.PlayerVO;
-import client.service.LoginResultHandler;
-
-import javax.swing.border.EmptyBorder;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import client.service.LoginResultHandler;
+import client.service.LoginService;
+import vo.PlayerVO;
+
 public class LoginFrame implements LoginResultHandler {
+
+	private static final Logger logger = LogManager.getLogger();
 	
 	private LoginService loginService = new LoginService(this);
 	
@@ -141,7 +145,9 @@ public class LoginFrame implements LoginResultHandler {
 				if((int)(e.getPoint().getX() / 186. * 108) + 7 < e.getPoint().getY())
 					try {
 						loginService.login(textFieldId.getText(), new String(passwordField.getPassword()));
-					}catch (IOException e1) { e1.printStackTrace(); }
+					}catch (IOException e1) { 
+						logger.error(e1.getMessage(), e1);
+					}
 				else {
 					
 					EventQueue.invokeLater(() -> joinFrame = new JoinFrame(loginService.getPlayerDAO()));

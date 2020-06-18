@@ -4,13 +4,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.service.ClientPacketController;
 import vo.Packet;
 
 public class ClientReceiver extends Thread {
-
+	
+	private static final Logger logger = LogManager.getLogger();
+	
+	
 	private Socket socket;
 	public ClientReceiver(Socket socket) {
 		this.socket = socket;
@@ -28,9 +34,9 @@ public class ClientReceiver extends Thread {
 				packetController.controller(packet);
 			}
 		} catch(java.net.SocketException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getMessage(), e1);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	} // run
 } // class

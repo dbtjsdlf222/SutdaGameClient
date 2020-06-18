@@ -8,8 +8,13 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import dao.PlayerDAO;
 public class RunServer {
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	private int port = 4888;
 	
@@ -18,7 +23,7 @@ public class RunServer {
 	}
 	
 	public void run() {
-		System.out.println("서버 실행");
+		logger.info("서버 실행");
 		ExecutorService pool = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
 		PlayerDAO dao = new PlayerDAO();
 		
@@ -34,11 +39,11 @@ public class RunServer {
 				
 			} //while
 		} catch(BindException e) {
-			System.out.println("서버가 이미 작동 중 입니다.");
+			logger.error(e.getMessage(), e);
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} finally {
 			pool.shutdown();
 		}

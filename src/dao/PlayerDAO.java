@@ -6,15 +6,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import connection.DBCon;
 import vo.PlayerVO;
 
 public class PlayerDAO {
-
+	
+	private static final Logger logger = LogManager.getLogger();
+	
 	private Connection conn;
 	private PreparedStatement pstmt;
 
@@ -22,7 +24,7 @@ public class PlayerDAO {
 		try {
 			conn = new DBCon().getMysqlConn();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -37,7 +39,7 @@ public class PlayerDAO {
 
 			return ip;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}
@@ -48,9 +50,9 @@ public class PlayerDAO {
 			ps.setString(1, InetAddress.getLocalHost().getHostAddress());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -59,7 +61,7 @@ public class PlayerDAO {
 		try {
 			local = InetAddress.getLocalHost();
 		} catch (UnknownHostException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getMessage(), e1);
 		}
 
 		String id = null;
@@ -126,7 +128,7 @@ public class PlayerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return true;
@@ -147,7 +149,7 @@ public class PlayerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return true;
@@ -178,7 +180,7 @@ public class PlayerDAO {
 				try {
 					ip = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage(), e);
 				}
 
 				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
@@ -189,7 +191,7 @@ public class PlayerDAO {
 		} catch (
 
 		SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}
@@ -209,7 +211,7 @@ public class PlayerDAO {
 			} else
 				return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return true;
@@ -226,7 +228,7 @@ public class PlayerDAO {
 
 			pstmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

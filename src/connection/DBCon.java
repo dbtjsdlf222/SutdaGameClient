@@ -2,10 +2,15 @@ package connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DBCon {
+
+	private static final Logger logger = LogManager.getLogger();
+	
 	private Connection conn = null;
 	
 //	public Connection getOracleConn() {
@@ -31,7 +36,7 @@ public class DBCon {
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
 		} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		} //try~catch
 		
 		return conn;

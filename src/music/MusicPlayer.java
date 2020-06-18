@@ -1,13 +1,17 @@
 package music;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-import client.ui.RoomScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javazoom.jl.player.Player;
 
 public class MusicPlayer extends Thread {
+
+	private static final Logger logger = LogManager.getLogger();
+	
 	private Player player;
 	private File file;
 	boolean loop = true;
@@ -16,7 +20,7 @@ public class MusicPlayer extends Thread {
 //			File file = new File(MainScreen.class.getResource("../Music/BigSleep.mp3").getFile());
 //			this.player = new Player(new BufferedInputStream(new FileInputStream(file)));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
