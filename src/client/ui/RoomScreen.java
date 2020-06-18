@@ -320,7 +320,7 @@ public class RoomScreen extends JFrame {
 		});
 
 		// 나가기 버튼
-		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
+		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
 		add(exitBtn);
 
@@ -336,7 +336,8 @@ public class RoomScreen extends JFrame {
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
 		setTitle("섯다 온라인");
-		String[] ac = { "_", "_", "_", "_", "_", "_" };
+//		String[] ac = { "_", "_", "_", "_", "_", "_" };
+		String[] ac = { "", "", "", "", "", "" };
 		buttonSet(ac); // 버튼 출력
 		mat(); // 돈판 출력
 
@@ -371,10 +372,11 @@ public class RoomScreen extends JFrame {
 
 	public void receiveCard1(float card) {
 		System.out.println("receiveCard1: " + card);
-		card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%.0f", card) + ".png")));
+		card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".png")));
 		
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
+				System.out.println("패 돌리기");
 				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
 			}
 		} // for

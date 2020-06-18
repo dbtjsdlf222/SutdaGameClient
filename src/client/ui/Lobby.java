@@ -231,7 +231,7 @@ public class Lobby {
 		lobbyJF.add(gBtn);
 
 		// 나가기 버튼
-		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exitBtn.PNG")));
+		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
 		lobbyJF.add(exitBtn);
 
