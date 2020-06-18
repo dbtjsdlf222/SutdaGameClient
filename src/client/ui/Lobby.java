@@ -3,6 +3,7 @@ package client.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -160,8 +161,29 @@ public class Lobby {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		JButton chatBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/Send.PNG")));
+		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("../../img/Send.PNG"));
+		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
+		
+		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(578, 225, 70, 25);
+		chatBtn.setBorderPainted(false);
+		chatBtn.setContentAreaFilled(false);
+		chatBtn.setFocusPainted(false);
+		chatBtn.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				chatBtn.setIcon(chatSendEnter);
+				chatBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				chatBtn.setIcon(chatSend);
+				chatBtn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		});
+		add(chatBtn);
+		
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
@@ -257,6 +279,11 @@ public class Lobby {
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	private void add(JButton chatBtn) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void initialize() {
