@@ -71,12 +71,12 @@ public class Packet {
 	}
 	
 	@JsonIgnore
-	public void setCard(float card) {
+	public void setCard_(float card) {
 		this.card[0] = card;
 	}
 	
 	@JsonIgnore
-	public void setCard(float card1,float card2) {
+	public void setCard_(float card1,float card2) {
 		this.card[0]=card1;
 		this.card[1]=card2;
 	}

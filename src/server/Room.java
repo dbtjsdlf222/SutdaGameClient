@@ -56,13 +56,13 @@ public class Room {
 			if (s.getValue().isLive()) {
 				packet.setAction(Protocol.CARD);
 				if (round == 1) { 		// 1번 카드 배분
-					packet.setCard(pollOneCard());
+					packet.setCard_(pollOneCard());
 					round = 2;
 				} else if (round == 2) { 	// 2번 카드 배분
 					beforeBet = 0;		// 전 타임 배팅 머니 0으로 초기화
-					packet.setCard(0, pollOneCard());
+					packet.setCard_(0, pollOneCard());
 				} else 					// 재경기시 1,2번 카드 배분
-					packet.setCard(pollOneCard(), pollOneCard());
+					packet.setCard_(pollOneCard(), pollOneCard());
 				Packing.sender(s.getValue().getPwSocket(), packet);
 			} // if
 		} // for
