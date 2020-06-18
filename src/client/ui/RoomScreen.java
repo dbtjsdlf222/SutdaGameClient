@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.sun.xml.internal.ws.client.SenderException;
+
 import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
@@ -175,7 +177,7 @@ public class RoomScreen extends JFrame {
 		pan.setOpaque(false);
 		add(pan);
 
-		for (int i = 0; i < btn.length; i++) {
+		for (int i = 0; i < 5; i++) {
 			btn[i] = new JButton(
 					new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
 			btn[i].setOpaque(false);
@@ -187,9 +189,8 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btn[0]) {
-
 					tf.setText("올인");
-
+					Packing.sender(playerVO.getPwSocket(), Protocol.Allin);
 				} else if (e.getSource() == btn[1]) {
 					tf.setText("하프");
 				} else if (e.getSource() == btn[2]) {
@@ -336,7 +337,7 @@ public class RoomScreen extends JFrame {
 		setTitle("섯다 온라인");
 //		String[] ac = { "_", "_", "_", "_", "_", "_" };
 		String[] ac = { "", "", "", "", "", "" };
-		setButton(ac); // 버튼 출력
+//		setButton(ac); // 버튼 출력
 		mat(); // 돈판 출력
 
 		back.mainImage();

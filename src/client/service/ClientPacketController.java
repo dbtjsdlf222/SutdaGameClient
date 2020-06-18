@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder.RpcLit;
+
 import client.ui.Lobby;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
@@ -128,16 +130,21 @@ public class ClientPacketController {
 
 		case Protocol.CARD:
 			RoomScreen.getInstance().receiveCard(packet.getCard());
-			System.out.println("CARD:" + packet.getCard());
 			break;
 
 		case Protocol.OPENCARD:
 
 			break;
 
-		case Protocol.SETBUTTON:
-			RoomScreen.getInstance().setButton(packet.getButtonArr());
+		case Protocol.TURN:
+			RoomScreen.getInstance().setButton(packet.getButtonArr());	//버튼 세팅
+			
 			break;
+			
+		case Protocol.PAY:
+			
+			break;
+			
 		} // switch
 	} // controller();
 } // class

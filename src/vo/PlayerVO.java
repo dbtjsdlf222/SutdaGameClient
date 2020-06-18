@@ -29,7 +29,7 @@ public class PlayerVO {
 	private boolean online = false;
 	private int cha;
 	private boolean live = false;
-	private float card[] = new float[2];
+	private float[] card;
 	private int cardLevel;
 	private String cardName;
 	private int index;
@@ -42,6 +42,14 @@ public class PlayerVO {
 	private BufferedReader brSocket;
 	@JsonIgnore
 	private PrintWriter pwSocket;
+
+	public float[] getCard() {
+		return card;
+	}
+
+	public void setCard(float[] card) {
+		this.card = card;
+	}
 
 	public int getRoomNo() {
 		return roomNo;
@@ -201,14 +209,6 @@ public class PlayerVO {
 
 	public void setLive(boolean live) {
 		this.live = live;
-	}
-
-	public float[] getCard() {
-		return card;
-	}
-
-	public void setCard(float[] card) {
-		this.card = card;
 	}
 
 	public int getNo() {

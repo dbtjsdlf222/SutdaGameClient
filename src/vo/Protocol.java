@@ -25,19 +25,23 @@ public class Protocol {
 	public static final String DRAW = "13";			//game 시작 상태 만들기
 	public static final String CHANGEMASTER = "21";	//선 변경
 	
-	public static final String Half = "14";
-	public static final String Quater = "15";
-	public static final String Check= "16";
-	public static final String Allin = "17";
-	public static final String Call = "18";
-	public static final String Die = "19";
-	public static final String Pping = "20";
-	public static final String Ddadang = "24";
+	public static final String Half = "Half";
+	public static final String Quater = "Quater";
+	public static final String Check= "Check";
+	public static final String Allin = "Allin";
+	public static final String Call = "Call";
+	public static final String Die = "Die";
+	public static final String Pping = "Pping";
+	public static final String Ddadang = "DdaDang";
 	
 	public static final String CARD = "23";
 	public static final String OPENCARD = "25";
 	public static final String SETMONEY = "26";
 	public static final String SETBUTTON = "27";
+	public static final String PAY = "28";
+	public static final String TURN = "29";
+	
+	
 	
 	public static String getName(String str) {
 		
