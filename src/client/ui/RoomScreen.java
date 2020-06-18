@@ -3,12 +3,15 @@ package client.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -186,7 +189,7 @@ public class RoomScreen extends JFrame {
 		for (int i = 0; i < 5; i++) {
 			try {
 				btn[i] = new JButton(
-						new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
+						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
 			} catch (Exception e) {
 				
 			}
@@ -304,30 +307,80 @@ public class RoomScreen extends JFrame {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		JButton chatBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/Send.PNG")));
+		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("../../img/Send.PNG"));
+		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
+		
+		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(340, 186, 70, 25);
+		chatBtn.setBorderPainted(false);
+		chatBtn.setContentAreaFilled(false);
+		chatBtn.setFocusPainted(false);
+		chatBtn.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				chatBtn.setIcon(chatSendEnter);
+				chatBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				chatBtn.setIcon(chatSend);
+				chatBtn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		});
+		add(chatBtn);
+		
 		chatPan.add(chatBtn);
 		JRootPane rootPane = this.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
-
+		
 		chatBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				if (e.getSource() == chatBtn) {
-//					if (!(chatText.getText().equals(""))) {
-//						co.chatting(chatText.getText());
-//						chatText.requestFocus();
-//
-//						chatText.setText("");
-//					}
-//				}
+				if (e.getSource() == chatBtn) {
+					if (!(chatText.getText().equals(""))) {
+						co.chatting(chatText.getText());
+						chatText.requestFocus();
+
+						chatText.setText("");
+					}
+				}
 
 				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
 
 			}
 		});
 
+		// 게임시작 버튼
+				ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
+				ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
+				
+				JButton gameStart = new JButton(gameStartBasic);
+				
+				gameStart.setBounds(510, 230, 240, 140);
+				gameStart.setBorderPainted(false);
+				gameStart.setContentAreaFilled(false);
+				gameStart.setFocusPainted(false);
+				gameStart.addMouseListener(new MouseAdapter() {
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						gameStart.setIcon(gameStartEnter);
+						gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						gameStart.setIcon(gameStartBasic);
+						gameStart.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						gameStart.setVisible(false);
+					}
+				});
+				add(gameStart);
+		
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
