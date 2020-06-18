@@ -1,6 +1,7 @@
 package vo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -16,7 +17,8 @@ public class Packet {
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
-	private	float card1, card2;
+	private	float[] card;
+	private String[] buttonArr; 
 	
 	public Packet() {}
 
@@ -40,20 +42,25 @@ public class Packet {
 		this.action = protocol;
 	}
 
-	public float getCard1() {
-		return card1;
+	public String[] getButtonArr() {
+		return buttonArr;
 	}
 
-	public void setCard1(float card1) {
-		this.card1 = card1;
+	public void setButtonArr(String[] buttonArr) {
+		this.buttonArr = buttonArr;
 	}
 
-	public float getCard2() {
-		return card2;
+	public float[] getCard() {
+		return card;
 	}
 
-	public void setCard2(float card2) {
-		this.card2 = card2;
+	public void setCard(float card) {
+		this.card[0] = card;
+	}
+	
+	public void setCard(float card1,float card2) {
+		this.card[0]=card1;
+		this.card[1]=card2;
 	}
 
 	public Map<Integer, PlayerVO> getRoomPlayerList() {
@@ -107,8 +114,10 @@ public class Packet {
 	@Override
 	public String toString() {
 		return "Packet [action=" + action + ", motion=" + motion + ", playerVO=" + playerVO + ", roomMap=" + roomMap
-				+ ", playerList=" + playerList + ", roomPlayerList=" + roomPlayerList + ", card1=" + card1 + ", card2="
-				+ card2 + "]";
+				+ ", playerList=" + playerList + ", roomPlayerList=" + roomPlayerList + ", card="
+				+ Arrays.toString(card) + "]";
 	}
+
+	
 	
 }

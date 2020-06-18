@@ -168,18 +168,16 @@ public class RoomScreen extends JFrame {
 		// } //시간 제한
 	} // 게임 진행 순서
 
-	public void buttonSet(String[] active) {
+	public void setButton(String[] buttonArray) {
 		JPanel pan = new JPanel();
 		pan.setBounds(0, 620, 1265, 60);
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
 		add(pan);
 
-		String[] resourceArray = { "Allin", "Half", "Quater", "Bbing", "Call", "Die" };
-
 		for (int i = 0; i < btn.length; i++) {
 			btn[i] = new JButton(
-					new ImageIcon(RoomScreen.class.getResource("../../img/" + resourceArray[i] + active[i] + ".PNG")));
+					new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
 		}
@@ -313,9 +311,9 @@ public class RoomScreen extends JFrame {
 //						chatText.setText("");
 //					}
 //				}
-				
+
 				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-				
+
 			}
 		});
 
@@ -338,7 +336,7 @@ public class RoomScreen extends JFrame {
 		setTitle("섯다 온라인");
 //		String[] ac = { "_", "_", "_", "_", "_", "_" };
 		String[] ac = { "", "", "", "", "", "" };
-		buttonSet(ac); // 버튼 출력
+		setButton(ac); // 버튼 출력
 		mat(); // 돈판 출력
 
 		back.mainImage();
@@ -370,10 +368,20 @@ public class RoomScreen extends JFrame {
 
 	}
 
-	public void receiveCard1(float card) {
-		System.out.println("receiveCard1: " + card);
-		card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".png")));
+	/**
+	 * @param card
+	 * card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용 
+	 */
+	
+	public void receiveCard(float[] card) {
+		System.out.println("receiveCards: " + card);
 		
+		if(card[0]!=0)
+			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card[0] + ".png")));
+
+		if(card[1]!=0)
+			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card[1] + ".png")));
+
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
 				System.out.println("패 돌리기");
@@ -381,17 +389,6 @@ public class RoomScreen extends JFrame {
 			}
 		} // for
 	} // receiveCard1();
-
-	public void receiveCard2(float card) {
-		card2[0] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%.0f", card) + ".png")));
-
-		for (int i = 1; i < 5; i++) {
-			if (profile[i] != null) {
-				card2[i] = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
-			}
-		} // for
-
-	} // receiveCard2();
 
 	// 오픈카드
 //	public void openCard(int playerIdx, int whichCard, float card) {

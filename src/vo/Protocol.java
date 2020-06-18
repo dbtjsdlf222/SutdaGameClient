@@ -27,16 +27,17 @@ public class Protocol {
 	
 	public static final String Half = "14";
 	public static final String Quater = "15";
-	public static final String Check = "16";
+	public static final String Check= "16";
 	public static final String Allin = "17";
 	public static final String Call = "18";
 	public static final String Die = "19";
 	public static final String Pping = "20";
+	public static final String Ddadang = "24";
 	
-	public static final String CARD1 = "23";
-	public static final String CARD2 = "24";
-	
+	public static final String CARD = "23";
 	public static final String OPENCARD = "25";
+	public static final String SETMONEY = "26";
+	public static final String SETBUTTON = "27";
 	
 	public static String getName(String str) {
 		
@@ -63,9 +64,11 @@ public class Protocol {
 			case "19": str = "Die"; break;
 			case "20": str = "Pping"; break;
 			case "22": str = "RELOADLOBBYLIST"; break;
-			case "23": str = "CARD1"; break;
-			case "24": str = "CARD2"; break;
-			case "25": str = "OPENCARD";
+			case "23": str = "CARD"; break;
+			case "24": str = "DdaDang"; break;
+			case "25": str = "OPENCARD"; break;
+			case "26": str = "SETMONEY"; break;
+			
 		}
 		
 		return str;

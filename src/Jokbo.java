@@ -22,7 +22,7 @@ public class Jokbo {
 	public boolean ddaeng() {
 		if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7)) || ((Math.abs(card1) == 7) && (Math.abs(card2) == 3))) {
 			for (int i = 0; i < playerVO.size(); i++) {
-				if (Math.abs(playerVO.get(i).getCard1()) == Math.abs(playerVO.get(i).getCard2())) {
+				if (Math.abs(playerVO.get(i).getCard()[0]) == Math.abs(playerVO.get(i).getCard()[1])) {
 					getCardLevel = 950;
 					CardName = "땡잡이";
 				} else if (Math.abs(card1) != Math.abs(card2)) {

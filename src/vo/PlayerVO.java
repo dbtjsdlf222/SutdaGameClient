@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -28,7 +29,7 @@ public class PlayerVO {
 	private boolean online = false;
 	private int cha;
 	private boolean live = false;
-	private float card1, card2;
+	private float card[] = new float[2];
 	private int cardLevel;
 	private String cardName;
 	private int index;
@@ -53,17 +54,21 @@ public class PlayerVO {
 	public PlayerVO() {
 	}
 
+	public void pay(int money) {
+		this.money -= money;
+	}
+	
 	public void joinPlayer(String id, String pw, String nic) {
 		this.id = id;
 		this.password = pw;
 		this.nic = nic;
 	}
 
-	public void enterPlayer(String nic, int cha, int money) {
-		this.nic = nic;
-		this.cha = cha;
-		this.money = money;
-	}
+//	public void enterPlayer(String nic, int cha, int money) {
+//		this.nic = nic;
+//		this.cha = cha;
+//		this.money = money;
+//	}
 
 	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
@@ -81,7 +86,7 @@ public class PlayerVO {
 	}
 
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
-			int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel, String cardName,
+			int lose, boolean online, int cha, boolean live, float[] card, float card2, int cardLevel, String cardName,
 			BufferedReader brSocket, PrintWriter pwSocket) {
 		this.socket = socket;
 		this.no = no;
@@ -95,8 +100,7 @@ public class PlayerVO {
 		this.online = online;
 		this.cha = cha;
 		this.live = live;
-		this.card1 = card1;
-		this.card2 = card2;
+		this.card = card;
 		this.cardLevel = cardLevel;
 		this.cardName = cardName;
 		this.brSocket = brSocket;
@@ -138,9 +142,9 @@ public class PlayerVO {
 	@Override
 	public String toString() {
 		return "PlayerVO [no=" + no + ", id=" + id + ", password=" + password + ", nic=" + nic + ", money=" + money
-				+ ", win=" + win + ", lose=" + lose + ", live=" + live + ", card1=" + card1 + ", card2=" + card2
-				+ ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index=" + index + ", roomNo=" + roomNo
-				+ "]";
+				+ ", win=" + win + ", lose=" + lose + ", cha=" + cha + ", live=" + live + ", card="
+				+ Arrays.toString(card) + ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index=" + index
+				+ ", roomNo=" + roomNo + "]";
 	}
 
 	public String getPassword() {
@@ -199,20 +203,12 @@ public class PlayerVO {
 		this.live = live;
 	}
 
-	public float getCard1() {
-		return card1;
+	public float[] getCard() {
+		return card;
 	}
 
-	public void setCard1(float card1) {
-		this.card1 = card1;
-	}
-
-	public float getCard2() {
-		return card2;
-	}
-
-	public void setCard2(float card2) {
-		this.card2 = card2;
+	public void setCard(float[] card) {
+		this.card = card;
 	}
 
 	public int getNo() {
