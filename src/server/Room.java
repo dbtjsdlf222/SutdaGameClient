@@ -51,8 +51,8 @@ public class Room {
 	}
 
 	public void handOutCard() {
-		Packet packet = new Packet();
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			Packet packet = new Packet();
 			if (s.getValue().isLive()) {
 				packet.setAction(Protocol.CARD);
 				if (round == 1) { 		// 1번 카드 배분
@@ -68,6 +68,12 @@ public class Room {
 		} // for
 	} // setPlayerCard();
 
+	public void setLiveTrue() {
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			s.getValue().setLive(true);
+		}
+	}
+	
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -97,9 +103,10 @@ public class Room {
 		round = 1; // 1라운드
 		turn = masterIndex; // 첫 차례는 방장부터
 		cardShuffle(); // 카드큐를 섞는다
+		setLiveTrue(); 
 		handOutCard(); // 카드배분
 		String [] buttonArr = {Protocol.Die,Protocol.Ddadang+"_",Protocol.Call+"_",Protocol.Quater+"_",Protocol.Half,Protocol.Allin+"_"};
-		Packing.sender(playerMap.get(masterIndex).getPwSocket(),new Packet(Protocol.SETBUTTON, buttonArr));
+		Packing.sender(playerMap.get(masterIndex).getPwSocket(),new Packet(Protocol.TURN, buttonArr,turn+""));
 		roomSpeaker(new Packet(Protocol.TURN, masterIndex+""));
 		roomSpeaker(new Packet(Protocol.PAY, startMoney+""));
 	} // gameStart();

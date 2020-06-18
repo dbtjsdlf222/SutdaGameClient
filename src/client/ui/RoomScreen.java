@@ -181,10 +181,15 @@ public class RoomScreen extends JFrame {
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
 		add(pan);
-
+		
+		
 		for (int i = 0; i < 5; i++) {
-			btn[i] = new JButton(
-					new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
+			try {
+				btn[i] = new JButton(
+						new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
+			} catch (Exception e) {
+				
+			}
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
 		}
@@ -215,7 +220,7 @@ public class RoomScreen extends JFrame {
 		btn[2].addActionListener(action);
 		btn[3].addActionListener(action);
 		btn[4].addActionListener(action);
-		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
+//		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 
 	}
 
