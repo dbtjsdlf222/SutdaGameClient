@@ -181,10 +181,15 @@ public class RoomScreen extends JFrame {
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
 		add(pan);
-
+		
+		
 		for (int i = 0; i < 5; i++) {
-			btn[i] = new JButton(
-					new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
+			try {
+				btn[i] = new JButton(
+						new ImageIcon(RoomScreen.class.getResource("../../img/" + buttonArray[i] + ".PNG")));
+			} catch (Exception e) {
+				
+			}
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
 		}
@@ -215,7 +220,7 @@ public class RoomScreen extends JFrame {
 		btn[2].addActionListener(action);
 		btn[3].addActionListener(action);
 		btn[4].addActionListener(action);
-		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
+//		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 
 	}
 
@@ -383,10 +388,10 @@ public class RoomScreen extends JFrame {
 		logger.info("receiveCards: " + card);
 		
 		if(card[0]!=0)
-			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card[0] + ".png")));
+			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%." + ((int)card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
 
 		if(card[1]!=0)
-			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + card[1] + ".png")));
+			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%." + ((int)card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {

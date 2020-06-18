@@ -72,6 +72,9 @@ public class Protocol {
 			case "24": str = "DdaDang"; break;
 			case "25": str = "OPENCARD"; break;
 			case "26": str = "SETMONEY"; break;
+			case "27": str = "SETBUTTON"; break;
+			case "28": str = "PAY"; break;
+			case "29": str = "TURN"; break;
 			
 		}
 		

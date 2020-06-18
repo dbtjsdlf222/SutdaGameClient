@@ -19,7 +19,7 @@ public class Packet {
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
 	private	float[] card = new float[2];
-	private String[] buttonArr; 
+	private String[] buttonArr = new String[6]; 
 	
 	public Packet() {}
 
@@ -43,8 +43,15 @@ public class Packet {
 		this.action = protocol;
 	}
 
-	public Packet(String setbutton, String[] buttonArr) {
+	public Packet(String protocol, String[] buttonArr) {
+		this.action = protocol;
 		this.buttonArr = buttonArr;
+	}
+
+	public Packet(String protocol, String[] buttonArr, String motion) {
+		this.action = protocol;
+		this.buttonArr = buttonArr;
+		this.motion = motion;
 	}
 
 	public String[] getButtonArr() {
@@ -59,13 +66,17 @@ public class Packet {
 		return card;
 	}
 
+	public void setCard(float[] card) {
+		this.card = card;
+	}
+	
 	@JsonIgnore
-	public void setCard(float card) {
+	public void setCard_(float card) {
 		this.card[0] = card;
 	}
 	
 	@JsonIgnore
-	public void setCard(float card1,float card2) {
+	public void setCard_(float card1,float card2) {
 		this.card[0]=card1;
 		this.card[1]=card2;
 	}

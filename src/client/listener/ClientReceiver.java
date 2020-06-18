@@ -36,7 +36,8 @@ public class ClientReceiver extends Thread {
 		} catch(java.net.SocketException e1) {
 			logger.error(e1.getMessage(), e1);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+//			logger.error(e.getMessage(), e);
+			e.printStackTrace();
 		}
 	} // run
 } // class
