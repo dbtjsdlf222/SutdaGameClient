@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import server.Room;
 
@@ -17,7 +18,7 @@ public class Packet {
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
-	private	float[] card;
+	private	float[] card = new float[2];
 	private String[] buttonArr; 
 	
 	public Packet() {}
@@ -42,6 +43,10 @@ public class Packet {
 		this.action = protocol;
 	}
 
+	public Packet(String setbutton, String[] buttonArr) {
+		this.buttonArr = buttonArr;
+	}
+
 	public String[] getButtonArr() {
 		return buttonArr;
 	}
@@ -54,10 +59,12 @@ public class Packet {
 		return card;
 	}
 
+	@JsonIgnore
 	public void setCard(float card) {
 		this.card[0] = card;
 	}
 	
+	@JsonIgnore
 	public void setCard(float card1,float card2) {
 		this.card[0]=card1;
 		this.card[1]=card2;

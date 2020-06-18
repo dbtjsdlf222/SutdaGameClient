@@ -133,16 +133,21 @@ public class ClientPacketController {
 
 		case Protocol.CARD:
 			RoomScreen.getInstance().receiveCard(packet.getCard());
-			logger.info("CARD:" + packet.getCard());
 			break;
 
 		case Protocol.OPENCARD:
 
 			break;
 
-		case Protocol.SETBUTTON:
-			RoomScreen.getInstance().setButton(packet.getButtonArr());
+		case Protocol.TURN:
+			RoomScreen.getInstance().setButton(packet.getButtonArr());	//버튼 세팅
+			
 			break;
+			
+		case Protocol.PAY:
+			
+			break;
+			
 		} // switch
 	} // controller();
 } // class

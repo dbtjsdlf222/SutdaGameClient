@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.Packing;
@@ -56,9 +55,10 @@ public class Room {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			if (s.getValue().isLive()) {
 				packet.setAction(Protocol.CARD);
-				if (round == 1) 		// 1번 카드 배분
+				if (round == 1) { 		// 1번 카드 배분
 					packet.setCard(pollOneCard());
-				else if (round == 2) { 	// 2번 카드 배분
+					round = 2;
+				} else if (round == 2) { 	// 2번 카드 배분
 					beforeBet = 0;		// 전 타임 배팅 머니 0으로 초기화
 					packet.setCard(0, pollOneCard());
 				} else 					// 재경기시 1,2번 카드 배분
@@ -88,10 +88,20 @@ public class Room {
 		return shuffledCard.poll();
 	} // pollOneCard();
 
+	public String[] setButton() {
+		
+		return null;
+	}
+	
 	public void gameStart() {
 		round = 1; // 1라운드
+		turn = masterIndex; // 첫 차례는 방장부터
 		cardShuffle(); // 카드큐를 섞는다
 		handOutCard(); // 카드배분
+		String [] buttonArr = {Protocol.Die,Protocol.Ddadang+"_",Protocol.Call+"_",Protocol.Quater+"_",Protocol.Half,Protocol.Allin+"_"};
+		Packing.sender(playerMap.get(masterIndex).getPwSocket(),new Packet(Protocol.SETBUTTON, buttonArr));
+		roomSpeaker(new Packet(Protocol.TURN, masterIndex+""));
+		roomSpeaker(new Packet(Protocol.PAY, startMoney+""));
 	} // gameStart();
 
 	public void roomSpeaker(Packet pac) {
