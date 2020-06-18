@@ -259,7 +259,7 @@ public class JoinFrame {
 					if (text.equals("")) {
 						lblIdErrorMessage.setForeground(Color.RED);
 						lblIdErrorMessage.setText("아이디를 입력해주세요.");
-					} else if (text.length() > 10 && text.length() < 5) {
+					} else if (text.length() < 5 && text.length() > 10) {
 						lblIdErrorMessage.setForeground(Color.RED);
 						lblIdErrorMessage.setText("5 ~ 10자리 이하만 가능합니다.");
 					} else if (playerDAO.selectID(text)) {
@@ -287,7 +287,7 @@ public class JoinFrame {
 			@Override
 			public void action(String text) {
 
-				passwordCheck = text.length() >= 4 && text.length() <= 9;
+				passwordCheck = text.length() >= 5 && text.length() <= 10;
 				lblPasswordErrorMessage.setForeground(passwordCheck ? Color.GREEN : Color.RED);
 				lblPasswordErrorMessage.setText(passwordCheck ? "가능한 비밀번호입니다." : "5 ~ 10자리를 입력하세요.");
 
@@ -341,41 +341,41 @@ public class JoinFrame {
 					sexLbl.setBounds(150, 20, 200, 20);
 					sexJF.add(sexLbl);
 
-					JRadioButton cha0Btn = new JRadioButton("남자");
+					JRadioButton cha0Btn = new JRadioButton("심슨");
 					cha0Btn.setForeground(Color.white);
 					cha0Btn.setBackground(Color.black);
 					sexJF.add(cha0Btn);
 					cha0Btn.setBounds(120, 160, 70, 50);
 
-					JRadioButton cha1Btn = new JRadioButton("여자");
+					JRadioButton cha1Btn = new JRadioButton("마지");
 					cha1Btn.setForeground(Color.white);
 					cha1Btn.setBackground(Color.black);
 					sexJF.add(cha1Btn);
 					cha1Btn.setBounds(330, 160, 70, 50);
 
-					JRadioButton cha2Btn = new JRadioButton("cha2");
+					JRadioButton cha2Btn = new JRadioButton("옆집누나");
 					cha2Btn.setForeground(Color.white);
 					cha2Btn.setBackground(Color.black);
 					sexJF.add(cha2Btn);
-					cha2Btn.setBounds(120, 340, 70, 50);
+					cha2Btn.setBounds(110, 340, 130, 50);
 
-					JRadioButton cha3Btn = new JRadioButton("cha3");
+					JRadioButton cha3Btn = new JRadioButton("옆집할아버지");
 					cha3Btn.setForeground(Color.white);
 					cha3Btn.setBackground(Color.black);
 					sexJF.add(cha3Btn);
-					cha3Btn.setBounds(330, 340, 70, 50);
+					cha3Btn.setBounds(310, 340, 130, 50);
 
-					JRadioButton cha5Btn = new JRadioButton("cha5");
+					JRadioButton cha5Btn = new JRadioButton("옆집삼촌");
 					cha5Btn.setForeground(Color.white);
 					cha5Btn.setBackground(Color.black);
 					sexJF.add(cha5Btn);
-					cha5Btn.setBounds(120, 510, 70, 50);
+					cha5Btn.setBounds(110, 510, 130, 50);
 
-					JRadioButton cha6Btn = new JRadioButton("cha6");
+					JRadioButton cha6Btn = new JRadioButton("sexy한 누나");
 					cha6Btn.setForeground(Color.white);
 					cha6Btn.setBackground(Color.black);
 					sexJF.add(cha6Btn);
-					cha6Btn.setBounds(330, 510, 70, 50);
+					cha6Btn.setBounds(310, 510, 130, 50);
 
 					ButtonGroup bg = new ButtonGroup();
 					bg.add(cha1Btn);
@@ -429,31 +429,26 @@ public class JoinFrame {
 							if (e.getSource() == okBtn) {
 								if (bg.isSelected(null)) {
 									JOptionPane.showMessageDialog(null, "캐릭터를 선택해주세요.");
+									return;
 								} else if (cha0Btn.isSelected()) {
 									playerVO.setCha(0);
-									cha = true;
 								} else if (cha1Btn.isSelected()) {
 									playerVO.setCha(1);
-									cha = true;
 								} else if (cha2Btn.isSelected()) {
 									playerVO.setCha(2);
-									cha = true;
 								} else if (cha3Btn.isSelected()) {
 									playerVO.setCha(3);
-									cha = true;
 								} else if (cha5Btn.isSelected()) {
 									playerVO.setCha(5);
-									cha = true;
 								} else if (cha6Btn.isSelected()) {
 									playerVO.setCha(6);
-									cha = true;
 								}
 
 							}
 							try {
 								playerVO.joinPlayer(textFieldId.getText(), new String(passwordField.getPassword()),
 										textFieldNickname.getText());
-								if (1 == playerDAO.playerJoin(playerVO) && cha == true) {
+								if (1 == playerDAO.playerJoin(playerVO)) {
 									JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
 									sexJF.dispose();
 									frame.dispose();
