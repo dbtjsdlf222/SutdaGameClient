@@ -123,11 +123,10 @@ public class Room {
 	}
 
 	public int joinPlayer(PlayerVO vo) {
-		
 		for (int i = 0; i < 5; i++) {
 			if (playerMap.get(i) == null) {
 				playerMap.put(i, vo);
-				buttonArray = { "Allin", "Half", "Quater", "Bbing", "Call", "Die" };
+
 				return i;
 			} // if
 		} // for
