@@ -38,8 +38,9 @@ public class Protocol {
 	public static final String OPENCARD = "25";
 	public static final String SETMONEY = "26";
 	public static final String SETBUTTON = "27";
-	public static final String PAY = "28";
+	public static final String STARTPAY = "28";
 	public static final String TURN = "29";
+	public static final String OTHERBET = "30";
 	
 	
 	
@@ -73,8 +74,9 @@ public class Protocol {
 			case "25": str = "OPENCARD"; break;
 			case "26": str = "SETMONEY"; break;
 			case "27": str = "SETBUTTON"; break;
-			case "28": str = "PAY"; break;
+			case "28": str = "STARTPAY"; break;
 			case "29": str = "TURN"; break;
+			case "30": str = "OTHERBET"; break;
 			
 		}
 		

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PlayerVO {
 
 	private static final Logger logger = LogManager.getLogger();
-	
+
 	@JsonIgnore
 	public static PlayerVO myVO;
 
@@ -34,7 +34,8 @@ public class PlayerVO {
 	private boolean online = false;
 	private int cha;
 	private boolean live = false;
-	private float[] card;
+	private float card1;
+	private float card2;
 	private int cardLevel;
 	private String cardName;
 	private int index;
@@ -47,14 +48,6 @@ public class PlayerVO {
 	private BufferedReader brSocket;
 	@JsonIgnore
 	private PrintWriter pwSocket;
-
-	public float[] getCard() {
-		return card;
-	}
-
-	public void setCard(float[] card) {
-		this.card = card;
-	}
 
 	public int getRoomNo() {
 		return roomNo;
@@ -70,7 +63,7 @@ public class PlayerVO {
 	public void pay(int money) {
 		this.money -= money;
 	}
-	
+
 	public void joinPlayer(String id, String pw, String nic) {
 		this.id = id;
 		this.password = pw;
@@ -99,7 +92,7 @@ public class PlayerVO {
 	}
 
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
-			int lose, boolean online, int cha, boolean live, float[] card, float card2, int cardLevel, String cardName,
+			int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel, String cardName,
 			BufferedReader brSocket, PrintWriter pwSocket) {
 		this.socket = socket;
 		this.no = no;
@@ -113,7 +106,8 @@ public class PlayerVO {
 		this.online = online;
 		this.cha = cha;
 		this.live = live;
-		this.card = card;
+		this.card1 = card1;
+		this.card2 = card2;
 		this.cardLevel = cardLevel;
 		this.cardName = cardName;
 		this.brSocket = brSocket;
@@ -124,6 +118,22 @@ public class PlayerVO {
 		this.nic = string;
 		this.cha = i;
 		this.money = j;
+	}
+
+	public float getCard1() {
+		return card1;
+	}
+
+	public void setCard1(float card1) {
+		this.card1 = card1;
+	}
+
+	public float getCard2() {
+		return card2;
+	}
+
+	public void setCard2(float card2) {
+		this.card2 = card2;
 	}
 
 	public String getIp() {
@@ -154,10 +164,9 @@ public class PlayerVO {
 
 	@Override
 	public String toString() {
-		return "PlayerVO [no=" + no + ", id=" + id + ", password=" + password + ", nic=" + nic + ", money=" + money
-				+ ", win=" + win + ", lose=" + lose + ", cha=" + cha + ", live=" + live + ", card="
-				+ Arrays.toString(card) + ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index=" + index
-				+ ", roomNo=" + roomNo + "]";
+		return "PlayerVO [no=" + no + ", id=" + id + ", nic=" + nic + ", money=" + money + ", live=" + live + ", card1="
+				+ card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index="
+				+ index + ", roomNo=" + roomNo + "]";
 	}
 
 	public String getPassword() {

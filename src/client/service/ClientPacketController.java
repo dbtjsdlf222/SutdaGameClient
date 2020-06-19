@@ -23,7 +23,7 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ClientPacketController {
-	
+
 	private static final Logger logger = LogManager.getLogger();
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
@@ -140,15 +140,28 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.TURN:
-			RoomScreen.getInstance().setButton(packet.getButtonArr());	//버튼 세팅
-			Integer.parseInt(packet.getMotion()); //이 차례의 사람 노란 테두리
-			
+			RoomScreen.getInstance().setButton(packet.getButtonArr()); // 버튼 세팅
+			Integer.parseInt(packet.getMotion()); // 이 차례의 사람 노란 테두리
+
 			break;
-			
-		case Protocol.PAY:
-			
+
+		case Protocol.STARTPAY:
+			try {
+				RoomScreen.getInstance().startPay(Integer.parseInt(packet.getMotion()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
-			
+
+		// Packet(Protocol.OTHERBET, proBet + "/" + turn+"/"+money)
+		case Protocol.OTHERBET:
+			try {
+				String[] sp = packet.getMotion().split("/");
+				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[3]);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} // switch
 	} // controller();
 } // class

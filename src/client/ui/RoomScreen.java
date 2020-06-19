@@ -44,7 +44,7 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class RoomScreen extends JFrame {
-	
+
 	private final static Logger logger = LogManager.getLogger();
 
 	public final int SCREEN_WIDTH = 1280;
@@ -182,14 +182,13 @@ public class RoomScreen extends JFrame {
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
 		add(pan);
-		
-		
+
 		for (int i = 0; i < 5; i++) {
 			try {
 				btn[i] = new JButton(
 						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
 			} catch (Exception e) {
-				
+
 			}
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
@@ -200,18 +199,23 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btn[0]) {
-					tf.setText("올인");
-					Packing.sender(playerVO.getPwSocket(), Protocol.Allin);
+					tf.setText(buttonArray[0]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[0]);
 				} else if (e.getSource() == btn[1]) {
-					tf.setText("하프");
+					tf.setText(buttonArray[1]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[1]);
 				} else if (e.getSource() == btn[2]) {
-					tf.setText("쿼터");
+					tf.setText(buttonArray[2]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[2]);
 				} else if (e.getSource() == btn[3]) {
-					tf.setText("삥");
+					tf.setText(buttonArray[3]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[3]);
 				} else if (e.getSource() == btn[4]) {
-					tf.setText("콜");
+					tf.setText(buttonArray[4]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[4]);
 				} else if (e.getSource() == btn[5]) {
-					tf.setText("다이");
+					tf.setText(buttonArray[5]);
+					Packing.sender(playerVO.getPwSocket(), buttonArray[5]);
 				}
 			}
 		};
@@ -221,7 +225,7 @@ public class RoomScreen extends JFrame {
 		btn[2].addActionListener(action);
 		btn[3].addActionListener(action);
 		btn[4].addActionListener(action);
-//		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
+		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 
 	}
 
@@ -307,19 +311,20 @@ public class RoomScreen extends JFrame {
 		// 채팅 보내기 버튼
 		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("../../img/Send.PNG"));
 		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
-		
+
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(340, 186, 70, 25);
 		chatBtn.setBorderPainted(false);
 		chatBtn.setContentAreaFilled(false);
 		chatBtn.setFocusPainted(false);
 		chatBtn.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				chatBtn.setIcon(chatSendEnter);
 				chatBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				chatBtn.setIcon(chatSend);
@@ -327,11 +332,11 @@ public class RoomScreen extends JFrame {
 			}
 		});
 		add(chatBtn);
-		
+
 		chatPan.add(chatBtn);
 		JRootPane rootPane = this.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
-		
+
 		chatBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -344,41 +349,41 @@ public class RoomScreen extends JFrame {
 						chatText.setText("");
 					}
 				}
-
-				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-
 			}
 		});
 
 		// 게임시작 버튼
-				ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
-				ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
-				
-				JButton gameStart = new JButton(gameStartBasic);
-				
-				gameStart.setBounds(510, 230, 240, 140);
-				gameStart.setBorderPainted(false);
-				gameStart.setContentAreaFilled(false);
-				gameStart.setFocusPainted(false);
-				gameStart.addMouseListener(new MouseAdapter() {
-					
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						gameStart.setIcon(gameStartEnter);
-						gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
-					}
-					@Override
-					public void mouseExited(MouseEvent e) {
-						gameStart.setIcon(gameStartBasic);
-						gameStart.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					}
-					@Override
-					public void mousePressed(MouseEvent e) {
-						gameStart.setVisible(false);
-					}
-				});
-				add(gameStart);
-		
+		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
+		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
+
+		JButton gameStart = new JButton(gameStartBasic);
+
+		gameStart.setBounds(510, 230, 240, 140);
+		gameStart.setBorderPainted(false);
+		gameStart.setContentAreaFilled(false);
+		gameStart.setFocusPainted(false);
+		gameStart.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gameStart.setIcon(gameStartEnter);
+				gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				gameStart.setIcon(gameStartBasic);
+				gameStart.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
+				gameStart.setVisible(false);
+			}
+		});
+		add(gameStart);
+
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
@@ -422,27 +427,36 @@ public class RoomScreen extends JFrame {
 
 	}
 
-	public void bet() {
-
+	public void startPay(int sMoney) {
+		
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
+		}
 	}
+	
+	public void betAlert(int idx, String bet, String money) {
+		
+		moneyText[idx].setText(money);
+	} //betAlert();
 
 	public void openCard() {
-
-	}
+		
+	} //openCard();
 
 	/**
-	 * @param card
-	 * card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용 
+	 * @param card card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용
 	 */
-	
+
 	public void receiveCard(float[] card) {
 		logger.info("receiveCards: " + card);
-		
-		if(card[0]!=0)
-			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%." + ((int)card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
 
-		if(card[1]!=0)
-			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/" + String.format("%." + ((int)card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
+		if (card[0] != 0)
+			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/"
+					+ String.format("%." + ((int) card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
+
+		if (card[1] != 0)
+			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/"
+					+ String.format("%." + ((int) card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {

@@ -1,3 +1,4 @@
+package util;
 import java.util.ArrayList;
 
 import server.Room;
