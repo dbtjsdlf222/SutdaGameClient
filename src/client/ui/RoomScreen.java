@@ -33,8 +33,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.sun.xml.internal.ws.client.SenderException;
-
 import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
