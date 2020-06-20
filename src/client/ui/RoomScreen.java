@@ -177,6 +177,9 @@ public class RoomScreen extends JFrame {
 	} // 게임 진행 순서
 
 	public void setButton(String[] buttonArray) {
+		
+		logger.debug(Arrays.toString(buttonArray));
+		
 		//pan을 계속 add 하는 버그 있음
 		JPanel pan = new JPanel();
 		pan.setBounds(0, 620, 1265, 60);
@@ -221,6 +224,7 @@ public class RoomScreen extends JFrame {
 					tf.setText(buttonArray[5]);
 					Packing.sender(playerVO.getPwSocket(), buttonArray[5]);
 				}
+				
 			}
 		};
 
@@ -231,6 +235,9 @@ public class RoomScreen extends JFrame {
 		btn[4].addActionListener(action);
 		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
 		add(pan);
+		add(back);
+		revalidate();
+		repaint();
 	}
 
 	public void buttonReset() {
