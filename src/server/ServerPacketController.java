@@ -152,7 +152,11 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.GAMESTART:
 			ro.getRoom(thisPlayerVO.getRoomNo()).gameStart();
+			break;
 			
+		case Protocol.BET:
+			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).bet(packet.getMotion());
+			break;
 		} // switch
 	} // runMainGame
  

@@ -203,29 +203,28 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				buttonReset();
-				
 				if (e.getSource() == btn[0]) {
 					tf.setText(buttonArray[0]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[0]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[0]);
 				} else if (e.getSource() == btn[1]) {
 					tf.setText(buttonArray[1]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[1]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[1]);
 				} else if (e.getSource() == btn[2]) {
 					tf.setText(buttonArray[2]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[2]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[2]);
 				} else if (e.getSource() == btn[3]) {
 					tf.setText(buttonArray[3]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[3]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[3]);
 				} else if (e.getSource() == btn[4]) {
 					tf.setText(buttonArray[4]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[4]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[4]);
 				} else if (e.getSource() == btn[5]) {
 					tf.setText(buttonArray[5]);
-					Packing.sender(playerVO.getPwSocket(), buttonArray[5]);
+					Packing.sender(playerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[5]);
 				}
+				buttonReset();
 				
-			}
+			} //actionPerformed();
 		};
 
 		btn[0].addActionListener(action);

@@ -41,6 +41,7 @@ public class Protocol {
 	public static final String STARTPAY = "28";
 	public static final String TURN = "29";
 	public static final String OTHERBET = "30";
+	public static final String BET = "31";
 	
 	
 	
@@ -77,7 +78,7 @@ public class Protocol {
 			case "28": str = "STARTPAY"; break;
 			case "29": str = "TURN"; break;
 			case "30": str = "OTHERBET"; break;
-			case "31": str = "BUTTONSET"; break;
+			case "31": str = "BET"; break;
 			
 		}
 		

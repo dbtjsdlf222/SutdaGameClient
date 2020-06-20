@@ -59,4 +59,17 @@ public class Packing {
 			logger.error(e.getMessage(), e);
 		}
 	}
+
+	public static void sender(PrintWriter pw, String pro, String motion) {
+		logger.info("[Send(" + pro +")]");
+		ObjectMapper mapper = new ObjectMapper();
+		Packet packet = new Packet();
+		packet.setAction(pro);
+		packet.setMotion(motion);
+		try {
+			pw.println(mapper.writeValueAsString(packet));
+		} catch (JsonProcessingException e) {
+			logger.error(e.getMessage(), e);
+		}
+	} //sender
 }

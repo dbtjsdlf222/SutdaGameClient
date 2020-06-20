@@ -154,7 +154,7 @@ public class ClientPacketController {
 			}
 			break;
 
-		// Packet(Protocol.OTHERBET, proBet + "/" + turn+"/"+money)
+		// Packet(Protocol.OTHERBET, turn + "/" + proBet +"/"+money)
 		case Protocol.OTHERBET:
 			try {
 				String[] sp = packet.getMotion().split("/");

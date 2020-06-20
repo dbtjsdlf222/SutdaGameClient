@@ -271,10 +271,13 @@ public class Room extends ServerMethod {
 		for (int i = 0; i < 4; i++) {
 			turn++;
 			turn %= 5;
-			if(playerMap.get(turn).isLive()) {
-				break;
-			}
-		}
+			try {
+				if(playerMap.get(turn).isLive()) { 
+					break;
+				}
+			} catch (NullPointerException e) { }
+		} //for
+		
 		logger.info("["+roomNo+"번방] "+playerMap.get(turn)+"님의 차례");
 		
 		String[] arr = setButton();
@@ -390,7 +393,7 @@ public class Room extends ServerMethod {
 		beforeBet = betMoney;
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 Vo에서 뺌
 
-		roomSpeaker(new Packet(Protocol.OTHERBET, proBet + "/" + turn + "/" + playerMap.get(turn).getMoney()));
+		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
 
 		turnProgress();
 	} // bet();
