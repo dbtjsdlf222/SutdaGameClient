@@ -131,11 +131,9 @@ public class Packet {
 
 	@Override
 	public String toString() {
-		return "Packet [action=" + action + ", motion=" + motion + ", playerVO=" + playerVO + ", roomMap=" + roomMap
-				+ ", playerList=" + playerList + ", roomPlayerList=" + roomPlayerList + ", card="
-				+ Arrays.toString(card) + "]";
+		return "Packet [motion=" + motion + ", playerVO=" + playerVO + ", buttonArr=" + Arrays.toString(buttonArr)
+				+ "]";
 	}
 
-	
 	
 }

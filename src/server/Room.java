@@ -495,5 +495,5 @@ public class Room extends ServerMethod {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
-	
+
 }

@@ -29,7 +29,7 @@ public class RunServer {
 
 	public void run() {
 		logger.info("서버 실행");
-		ExecutorService pool = Executors.newFixedThreadPool(2); // 최대 스레드가 2개인 스레드풀 생성
+		ExecutorService pool = Executors.newFixedThreadPool(5); // 최대 스레드가 2개인 스레드풀 생성
 		PlayerDAO dao = new PlayerDAO();
 
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -40,7 +40,8 @@ public class RunServer {
 
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
-
+				
+				pool.execute(new ServerReceiver(socket));
 //				Runnable task = () -> {
 //					try {
 //					} catch (InterruptedException e) {
@@ -52,7 +53,6 @@ public class RunServer {
 //				runnableTasks.forEach(executor::executeTask);
 //				executor.waitForAllThreadsToCompletion();
 
-				 pool.submit(new ServerReceiver(socket));
 
 			} // while
 

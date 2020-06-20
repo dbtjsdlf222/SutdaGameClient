@@ -28,18 +28,19 @@ public class ServerMethod {
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
 			Packet packet = new Packet();
 			packet.setPlayerVO(thisPlayerVO);
-			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.MESSAGE, "알림 [" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
+			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.MESSAGE, "알림 [" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다.")); 
 			packet.setAction(Protocol.EXITOTHERROOM);
 			packet.setMotion(thisPlayerVO.getIndex()+"");
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
+			
 			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
 				ro.removeRoom(thisPlayerVO.getRoomNo());
 				this.lobbyReloadBroadcast();
+				lobbyReloadBroadcast();
 			}
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
-		
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {

@@ -158,7 +158,7 @@ public class ClientPacketController {
 		case Protocol.OTHERBET:
 			try {
 				String[] sp = packet.getMotion().split("/");
-				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[3]);
+				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[2]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
