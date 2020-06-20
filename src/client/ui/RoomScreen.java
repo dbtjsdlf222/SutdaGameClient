@@ -451,17 +451,17 @@ public class RoomScreen extends JFrame {
 		logger.info("receiveCards: " + card);
 
 		if (card[0] != 0)
-			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/"
+			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
 					+ String.format("%." + ((int) card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
 
 		if (card[1] != 0)
-			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/"
+			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
 					+ String.format("%." + ((int) card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
 				logger.info("패 돌리기");
-				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/Pae.png")));
+				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
 			}
 		} // for
 	} // receiveCard1();
