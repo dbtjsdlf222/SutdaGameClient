@@ -5,13 +5,11 @@ import java.util.Arrays;
 import vo.PlayerVO;
 
 public class Jokbo {
-	int card[] = new int[20];
 	ArrayList<PlayerVO> playerVO = new ArrayList<>();
 	public float card1;
 	public float card2;
 	private boolean ddaeng = false;
 	private boolean gusa = false;
-	private boolean mungsa = false;
 	private boolean amhaeng = false;
 	private int getCardLevel = 0;
 	private String CardName;
@@ -19,7 +17,7 @@ public class Jokbo {
 	public Jokbo() {
 		super();
 	}
-
+	
 	public boolean ddaeng() {
 		if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7)) || ((Math.abs(card1) == 7) && (Math.abs(card2) == 3))) {
 			for (int i = 0; i < playerVO.size(); i++) {
@@ -93,10 +91,4 @@ public class Jokbo {
 		return getCardLevel;
 	}
 
-	@Override
-	public String toString() {
-		return "Jokbo [card=" + Arrays.toString(card) + ", playerVO=" + playerVO + ", card1=" + card1 + ", card2="
-				+ card2 + ", ddaeng=" + ddaeng + ", gusa=" + gusa + ", mungsa=" + mungsa + ", amhaeng=" + amhaeng
-				+ ", getCardLevel=" + getCardLevel + "]";
-	}
 }

@@ -177,12 +177,12 @@ public class RoomScreen extends JFrame {
 	} // 게임 진행 순서
 
 	public void setButton(String[] buttonArray) {
+		//pan을 계속 add 하는 버그 있음
 		JPanel pan = new JPanel();
 		pan.setBounds(0, 620, 1265, 60);
 		pan.setLayout(new GridLayout(1, 6));
 		pan.setOpaque(false);
-		add(pan);
-
+		
 		for (int i = 0; i < 6; i++) {
 			try {
 			btn[i] = new JButton(
@@ -199,6 +199,9 @@ public class RoomScreen extends JFrame {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				buttonReset();
+				
 				if (e.getSource() == btn[0]) {
 					tf.setText(buttonArray[0]);
 					Packing.sender(playerVO.getPwSocket(), buttonArray[0]);
@@ -227,9 +230,18 @@ public class RoomScreen extends JFrame {
 		btn[3].addActionListener(action);
 		btn[4].addActionListener(action);
 		btn[5].addActionListener(action); // 버튼 클릭 시 텍스트 표시
-
+		add(pan);
 	}
 
+	public void buttonReset() {
+		String[] buttonArray = {Protocol.Die,Protocol.Ddadang,Protocol.Call,Protocol.Quater,Protocol.Half,Protocol.Allin};
+		for (int i = 0; i < 6; i++) {
+			btn[i] = new JButton(new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + "_.PNG")));
+			btn[i].setOpaque(false);
+//			pan.add(btn[i]);
+		}
+	}
+	
 	public void reLoadMoney(int playerIdx, String money) {
 		playerIdx = playerIdx - mySit % 5;
 		moneyText[playerIdx].setText(money);

@@ -22,6 +22,7 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
+@SuppressWarnings("serial")
 public class ClientPacketController {
 
 	private static final Logger logger = LogManager.getLogger();
@@ -52,8 +53,7 @@ public class ClientPacketController {
 	public static JScrollPane rlScroll = new JScrollPane(roomJT);
 	public static JPanel rlobbyPan = new JPanel();
 
-	public ClientPacketController() {
-	}
+	public ClientPacketController() { }
 
 	public void controller(Packet packet) {
 
@@ -99,7 +99,6 @@ public class ClientPacketController {
 				rn[i][1] = value.getMaster() + "";
 				rn[i][2] = value.getPlayerSize() + "/5";
 				rn[i][3] = value.isGameStarted() ? "게임중" : "대기중";
-				JButton jb = new JButton(value.getRoomNo() + "");
 				rLmodel.addRow(rn[i]);
 				i++;
 			}

@@ -17,7 +17,7 @@ public class ServerMethod {
 	protected static final Logger logger = LogManager.getLogger();
 	protected PlayerVO thisPlayerVO = new PlayerVO();
 	protected static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
-	protected RoomOperator ro = RoomOperator.ro; 
+	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected PlayerDAO dao = new PlayerDAO();
 	protected Socket socket;
 	protected int roomIndex;

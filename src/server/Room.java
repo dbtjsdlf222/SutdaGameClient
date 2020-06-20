@@ -6,14 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.Jokbo;
 import util.Packing;
@@ -104,7 +99,6 @@ public class Room extends ServerMethod {
 
 	public String[] setButton() {
 		String[] arr = new String[6];
-
 		arr[0] = Protocol.Die;
 
 		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
@@ -189,6 +183,7 @@ public class Room extends ServerMethod {
 
 	public void exitPlayer(PlayerVO vo) {
 
+		//랜덤으로 방장 지정
 		// int playerIndex = getPlayerIndex(vo.getNo());
 		// playerMap.remove(playerIndex);
 		// static 스레드 활용하여 턴제한시간 7초 플레이어가 자신의 턴일때 나갔을 경우 timeSet(0);
@@ -217,10 +212,14 @@ public class Room extends ServerMethod {
 		//
 		// }
 
+		//다음 사람에게 방장 지정
 		int playerIndex = getPlayerIndex(vo.getNo());
 		playerMap.remove(playerIndex);
-
-		if (masterIndex == playerIndex && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+		vo.gameLose();
+		dao.playerSave(vo);
+		
+		// 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+		if (masterIndex == playerIndex && playerMap.size() <= 0) {
 			return;
 		}
 		//방장 다음차례의 사람을 방장으로 지정 

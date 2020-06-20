@@ -7,10 +7,13 @@ import server.Room;
 import vo.PlayerVO;
 
 public class RoomOperator {
-	public static RoomOperator ro = new RoomOperator();
+	
+	private static RoomOperator ro = new RoomOperator();
 	private Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
 	
-	static {}
+	public static RoomOperator getInstance() {
+		return ro;
+	}
 	
 	private RoomOperator() {}
 
