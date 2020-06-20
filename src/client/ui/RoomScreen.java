@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -221,6 +222,7 @@ public class RoomScreen extends JFrame {
 	public void buttonReset() {
 		for (int i = 0; i < 6; i++) {
 			btn[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/button/" + betBtnInitArr[i] + ".PNG")));
+			btn[i].setEnabled(false);
 		}
 	} // buttonReset();
 
@@ -364,20 +366,32 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				gameStart.setIcon(gameStartEnter);
-				gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gameStart.setIcon(gameStartBasic);
-				gameStart.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-				gameStart.setVisible(false);
-			}
+				int tempCount = 0;
+				for (int i = 0; i < 5; i++) {
+					try {
+						if(profile[i] != null) {
+							tempCount++;
+						}
+					} catch (NullPointerException e2) {}
+				} //for
+				if(tempCount >= 2) {
+					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
+					gameStart.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "플레이어가 2명 이상일 때만 시작 가능합니다.", "알림", JOptionPane.WARNING_MESSAGE);
+				}
+			} //mousePressed();
 		});
 		add(gameStart);
 
