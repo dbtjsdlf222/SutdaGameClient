@@ -32,7 +32,7 @@ public class Protocol {
 	public static final String Call = "Call";
 	public static final String Die = "Die";
 	public static final String Pping = "Pping";
-	public static final String Ddadang = "DdaDang";
+	public static final String Ddadang = "Ddadang";
 	
 	public static final String CARD = "23";
 	public static final String OPENCARD = "25";
@@ -41,6 +41,7 @@ public class Protocol {
 	public static final String STARTPAY = "28";
 	public static final String TURN = "29";
 	public static final String OTHERBET = "30";
+	public static final String BUTTONSET = "31";
 	
 	
 	
@@ -77,6 +78,7 @@ public class Protocol {
 			case "28": str = "STARTPAY"; break;
 			case "29": str = "TURN"; break;
 			case "30": str = "OTHERBET"; break;
+			case "31": str = "BUTTONSET"; break;
 			
 		}
 		

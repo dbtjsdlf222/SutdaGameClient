@@ -19,22 +19,12 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
-public class ServerPacketController {
-	
-	private static final Logger logger = LogManager.getLogger();
-	
-	private PlayerVO thisPlayerVO = new PlayerVO();
-	private static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
-	private ObjectMapper mapper = new ObjectMapper();
-	private RoomOperator ro = RoomOperator.ro; 
-	private PlayerDAO dao = new PlayerDAO();
-	private Socket socket;
-	private int roomIndex;
+public class ServerPacketController extends ServerMethod {
 	
 	public ServerPacketController(Socket socket) {
-		this.socket = socket;
+		super.socket = socket;
 	}
-
+	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 		
 		logger.info("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
@@ -166,56 +156,5 @@ public class ServerPacketController {
 		} // switch
 	} // runMainGame
  
-	public void exitPlayer() {
-
-		if (thisPlayerVO.getRoomNo() != 0) {
-			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
-			Packet packet = new Packet();
-			packet.setPlayerVO(thisPlayerVO);
-			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(new Packet(Protocol.MESSAGE, "알림 [" + thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
-			packet.setAction(Protocol.EXITOTHERROOM);
-			packet.setMotion(thisPlayerVO.getIndex()+"");
-			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
-			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
-				ro.removeRoom(thisPlayerVO.getRoomNo());
-				this.lobbyReloadBroadcast();
-			}
-		} else {
-			lobbyExitBroadcast();
-		} // if~else
-		
-	} //exitPlayer
-
-	public void lobbyBroadcast(Packet packet) {
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
-		} //for
-	} //broadcast
-
-	public void lobbyExitBroadcast() {
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			if(lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-				lobbyPlayerList.remove(i);
-			}
-		} //for
-		Packet packet = new Packet();
-		packet.setAction(Protocol.RELOADLOBBYLIST);
-		packet.setPlayerList(lobbyPlayerList);
-		packet.setRoomMap(ro.getAllRoom());
-		for(PlayerVO player : lobbyPlayerList)
-			Packing.sender(player.getPwSocket(), packet);
-	}
-	
-	public void lobbyReloadBroadcast() {
-		Packet packet = new Packet();
-		packet.setAction(Protocol.RELOADLOBBYLIST);
-		packet.setPlayerList(lobbyPlayerList);
-		packet.setRoomMap(ro.getAllRoom());
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
-		} //for
-	}
-
-	public PlayerVO getThisPlayerVO() { return thisPlayerVO; }
 	
 }

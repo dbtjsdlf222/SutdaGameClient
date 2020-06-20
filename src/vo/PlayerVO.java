@@ -288,7 +288,15 @@ public class PlayerVO {
 	public void setLose(int lose) {
 		this.lose = lose;
 	}
+	
+	public void gameLose() {
+		lose++;
+	}
 
+	public void gameWin() {
+		win++;
+	}
+	
 	public boolean isOnline() {
 		return this.online;
 	}

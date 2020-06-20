@@ -21,24 +21,23 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
-public class Room {
-
-	private static final Logger logger = LogManager.getLogger();
+public class Room extends ServerMethod {
 
 	private static int increaseRoomNo = 1;
-	private int roomNo; // 방 번호
+	private int roomNo;		// 방 번호
 	private int startMoney; // 시작 금액
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
-	private String master; // 방장(선)이 누구인지
-	private int totalMoney; // 총 배팅액의 합
-	private int beforeBet; // 전 플레이어의 배팅액
-	private int round; // 몇번째 카드 배팅인지
-	private int lastBetIdx; // 마지막으로 배팅한 플레이어가 몇번째 사람인지
-	private int turn; // 누구의 차례인지
-	private boolean round2First = false;
+	private String master; 		 // 방장(선)이 누구인지
+	private int totalMoney; 	 // 총 배팅액의 합
+	private int beforeBet;	 	 // 전 플레이어의 배팅액
+	private int round; 			 // 몇번째 카드 배팅인지
+	private int lastBetIdx;	 	 // 마지막으로 배팅한 플레이어가 몇번째 사람인지
+	private int turn; 			 // 누구의 차례인지
+	private boolean round1First = false;	// 첫 차례 버튼세팅 조건 변수
+	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
 
 	// 생성자
@@ -58,13 +57,13 @@ public class Room {
 			Packet packet = new Packet();
 			if (s.getValue().isLive()) {
 				packet.setAction(Protocol.CARD);
-				
-				if (round == 1) { 	// 1라운드 일경우 첫번째 카드 배분
+
+				if (round == 1) { // 1라운드 일경우 첫번째 카드 배분
 					float card = pollOneCard();
 					packet.setCard_(card);
 					s.getValue().setCard1(card);
-					
-				} else if (round == 2) { // 2라운드 일경우 두번째 카드 배분 
+
+				} else if (round == 2) { // 2라운드 일경우 두번째 카드 배분
 					float card = pollOneCard();
 					s.getValue().setCard2(card);
 					packet.setCard_(0, card);
@@ -104,21 +103,40 @@ public class Room {
 	} // pollOneCard();
 
 	public String[] setButton() {
+		String[] arr = new String[6];
 
-		return null;
+		arr[0] = Protocol.Die;
+
+		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
+		if (round2First) {
+			arr[1] = Protocol.Check;
+			arr[2] = Protocol.Pping;
+		} else {
+			arr[1] = Protocol.Call;
+			arr[2] = Protocol.Ddadang;
+		}
+		arr[3] = Protocol.Quater;
+		arr[4] = Protocol.Half;
+		arr[5] = Protocol.Allin;
+
+		if (round == 1) {
+			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
+				arr[1] += "-";	
+				arr[2] += "-";
+				arr[3] += "-";
+			}
+			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
+		}
+		return arr;
 	}
 
 	public void gameStart() {
-		round = 1; // 1라운드
-		turn = masterIndex; // 첫 차례는 방장부터
-		cardShuffle(); // 카드큐를 섞는다
-		setLiveTrue();
-		handOutCard(); // 카드배분
-		String[] buttonArr = { Protocol.Die, Protocol.Ddadang + "_", Protocol.Call + "_", Protocol.Quater + "_",
-				Protocol.Half, Protocol.Allin + "_" };
-		Packing.sender(playerMap.get(masterIndex).getPwSocket(), new Packet(Protocol.TURN, buttonArr, turn + ""));
+		gameReset();
+		handOutCard();		// 1라운드 카드배분
+		turnProgress();
 		roomSpeaker(new Packet(Protocol.TURN, masterIndex + ""));
 		roomSpeaker(new Packet(Protocol.STARTPAY, startMoney + ""));
+		lobbyReloadBroadcast(); 
 	} // gameStart();
 
 	public void roomSpeaker(Packet pac) {
@@ -171,52 +189,51 @@ public class Room {
 
 	public void exitPlayer(PlayerVO vo) {
 
+		// int playerIndex = getPlayerIndex(vo.getNo());
+		// playerMap.remove(playerIndex);
+		// static 스레드 활용하여 턴제한시간 7초 플레이어가 자신의 턴일때 나갔을 경우 timeSet(0);
+
+		// if (masterIndex == playerIndex) {
+		//
+		// int size = playerMap.size();
+		//
+		// if (size < 1)
+		// return;
+		//
+		// int random = (int) (Math.random() * size);
+		//
+		// Iterator<Entry<Integer, PlayerVO>> iterator =
+		// playerMap.entrySet().iterator();
+		// Entry<Integer, PlayerVO> entry;
+		// entry = iterator.next();
+		// for (int i = 0; i < random; i++)
+		// entry = iterator.next();
+		//
+		// masterIndex = entry.getKey();
+		// master = entry.getValue().getNic();
+		// this.roomSpeaker(new Packet(Protocol.CHANGEMASTER,
+		// entry.getKey().toString()));
+		// setMasterNo(entry.getValue().getNo());
+		//
+		// }
+
 		int playerIndex = getPlayerIndex(vo.getNo());
 		playerMap.remove(playerIndex);
-//		static 스레드 활용하여 턴제한시간 7초 플레이어가 자신의 턴일때 나갔을 경우 timeSet(0);
-		
-		if (masterIndex == playerIndex) {
 
-			int size = playerMap.size();
-
-			if (size < 1)
-				return;
-
-			int random = (int) (Math.random() * size);
-
-			Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
-			Entry<Integer, PlayerVO> entry;
-			entry = iterator.next();
-			for (int i = 0; i < random; i++)
-				entry = iterator.next();
-
-			masterIndex = entry.getKey();
-			master = entry.getValue().getNic();
-			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, entry.getKey().toString()));
-			setMasterNo(entry.getValue().getNo());
-
+		if (masterIndex == playerIndex && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+			return;
 		}
-
-//		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
-//			int i = set.getKey();
-//
-//			if (set.getValue().getNo() == vo.getNo()) {
-//				playerMap.remove(i);
-//				try {
-//					if (masterIndex == i && playerMap.size() <= 0) { // 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
-//						return;
-//					}
-//				} catch (NullPointerException e) {
-//					e.printStackTrace();
-//				}
-//				continue;
-//			}
-//
-//			masterIndex = set.getKey();
-//			this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
-//			return;
-//		} // for
-	} // exitPlayer
+		//방장 다음차례의 사람을 방장으로 지정 
+		for (int i = 1; i < 5; i++) {
+			int idx = (playerIndex + i) % 5;
+			if (playerMap.get(idx).isLive()) {
+				masterIndex = idx;
+				this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+				break;
+			}
+		}
+		lobbyReloadBroadcast();
+	} // exitPlayer();
 
 	public static int getIncreaseRoomNo() {
 		return increaseRoomNo;
@@ -249,36 +266,43 @@ public class Room {
 	// System.out.println("입장 불가");
 	// }
 	// } // 판돈 체크 후 입장 여부 확인
-	
+
 	public void turnProgress() {
-		turn++;
-		String[] arr = new String[6];
 		
-		arr[0] = Protocol.Die;
-		
-		//두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
-		if (round2First) {
-			arr[1] = Protocol.Call;
-			arr[2] = Protocol.Ddadang;
-		} else {
-			arr[1] = Protocol.Check;
-			arr[2] = Protocol.Pping;
+		for (int i = 0; i < 4; i++) {
+			turn++;
+			turn %= 5;
+			if(playerMap.get(turn).isLive()) {
+				break;
+			}
 		}
-		arr[3] = Protocol.Quater;
-		arr[4] = Protocol.Half;
-		arr[5] = Protocol.Allin;
+		logger.info("["+roomNo+"번방] "+playerMap.get(turn)+"님의 차례");
 		
-		if(round==1) {
-			arr[5]+="_";	//올인 버튼 비활성화
-		}
+		String[] arr = setButton();
 		
-		Packet packet = new Packet(Protocol.TURN, arr, turn + "");
+		//차례 클라이언트에게 button배열 전송
+		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SETBUTTON, arr));
+		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
-	}
+	} //turnProgress();
 
 	public void bet(String proBet) {
 		int betMoney = 0;
 
+		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
+		if(round1First) {
+			if(Protocol.Die!=proBet) {
+				round1First = false;
+			}
+		}
+		
+		// 2라운드 첫 배팅한 사람이 죽을 경우 다음 사람도 체크 삥 버튼으로 보냄
+		if(round2First) {
+			if(Protocol.Die!=proBet) {
+				round2First = false;
+			}
+		} //if(round2First);
+		
 		switch (proBet) {
 		case Protocol.Half:
 			betMoney = beforeBet + (totalMoney / 2);
@@ -300,17 +324,17 @@ public class Room {
 				if (playerMap.get(j) == null && !playerMap.get(j).isLive())
 					continue;
 
-				if (j == lastBetIdx) {	//마지막 배팅한 사람이 내 다음 사람이면
-					if (round == 1) { 	// 1번째 카드 승부
+				if (j == lastBetIdx) { // 마지막 배팅한 사람이 내 다음 사람이면
+					if (round == 1) { // 1번째 카드 승부
 						round = 2;
-						handOutCard();	// 2번째 카드 카드 배분
+						handOutCard(); // 2번째 카드 카드 배분
 						beforeBet = 0;
 					} else if (round == 2) {
 						gameResult();
 					}
 					break;
-				} //if
-			} //for
+				} // if
+			} // for
 			break; // Call
 
 		case Protocol.Allin:
@@ -366,8 +390,8 @@ public class Room {
 		} // switch
 		beforeBet = betMoney;
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 Vo에서 뺌
-		
-		roomSpeaker(new Packet(Protocol.OTHERBET, proBet + "/" + turn+"/"+playerMap.get(turn).getMoney()));
+
+		roomSpeaker(new Packet(Protocol.OTHERBET, proBet + "/" + turn + "/" + playerMap.get(turn).getMoney()));
 
 		turnProgress();
 	} // bet();
@@ -375,14 +399,39 @@ public class Room {
 	public void gameResult() {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			new Jokbo().getCardLevel(s.getValue().getCard1(), s.getValue().getCard2());
-		} // for		
-	} //gameResult();
+		} // for
+	} // gameResult();
 
 	// 승자에게 돈 이동
 	public void gameOver(int winer) {
 		playerMap.get(winer).setMoney(playerMap.get(winer).getMoney() + totalMoney);
+		gameStarted = false;
+		
+		//플레이어 DB에 저장
+		for (int i = 0; i < 5; i++) {
+			try {
+				if(winer==i) {
+					playerMap.get(i).gameWin();
+				} else {
+					playerMap.get(i).gameLose();
+				}
+			dao.playerSave(playerMap.get(i));
+			} catch (NullPointerException e) {}
+		}
+		
+		lobbyReloadBroadcast();
+	} // gameOver();
+
+	public void gameReset() {
+		round = 1;	 // 1라운드
+		round1First = true;
+		round2First = false;
+		turn = masterIndex-1; // turnProgress()에서 turn+1 을하고 진행
+		startMoney = 100000;
+		gameStarted = true;
 		setLiveTrue();
-	} //gameOver();
+		cardShuffle(); 		// 카드큐를 섞는다
+	}
 
 	public Map<Integer, PlayerVO> getList() {
 		return playerMap;
@@ -407,7 +456,7 @@ public class Room {
 	public void setShuffledCard(Queue<Float> shuffledCard) {
 		this.shuffledCard = shuffledCard;
 	}
-
+	
 	public String getMaster() {
 		return master;
 	}
@@ -444,5 +493,5 @@ public class Room {
 	public void setGameStarted(boolean gameStarted) {
 		this.gameStarted = gameStarted;
 	}
-
+	
 }

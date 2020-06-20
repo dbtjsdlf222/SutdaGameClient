@@ -140,11 +140,13 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.TURN:
-			RoomScreen.getInstance().setButton(packet.getButtonArr()); // 버튼 세팅
 			Integer.parseInt(packet.getMotion()); // 이 차례의 사람 노란 테두리
-
 			break;
 
+		case Protocol.BUTTONSET:
+			RoomScreen.getInstance().setButton(packet.getButtonArr()); // 버튼 세팅
+			break;
+			
 		case Protocol.STARTPAY:
 			try {
 				RoomScreen.getInstance().startPay(Integer.parseInt(packet.getMotion()));

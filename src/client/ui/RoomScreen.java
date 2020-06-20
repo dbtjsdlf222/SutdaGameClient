@@ -183,13 +183,14 @@ public class RoomScreen extends JFrame {
 		pan.setOpaque(false);
 		add(pan);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			try {
-				btn[i] = new JButton(
+			btn[i] = new JButton(
 						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
 			} catch (Exception e) {
-
+				System.err.println(buttonArray[i] + ".PNG");
 			}
+			System.out.println(buttonArray[i]);
 			btn[i].setOpaque(false);
 			pan.add(btn[i]);
 		}
@@ -427,12 +428,15 @@ public class RoomScreen extends JFrame {
 
 	}
 
+	//시작 돈을 걷고 Text에 적용
 	public void startPay(int sMoney) {
-		
-		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
-		}
-	}
+		for (int i = 0; i < 5; i++) {
+			if(moneyText[i] ==null) {
+				continue; 
+			}
+			moneyText[i].setText(Integer.parseInt(moneyText[i].getText())-sMoney+"");
+		} //for
+	} //startPay();
 	
 	public void betAlert(int idx, String bet, String money) {
 		
