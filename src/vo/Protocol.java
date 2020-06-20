@@ -42,6 +42,7 @@ public class Protocol {
 	public static final String TURN = "29";
 	public static final String OTHERBET = "30";
 	public static final String BET = "31";
+	public static final String GAMEOVER = "32";
 	
 	
 	
@@ -79,6 +80,7 @@ public class Protocol {
 			case "29": str = "TURN"; break;
 			case "30": str = "OTHERBET"; break;
 			case "31": str = "BET"; break;
+			case "32": str = "GAMEOVER"; break;
 			
 		}
 		

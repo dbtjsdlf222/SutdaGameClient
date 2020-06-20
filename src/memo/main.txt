@@ -6,9 +6,19 @@
 프로젝트 분할
 gameResult
 
+방 나갔는데 방 제거 안됨
+동점처리
+
+money int > long
+
 UI
 경로 변경
 resources.img > img.resources
+
+betAlert()
+bet을 받아 이미지 세팅
+
+모든 창 아이콘 통일 및 생성 위치 중앙으로 고정
 
 승리시 그 사람 띄움
 다른 사람이 무엇을 배팅 했는지 img 띄워줌

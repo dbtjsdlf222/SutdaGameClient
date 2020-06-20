@@ -65,7 +65,7 @@ public class RoomScreen extends JFrame {
 	private String[] betBtnInitArr = { Protocol.Die+"_", Protocol.Ddadang+"_", Protocol.Call+"_", Protocol.Quater+"_", Protocol.Half+"_",
 			Protocol.Allin+"_"};
 	private int mySit;
-
+	private JLabel totalMoney = new JLabel();
 	// JLabel frame = new JLabel(new
 	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
 	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
@@ -73,7 +73,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
 	JTextField[] nicText = new JTextField[5];
-	JTextField[] moneyText = new JTextField[5];
+	JLabel[] moneyText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
 
 	public static RoomScreen getInstance() {
@@ -227,7 +227,7 @@ public class RoomScreen extends JFrame {
 	} // buttonReset();
 
 	public void reLoadMoney(int playerIdx, String money) {
-		playerIdx = playerIdx - mySit % 5;
+		playerIdx = (playerIdx - mySit + 5) % 5;
 		moneyText[playerIdx].setText(money);
 	}
 
@@ -242,19 +242,20 @@ public class RoomScreen extends JFrame {
 		littleMoney.setBounds(10, 10, 420, 280);
 		manyMoney.setBounds(10, 10, 420, 280);
 		tf = new JTextField(15);
-		tf.setBounds(300, 300, 400, 150);
+		tf.setBounds(300, 300, 300, 150);
 
-		// if(stackMoney >= 10000000) {
-		// pan6.add(littleMoney);
-		// }else {
 		mat.add(manyMoney);
-		// }
 		mat.add(tf);
 	}
 
 	private boolean initialized = false;
 
 	public synchronized void mainScreen() {
+		totalMoney.setBounds(420, 10, 420, 50);
+		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
+		totalMoney.setForeground(Color.yellow);
+		totalMoney.setHorizontalAlignment(JLabel.CENTER);
+		add(totalMoney);
 		
 		setButton(betBtnInitArr);
 		buttonReset();
@@ -404,6 +405,7 @@ public class RoomScreen extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				dispose();
 				new Lobby();
 			}
@@ -436,20 +438,23 @@ public class RoomScreen extends JFrame {
 	}
 
 	// 시작 돈을 걷고 Text에 적용
-	public void startPay(int sMoney) {
+	public void startPay(long sMoney) {
+		int count = 0;
 		for (int i = 0; i < 5; i++) {
 			if (moneyText[i] == null) {
 				continue;
 			}
-			moneyText[i].setText(Integer.parseInt(moneyText[i].getText()) - sMoney + "");
+			count++;
+			moneyText[i].setText(Long.parseLong(moneyText[i].getText()) - sMoney + "");
 		} // for
+		totalMoney.setText(count*sMoney+"");
 	} // startPay();
 
 	public void betAlert(int idx, String bet, String money) {
-		idx += mySit;
-		idx %= 5;
-		System.err.println(idx);
+		idx = (idx - mySit + 5) % 5;
 		moneyText[idx].setText(money);
+		long calcMoney =  Long.parseLong(totalMoney.getText());
+		totalMoney.setText(calcMoney+Long.parseLong(money)+"");
 	} // betAlert();
 
 	public void openCard() {
@@ -480,6 +485,11 @@ public class RoomScreen extends JFrame {
 		} // for
 	} // receiveCard1();
 
+	
+	public void gameOver(String winerMsg, int winerIdx,String winMoney) {
+		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
+		moneyText[winerIdx].setText(winMoney);
+	}
 	// 오픈카드
 	// public void openCard(int playerIdx, int whichCard, float card) {
 	// playerIdx = (playerIdx - mySit + 5) % 5;
@@ -517,7 +527,7 @@ public class RoomScreen extends JFrame {
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
 			nicText[i] = new JTextField(setVO.getNic());
-			moneyText[i] = new JTextField(setVO.getMoney() + "");
+			moneyText[i] = new JLabel(setVO.getMoney() + "");
 
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {

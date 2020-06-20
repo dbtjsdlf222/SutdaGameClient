@@ -57,7 +57,7 @@ public class Packet {
 	public String[] getButtonArr() {
 		return buttonArr;
 	}
-
+	
 	public void setButtonArr(String[] buttonArr) {
 		this.buttonArr = buttonArr;
 	}

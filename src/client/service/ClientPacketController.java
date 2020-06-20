@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -162,7 +163,12 @@ public class ClientPacketController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			break;
+			
+		case Protocol.GAMEOVER :
+			String[] strArr = packet.getMotion().split("/");
+			RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
+			break;
 		} // switch
 	} // controller();
 } // class

@@ -8,6 +8,8 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.JOptionPane;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import util.Jokbo;
@@ -159,8 +161,8 @@ public class Room extends ServerMethod {
 	} // roomSpeaker();
 
 	public void roomChat(Packet packet) {
-		for (int i = 0; i < playerMap.size(); i++) {
-			playerMap.get(i).getPwSocket().println(packet);
+		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
+			Packing.sender(set.getValue().getPwSocket(), packet);
 		} // for
 	} // roomChat();
 
@@ -215,9 +217,10 @@ public class Room extends ServerMethod {
 		//다음 사람에게 방장 지정
 		int playerIndex = getPlayerIndex(vo.getNo());
 		playerMap.remove(playerIndex);
-		vo.gameLose();
-		dao.playerSave(vo);
-		
+		if(isGameStarted()) {
+			vo.gameLose();
+			dao.playerSave(vo);
+		}
 		// 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
 		if (masterIndex == playerIndex && playerMap.size() <= 0) {
 			return;
@@ -225,6 +228,8 @@ public class Room extends ServerMethod {
 		//방장 다음차례의 사람을 방장으로 지정 
 		for (int i = 1; i < 5; i++) {
 			int idx = (playerIndex + i) % 5;
+			if(playerMap.get(idx)==null)
+				continue;
 			if (playerMap.get(idx).isLive()) {
 				masterIndex = idx;
 				this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
@@ -402,11 +407,15 @@ public class Room extends ServerMethod {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			new Jokbo().getCardLevel(s.getValue().getCard1(), s.getValue().getCard2());
 		} // for
+		gameOver(0);
 	} // gameResult();
 
 	// 승자에게 돈 이동
 	public void gameOver(int winer) {
+		JOptionPane.showMessageDialog(null, "승자는 "+playerMap.get(winer).getNic()+" 입니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+		
 		playerMap.get(winer).setMoney(playerMap.get(winer).getMoney() + totalMoney);
+		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winer).getNic()+" 입니다./" + winer + "/" + playerMap.get(winer).getMoney()));
 		gameStarted = false;
 		
 		//플레이어 DB에 저장
