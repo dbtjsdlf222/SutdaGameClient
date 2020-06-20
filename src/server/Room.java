@@ -115,9 +115,9 @@ public class Room extends ServerMethod {
 
 		if (round == 1) {
 			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
-				arr[1] += "-";	
-				arr[2] += "-";
-				arr[3] += "-";
+				arr[1] += "_";	
+				arr[2] += "_";
+				arr[3] += "_";
 			}
 			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
 		}

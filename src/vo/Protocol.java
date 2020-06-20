@@ -41,7 +41,6 @@ public class Protocol {
 	public static final String STARTPAY = "28";
 	public static final String TURN = "29";
 	public static final String OTHERBET = "30";
-	public static final String BUTTONSET = "31";
 	
 	
 	
