@@ -11,6 +11,8 @@ gameResult
 
 money int > long
 
+배팅하기 위해 얼마가 필요한지 알림
+
 UI
 경로 변경
 resources.img > img.resources

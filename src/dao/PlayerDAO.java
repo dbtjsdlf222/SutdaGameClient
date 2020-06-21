@@ -231,5 +231,4 @@ public class PlayerDAO {
 			logger.error(e.getMessage(), e);
 		}
 	}
-
 }
