@@ -74,6 +74,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] card2 = new JLabel[5];
 	JTextField[] nicText = new JTextField[5];
 	JLabel[] moneyText = new JLabel[5];
+	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
 
 	public static RoomScreen getInstance() {
@@ -548,6 +549,9 @@ public class RoomScreen extends JFrame {
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
+				
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(true);
 
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -571,8 +575,11 @@ public class RoomScreen extends JFrame {
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
+				
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(true);
+				
 				card1[i].setBounds(115, 10, 110, 160);
-
 				card1[i].setOpaque(false);
 
 				card2[i].setBounds(230, 10, 110, 160);
@@ -595,6 +602,9 @@ public class RoomScreen extends JFrame {
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
 
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(true);
+				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
 
@@ -618,6 +628,9 @@ public class RoomScreen extends JFrame {
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
 
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(true);
+				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
 
@@ -641,6 +654,9 @@ public class RoomScreen extends JFrame {
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(true);
 
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(true);
+				
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
 
