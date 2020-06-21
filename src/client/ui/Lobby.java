@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -41,9 +42,9 @@ public class Lobby {
 		ClientPacketSender.instance.enterLobby();
 		lobbyScreen();
 	}
-	
+
 	private static boolean initializeOnce = false;
-	
+
 	public void lobbyScreen() {
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
@@ -72,30 +73,30 @@ public class Lobby {
 				.getTableHeader().getDefaultRenderer();
 		lobHRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientPacketController.roomJT.getTableHeader().setDefaultRenderer(lobHRenderer);
-		
-		if(!initializeOnce) {
+
+		if (!initializeOnce) {
 			initializeOnce = true;
 			ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
-	
+
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 1) {
-						ClientPacketSender.instance.enterRoom(Integer
-								.parseInt(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-						RoomScreen.getInstance().mainScreen();
+						if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][3]
+								.equals("게임중")) {
+							JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
+									JOptionPane.WARNING_MESSAGE);
+							return;
+						} else {
+							ClientPacketSender.instance.enterRoom(Integer.parseInt(
+									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+							RoomScreen.getInstance().mainScreen();
+							lobbyJF.dispose();
+						}
 					}
 				}
 			});
 		}
 		
-		ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					lobbyJF.dispose();
-				}
-			}
-		});
 
 		ClientPacketController.roomJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.roomJT.setShowVerticalLines(false);
@@ -163,19 +164,20 @@ public class Lobby {
 		// 채팅 보내기 버튼
 		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("../../img/Send.PNG"));
 		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
-		
+
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(578, 225, 70, 25);
 		chatBtn.setBorderPainted(false);
 		chatBtn.setContentAreaFilled(false);
 		chatBtn.setFocusPainted(false);
 		chatBtn.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				chatBtn.setIcon(chatSendEnter);
 				chatBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				chatBtn.setIcon(chatSend);
@@ -183,7 +185,7 @@ public class Lobby {
 			}
 		});
 		add(chatBtn);
-		
+
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
 		rootPane.setDefaultButton(chatBtn);
@@ -283,12 +285,10 @@ public class Lobby {
 
 	private void add(JButton chatBtn) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void initialize() {
 	}
-	
-	
-	
+
 }
