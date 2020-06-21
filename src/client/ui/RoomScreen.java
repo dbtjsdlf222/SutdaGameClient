@@ -249,6 +249,10 @@ public class RoomScreen extends JFrame {
 	}
 
 	private boolean initialized = false;
+	
+	public void turn() {
+		
+	}
 
 	public synchronized void mainScreen() {
 		totalMoney.setBounds(420, 10, 420, 50);
@@ -539,12 +543,10 @@ public class RoomScreen extends JFrame {
 			}
 
 			if (i == 1) {
-				
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(false);
 				panlist[i].add(profile[i]);
-				
 
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -553,6 +555,11 @@ public class RoomScreen extends JFrame {
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
+				
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(10, 125, 90, 20);
 				nicText[i].setOpaque(false);
@@ -567,36 +574,42 @@ public class RoomScreen extends JFrame {
 				panlist[i].add(moneyText[i]);
 
 			} else if (i == 2) {
-				panlist[i].add(nicText[i]);
-				panlist[i].add(moneyText[i]);
-				panlist[i].add(card1[i]);
-				panlist[i].add(card2[i]);
-				panlist[i].add(profile[i]);
 
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(false);
-				
+				panlist[i].add(profile[i]);
 				
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
+				panlist[i].add(card1[i]);
 
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
+				panlist[i].add(card2[i]);
+				
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(10, 125, 90, 20);
 				nicText[i].setOpaque(false);
+				nicText[i].setBackground(Color.white);
+				nicText[i].setForeground(Color.BLACK);
+				panlist[i].add(nicText[i]);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
 				moneyText[i].setOpaque(false);
+				moneyText[i].setBackground(Color.white);
+				moneyText[i].setForeground(Color.BLACK);
+				panlist[i].add(moneyText[i]);
 
 			} else if (i == 3) {
-
 				profile[i].setBounds(250, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(false);
 				panlist[i].add(profile[i]);
-
 				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -605,41 +618,57 @@ public class RoomScreen extends JFrame {
 				card2[i].setBounds(125, 10, 110, 160);
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
+				
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(250, 125, 90, 20);
 				nicText[i].setOpaque(false);
+				nicText[i].setBackground(Color.white);
+				nicText[i].setForeground(Color.BLACK);
 				panlist[i].add(nicText[i]);
 
 				moneyText[i].setBounds(250, 150, 90, 20);
 				moneyText[i].setOpaque(false);
+				moneyText[i].setBackground(Color.white);
+				moneyText[i].setForeground(Color.BLACK);
 				panlist[i].add(moneyText[i]);
 
 			} else if (i == 4) {
-				panlist[i].add(nicText[i]);
-				panlist[i].add(moneyText[i]);
-				panlist[i].add(card1[i]);
-				panlist[i].add(card2[i]);
-				panlist[i].add(profile[i]);
 
 				profile[i].setBounds(250, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(false);
+				panlist[i].add(profile[i]);
 
-				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
+				panlist[i].add(card1[i]);
 
 				card2[i].setBounds(125, 10, 110, 160);
 				card2[i].setOpaque(false);
+				panlist[i].add(card2[i]);
+				
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(250, 125, 90, 20);
 				nicText[i].setOpaque(false);
+				nicText[i].setBackground(Color.white);
+				nicText[i].setForeground(Color.BLACK);
+				panlist[i].add(nicText[i]);
 
 				moneyText[i].setBounds(250, 150, 90, 20);
 				moneyText[i].setOpaque(false);
+				moneyText[i].setBackground(Color.white);
+				moneyText[i].setForeground(Color.BLACK);
+				panlist[i].add(moneyText[i]);
 
 			} else if (i == 0) {
-				
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
 				profile[i].setOpaque(false);
@@ -658,6 +687,11 @@ public class RoomScreen extends JFrame {
 				nicText[i].setBackground(Color.white);
 				nicText[i].setForeground(Color.BLACK);
 				panlist[i].add(nicText[i]);
+				
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
 				moneyText[i].setOpaque(false);
