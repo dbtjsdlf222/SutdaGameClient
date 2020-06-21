@@ -1,26 +1,43 @@
 package util;
 import java.util.ArrayList;
+import java.util.Map;
 
 import server.Room;
 import vo.PlayerVO;
-import vo.PlayerVO;
 
-public class CardLevel {
-	int card[] = new int[20];
-	ArrayList<PlayerVO> playerVO = new ArrayList<>();
-	public float card1;
-	public float card2;
-	private int getCardLevel = 0;
-	private String CardName;
-
-	private boolean ddaeng = false;
-	private boolean gusa = false;
-	private boolean amhaeng = false;
+class CalcCardLevel {
+	protected int playerIdx;
+	protected float card1;
+	protected float card2;
+	protected int getCardLevel = 0;
+	protected String CardName;
+	protected boolean ddaeng = false;
+	protected boolean gusa = false;
+	protected boolean amhaeng = false;
 	
-	public CardLevel() {
-		super();
+	public CalcCardLevel(){}
+	
+	public CalcCardLevel(int idx,float card1, float card2) {
+		this.playerIdx = idx;
+		this.card1 = card1;
+		this.card2 = card2;
 	}
+	
+} // CalcCardLevel
 
+public class CardCombination extends CalcCardLevel {
+	
+	ArrayList<CalcCardLevel> playerCard = new ArrayList<>();
+
+	public void getWinner(Map<Integer, PlayerVO> playerMap) {
+		for (int i = 0; i < 5; i++) {
+			if(playerMap.get(i)==null) continue;
+			
+			playerCard.add(new CalcCardLevel(i, playerMap.get(i).getCard1(), playerMap.get(i).getCard2()));
+			CardLevel_();
+		}
+	} //getWinner();
+	
 	public int CardLevel_(float card1, float card2) {
 
 		if ((card1 == 3 && card2 == 8) || (card1 == 8 && card2 == 3)) { // 38광땡
@@ -66,8 +83,8 @@ public class CardLevel {
 	
 	public boolean ddaeng() {
 		if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7)) || ((Math.abs(card1) == 7) && (Math.abs(card2) == 3))) {
-			for (int i = 0; i < playerVO.size(); i++) {
-				if (Math.abs(playerVO.get(i).getCard1()) == Math.abs(playerVO.get(i).getCard2())) {
+			for (int i = 0; i < playerCard.size(); i++) {
+				if (Math.abs(playerCard.get(i).card1) == Math.abs(playerCard.get(i).card2)) {
 					getCardLevel = 950;
 					CardName = "땡잡이";
 				} else if (Math.abs(card1) != Math.abs(card2)) {
@@ -81,11 +98,11 @@ public class CardLevel {
 
 	public boolean amhaeng() {
 		if ((card1 == 4 && card2 == 7) || (card1 == 7 && card2 == 4)) {
-			for (int i = 0; i < playerVO.size(); i++) {
-				if (playerVO.get(i).getCardLevel() == 1800) {
+			for (int i = 0; i < playerCard.size(); i++) {
+				if (playerCard.get(i).getCardLevel() == 1800) {
 					getCardLevel = 2000;
 					CardName = "암행어사";
-				} else if (playerVO.get(i).getCardLevel() == 1300) {
+				} else if (playerCard.get(i).getCardLevel() == 1300) {
 					getCardLevel = 1500;
 					CardName = "암행어사";
 				}
