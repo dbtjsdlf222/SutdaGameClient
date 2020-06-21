@@ -1,44 +1,44 @@
 package util;
+
 import java.util.ArrayList;
 import java.util.Map;
 
 import server.Room;
 import vo.PlayerVO;
 
-class CalcCardLevel {
-	protected int playerIdx;
-	protected float card1;
-	protected float card2;
-	protected int getCardLevel = 0;
-	protected String CardName;
-	protected boolean ddaeng = false;
-	protected boolean gusa = false;
-	protected boolean amhaeng = false;
-	
-	public CalcCardLevel(){}
-	
-	public CalcCardLevel(int idx,float card1, float card2) {
+public class CalcCardLevel {
+
+	private static ArrayList<CalcCardLevel> playerCardList = new ArrayList<>();
+
+	private int playerIdx;
+	private float card1;
+	private float card2;
+	private int getCardLevel = 0;
+	private String CardName;
+	private boolean ddaeng = false;
+	private boolean gusa = false;
+	private boolean amhaeng = false;
+
+	public CalcCardLevel() {
+	}
+
+	public CalcCardLevel(int idx, float card1, float card2) {
 		this.playerIdx = idx;
 		this.card1 = card1;
 		this.card2 = card2;
+		CardLevel(idx, card1, card2);
 	}
-	
-} // CalcCardLevel
-
-public class CardCombination extends CalcCardLevel {
-	
-	ArrayList<CalcCardLevel> playerCard = new ArrayList<>();
 
 	public void getWinner(Map<Integer, PlayerVO> playerMap) {
 		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i)==null) continue;
-			
-			playerCard.add(new CalcCardLevel(i, playerMap.get(i).getCard1(), playerMap.get(i).getCard2()));
-			CardLevel_();
+			if (playerMap.get(i) == null)
+				continue;
+
+			playerCardList.add(new CalcCardLevel(i, playerMap.get(i).getCard1(), playerMap.get(i).getCard2()));
 		}
-	} //getWinner();
-	
-	public int CardLevel_(float card1, float card2) {
+	} // getWinner();
+
+	public int CardLevel(int i, float card1, float card2) {
 
 		if ((card1 == 3 && card2 == 8) || (card1 == 8 && card2 == 3)) { // 38광땡
 			getCardLevel = 3800;
@@ -50,26 +50,31 @@ public class CardCombination extends CalcCardLevel {
 			getCardLevel = 1300;
 			CardName = "13광땡";
 		}
-		
+
 		if (Math.abs(card1) == Math.abs(card2))
 			getCardLevel = (int) (Math.abs(card1) * 100); // 땡
 
-		if (((Math.abs(card1) == 1) && (Math.abs(card2) == 2)) || ((Math.abs(card1) == 2) && (Math.abs(card2) == 1))) {	//알리
+		if (((Math.abs(card1) == 1) && (Math.abs(card2) == 2)) || ((Math.abs(card1) == 2) && (Math.abs(card2) == 1))) { // 알리
 			getCardLevel = 90;
 			CardName = "알리";
-		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 4)) || ((Math.abs(card1) == 4) && (Math.abs(card2) == 1))) { // 독사
+		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 4))
+				|| ((Math.abs(card1) == 4) && (Math.abs(card2) == 1))) { // 독사
 			getCardLevel = 80;
 			CardName = "독사";
-		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 9)) || ((Math.abs(card1) == 9) && (Math.abs(card2) == 1))) { // 구삥
+		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 9))
+				|| ((Math.abs(card1) == 9) && (Math.abs(card2) == 1))) { // 구삥
 			getCardLevel = 70;
 			CardName = "구삥";
-		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 10)) || ((Math.abs(card1) == 10) && (Math.abs(card2) == 1))) { // 장삥
+		} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 10))
+				|| ((Math.abs(card1) == 10) && (Math.abs(card2) == 1))) { // 장삥
 			getCardLevel = 60;
 			CardName = "장삥";
-		} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 10)) || ((Math.abs(card1) == 10) && (Math.abs(card2) == 4))) { // 장사
+		} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 10))
+				|| ((Math.abs(card1) == 10) && (Math.abs(card2) == 4))) { // 장사
 			getCardLevel = 50;
 			CardName = "장사";
-		} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 6)) || ((Math.abs(card1) == 6) && (Math.abs(card2) == 4))) { // 세륙
+		} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 6))
+				|| ((Math.abs(card1) == 6) && (Math.abs(card2) == 4))) { // 세륙
 			getCardLevel = 40;
 			CardName = "세륙";
 		}
@@ -80,11 +85,11 @@ public class CardCombination extends CalcCardLevel {
 			CardName = "망통";
 		return getCardLevel;
 	}
-	
+
 	public boolean ddaeng() {
 		if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7)) || ((Math.abs(card1) == 7) && (Math.abs(card2) == 3))) {
-			for (int i = 0; i < playerCard.size(); i++) {
-				if (Math.abs(playerCard.get(i).card1) == Math.abs(playerCard.get(i).card2)) {
+			for (int i = 0; i < playerCardList.size(); i++) {
+				if (Math.abs(playerCardList.get(i).card1) == Math.abs(playerCardList.get(i).card2)) {
 					getCardLevel = 950;
 					CardName = "땡잡이";
 				} else if (Math.abs(card1) != Math.abs(card2)) {
@@ -98,11 +103,11 @@ public class CardCombination extends CalcCardLevel {
 
 	public boolean amhaeng() {
 		if ((card1 == 4 && card2 == 7) || (card1 == 7 && card2 == 4)) {
-			for (int i = 0; i < playerCard.size(); i++) {
-				if (playerCard.get(i).getCardLevel() == 1800) {
+			for (int i = 0; i < playerCardList.size(); i++) {
+				if (playerCardList.get(i).getCardLevel() == 1800) {
 					getCardLevel = 2000;
 					CardName = "암행어사";
-				} else if (playerCard.get(i).getCardLevel() == 1300) {
+				} else if (playerCardList.get(i).getCardLevel() == 1300) {
 					getCardLevel = 1500;
 					CardName = "암행어사";
 				}
@@ -116,7 +121,7 @@ public class CardCombination extends CalcCardLevel {
 				|| ((Math.abs(card1) == 9) && (card2 == 4.5))) {
 			if (getCardLevel <= 90) {
 				CardName = "구사";
-//				return rematch();
+				// return rematch();
 			} else if (getCardLevel >= 100) {
 				getCardLevel = 3;
 				CardName = "3끗";
@@ -129,12 +134,12 @@ public class CardCombination extends CalcCardLevel {
 		if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2 == 4)) {
 			if (getCardLevel <= 900) {
 				CardName = "멍구사";
-//				return rematch();
+				// return rematch();
 			} else if (getCardLevel >= 1000) {
 				getCardLevel = 3;
 				CardName = "3끗";
 			}
 		}
 	}// 멍텅구리 구사 재경기
-	
+
 }

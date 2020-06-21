@@ -155,7 +155,7 @@ public class ClientPacketController {
 			}
 			break;
 
-		// Packet(Protocol.OTHERBET, turn + "/" + proBet +"/"+money)
+		// Motion(Protocol.OTHERBET, turn + "/" + proBet +"/"+money)
 		case Protocol.OTHERBET:
 			try {
 				String[] sp = packet.getMotion().split("/");
@@ -165,6 +165,7 @@ public class ClientPacketController {
 			}
 			break;
 			
+		// Motion(String winerMsg / int winerIdx / String winMoney)
 		case Protocol.GAMEOVER :
 			String[] strArr = packet.getMotion().split("/");
 			RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
