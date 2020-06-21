@@ -72,7 +72,7 @@ public class RoomScreen extends JFrame {
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
-	JTextField[] nicText = new JTextField[5];
+	JLabel[] nicText = new JLabel[5];
 	JLabel[] moneyText = new JLabel[5];
 	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
@@ -147,7 +147,7 @@ public class RoomScreen extends JFrame {
 			// frame.setBounds(905, 205, 370, 190);
 			masterSticker.setBounds(890, 220, 15, 15);
 		}
-		masterSticker.setOpaque(true);
+		masterSticker.setOpaque(false);
 
 		add(masterSticker);
 		revalidate();
@@ -297,13 +297,13 @@ public class RoomScreen extends JFrame {
 		chatPan.add(chatText);
 		chatText.requestFocus();
 		chatText.setFont(new Font("Rosewood Std", Font.PLAIN, 12));
-		chatText.setBorder(new LineBorder(Color.orange, 3));
+		chatText.setBorder(new LineBorder(Color.orange, 1));
 		ChattingOperator co = ChattingOperator.getInstance();
 
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
-		ChattingOperator.chatArea.setBorder(new LineBorder(Color.orange, 3));
-		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ChattingOperator.chatArea.setBorder(new LineBorder(Color.orange, 1));
+		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 1)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.scrollPane.setBounds(10, 10, 400, 165);
 		ClientPacketController.scrollPane.setBorder(null);
@@ -463,28 +463,28 @@ public class RoomScreen extends JFrame {
 	} // openCard();
 
 	/**
-	 * @param card
-	 *            card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용
-	 */
+     * @param card
+     *            card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용
+     */
 
-	public void receiveCard(float[] card) {
-		logger.info("receiveCards: " + card);
+    public void receiveCard(float[] card) {
+        logger.info("receiveCards: " + card);
 
-		if (card[0] != 0)
-			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
-					+ String.format("%." + ((int) card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
+        if (card[0] != 0)
+            card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
+                    + String.format("%." + ((int) card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
 
-		if (card[1] != 0)
-			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
-					+ String.format("%." + ((int) card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
+        if (card[1] != 0)
+            card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
+                    + String.format("%." + ((int) card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
 
-		for (int i = 1; i < 5; i++) {
-			if (profile[i] != null) {
-				logger.info("패 돌리기");
-				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
-			}
-		} // for
-	} // receiveCard1();
+        for (int i = 1; i < 5; i++) {
+            if (profile[i] != null) {
+                logger.info("패 돌리기");
+                card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
+            }
+        } // for
+    } // receiveCard1();
 
 	
 	public void gameOver(String winerMsg, int winerIdx,String winMoney) {
@@ -527,7 +527,7 @@ public class RoomScreen extends JFrame {
 			// new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG"));
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
-			nicText[i] = new JTextField(setVO.getNic());
+			nicText[i] = new JLabel(setVO.getNic());
 			moneyText[i] = new JLabel(setVO.getMoney() + "");
 
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
@@ -548,10 +548,10 @@ public class RoomScreen extends JFrame {
 
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(true);
+				profile[i].setOpaque(false);
 				
 				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(true);
+				betText[i].setOpaque(false);
 
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -560,10 +560,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(true);
+				nicText[i].setOpaque(false);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(true);
+				moneyText[i].setOpaque(false);
 
 			} else if (i == 2) {
 				panlist[i].add(nicText[i]);
@@ -574,10 +574,10 @@ public class RoomScreen extends JFrame {
 
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(true);
+				profile[i].setOpaque(false);
 				
 				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(true);
+				betText[i].setOpaque(false);
 				
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -586,10 +586,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(true);
+				nicText[i].setOpaque(false);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(true);
+				moneyText[i].setOpaque(false);
 
 			} else if (i == 3) {
 				panlist[i].add(nicText[i]);
@@ -600,10 +600,10 @@ public class RoomScreen extends JFrame {
 
 				profile[i].setBounds(250, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(true);
+				profile[i].setOpaque(false);
 
 				betText[i].setBounds(250, 10, 90, 20);
-				betText[i].setOpaque(true);
+				betText[i].setOpaque(false);
 				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -612,10 +612,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(250, 125, 90, 20);
-				nicText[i].setOpaque(true);
+				nicText[i].setOpaque(false);
 
 				moneyText[i].setBounds(250, 150, 90, 20);
-				moneyText[i].setOpaque(true);
+				moneyText[i].setOpaque(false);
 
 			} else if (i == 4) {
 				panlist[i].add(nicText[i]);
@@ -626,10 +626,10 @@ public class RoomScreen extends JFrame {
 
 				profile[i].setBounds(250, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(true);
+				profile[i].setOpaque(false);
 
 				betText[i].setBounds(250, 10, 90, 20);
-				betText[i].setOpaque(true);
+				betText[i].setOpaque(false);
 				
 				card1[i].setBounds(10, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -638,10 +638,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(250, 125, 90, 20);
-				nicText[i].setOpaque(true);
+				nicText[i].setOpaque(false);
 
 				moneyText[i].setBounds(250, 150, 90, 20);
-				moneyText[i].setOpaque(true);
+				moneyText[i].setOpaque(false);
 
 			} else if (i == 0) {
 				panlist[i].add(nicText[i]);
@@ -652,10 +652,10 @@ public class RoomScreen extends JFrame {
 
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(true);
+				profile[i].setOpaque(false);
 
 				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(true);
+				betText[i].setOpaque(false);
 				
 				card1[i].setBounds(115, 10, 110, 160);
 				card1[i].setOpaque(false);
@@ -664,10 +664,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 
 				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(true);
+				nicText[i].setOpaque(false);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(true);
+				moneyText[i].setOpaque(false);
 
 			}
 
