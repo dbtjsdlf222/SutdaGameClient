@@ -78,7 +78,6 @@ public class RoomScreen extends JFrame {
 	JLabel[] profile = new JLabel[5];
 
 	public static RoomScreen getInstance() {
-
 		if (instance == null)
 			instance = new RoomScreen();
 		return instance;

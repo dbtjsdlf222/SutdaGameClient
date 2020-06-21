@@ -226,7 +226,7 @@ public class PlayerDAO {
 			pstmt.setInt(3, vo.getLose());
 			pstmt.setInt(4, vo.getNo());
 
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
