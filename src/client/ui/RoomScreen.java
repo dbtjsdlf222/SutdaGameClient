@@ -77,6 +77,7 @@ public class RoomScreen extends JFrame {
 	JLabel[] moneyText = new JLabel[5];
 	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
+	JLabel[] beticon = new JLabel[5];
 	DecimalFormat fm = new DecimalFormat("###,###");
 
 	public static RoomScreen getInstance() {
@@ -113,7 +114,7 @@ public class RoomScreen extends JFrame {
 
 		panlist[index].setBounds(x[index], y[index], 350, 180);
 		panlist[index].setLayout(null);
-		panlist[index].setBackground(new Color(0, 0, 0, 122));
+		panlist[index].setBackground(new Color(0, 0, 0));
 		add(panlist[index]);
 
 		getContentPane().add(back, BorderLayout.CENTER);
@@ -284,7 +285,7 @@ public class RoomScreen extends JFrame {
 				panlist[i].setBounds(915, 215, 350, 180);
 			}
 			panlist[i].setLayout(null);
-			panlist[i].setBackground(new Color(0, 0, 0, 122));
+			panlist[i].setBackground(new Color(0, 0, 0));
 			add(panlist[i]);
 		}
 
@@ -454,7 +455,7 @@ public class RoomScreen extends JFrame {
 				continue;
 			}
 			count++;
-			moneyText[i].setText(Long.parseLong(moneyText[i].getText()) - sMoney + "");
+			moneyText[i].setText(Long.parseLong(moneyText[i].getText().replaceAll(",", "")) - sMoney + "");
 		} // for
 		totalMoney.setText(count * sMoney + "");
 	} // startPay();
@@ -462,10 +463,49 @@ public class RoomScreen extends JFrame {
 	public void betAlert(int idx, String bet, String money) {
 		idx = (idx - mySit + 5) % 5;
 		moneyText[idx].setText(money);
-		long calcMoney =  Long.parseLong(totalMoney.getText());
-		totalMoney.setText(calcMoney+Long.parseLong(money)+"");
+//		long calcMoney = Long.parseLong(totalMoney.getText());
+//		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
 		betText[idx].setText(bet);
+		betIcon(idx, bet);
 	} // betAlert();
+
+	public void betIcon(int idx, String bet) {
+
+		System.out.println(idx);
+		// beticon[idx].setIcon(new
+		// ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png")));
+		beticon[idx].setText(bet);
+		switch (idx) {
+		case 0:
+			System.out.println("0번 인덱스");
+			beticon[idx].setBounds(729, 468, 95, 55);
+			beticon[idx].setOpaque(false);
+			getContentPane().add(beticon[idx]);
+			break;
+		case 1:
+			System.out.println("1번 인덱스");
+			beticon[idx].setBounds(314, 26, 95, 55);
+			beticon[idx].setOpaque(false);
+			getContentPane().add(beticon[idx]);
+			break;
+		case 2:
+			beticon[idx].setBounds(314, 70, 95, 55);
+			beticon[idx].setOpaque(false);
+			getContentPane().add(beticon[idx]);
+			break;
+		case 3:
+			beticon[idx].setBounds(840, 70, 95, 55);
+			beticon[idx].setOpaque(false);
+			getContentPane().add(beticon[idx]);
+			break;
+		case 4:
+			beticon[idx].setBounds(840, 260, 95, 55);
+			beticon[idx].setOpaque(false);
+			getContentPane().add(beticon[idx]);
+			break;
+
+		}
+	}
 
 	public void openCard() {
 
@@ -532,17 +572,17 @@ public class RoomScreen extends JFrame {
 			// new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG"));
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
-			
+
 			nicText[i] = new JLabel(setVO.getNic());
 			nicText[i].setForeground(Color.white);
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-			
+
 			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
-	
+
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(

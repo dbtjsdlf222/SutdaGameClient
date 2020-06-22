@@ -29,6 +29,7 @@ import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
+import vo.PlayerVO;
 
 public class Lobby {
 	private JFrame lobbyJF = new JFrame();
@@ -37,7 +38,9 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JButton gBtn;
-
+	
+	public static JPanel infoPan = new JPanel();
+	
 	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
 		ClientPacketSender.instance.enterLobby();
 		lobbyScreen();
@@ -113,11 +116,32 @@ public class Lobby {
 		ClientPacketController.rlScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.rlobbyPan.add(ClientPacketController.rlScroll);
 
+		
+		
+		JLabel infolbl = new JLabel("I N F O");
+		infolbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		infolbl.setForeground(new Color(255, 255, 255, 150));
+		infolbl.setBounds(1000, 370, 280, 30);
+		lobbyJF.add(infolbl);
+		
+		
+		infoPan.setBounds(850, 410, 390, 260);
+		infoPan.setBackground(new Color(0, 0, 0));
+		infoPan.setBorder(new LineBorder(Color.orange, 3));
+		infoPan.setLayout(null);
+		lobbyJF.add(infoPan);
+		ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/character/cha" + PlayerVO.myVO.getCha() + ".PNG")));
+		infoPan.add(ClientPacketController.userCha);
+		ClientPacketController.userCha.setBounds(40, 50, 90, 100);
+		ClientPacketController.userCha.setOpaque(false);
+		
+		
+		
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
-		newBtn.setBounds(681, 515, 150, 50);
+		newBtn.setBounds(10, 200, 370, 50);
 		newBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lobbyJF.add(newBtn);
+		infoPan.add(newBtn);
 
 		newBtn.addActionListener(new ActionListener() {
 
@@ -140,7 +164,7 @@ public class Lobby {
 
 		// 채팅 판넬
 		JPanel chatPan = new JPanel();
-		chatPan.setBounds(5, 410, 658, 260);
+		chatPan.setBounds(5, 410, 818, 260);
 		chatPan.setBackground(new Color(0, 0, 0, 120));
 		chatPan.setLayout(null);
 		lobbyJF.add(chatPan);
@@ -148,7 +172,7 @@ public class Lobby {
 
 		// 채팅 필드
 		JTextField chatText = new JTextField();
-		chatText.setBounds(10, 225, 560, 25);
+		chatText.setBounds(10, 225, 720, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
 		chatText.setFont(new Font("휴먼옛체", Font.PLAIN, 13));
@@ -159,7 +183,7 @@ public class Lobby {
 
 		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		ClientPacketController.scrollPane.setBounds(10, 15, 638, 195);
+		ClientPacketController.scrollPane.setBounds(10, 10, 798, 205);
 		ClientPacketController.scrollPane.setBorder(null);
 		chatPan.add(ClientPacketController.scrollPane);
 
@@ -168,7 +192,7 @@ public class Lobby {
 		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
 
 		JButton chatBtn = new JButton(chatSend);
-		chatBtn.setBounds(578, 225, 70, 25);
+		chatBtn.setBounds(738, 225, 70, 25);
 		chatBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chatBtn.setBorderPainted(false);
 		chatBtn.setContentAreaFilled(false);
@@ -215,7 +239,7 @@ public class Lobby {
 
 		// 플레이어 판넬
 		JPanel playerPan = new JPanel();
-		playerPan.setBounds(850, 60, 390, 610);
+		playerPan.setBounds(850, 60, 390, 290);
 		playerPan.setBackground(new Color(0, 0, 0, 120));
 		playerPan.setLayout(null);
 		lobbyJF.add(playerPan);
@@ -248,21 +272,18 @@ public class Lobby {
 		ClientPacketController.playerJT.getTableHeader().setResizingAllowed(false);
 		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0));
 		ClientPacketController.plScroll.setOpaque(false);
-		ClientPacketController.plScroll.setBounds(10, 10, 370, 590);
+		ClientPacketController.plScroll.setBounds(10, 10, 370, 270);
 		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.plScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		playerPan.add(ClientPacketController.plScroll);
 		initialize(); // 초기화
 
-		// 귓속말 버튼
-		gBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gBtn.PNG")));
-		gBtn.setBounds(681, 410, 150, 50);
-		gBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lobbyJF.add(gBtn);
-
 		// 나가기 버튼
-		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
-		exitBtn.setBounds(681, 620, 150, 50);
+		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/exit.PNG")));
+		exitBtn.setBounds(1220, 10, 30, 30);
+		exitBtn.setBackground(new Color(0, 0, 0, 0));
+		exitBtn.setFocusable(false);
+		exitBtn.setContentAreaFilled(false);
 		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lobbyJF.add(exitBtn);
 
