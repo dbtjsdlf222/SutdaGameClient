@@ -253,10 +253,11 @@ public class RoomScreen extends JFrame {
 
 	private boolean initialized = false;
 
-	public void turn() {
-
+	public void turn(int index) {
+		index = (index - mySit + 5) % 5;
+		panlist[index].setBorder(new LineBorder(Color.orange, 1));
 	}
-
+	
 	public synchronized void mainScreen() {
 		totalMoney.setBounds(420, 10, 420, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
@@ -797,5 +798,6 @@ public class RoomScreen extends JFrame {
 		ms.mainScreen();
 		ms.enterPlayerList(voList, 2);
 		ms.exitPlayer(1);
+		ms.turn(0);
 	}
 }
