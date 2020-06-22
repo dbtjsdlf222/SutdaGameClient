@@ -89,7 +89,7 @@ public class Lobby {
 						} else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-							RoomScreen.getInstance().mainScreen();
+//							RoomScreen.getInstance().mainScreen();
 							lobbyJF.dispose();
 						}
 					}

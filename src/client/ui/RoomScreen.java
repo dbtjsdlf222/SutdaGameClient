@@ -459,6 +459,7 @@ public class RoomScreen extends JFrame {
 		moneyText[idx].setText(money);
 		long calcMoney =  Long.parseLong(totalMoney.getText());
 		totalMoney.setText(calcMoney+Long.parseLong(money)+"");
+		betText[idx].setText(bet);
 	} // betAlert();
 
 	public void openCard() {
@@ -541,7 +542,7 @@ public class RoomScreen extends JFrame {
 				profile[i] = new JLabel(new ImageIcon(
 						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
-
+			betText[i] = new JLabel();
 			if (i == 1) {
 				profile[i].setBounds(10, 10, 90, 100);
 				profile[i].setBackground(new Color(35, 60, 3, 122));
@@ -555,6 +556,7 @@ public class RoomScreen extends JFrame {
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
+				
 				
 				betText[i].setBounds(10, 10, 90, 20);
 				betText[i].setOpaque(false);
