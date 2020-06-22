@@ -44,8 +44,6 @@ public class Protocol {
 	public static final String BET = "31";
 	public static final String GAMEOVER = "32";
 	
-	
-	
 	public static String getName(String str) {
 		
 		switch(str) {
