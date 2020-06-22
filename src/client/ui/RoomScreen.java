@@ -564,7 +564,7 @@ public class RoomScreen extends JFrame {
 
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]);
+				panlist[i].add(card2[i]); 
 
 				betText[i].setBounds(10, 10, 90, 20);
 				betText[i].setOpaque(false);
@@ -595,10 +595,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
 
-//				betText[i].setBounds(10, 10, 90, 20);
-//				betText[i].setOpaque(false);
-//				betText[i].setForeground(Color.black);
-//				panlist[i].add(betText[i]);
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(10, 125, 90, 20);
 				nicText[i].setOpaque(false);
@@ -622,10 +622,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
 
-//				betText[i].setBounds(250, 10, 90, 20);
-//				betText[i].setOpaque(false);
-//				betText[i].setForeground(Color.black);
-//				panlist[i].add(betText[i]);
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(250, 125, 90, 20);
 				nicText[i].setOpaque(false);
@@ -650,10 +650,10 @@ public class RoomScreen extends JFrame {
 				card2[i].setOpaque(false);
 				panlist[i].add(card2[i]);
 
-//				betText[i].setBounds(250, 10, 90, 20);
-//				betText[i].setOpaque(false);
-//				betText[i].setForeground(Color.black);
-//				panlist[i].add(betText[i]);
+				betText[i].setBounds(250, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				nicText[i].setBounds(250, 125, 90, 20);
 				nicText[i].setOpaque(false);
@@ -681,10 +681,10 @@ public class RoomScreen extends JFrame {
 				nicText[i].setOpaque(false);
 				panlist[i].add(nicText[i]);
 
-//				betText[i].setBounds(10, 10, 90, 20);
-//				betText[i].setOpaque(false);
-//				betText[i].setForeground(Color.black);
-//				panlist[i].add(betText[i]);
+				betText[i].setBounds(10, 10, 90, 20);
+				betText[i].setOpaque(false);
+				betText[i].setForeground(Color.black);
+				panlist[i].add(betText[i]);
 
 				moneyText[i].setBounds(10, 150, 90, 20);
 				moneyText[i].setOpaque(false);
