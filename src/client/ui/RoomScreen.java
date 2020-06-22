@@ -406,6 +406,7 @@ public class RoomScreen extends JFrame {
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
+		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(exitBtn);
 
 		exitBtn.addActionListener(new ActionListener() {
@@ -428,6 +429,7 @@ public class RoomScreen extends JFrame {
 		content.add(back, BorderLayout.CENTER);
 		back.setOpaque(false);
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true); // 배경화면
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -529,14 +531,17 @@ public class RoomScreen extends JFrame {
 			// new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG"));
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
+			
 			nicText[i] = new JLabel(setVO.getNic());
 			nicText[i].setForeground(Color.white);
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
+			
 			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
+	
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(

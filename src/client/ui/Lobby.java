@@ -76,6 +76,7 @@ public class Lobby {
 
 		if (!initializeOnce) {
 			initializeOnce = true;
+			ClientPacketController.roomJT.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			ClientPacketController.roomJT.addMouseListener(new MouseAdapter() {
 
 				@Override
@@ -115,6 +116,7 @@ public class Lobby {
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
 		newBtn.setBounds(681, 515, 150, 50);
+		newBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lobbyJF.add(newBtn);
 
 		newBtn.addActionListener(new ActionListener() {
@@ -167,6 +169,7 @@ public class Lobby {
 
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(578, 225, 70, 25);
+		chatBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chatBtn.setBorderPainted(false);
 		chatBtn.setContentAreaFilled(false);
 		chatBtn.setFocusPainted(false);
@@ -236,6 +239,8 @@ public class Lobby {
 		ClientPacketController.playerJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.playerJT.setShowVerticalLines(false);
 		ClientPacketController.playerJT.setSelectionBackground(new Color(232, 57, 95));
+		ClientPacketController.playerJT.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 
 		ClientPacketController.playerJT.setRowHeight(40);
 		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
@@ -252,11 +257,13 @@ public class Lobby {
 		// 귓속말 버튼
 		gBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gBtn.PNG")));
 		gBtn.setBounds(681, 410, 150, 50);
+		gBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lobbyJF.add(gBtn);
 
 		// 나가기 버튼
 		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(681, 620, 150, 50);
+		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lobbyJF.add(exitBtn);
 
 		exitBtn.addActionListener(new ActionListener() {
