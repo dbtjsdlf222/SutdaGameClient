@@ -256,6 +256,7 @@ public class RoomScreen extends JFrame {
 	public void turn(int index) {
 		index = (index - mySit + 5) % 5;
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
+		
 	}
 	
 	public synchronized void mainScreen() {
@@ -730,7 +731,7 @@ public class RoomScreen extends JFrame {
 				moneyText[i].setBounds(10, 150, 90, 20);
 				moneyText[i].setOpaque(false);
 				panlist[i].add(moneyText[i]);
-
+				
 			}
 
 		} catch (Exception e) {

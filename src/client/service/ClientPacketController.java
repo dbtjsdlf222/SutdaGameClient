@@ -146,7 +146,7 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.TURN:
-			Integer.parseInt(packet.getMotion()); // 이 차례의 사람 노란 테두리
+			RoomScreen.getInstance().turn(Integer.parseInt(packet.getMotion()));	//이 차례의 사람 노란 테두리
 			break;
 
 		case Protocol.SETBUTTON:
