@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,7 +55,8 @@ public class ClientPacketController {
 	public static JTable roomJT = new JTable(rLmodel);
 	public static JScrollPane rlScroll = new JScrollPane(roomJT);
 	public static JPanel rlobbyPan = new JPanel();
-
+	public static  JLabel userCha = new JLabel();
+	
 	public ClientPacketController() { }
 
 	public void controller(Packet packet) {
@@ -66,8 +69,10 @@ public class ClientPacketController {
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
 
-		case Protocol.RELOADLOBBYLIST:
 		case Protocol.ENTERLOBBY:
+			System.out.println(packet.getPlayerVO().getCha());
+			JLabel userCha = new JLabel(new ImageIcon(ClientPacketController.class.getResource("../../img/character/cha" + packet.getPlayerVO().getCha() + ".PNG")));
+		case Protocol.RELOADLOBBYLIST:
 
 			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
 			// playerList
@@ -82,7 +87,8 @@ public class ClientPacketController {
 				pn[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
 				pLmodel.addRow(pn[i]);
 			}
-
+			System.out.println("여기욤");
+			
 			// roomList
 			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
 				((DefaultTableModel) roomJT.getModel()).removeRow(i);
