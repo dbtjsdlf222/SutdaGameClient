@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -57,7 +59,7 @@ public class Lobby {
 		lobbyJF.add(lobLbl);
 
 		// 로비 판넬 [방리스트]
-		ClientPacketController.rlobbyPan.setBackground(new Color(0, 0, 0, 120));
+		ClientPacketController.rlobbyPan.setBackground(new Color(63, 28, 6, 120));
 		ClientPacketController.rlobbyPan.setBounds(5, 60, 818, 290);
 		ClientPacketController.rlobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.rlobbyPan.setLayout(null);
@@ -109,7 +111,7 @@ public class Lobby {
 		ClientPacketController.roomJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.roomJT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.roomJT.getTableHeader().setResizingAllowed(false);
-		ClientPacketController.rlScroll.getViewport().setBackground(new Color(0, 0, 0));
+		ClientPacketController.rlScroll.getViewport().setBackground(new Color(63, 28, 6));
 		ClientPacketController.rlScroll.setOpaque(false);
 		ClientPacketController.rlScroll.setBounds(10, 10, 798, 270);
 		ClientPacketController.rlScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
@@ -117,25 +119,52 @@ public class Lobby {
 		ClientPacketController.rlobbyPan.add(ClientPacketController.rlScroll);
 
 		
-		
+		//인포라벨
 		JLabel infolbl = new JLabel("I N F O");
 		infolbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
 		infolbl.setForeground(new Color(255, 255, 255, 150));
 		infolbl.setBounds(1000, 370, 280, 30);
 		lobbyJF.add(infolbl);
 		
-		
+		//인포 판넬
 		infoPan.setBounds(850, 410, 390, 260);
-		infoPan.setBackground(new Color(0, 0, 0));
+		infoPan.setBackground(new Color(63, 28, 6));
 		infoPan.setBorder(new LineBorder(Color.orange, 3));
 		infoPan.setLayout(null);
 		lobbyJF.add(infoPan);
 		ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/character/cha" + PlayerVO.myVO.getCha() + ".PNG")));
+		ClientPacketController.userCha.setBorder(new LineBorder(new Color(235, 209, 192), 3));
 		infoPan.add(ClientPacketController.userCha);
-		ClientPacketController.userCha.setBounds(40, 50, 90, 100);
+		ClientPacketController.userCha.setBounds(30, 50, 80, 100);
 		ClientPacketController.userCha.setOpaque(false);
 		
-		
+		JLabel infolbl2 = new JLabel();
+		infolbl2.setText(PlayerVO.myVO.getNic());
+		infolbl2.setBounds(130, 30, 120, 30);
+		infolbl2.setBackground(new Color(63, 28, 6));
+		infolbl2.setForeground(new Color(219, 182, 155));
+		infolbl2.setHorizontalAlignment(JLabel.CENTER);
+		infolbl2.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 22));
+		infolbl2.setOpaque(true);
+		infoPan.add(infolbl2);
+
+		JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/infoMoney.png")));
+		infoMoneyLbl.setOpaque(true);
+		infoMoneyLbl.setBackground(new Color(63, 28, 6));
+		infoMoneyLbl.setForeground(new Color(163, 95, 56));
+		infoMoneyLbl.setText("머니 : " +RoomScreen.fm.format(PlayerVO.myVO.getMoney()));
+		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
+		infoMoneyLbl.setBounds(120, 70, 230,30);
+		infoPan.add(infoMoneyLbl);
+
+		JLabel infoRatingLbl = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/Rating.png")));
+		infoRatingLbl.setOpaque(true);
+		infoRatingLbl.setBackground(new Color(63, 28, 6));
+		infoRatingLbl.setForeground(new Color(163, 95, 56));
+		infoRatingLbl.setText("전적 : " + PlayerVO.myVO.getWin()+"승 "+ PlayerVO.myVO.getLose() + "패");
+		infoRatingLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
+		infoRatingLbl.setBounds(120, 110, 230,30);
+		infoPan.add(infoRatingLbl);
 		
 		// 방만들기 버튼
 		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/newBtn.PNG")));
@@ -179,8 +208,9 @@ public class Lobby {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
-		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-
+		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 20));
+		ChattingOperator.chatArea.setBackground(new Color(63, 28, 6));
+		ChattingOperator.chatArea.setForeground(Color.white);
 		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.scrollPane.setBounds(10, 10, 798, 205);
@@ -240,7 +270,7 @@ public class Lobby {
 		// 플레이어 판넬
 		JPanel playerPan = new JPanel();
 		playerPan.setBounds(850, 60, 390, 290);
-		playerPan.setBackground(new Color(0, 0, 0, 120));
+		playerPan.setBackground(new Color(63, 28, 6, 120));
 		playerPan.setLayout(null);
 		lobbyJF.add(playerPan);
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
@@ -263,14 +293,11 @@ public class Lobby {
 		ClientPacketController.playerJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.playerJT.setShowVerticalLines(false);
 		ClientPacketController.playerJT.setSelectionBackground(new Color(232, 57, 95));
-		ClientPacketController.playerJT.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-
-		ClientPacketController.playerJT.setRowHeight(40);
+		ClientPacketController.playerJT.setRowHeight(30);
 		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
 		ClientPacketController.playerJT.getTableHeader().setReorderingAllowed(false);
 		ClientPacketController.playerJT.getTableHeader().setResizingAllowed(false);
-		ClientPacketController.plScroll.getViewport().setBackground(new Color(0, 0, 0));
+		ClientPacketController.plScroll.getViewport().setBackground(new Color(63, 28, 6));
 		ClientPacketController.plScroll.setOpaque(false);
 		ClientPacketController.plScroll.setBounds(10, 10, 370, 270);
 		ClientPacketController.plScroll.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));

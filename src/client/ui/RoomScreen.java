@@ -78,7 +78,7 @@ public class RoomScreen extends JFrame {
 	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
 	JLabel[] beticon = new JLabel[5];
-	DecimalFormat fm = new DecimalFormat("###,###");
+	public static DecimalFormat fm = new DecimalFormat("###,###");
 
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -604,7 +604,7 @@ public class RoomScreen extends JFrame {
 
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]); 
+				panlist[i].add(card2[i]);
 
 				betText[i].setBounds(10, 10, 90, 20);
 				betText[i].setOpaque(false);
