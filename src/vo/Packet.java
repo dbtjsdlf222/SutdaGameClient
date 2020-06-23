@@ -54,6 +54,11 @@ public class Packet {
 		this.motion = motion;
 	}
 
+	public Packet(String protocol, Map<Integer, PlayerVO> playerMap) {
+		this.action = protocol;
+		this.roomPlayerList = playerMap;
+	}
+
 	public String[] getButtonArr() {
 		return buttonArr;
 	}

@@ -142,7 +142,7 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.OPENCARD:
-
+				RoomScreen.getInstance().openCard(packet.getRoomPlayerList());
 			break;
 
 		case Protocol.TURN:
@@ -176,6 +176,12 @@ public class ClientPacketController {
 			String[] strArr = packet.getMotion().split("/");
 			RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
 			break;
+			
+		case Protocol.DRAW:
+			System.out.println("[Receive]DRAW");
+			break;
+			
+			
 		} // switch
 	} // controller();
 } // class

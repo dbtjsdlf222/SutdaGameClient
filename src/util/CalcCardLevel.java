@@ -1,15 +1,17 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
-import server.Room;
+import operator.RoomOperator;
 import vo.PlayerVO;
 
-public class CalcCardLevel {
+public class CalcCardLevel implements Comparable {
 
-	private static ArrayList<CalcCardLevel> playerCardList = new ArrayList<>();
-
+	private static List<CalcCardLevel> playerCardList = new ArrayList<>();
+	private int idx;
 	private float card1;
 	private float card2;
 	private int cardLevel = 0;
@@ -21,56 +23,38 @@ public class CalcCardLevel {
 	private Integer amhaeng= null;
 	private Integer kwang138= null;
 	private Integer kwang38= null;
-	private boolean remach = false;
 	
-	
-	private CalcCardLevel bigScore = new CalcCardLevel();
+	public CalcCardLevel() { }
 
-	public CalcCardLevel() {
-	}
-
-	public int getCardLevel() {
-		return cardLevel;
-	}
-
-	public void setCardLevel(int cardLevel) {
-		this.cardLevel = cardLevel;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public CalcCardLevel(float card1, float card2) {
-		this.card1 = card1;
-		this.card2 = card2;
-//		CardLevel(idx, card1, card2);
-	}
-
-	public void getWinner(Map<Integer, PlayerVO> playerMap) {
-		PlayerVO height = null;
-		int draw = 0;
+	public void getWinner(int roomNo,Map<Integer, PlayerVO> playerMap) {
+		
 		CardLevel(playerMap);
 		
 		if(mungGusa!=null) {
 			System.out.println("멍구사 재경기");
+			RoomOperator.getInstance().getRoom(roomNo).handOutCard();
+			return;
 		} else if (gusa!=null) {
 			System.out.println("구사 재경기");
+			RoomOperator.getInstance().getRoom(roomNo).handOutCard();
+			return;
 		}
 		
-		for (int i = 0; i < 5; i++) {
-			try {
-				if(playerMap.get(i).getCardLevel() >= height.getCardLevel()) {
-					
-				}
-			} catch (NullPointerException e) {
-				height
-			}
-		} //for
+		Collections.sort(playerCardList);
+		
+		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
+			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx());
+		} else {
+			System.out.println("동점 재경기");
+			for (int i = 0; i < 5; i++) {
+				try {
+					if(playerCardList.get(0).getCardLevel() != playerCardList.get(i).getCardLevel()) {
+						playerMap.get(playerCardList.get(i).getIdx()).setLive(false);
+						RoomOperator.getInstance().getRoom(roomNo).draw();
+					}
+				} catch (Exception e) { } //try~catch
+			} //for
+		} //if~else
 	} // getWinner();
 
 	public void CardLevel(Map<Integer, PlayerVO> playerMap) {
@@ -80,7 +64,7 @@ public class CalcCardLevel {
 				continue;
 			
 			CalcCardLevel cal = new CalcCardLevel(playerMap.get(i).getCard1(), playerMap.get(i).getCard2());
-
+			cal.idx = i;
 			if ((card1 == 3 && card2 == 8) || (card1 == 8 && card2 == 3)) { // 38광땡
 				cal.cardLevel = 3800;
 				cal.setCardName("38광땡");
@@ -222,46 +206,35 @@ public class CalcCardLevel {
 		} // for
 	} // CardLevel()
 
-	// 땡잡이
-	/*
-	 * public void ddaeng() { if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7))
-	 * || ((Math.abs(card1) == 7) && (Math.abs(card2) == 3))) { cal.cardLevel = 0;
-	 * CardName = "망통"; ddaeng = true; for (int i = 0; i < playerCardList.size();
-	 * i++) { // if (Math.abs(playerCardList.get(i).card1) ==
-	 * Math.abs(playerCardList.get(i).card2)) { // cardLevel = 950; //장땡은 못잡으니 1000
-	 * 보다 아래인 950으로 세팅 // CardName = "땡잡이"; // } } } } // ddaeng();
-	 * 
-	 * //암행어사 public boolean amhaeng() { if ((card1 == 4 && card2 == 7) || (card1 ==
-	 * 7 && card2 == 4)) { CardName = "암행어사"; for (int i = 0; i <
-	 * playerCardList.size(); i++) { if (playerCardList.get(i).cal.cardLevel ==
-	 * 1800) { cal.cardLevel = 2000; break; } else if
-	 * (playerCardList.get(i).cal.cardLevel == 1300) { cal.cardLevel = 1500; break;
-	 * } } //for } //if return true; } // amhaeng();
-	 * 
-	 * public void gusa() { if ((card1 == 4 && card2 == 9.5) || ((card1 == 4.5) &&
-	 * (Math.abs(card2) == 9)) || (card1 == 9.5 && card2 == 4) || ((Math.abs(card1)
-	 * == 9) && (card2 == 4.5))) { if (cal.cardLevel <= 90) { CardName = "구사"; //
-	 * return rematch(); } else if (cal.cardLevel >= 100) { cal.cardLevel = 3;
-	 * CardName = "3끗"; } } } // 구사 재경기
-	 * 
-	 * public void mungsa() { if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2
-	 * == 4)) { if (cal.cardLevel <= 900) { CardName = "멍구사"; // return rematch(); }
-	 * else if (cal.cardLevel >= 1000) { cal.cardLevel = 3; CardName = "3끗"; } } }//
-	 * 멍텅구리 구사 재경기
-	 */ public float getCard1() {
-		return card1;
-	}
-
-	public void setCard1(float card1) {
+	@Override
+	public int compareTo(Object o) {
+		if(o instanceof CalcCardLevel) {
+			CalcCardLevel ccl = (CalcCardLevel)o;
+			
+			if(cardLevel > ccl.getCardLevel()) {
+				return -1;
+			} else if (cardLevel == ccl.getCardLevel()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+		return 0;
+	} //compareTo();
+	
+	public float getCard1() { return card1;}
+	public void setCard1(float card1) {this.card1 = card1;}
+	public float getCard2() {return card2;}
+	public void setCard2(float card2) {this.card2 = card2;}
+	public int getCardLevel() { return cardLevel; }
+	public void setCardLevel(int cardLevel) { this.cardLevel = cardLevel; }
+	public String getCardName() { return cardName; }
+	public void setCardName(String cardName) { this.cardName = cardName;}
+	public int getIdx() { return idx;}
+	public void setIdx(int idx) { this.idx = idx; }
+	public CalcCardLevel(float card1, float card2) {
 		this.card1 = card1;
-	}
-
-	public float getCard2() {
-		return card2;
-	}
-
-	public void setCard2(float card2) {
 		this.card2 = card2;
+//		CardLevel(idx, card1, card2);
 	}
-
-}
+} //class

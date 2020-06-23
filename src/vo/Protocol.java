@@ -22,7 +22,6 @@ public class Protocol {
 	
 	//Game
 	public static final String GAMESTART = "12";	//game 시작 상태 만들기
-	public static final String DRAW = "13";			//game 시작 상태 만들기
 	public static final String CHANGEMASTER = "21";	//선 변경
 	
 	public static final String Half = "Half";
@@ -43,6 +42,7 @@ public class Protocol {
 	public static final String OTHERBET = "30";
 	public static final String BET = "31";
 	public static final String GAMEOVER = "32";
+	public static final String DRAW = "33";
 	
 	public static String getName(String str) {
 		
@@ -79,7 +79,7 @@ public class Protocol {
 			case "30": str = "OTHERBET"; break;
 			case "31": str = "BET"; break;
 			case "32": str = "GAMEOVER"; break;
-			
+			case "33": str = "DRAW"; break;
 		}
 		
 		return str;

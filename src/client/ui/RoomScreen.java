@@ -78,7 +78,7 @@ public class RoomScreen extends JFrame {
 	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
 	JLabel[] beticon = new JLabel[5];
-	public static DecimalFormat fm = new DecimalFormat("###,###");
+	DecimalFormat fm = new DecimalFormat("###,###");
 
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -468,7 +468,7 @@ public class RoomScreen extends JFrame {
 //		long calcMoney = Long.parseLong(totalMoney.getText());
 //		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
 		betText[idx].setText(bet);
-		betIcon(idx, bet);
+//		betIcon(idx, bet);
 	} // betAlert();
 
 	public void betIcon(int idx, String bet) {
@@ -509,8 +509,29 @@ public class RoomScreen extends JFrame {
 		}
 	}
 
-	public void openCard() {
-
+	public ImageIcon cardFormat(float card) {
+		
+		System.out.println(String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png");
+		
+		return  new ImageIcon(RoomScreen.class.getResource
+				("../../img/card/"+
+					String.format("%." + 
+							((int) card == card ? "0" : "1")+"f", card) +
+					".png"));
+	}
+	
+	public void openCard(Map<Integer,PlayerVO> cardMap) {
+		
+		for (int i = 0; i < 5; i++) {
+			if(cardMap.get(i)==null) continue;
+			
+			float c1 = cardMap.get(i).getCard1();
+			float c2 = cardMap.get(i).getCard2();
+			
+			card1[i].setIcon(cardFormat(c1));
+			card1[i].setIcon(cardFormat(c2));
+		}
+		
 	} // openCard();
 
 	/**
@@ -518,15 +539,12 @@ public class RoomScreen extends JFrame {
 	 */
 
 	public void receiveCard(float[] card) {
-		logger.info("receiveCards: " + card);
 
 		if (card[0] != 0)
-			card1[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
-					+ String.format("%." + ((int) card[0] == card[0] ? "0" : "1") + "f", card[0]) + ".png")));
+			card1[0].setIcon(cardFormat(card[0]));
 
 		if (card[1] != 0)
-			card2[0].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"
-					+ String.format("%." + ((int) card[1] == card[1] ? "0" : "1") + "f", card[1]) + ".png")));
+			card2[1].setIcon(cardFormat(card[1]));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
@@ -606,7 +624,7 @@ public class RoomScreen extends JFrame {
 
 				card2[i].setBounds(230, 10, 110, 160);
 				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]);
+				panlist[i].add(card2[i]); 
 
 				betText[i].setBounds(10, 10, 90, 20);
 				betText[i].setOpaque(false);

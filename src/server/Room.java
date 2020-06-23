@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import util.CalcCardLevel;
 import util.Jokbo;
 import util.Packing;
 import vo.Packet;
@@ -66,8 +67,13 @@ public class Room extends ServerMethod {
 					packet.setCard_(0, card);
 					turn = masterIndex;
 					round2First = true;
-				} else // 재경기시 1,2번 카드 배분
-					packet.setCard_(pollOneCard(), pollOneCard());
+				}  else if (round == 3) { // 재경기시 1,2번 카드 배분
+					float c1 = pollOneCard();
+					float c2 = pollOneCard();
+					packet.setCard_(c1, c2);
+					s.getValue().setCard1(c1);
+					s.getValue().setCard2(c2);
+				}
 				Packing.sender(s.getValue().getPwSocket(), packet);
 			} // if
 		} // for
@@ -404,24 +410,31 @@ public class Room extends ServerMethod {
 	} // bet();
 
 	public void gameResult() {
-		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-			new Jokbo().getCardLevel(s.getValue().getCard1(), s.getValue().getCard2());
-		} // for
+		round = 3;	//재경기시 카드 2개를 주기위함
+		roomSpeaker(new Packet(Protocol.OPENCARD,playerMap));
+		new CalcCardLevel().getWinner(roomNo, playerMap);
 		gameOver(0);
 	} // gameResult();
-
+	
+	public void draw() {
+		logger.info("draw()");
+		roomSpeaker(new Packet(Protocol.DRAW));
+		handOutCard();
+		turnProgress();
+	}
+	
 	// 승자에게 돈 이동
-	public void gameOver(int winer) {
-		JOptionPane.showMessageDialog(null, "승자는 "+playerMap.get(winer).getNic()+" 입니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+	public void gameOver(int winerIdx) {
+		JOptionPane.showMessageDialog(null, "승자는 "+playerMap.get(winerIdx).getNic()+" 입니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 		
-		playerMap.get(winer).setMoney(playerMap.get(winer).getMoney() + totalMoney);
-		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winer).getNic()+" 입니다./" + winer + "/" + playerMap.get(winer).getMoney()));
+		playerMap.get(winerIdx).setMoney(playerMap.get(winerIdx).getMoney() + totalMoney);
+		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다./" + winerIdx + "/" + playerMap.get(winerIdx).getMoney()));
 		gameStarted = false;
 		
 		//플레이어 DB에 저장
 		for (int i = 0; i < 5; i++) {
 			try {
-				if(winer==i) {
+				if(winerIdx==i) {
 					playerMap.get(i).gameWin();
 				} else {
 					playerMap.get(i).gameLose();
