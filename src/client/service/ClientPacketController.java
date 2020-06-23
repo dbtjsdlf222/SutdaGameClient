@@ -87,7 +87,6 @@ public class ClientPacketController {
 				pn[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
 				pLmodel.addRow(pn[i]);
 			}
-			System.out.println("여기욤");
 			
 			// roomList
 			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {

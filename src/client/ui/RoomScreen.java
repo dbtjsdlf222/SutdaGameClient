@@ -78,7 +78,7 @@ public class RoomScreen extends JFrame {
 	JLabel[] betText = new JLabel[5];
 	JLabel[] profile = new JLabel[5];
 	JLabel[] beticon = new JLabel[5];
-	DecimalFormat fm = new DecimalFormat("###,###");
+	public static DecimalFormat fm = new DecimalFormat("###,###");
 
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -524,12 +524,17 @@ public class RoomScreen extends JFrame {
 		
 		for (int i = 0; i < 5; i++) {
 			if(cardMap.get(i)==null) continue;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {e.printStackTrace(); 
+			} 
+			int idx = (i - mySit + 5) % 5;
 			
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
 			
-			card1[i].setIcon(cardFormat(c1));
-			card1[i].setIcon(cardFormat(c2));
+			card1[idx].setIcon(cardFormat(c1));
+			card2[idx].setIcon(cardFormat(c2));
 		}
 		
 	} // openCard();
@@ -544,11 +549,10 @@ public class RoomScreen extends JFrame {
 			card1[0].setIcon(cardFormat(card[0]));
 
 		if (card[1] != 0)
-			card2[1].setIcon(cardFormat(card[1]));
+			card2[0].setIcon(cardFormat(card[1]));
 
 		for (int i = 1; i < 5; i++) {
 			if (profile[i] != null) {
-				logger.info("패 돌리기");
 				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
 			}
 		} // for
@@ -556,6 +560,7 @@ public class RoomScreen extends JFrame {
 
 	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
 		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
+		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
 	}
 	// 오픈카드

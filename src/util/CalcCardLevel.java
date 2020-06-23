@@ -10,7 +10,7 @@ import vo.PlayerVO;
 
 public class CalcCardLevel implements Comparable {
 
-	private static List<CalcCardLevel> playerCardList = new ArrayList<>();
+	private List<CalcCardLevel> playerCardList = new ArrayList<>();
 	private int idx;
 	private float card1;
 	private float card2;
@@ -40,7 +40,15 @@ public class CalcCardLevel implements Comparable {
 			return;
 		}
 		
+		for (CalcCardLevel calcCardLevel : playerCardList) {
+			System.out.println(calcCardLevel.getCardLevel());
+		}
+		System.out.println("======정렬======");
 		Collections.sort(playerCardList);
+		
+		for (CalcCardLevel calcCardLevel : playerCardList) {
+			System.out.println(calcCardLevel.getCardLevel());
+		}
 		
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx());
@@ -70,7 +78,6 @@ public class CalcCardLevel implements Comparable {
 				cal.setCardName("38광땡");
 				gusa = null;
 				mungGusa = null;
-				continue;
 			} else if ((card1 == 1 && card2 == 8) || (card1 == 8 && card2 == 1)) { // 18광땡
 				cal.cardLevel = 1800;
 				cal.setCardName("18광땡");
@@ -82,7 +89,6 @@ public class CalcCardLevel implements Comparable {
 				 else 
 					kwang138=i;
 				
-				continue;
 			} else if ((card1 == 1 && card2 == 3) || (card1 == 3 && card2 == 1)) { // 13광땡
 				cal.cardLevel = 1300;
 				cal.setCardName("13광땡");
@@ -92,7 +98,6 @@ public class CalcCardLevel implements Comparable {
 					playerCardList.get(amhaeng).setCardLevel(2000);
 				else
 					kwang138=i;
-				continue;
 			}
 
 			if (Math.abs(card1) == Math.abs(card2)) {
@@ -109,39 +114,32 @@ public class CalcCardLevel implements Comparable {
 				} // if
 				gusa = null;
 				ddaeng = i;
-				continue;
 			} // 떙
 
 			if (((Math.abs(card1) == 1) && (Math.abs(card2) == 2))
 					|| ((Math.abs(card1) == 2) && (Math.abs(card2) == 1))) { // 알리
 				cal.cardLevel = 90;
 				cal.setCardName("알리");
-				continue;
 			} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 4))
 					|| ((Math.abs(card1) == 4) && (Math.abs(card2) == 1))) { // 독사
 				cal.cardLevel = 80;
 				cal.setCardName("독사");
-				continue;
 			} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 9))
 					|| ((Math.abs(card1) == 9) && (Math.abs(card2) == 1))) { // 구삥
 				cal.cardLevel = 70;
 				cal.setCardName("구삥");
-				continue;
 			} else if (((Math.abs(card1) == 1) && (Math.abs(card2) == 10))
 					|| ((Math.abs(card1) == 10) && (Math.abs(card2) == 1))) { // 장삥
 				cal.cardLevel = 60;
 				cal.setCardName("장삥");
-				continue;
 			} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 10))
 					|| ((Math.abs(card1) == 10) && (Math.abs(card2) == 4))) { // 장사
 				cal.cardLevel = 50;
 				cal.setCardName("장사");
-				continue;
 			} else if (((Math.abs(card1) == 4) && (Math.abs(card2) == 6))
 					|| ((Math.abs(card1) == 6) && (Math.abs(card2) == 4))) { // 세륙
 				cal.cardLevel = 40;
 				cal.setCardName("세륙");
-				continue;
 			}
 
 			if (((Math.abs(card1) == 3) && (Math.abs(card2) == 7))
@@ -154,7 +152,6 @@ public class CalcCardLevel implements Comparable {
 				} else {
 					catchDdaeng = i;
 				}
-				continue;
 			} // 땡잡이
 
 			if ((card1 == 4 && card2 == 7) || (card1 == 7 && card2 == 4)) {
@@ -166,7 +163,6 @@ public class CalcCardLevel implements Comparable {
 					amhaeng = i;
 					cal.cardLevel = 1;
 				}
-				continue;
 			} // if
 			
 			// 암행어사
@@ -191,7 +187,6 @@ public class CalcCardLevel implements Comparable {
 					}
 				}
 				cal.cardLevel = 3;
-				continue;
 			}
 
 			cal.cardLevel = (int) ((Math.abs(card1) + Math.abs(card2)) % 10); // 끗
