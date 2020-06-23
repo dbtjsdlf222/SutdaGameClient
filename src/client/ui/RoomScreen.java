@@ -468,42 +468,41 @@ public class RoomScreen extends JFrame {
 //		long calcMoney = Long.parseLong(totalMoney.getText());
 //		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
 		betText[idx].setText(bet);
-//		betIcon(idx, bet);
+		betIcon(idx, bet);
 	} // betAlert();
 
 	public void betIcon(int idx, String bet) {
-
-		System.out.println(idx);
-		// beticon[idx].setIcon(new
-		// ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png")));
-		beticon[idx].setText(bet);
+		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png"));
+		JLabel ijij = new JLabel(iCon);
+		ijij.setBounds(729, 468, 95, 55);;
+		add(ijij);
+		System.out.println(idx + "하고 " + bet +"이가 들어와요");
+	//	beticon[idx].setIcon(iCon);
+//		beticon[idx].setText(bet);
+	//	beticon[idx].setOpaque(true);
+		
 		switch (idx) {
 		case 0:
 			System.out.println("0번 인덱스");
 			beticon[idx].setBounds(729, 468, 95, 55);
-			beticon[idx].setOpaque(false);
-			getContentPane().add(beticon[idx]);
+			add(beticon[idx]);
 			break;
 		case 1:
 			System.out.println("1번 인덱스");
 			beticon[idx].setBounds(314, 26, 95, 55);
-			beticon[idx].setOpaque(false);
-			getContentPane().add(beticon[idx]);
+			add(beticon[idx]);
 			break;
 		case 2:
 			beticon[idx].setBounds(314, 70, 95, 55);
-			beticon[idx].setOpaque(false);
-			getContentPane().add(beticon[idx]);
+			add(beticon[idx]);
 			break;
 		case 3:
 			beticon[idx].setBounds(840, 70, 95, 55);
-			beticon[idx].setOpaque(false);
-			getContentPane().add(beticon[idx]);
+			add(beticon[idx]);
 			break;
 		case 4:
 			beticon[idx].setBounds(840, 260, 95, 55);
-			beticon[idx].setOpaque(false);
-			getContentPane().add(beticon[idx]);
+			add(beticon[idx]);
 			break;
 
 		}
