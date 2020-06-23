@@ -63,11 +63,14 @@ public class CalcCardLevel {
 		}
 		
 		for (int i = 0; i < 5; i++) {
-			if(playerMap.get(i).getCardLevel() >= height.getCardLevel()) {
-				
-			} //if
+			try {
+				if(playerMap.get(i).getCardLevel() >= height.getCardLevel()) {
+					
+				}
+			} catch (NullPointerException e) {
+				height
+			}
 		} //for
-		
 	} // getWinner();
 
 	public void CardLevel(Map<Integer, PlayerVO> playerMap) {
