@@ -65,15 +65,16 @@ public class RoomScreen extends JFrame {
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_" };
 	private int mySit;	//서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
+	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
-	JLabel[] nicText = new JLabel[5];
-	JLabel[] moneyText = new JLabel[5];
-	JLabel[] betText = new JLabel[5];
-	JLabel[] profile = new JLabel[5];
-	JLabel[] beticon = new JLabel[5];
+	private JButton gameStartBtn = null;
+	private JLabel[] nicText = new JLabel[5];
+	private JLabel[] moneyText = new JLabel[5];
+	private JLabel[] betText = new JLabel[5];
+	private JLabel[] profile = new JLabel[5];
+	private JLabel[] beticon = new JLabel[5];
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart = false;
 	private int roomMaster = 0;
@@ -259,25 +260,28 @@ public class RoomScreen extends JFrame {
 	
 	// 게임시작 버튼
 	public void startBtnSet() {
+		
+		if(gameStartBtn!=null) return;
+		
 		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
 		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
-		JButton gameStart = new JButton(gameStartBasic);
-		gameStart.setBounds(510, 230, 240, 140);
-		gameStart.setBorderPainted(false);
-		gameStart.setContentAreaFilled(false);
-		gameStart.setFocusPainted(false);
-		gameStart.addMouseListener(new MouseAdapter() {
+		gameStartBtn = new JButton(gameStartBasic);
+		gameStartBtn.setBounds(510, 230, 240, 140);
+		gameStartBtn.setBorderPainted(false);
+		gameStartBtn.setContentAreaFilled(false);
+		gameStartBtn.setFocusPainted(false);
+		gameStartBtn.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				gameStart.setIcon(gameStartEnter);
-				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				gameStartBtn.setIcon(gameStartEnter);
+				gameStartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				gameStart.setIcon(gameStartBasic);
-				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				gameStartBtn.setIcon(gameStartBasic);
+				gameStartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
@@ -291,13 +295,14 @@ public class RoomScreen extends JFrame {
 				if (tempCount >= 2) {
 					RoomScreen.getInstance().gameStart = true;
 					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-					gameStart.setVisible(false);
+					remove(gameStartBtn);
+					gameStartBtn = null;
 				} else {
 					JOptionPane.showMessageDialog(null, "플레이어가 2명 이상일 때만 시작 가능합니다.", "알림", JOptionPane.WARNING_MESSAGE);
 				}
 			} // mousePressed();
 		});
-		add(gameStart);
+		add(gameStartBtn);
 	}
 	
 	public void mainScreen() {
@@ -495,7 +500,7 @@ public class RoomScreen extends JFrame {
 		for (int i = 0; i < 5; i++) {
 			if(cardMap.get(i)==null) continue;
 			
-			int idx = i - (mySit + 5) % 5;
+			int idx = (i - mySit + 5) % 5;
 			
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
@@ -533,6 +538,10 @@ public class RoomScreen extends JFrame {
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
 		RoomScreen.getInstance().gameStart = false;
+		if(mySit == roomMaster) {
+			startBtnSet();
+		}
+		RoomScreen.getInstance().startBtnSet();
 	}
 
 	/**

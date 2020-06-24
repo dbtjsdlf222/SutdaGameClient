@@ -268,23 +268,29 @@ public class Room extends ServerMethod {
 			Packet packet = new Packet();
 			packet.setAction(Protocol.EXITOTHERROOM);
 			packet.setMotion(Integer.toString(playerIndex));
-			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
+			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
 		
-			// 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
-			if (masterIndex == playerIndex && playerMap.size() <= 0) {
-				return;
+			if (masterIndex == playerIndex) {
+				//방장 다음차례의 사람을 방장으로 지정 
+				for (int i = 1; i < 5; i++) {
+					int idx = (playerIndex + i) % 5;
+					
+					if(playerMap.get(idx)==null) continue;
+					
+					if(!isGameStarted()) {
+						masterIndex = idx;
+						this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+						break;
+					} else {
+						if(playerMap.get(idx).isLive()) {
+							masterIndex = idx;
+							this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+							break;
+						}
+					}
+					
+				} //for
 			}
-			//방장 다음차례의 사람을 방장으로 지정 
-			for (int i = 1; i < 5; i++) {
-				int idx = (playerIndex + i) % 5;
-				if(playerMap.get(idx)==null)
-					continue;
-				if (playerMap.get(idx).isLive()) {
-					masterIndex = idx;
-					this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
-					break;
-				} //if
-			} //for
 		} //if(playerMap.size() <= 0)
 		lobbyReloadBroadcast();
 	} // exitPlayer();
@@ -457,7 +463,6 @@ public class Room extends ServerMethod {
 		round = 3;	//재경기시 카드 2개를 주기위함
 		roomSpeaker(new Packet(Protocol.OPENCARD,playerMap));
 		new CalcCardLevel().getWinner(roomNo, playerMap);
-		gameOver(0);
 	} // gameResult();
 	
 	public void draw() {
@@ -469,8 +474,6 @@ public class Room extends ServerMethod {
 	
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx) {
-		JOptionPane.showMessageDialog(null, "승자는 "+playerMap.get(winerIdx).getNic()+" 입니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-		
 		playerMap.get(winerIdx).winMoney(totalMoney);
 		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다./" + winerIdx + "/" + playerMap.get(winerIdx).getMoney()));
 		gameStarted = false;

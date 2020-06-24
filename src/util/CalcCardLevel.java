@@ -40,15 +40,7 @@ public class CalcCardLevel implements Comparable {
 			return;
 		}
 		
-		for (CalcCardLevel calcCardLevel : playerCardList) {
-			System.out.println(calcCardLevel.getCardLevel());
-		}
-		System.out.println("======정렬======");
 		Collections.sort(playerCardList);
-		
-		for (CalcCardLevel calcCardLevel : playerCardList) {
-			System.out.println(calcCardLevel.getCardLevel());
-		}
 		
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx());
