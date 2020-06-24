@@ -75,6 +75,7 @@ public class ServerPacketController extends ServerMethod {
 			roomIndex = 0;
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setAction(Protocol.ENTEROTHERROOM);
+			
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
 			
@@ -88,12 +89,13 @@ public class ServerPacketController extends ServerMethod {
 		case Protocol.EXITROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
 			packet.setAction(Protocol.EXITOTHERROOM);
-			
 			packet.setMotion(Integer.toString(roomIndex));
 			
+			thisPlayerVO.setRoomNo(0);
 			room.exitPlayer(thisPlayerVO);
 			room.roomSpeaker(packet);
 			ro.getRoom(thisPlayerVO.getRoomNo()).roomChat(new Packet(Protocol.MESSAGE, "알림 ["+ thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
+			
 			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
 				ro.removeRoom(thisPlayerVO.getRoomNo());
 				lobbyReloadBroadcast();

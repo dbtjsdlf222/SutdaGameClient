@@ -70,8 +70,6 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.ENTERLOBBY:
-			System.out.println(packet.getPlayerVO().getCha());
-			JLabel userCha = new JLabel(new ImageIcon(ClientPacketController.class.getResource("../../img/character/cha" + packet.getPlayerVO().getCha() + ".PNG")));
 		case Protocol.RELOADLOBBYLIST:
 
 			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
@@ -118,9 +116,15 @@ public class ClientPacketController {
 			}
 			break;
 
+		case Protocol.MAKEROOM:
+			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
+			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
+			RoomScreen.getInstance().startBtnSet();
+			break;
+			
 		case Protocol.ENTEROTHERROOM:
-			RoomScreen.getInstance().mainScreen();
-			RoomScreen.getInstance().enterPlayerOther(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
+//			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			break;
 
 		case Protocol.EXITOTHERROOM:
@@ -128,12 +132,13 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.ENTERROOM:
-			RoomScreen.getInstance().mainScreen();
+//			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			break;
 
 		case Protocol.CHANGEMASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
+			
 			break;
 
 		case Protocol.CARD:
@@ -174,6 +179,7 @@ public class ClientPacketController {
 		case Protocol.GAMEOVER :
 			String[] strArr = packet.getMotion().split("/");
 			RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
+			RoomScreen.getInstance().changeMaster(Integer.parseInt(strArr[1]));
 			break;
 			
 		case Protocol.DRAW:

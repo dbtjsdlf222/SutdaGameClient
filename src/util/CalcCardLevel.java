@@ -10,7 +10,7 @@ import vo.PlayerVO;
 
 public class CalcCardLevel implements Comparable {
 
-	private List<CalcCardLevel> playerCardList = new ArrayList<>();
+	private static List<CalcCardLevel> playerCardList = new ArrayList<>();
 	private int idx;
 	private float card1;
 	private float card2;
@@ -70,8 +70,9 @@ public class CalcCardLevel implements Comparable {
 			
 			if (playerMap.get(i) == null)
 				continue;
-			
-			CalcCardLevel cal = new CalcCardLevel(playerMap.get(i).getCard1(), playerMap.get(i).getCard2());
+			float card1 = playerMap.get(i).getCard1();
+			float card2 = playerMap.get(i).getCard2();
+			CalcCardLevel cal = new CalcCardLevel(card1, card2);
 			cal.idx = i;
 			if ((card1 == 3 && card2 == 8) || (card1 == 8 && card2 == 3)) { // 38광땡
 				cal.cardLevel = 3800;
@@ -103,7 +104,7 @@ public class CalcCardLevel implements Comparable {
 			if (Math.abs(card1) == Math.abs(card2)) {
 				cal.cardLevel = (int) (Math.abs(card1) * 100); // 땡
 				gusa = null;
-				if (cal.cardLevel == 10) {
+				if (cal.cardLevel == 1000) {
 					cal.setCardName("장땡");
 					mungGusa = null;
 				} else {

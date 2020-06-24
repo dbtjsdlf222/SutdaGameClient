@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,7 +37,6 @@ public class Lobby {
 	private Container con;
 	private JButton exitBtn;
 	private JButton newBtn;
-	private JButton gBtn;
 	
 	public static JPanel infoPan = new JPanel();
 	
@@ -95,14 +92,13 @@ public class Lobby {
 						} else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-//							RoomScreen.getInstance().mainScreen();
+							RoomScreen.getInstance().mainScreen();
 							lobbyJF.dispose();
 						}
 					}
 				}
 			});
-		}
-		
+		} //if(!initializeOnce);
 
 		ClientPacketController.roomJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.roomJT.setShowVerticalLines(false);

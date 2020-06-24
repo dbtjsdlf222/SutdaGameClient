@@ -43,6 +43,7 @@ public class Protocol {
 	public static final String BET = "31";
 	public static final String GAMEOVER = "32";
 	public static final String DRAW = "33";
+	public static final String SETSTARTBUTTON = "34"; 
 	
 	public static String getName(String str) {
 		
@@ -80,6 +81,7 @@ public class Protocol {
 			case "31": str = "BET"; break;
 			case "32": str = "GAMEOVER"; break;
 			case "33": str = "DRAW"; break;
+			case "34": str = "SHOWSTARTBTN"; break;
 		}
 		
 		return str;

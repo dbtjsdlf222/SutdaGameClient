@@ -59,16 +59,12 @@ public class RoomScreen extends JFrame {
 	private Background back = new Background();
 	private JTextField tf;
 	private JButton[] btn = new JButton[6];
-	private Map<Integer, PlayerVO> playerListMap = new HashMap<>();
 	private JPanel mat = new JPanel();
-	private int index;
 	private JPanel betButtonPan = new JPanel();
 	private String[] betBtnInitArr = { Protocol.Die + "_", Protocol.Ddadang + "_", Protocol.Call + "_",
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_" };
-	private int mySit;
+	private int mySit;	//서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	// JLabel frame = new JLabel(new
-	// ImageIcon(MainScreen.class.getResource("../../img/fff.png")));
 	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
@@ -79,7 +75,8 @@ public class RoomScreen extends JFrame {
 	JLabel[] profile = new JLabel[5];
 	JLabel[] beticon = new JLabel[5];
 	public static DecimalFormat fm = new DecimalFormat("###,###");
-
+	private boolean gameStart = false;
+	private int roomMaster = 0;
 	public static RoomScreen getInstance() {
 		if (instance == null)
 			instance = new RoomScreen();
@@ -121,30 +118,31 @@ public class RoomScreen extends JFrame {
 		revalidate();
 		repaint();
 
-		// if (playerListMap.get(index).getNo() == playerVO.getNo()) {
-		// playerListMap.remove(index);
-		// } // if
-
 	} // exitPlayer();
 
 	/**
-	 * @param k 방장이 나가거나 죽었을경우 방장 위임할 인덱스
+	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
-	public void changeMaster(int k) {
+	public void changeMaster(int idx) {
+		roomMaster = idx;
+		idx = (idx - mySit + 5) % 5;
 
-		if (k == 0) {
+		if(!gameStart && roomMaster==mySit)
+			RoomScreen.getInstance().startBtnSet();
+		
+		if (idx == 0) {
 			// frame.setBounds(450, 430, 370, 190);
 			masterSticker.setBounds(430, 440, 15, 15);
-		} else if (k == 1) {
+		} else if (idx == 1) {
 			// frame.setBounds(-5, 205, 370, 190);
 			masterSticker.setBounds(370, 220, 15, 15);
-		} else if (k == 2) {
+		} else if (idx == 2) {
 			// frame.setBounds(-5, 20, 370, 190);
 			masterSticker.setBounds(370, 30, 15, 15);
-		} else if (k == 3) {
+		} else if (idx == 3) {
 			// frame.setBounds(905, 20, 370, 190);
 			masterSticker.setBounds(890, 30, 15, 15);
-		} else if (k == 4) {
+		} else if (idx == 4) {
 			// frame.setBounds(905, 205, 370, 190);
 			masterSticker.setBounds(890, 220, 15, 15);
 		}
@@ -246,50 +244,84 @@ public class RoomScreen extends JFrame {
 		manyMoney.setBounds(10, 10, 420, 280);
 		tf = new JTextField(15);
 		tf.setBounds(300, 300, 300, 150);
-
 		mat.add(manyMoney);
 		mat.add(tf);
 	}
-
 	private boolean initialized = false;
-
 	public void turn(int index) {
 		index = (index - mySit + 5) % 5;
+		for (int i = 0; i < 5; i++) {
+			if(panlist[i]==null) continue;
+			panlist[i].setBorder(null);	
+		}
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
-		
+	} //turn();
+	
+	// 게임시작 버튼
+	public void startBtnSet() {
+		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
+		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
+		JButton gameStart = new JButton(gameStartBasic);
+		gameStart.setBounds(510, 230, 240, 140);
+		gameStart.setBorderPainted(false);
+		gameStart.setContentAreaFilled(false);
+		gameStart.setFocusPainted(false);
+		gameStart.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gameStart.setIcon(gameStartEnter);
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				gameStart.setIcon(gameStartBasic);
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int tempCount = 0;
+				for (int i = 0; i < 5; i++) {
+						if (profile[i] != null) {
+							tempCount++;
+						}
+				} // for
+				if (tempCount >= 2) {
+					RoomScreen.getInstance().gameStart = true;
+					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
+					gameStart.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "플레이어가 2명 이상일 때만 시작 가능합니다.", "알림", JOptionPane.WARNING_MESSAGE);
+				}
+			} // mousePressed();
+		});
+		add(gameStart);
 	}
 	
-	public synchronized void mainScreen() {
+	public void mainScreen() {
 		totalMoney.setBounds(420, 10, 420, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
 		totalMoney.setForeground(Color.yellow);
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
 		add(totalMoney);
+		
+		for (int i = 0; i < 5; i++) {
+			panlist[i] = new JPanel();
+			if (i == 0) { panlist[i].setBounds(460, 440, 350, 180); } else 
+			if (i == 1) { panlist[i].setBounds(  0, 215, 350, 180); } else 
+			if (i == 2) { panlist[i].setBounds(  0,  30, 350, 180);	} else
+			if (i == 3) { panlist[i].setBounds(915,  30,3590, 180); } else
+			if (i == 4) { panlist[i].setBounds(915, 215, 350, 180); }
+			add(panlist[i]);
+		}
 
 		setButton(betBtnInitArr);
 		buttonReset();
 		if (initialized)
 			return;
 		initialized = true;
-
-		for (int i = 0; i < panlist.length; i++) {
-			panlist[i] = new JPanel();
-
-			if (i == 0) {
-				panlist[i].setBounds(460, 440, 350, 180);
-			} else if (i == 1) {
-				panlist[i].setBounds(0, 215, 350, 180);
-			} else if (i == 2) {
-				panlist[i].setBounds(0, 30, 350, 180);
-			} else if (i == 3) {
-				panlist[i].setBounds(915, 30, 350, 180);
-			} else if (i == 4) {
-				panlist[i].setBounds(915, 215, 350, 180);
-			}
-			panlist[i].setLayout(null);
-			panlist[i].setBackground(new Color(0, 0, 0));
-			add(panlist[i]);
-		}
 
 		// 채팅 판넬
 		JPanel chatPan = new JPanel();
@@ -358,54 +390,12 @@ public class RoomScreen extends JFrame {
 						chatText.setText("");
 					}
 				}
-			}
-		});
+			} //actionPerformed();
+		}); //addActionListener();
 
-		// 게임시작 버튼
-		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
-		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
-
-		JButton gameStart = new JButton(gameStartBasic);
-
-		gameStart.setBounds(510, 230, 240, 140);
-		gameStart.setBorderPainted(false);
-		gameStart.setContentAreaFilled(false);
-		gameStart.setFocusPainted(false);
-		gameStart.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				gameStart.setIcon(gameStartEnter);
-				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				gameStart.setIcon(gameStartBasic);
-				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				int tempCount = 0;
-				for (int i = 0; i < 5; i++) {
-					try {
-						if (profile[i] != null) {
-							tempCount++;
-						}
-					} catch (NullPointerException e2) {
-					}
-				} // for
-				if (tempCount >= 2) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-					gameStart.setVisible(false);
-				} else {
-					JOptionPane.showMessageDialog(null, "플레이어가 2명 이상일 때만 시작 가능합니다.", "알림", JOptionPane.WARNING_MESSAGE);
-				}
-			} // mousePressed();
-		});
-		add(gameStart);
-
+		// 게임 시작 버튼
+		startBtnSet();
+		
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
 		exitBtn.setBounds(1105, 560, 150, 50);
@@ -413,10 +403,8 @@ public class RoomScreen extends JFrame {
 		add(exitBtn);
 
 		exitBtn.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				dispose();
 				new Lobby();
 			}
@@ -446,8 +434,7 @@ public class RoomScreen extends JFrame {
 		groupLayout
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
-
-	}
+	} //mainScreen();
 
 	// 시작 돈을 걷고 Text에 적용
 	public void startPay(long sMoney) {
@@ -465,35 +452,27 @@ public class RoomScreen extends JFrame {
 	public void betAlert(int idx, String bet, String money) {
 		idx = (idx - mySit + 5) % 5;
 		moneyText[idx].setText(money);
-//		long calcMoney = Long.parseLong(totalMoney.getText());
-//		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
+		long calcMoney = Long.parseLong(totalMoney.getText());
+		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
 		betText[idx].setText(bet);
 		betIcon(idx, bet);
 	} // betAlert();
 
 	public void betIcon(int idx, String bet) {
 		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png"));
-		JLabel ijij = new JLabel(iCon);
-		ijij.setBounds(729, 468, 95, 55);;
-		add(ijij);
-		System.out.println(idx + "하고 " + bet +"이가 들어와요");
-	//	beticon[idx].setIcon(iCon);
-//		beticon[idx].setText(bet);
-	//	beticon[idx].setOpaque(true);
 		
+		beticon[idx] = new JLabel(iCon);
 		switch (idx) {
 		case 0:
-			System.out.println("0번 인덱스");
 			beticon[idx].setBounds(729, 468, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 1:
-			System.out.println("1번 인덱스");
-			beticon[idx].setBounds(314, 26, 95, 55);
+			beticon[idx].setBounds(314, 70, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(314, 70, 95, 55);
+			beticon[idx].setBounds(314, 26, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 3:
@@ -504,19 +483,12 @@ public class RoomScreen extends JFrame {
 			beticon[idx].setBounds(840, 260, 95, 55);
 			add(beticon[idx]);
 			break;
-
 		}
-	}
+	} //betIcon();
 
 	public ImageIcon cardFormat(float card) {
-		
-		System.out.println(String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png");
-		
-		return  new ImageIcon(RoomScreen.class.getResource
-				("../../img/card/"+
-					String.format("%." + 
-							((int) card == card ? "0" : "1")+"f", card) +
-					".png"));
+		return  new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
+				String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png"));
 	}
 	
 	public void openCard(Map<Integer,PlayerVO> cardMap) {
@@ -525,8 +497,7 @@ public class RoomScreen extends JFrame {
 			if(cardMap.get(i)==null) continue;
 			try {
 				Thread.sleep(500);
-			} catch (InterruptedException e) {e.printStackTrace(); 
-			} 
+			} catch (InterruptedException e) { e.printStackTrace(); }
 			int idx = (i - mySit + 5) % 5;
 			
 			float c1 = cardMap.get(i).getCard1();
@@ -535,7 +506,6 @@ public class RoomScreen extends JFrame {
 			card1[idx].setIcon(cardFormat(c1));
 			card2[idx].setIcon(cardFormat(c2));
 		}
-		
 	} // openCard();
 
 	/**
@@ -544,8 +514,9 @@ public class RoomScreen extends JFrame {
 
 	public void receiveCard(float[] card) {
 
-		if (card[0] != 0)
+		if (card[0] != 0) 
 			card1[0].setIcon(cardFormat(card[0]));
+			
 
 		if (card[1] != 0)
 			card2[0].setIcon(cardFormat(card[1]));
@@ -561,39 +532,15 @@ public class RoomScreen extends JFrame {
 		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
+		RoomScreen.getInstance().gameStart = false;
 	}
-	// 오픈카드
-	// public void openCard(int playerIdx, int whichCard, float card) {
-	// playerIdx = (playerIdx - mySit + 5) % 5;
-	//
-	// if (whichCard == 1) {
-	// card1[playerIdx] = new JLabel(new
-	// ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
-	// } else {
-	// card2[playerIdx] = new JLabel(new
-	// ImageIcon(RoomScreen.class.getResource("../../img/" + card + ".PNG")));
-	// }
-	//
-	// for (int i = 1; i < 5; i++) {
-	// if (profile[i] != null) {
-	// card1[i] = new JLabel(new
-	// ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG")));
-	// }
-	// } // for
-	//
-	// } // receiveCard();
 
 	/**
 	 * @param i     몇번째 자리
 	 * @param setVO 자리에 앉을 사람의 VO
 	 */
 	public void setSit(int i, PlayerVO setVO) {
-
-		i = (i - mySit + 5) % 5;
-
 		try {
-			// new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG"));
-			// new ImageIcon(RoomScreen.class.getResource("../../img/Pae.PNG"));
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
 
@@ -601,7 +548,8 @@ public class RoomScreen extends JFrame {
 			nicText[i].setForeground(Color.white);
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-
+			System.out.println("nicText: "+nicText);
+			
 			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
@@ -616,145 +564,40 @@ public class RoomScreen extends JFrame {
 						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
 			}
 			betText[i] = new JLabel();
-			if (i == 1) {
+			panlist[i].setLayout(null);
+			panlist[i].setBackground(new Color(0, 0, 0));
+			
+			if (i==0||i==1||i==2) {
 				profile[i].setBounds(10, 10, 90, 100);
-				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(false);
-				panlist[i].add(profile[i]);
-
 				card1[i].setBounds(115, 10, 110, 160);
-				card1[i].setOpaque(false);
-				panlist[i].add(card1[i]);
-
 				card2[i].setBounds(230, 10, 110, 160);
-				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]); 
-
 				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(false);
-				betText[i].setForeground(Color.black);
-				panlist[i].add(betText[i]);
-
 				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(false);
-
-				panlist[i].add(nicText[i]);
-
 				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(false);
-				panlist[i].add(moneyText[i]);
 
-			} else if (i == 2) {
-
-				profile[i].setBounds(10, 10, 90, 100);
-				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(false);
-				panlist[i].add(profile[i]);
-
-				card1[i].setBounds(115, 10, 110, 160);
-				card1[i].setOpaque(false);
-				panlist[i].add(card1[i]);
-
-				card2[i].setBounds(230, 10, 110, 160);
-				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]);
-
-				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(false);
-				betText[i].setForeground(Color.black);
-				panlist[i].add(betText[i]);
-
-				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(false);
-				panlist[i].add(nicText[i]);
-
-				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(false);
-				panlist[i].add(moneyText[i]);
-
-			} else if (i == 3) {
+			} else if (i==3||i==4) {
 				profile[i].setBounds(250, 10, 90, 100);
-				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(false);
-				panlist[i].add(profile[i]);
-
 				card1[i].setBounds(10, 10, 110, 160);
-				card1[i].setOpaque(false);
-				panlist[i].add(card1[i]);
-
 				card2[i].setBounds(125, 10, 110, 160);
-				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]);
-
 				betText[i].setBounds(250, 10, 90, 20);
-				betText[i].setOpaque(false);
-				betText[i].setForeground(Color.black);
-				panlist[i].add(betText[i]);
-
 				nicText[i].setBounds(250, 125, 90, 20);
-				nicText[i].setOpaque(false);
-				panlist[i].add(nicText[i]);
-
 				moneyText[i].setBounds(250, 150, 90, 20);
-				moneyText[i].setOpaque(false);
-				panlist[i].add(moneyText[i]);
-
-			} else if (i == 4) {
-
-				profile[i].setBounds(250, 10, 90, 100);
-				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(false);
-				panlist[i].add(profile[i]);
-
-				card1[i].setBounds(10, 10, 110, 160);
-				card1[i].setOpaque(false);
-				panlist[i].add(card1[i]);
-
-				card2[i].setBounds(125, 10, 110, 160);
-				card2[i].setOpaque(false);
-				panlist[i].add(card2[i]);
-
-				betText[i].setBounds(250, 10, 90, 20);
-				betText[i].setOpaque(false);
-				betText[i].setForeground(Color.black);
-				panlist[i].add(betText[i]);
-
-				nicText[i].setBounds(250, 125, 90, 20);
-				nicText[i].setOpaque(false);
-				panlist[i].add(nicText[i]);
-
-				moneyText[i].setBounds(250, 150, 90, 20);
-				moneyText[i].setOpaque(false);
-				panlist[i].add(moneyText[i]);
-
-			} else if (i == 0) {
-				profile[i].setBounds(10, 10, 90, 100);
-				profile[i].setBackground(new Color(35, 60, 3, 122));
-				profile[i].setOpaque(false);
-				panlist[i].add(profile[i]);
-
-				card1[i].setBounds(115, 10, 110, 160);
-				card1[i].setOpaque(false);
-				panlist[i].add(card1[i]);
-
-				card2[i].setBounds(230, 10, 110, 160);
-				panlist[i].add(card2[i]);
-				card2[i].setOpaque(false);
-
-				nicText[i].setBounds(10, 125, 90, 20);
-				nicText[i].setOpaque(false);
-				panlist[i].add(nicText[i]);
-
-				betText[i].setBounds(10, 10, 90, 20);
-				betText[i].setOpaque(false);
-				betText[i].setForeground(Color.black);
-				panlist[i].add(betText[i]);
-
-				moneyText[i].setBounds(10, 150, 90, 20);
-				moneyText[i].setOpaque(false);
-				panlist[i].add(moneyText[i]);
-				
 			}
+			
+			profile[i].setOpaque(false);
+			profile[i].setBackground(new Color(34, 116, 28));
+			panlist[i].add(profile[i]);
+			card1[i].setOpaque(false);
+			card2[i].setOpaque(false);
+			panlist[i].add(card1[i]);
+			panlist[i].add(card2[i]); 
+			betText[i].setOpaque(false);
+			betText[i].setForeground(Color.black);
+			panlist[i].add(betText[i]);
+			nicText[i].setOpaque(false);
+			panlist[i].add(nicText[i]);
+			moneyText[i].setOpaque(false);
+			panlist[i].add(moneyText[i]);
 
 		} catch (Exception e) {
 			logger.info(Arrays.toString(panlist));
@@ -763,49 +606,38 @@ public class RoomScreen extends JFrame {
 	} // setSit();
 
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
+		
+//		for (Entry<Integer, PlayerVO> set : voList.entrySet()) {
+//			if (PlayerVO.myVO.getNo() == set.getValue().getNo()) {
+//				mySit = set.getValue().getIndex();
+//				break;
+//			}
+//		} //for
 
-		for (Entry<Integer, PlayerVO> set : voList.entrySet()) {
-
-			if (PlayerVO.myVO.getNo() == set.getValue().getNo()) {
-				mySit = set.getValue().getIndex();
-				break;
-			}
-
-		}
-
-		this.index = index;
-		playerListMap = voList;
+		mySit = index;
 
 		for (int i = 0; i < 5; i++) {
 			int j;
 
-			if ((j = index + i) >= 5)
-				j -= 5;
-
+			j = (mySit - i + 5) % 5;
+			
 			PlayerVO setVO = voList.get(j);
 
 			if (setVO == null)
 				continue;
-
+			
 			setSit(i, setVO);
 
 		} // for
 	} // enterPlayerList();
 
-	public void enterPlayerOther(PlayerVO vo, int index) {
-
+	public void enterPlayer(PlayerVO vo, int index) {
+		System.err.println("       " + index +" | "+ vo);
 		if (PlayerVO.myVO.getNo() == vo.getNo())
 			mySit = vo.getIndex();
 
-		playerListMap.put(index, vo);
-
-		index -= this.index;
-
-		if (index < 0)
-			index += 5;
-
+		index = (index - mySit + 5) % 5;
 		setSit(index, vo);
-
 	} // enterPlayerList();
 
 	public static void main(String[] args) {
