@@ -2,6 +2,7 @@ package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,7 +40,7 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	
-	public static JPanel infoPan = new JPanel();
+	public JPanel infoPan = new JPanel();
 	
 	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
 		ClientPacketSender.instance.enterLobby();
@@ -93,7 +95,7 @@ public class Lobby {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
 							RoomScreen.getInstance().mainScreen();
-							lobbyJF.dispose();
+							((JFrame)SwingUtilities.getRoot((Component)e.getSource())).dispose();
 						}
 					}
 				}
