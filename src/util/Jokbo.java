@@ -2,19 +2,18 @@ package util;
 
 import java.util.ArrayList;
 
-class Card{
+class Card {
 	private float card1;
 	private float card2;
+	
 	public Card(float card1, float card2) {
-		super();
 		this.card1 = card1;
 		this.card2 = card2;
 	}
-	
 }
 
 public class Jokbo {
-	private Jokbo jokbo;
+	private static Jokbo instance;
 	private ArrayList<Jokbo> jokboList;
 	private String name;
 	private ArrayList<Card> cardComboArr;
@@ -77,23 +76,14 @@ public class Jokbo {
 		
 	}
 
-	public Jokbo(String name) {
-		this.name = name;
-	}
-
-
-
 	public static Jokbo getInstance() {
-		if(jokbo==null) { jokbo = new Jokbo(); }
-		return jokbo;
+		if(instance == null) { instance = new Jokbo(); }
+		return instance;
 	}
 	
 	public ArrayList<Jokbo> getJokboList() { return jokboList; }
+	public Jokbo(String name) { this.name = name; }
 	public void setJokboList(ArrayList<Jokbo> jokboList) { this.jokboList = jokboList; }
-	public float getCard1() { return card1; }
-	public void setCard1(float card1) { this.card1 = card1; }
-	public float getCard2() { return card2; }
-	public void setCard2(float card2) { this.card2 = card2; }
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
 	
