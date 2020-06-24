@@ -141,6 +141,7 @@ public class Room extends ServerMethod {
 		lobbyReloadBroadcast(); 
 	} // gameStart();
 
+	
 	public void roomSpeaker(Packet pac) {
 
 		String message = "";
@@ -165,6 +166,37 @@ public class Room extends ServerMethod {
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
 		}
 	} // roomSpeaker();
+	
+	/**
+	 * 
+	 * @param pac	packet
+	 * @param no	제외할 playerNo
+	 */
+	public void roomSpeakerNotThisPlayer(Packet pac, int no) {
+		
+		String message = "";
+		
+		message += "[Send(roomSpeaker(" + roomNo;
+		Iterator<Entry<Integer, PlayerVO>> iterator = playerMap.entrySet().iterator();
+		if (iterator.hasNext()) {
+			
+			message += "(" + iterator.next().getValue().getNic();
+			
+			while (iterator.hasNext())
+				message += ", " + iterator.next().getValue().getNic();
+			
+			message += ")";
+			
+		}
+		message += ", " + Protocol.getName(pac.getAction()) + "))] " + pac;
+		
+		logger.info(message);
+		
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			if(s.getValue().getNo()==no) continue;
+			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
+		}
+	} // roomSpeaker();
 
 	public void roomChat(Packet packet) {
 		for (Entry<Integer, PlayerVO> set : playerMap.entrySet()) {
@@ -182,10 +214,11 @@ public class Room extends ServerMethod {
 		for (int i = 0; i < 5; i++) {
 			if (playerMap.get(i) == null) {
 				playerMap.put(i, vo);
-
+				vo.setIndex(i);
 				return i;
 			} // if
 		} // for
+		logger.error("방번호:"+roomNo+" 인원초과");
 		return 0;
 	} // join
 
@@ -227,21 +260,32 @@ public class Room extends ServerMethod {
 			vo.gameLose();
 			dao.playerSave(vo);
 		}
-		// 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
-		if (masterIndex == playerIndex && playerMap.size() <= 0) {
-			return;
-		}
-		//방장 다음차례의 사람을 방장으로 지정 
-		for (int i = 1; i < 5; i++) {
-			int idx = (playerIndex + i) % 5;
-			if(playerMap.get(idx)==null)
-				continue;
-			if (playerMap.get(idx).isLive()) {
-				masterIndex = idx;
-				this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
-				break;
+		
+		if(playerMap.size() <= 0) {
+			ro.removeRoom(roomNo);
+			
+		} else {
+			Packet packet = new Packet();
+			packet.setAction(Protocol.EXITOTHERROOM);
+			packet.setMotion(Integer.toString(playerIndex));
+			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
+		
+			// 퇴장 플레이어가 방장이 아니고 다른 플레이어가 없으면 종료
+			if (masterIndex == playerIndex && playerMap.size() <= 0) {
+				return;
 			}
-		}
+			//방장 다음차례의 사람을 방장으로 지정 
+			for (int i = 1; i < 5; i++) {
+				int idx = (playerIndex + i) % 5;
+				if(playerMap.get(idx)==null)
+					continue;
+				if (playerMap.get(idx).isLive()) {
+					masterIndex = idx;
+					this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+					break;
+				} //if
+			} //for
+		} //if(playerMap.size() <= 0)
 		lobbyReloadBroadcast();
 	} // exitPlayer();
 
@@ -427,7 +471,7 @@ public class Room extends ServerMethod {
 	public void gameOver(int winerIdx) {
 		JOptionPane.showMessageDialog(null, "승자는 "+playerMap.get(winerIdx).getNic()+" 입니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 		
-		playerMap.get(winerIdx).setMoney(playerMap.get(winerIdx).getMoney() + totalMoney);
+		playerMap.get(winerIdx).winMoney(totalMoney);
 		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다./" + winerIdx + "/" + playerMap.get(winerIdx).getMoney()));
 		gameStarted = false;
 		
@@ -483,6 +527,14 @@ public class Room extends ServerMethod {
 	
 	public String getMaster() {
 		return master;
+	}
+
+	public Integer getMasterIndex() {
+		return masterIndex;
+	}
+
+	public void setMasterIndex(Integer masterIndex) {
+		this.masterIndex = masterIndex;
 	}
 
 	public int getPlayerIndex(int playerNo) {

@@ -20,7 +20,6 @@ public class ServerMethod {
 	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected PlayerDAO dao = new PlayerDAO();
 	protected Socket socket;
-	protected int roomIndex;
 	
 	public void exitPlayer() {
 

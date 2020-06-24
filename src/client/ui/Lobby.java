@@ -173,9 +173,9 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
+					lobbyJF.dispose();
 					ClientPacketSender.instance.makeRoom();
 					RoomScreen.getInstance().mainScreen();
-					lobbyJF.dispose();
 				}
 			} // action
 		}); // listener

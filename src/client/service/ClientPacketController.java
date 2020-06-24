@@ -122,6 +122,12 @@ public class ClientPacketController {
 			RoomScreen.getInstance().startBtnSet();
 			break;
 			
+		case Protocol.ENTERROOM:
+//			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
+			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
+			break;
+			
 		case Protocol.ENTEROTHERROOM:
 //			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
@@ -129,11 +135,6 @@ public class ClientPacketController {
 
 		case Protocol.EXITOTHERROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
-			break;
-
-		case Protocol.ENTERROOM:
-//			RoomScreen.getInstance().mainScreen();
-			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			break;
 
 		case Protocol.CHANGEMASTER:

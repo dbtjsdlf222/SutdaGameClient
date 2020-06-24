@@ -198,7 +198,7 @@ public class RoomScreen extends JFrame {
 				btn[i] = new JButton(
 						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
 
-				logger.debug(buttonArray[i] + ": " + (buttonArray[i].indexOf("_") == -1));
+//				logger.debug(buttonArray[i] + ": " + (buttonArray[i].indexOf("_") == -1));
 
 				if (buttonArray[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
@@ -393,8 +393,6 @@ public class RoomScreen extends JFrame {
 			} //actionPerformed();
 		}); //addActionListener();
 
-		// 게임 시작 버튼
-		startBtnSet();
 		
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
@@ -472,7 +470,7 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(314, 26, 95, 55);
+			beticon[idx].setBounds(314, 20, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 3:
@@ -487,6 +485,7 @@ public class RoomScreen extends JFrame {
 	} //betIcon();
 
 	public ImageIcon cardFormat(float card) {
+		System.out.println("cardFormat: "+String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png");
 		return  new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
 				String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png"));
 	}
@@ -495,16 +494,17 @@ public class RoomScreen extends JFrame {
 		
 		for (int i = 0; i < 5; i++) {
 			if(cardMap.get(i)==null) continue;
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) { e.printStackTrace(); }
-			int idx = (i - mySit + 5) % 5;
+			
+			int idx = i - (mySit + 5) % 5;
 			
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
 			
 			card1[idx].setIcon(cardFormat(c1));
 			card2[idx].setIcon(cardFormat(c2));
+			
+			try { Thread.sleep(500); }
+			catch (InterruptedException e) { e.printStackTrace(); }
 		}
 	} // openCard();
 
@@ -555,8 +555,8 @@ public class RoomScreen extends JFrame {
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
 
-			// 1번과 2번 자리 앉은 사람은 이미지 반전
-			if (i == 1 || i == 2) {
+			// 0번과 1번과 2번 자리 앉은 사람은 이미지 반전
+			if (i==0||i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(
 						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
@@ -613,32 +613,35 @@ public class RoomScreen extends JFrame {
 //				break;
 //			}
 //		} //for
-
+		System.out.println("indexindex: "+ index);
 		mySit = index;
-
 		for (int i = 0; i < 5; i++) {
 			int j;
-
-			j = (mySit - i + 5) % 5;
 			
+			j = (mySit + i) % 5;
 			PlayerVO setVO = voList.get(j);
-
+			System.out.println("voList.get(j) : "+j);
 			if (setVO == null)
 				continue;
-			
+			System.out.println("setSit(i, setVO)  i: "+i+" setVO: "+setVO);
 			setSit(i, setVO);
-
 		} // for
 	} // enterPlayerList();
 
+	/**
+	 * 자신이 들어오거나 다른 사람이 들어올때 실행
+	 * @param vo	자신의 PlayerVO
+	 * @param index 서버상 자신의 index
+	 */
 	public void enterPlayer(PlayerVO vo, int index) {
-		System.err.println("       " + index +" | "+ vo);
-		if (PlayerVO.myVO.getNo() == vo.getNo())
+		
+		if (PlayerVO.myVO.getNo() == vo.getNo()) {	//들어온 사람이 자기 자신이면 return
 			mySit = vo.getIndex();
-
+		}
+		
 		index = (index - mySit + 5) % 5;
 		setSit(index, vo);
-	} // enterPlayerList();
+	} // enterPlayer();
 
 	public static void main(String[] args) {
 		Map<Integer, PlayerVO> voList = new HashMap<Integer, PlayerVO>();

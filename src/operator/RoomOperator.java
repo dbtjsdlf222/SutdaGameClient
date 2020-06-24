@@ -30,7 +30,10 @@ public class RoomOperator {
 
 	public int makeRoom(PlayerVO pVO) {
 		Room room = new Room();
+		pVO.setRoomNo(room.getRoomNo());
+		room.setMaster(pVO.getNic());
 		room.joinPlayer(pVO);
+		room.setMasterNo(pVO.getNo());
 		roomMap.put(room.getRoomNo(), room);
 		return room.getRoomNo();
 	}

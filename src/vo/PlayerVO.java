@@ -265,6 +265,10 @@ public class PlayerVO {
 		this.money = money;
 	}
 
+	public void winMoney(int money) {
+		this.money += money;
+	}
+	
 	public boolean isAdmin() {
 		return this.admin;
 	}

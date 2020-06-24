@@ -4,15 +4,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.PlayerDAO;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -67,39 +61,30 @@ public class ServerPacketController extends ServerMethod {
 
 		case Protocol.MAKEROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
-			packet.getPlayerVO().setRoomNo(thisPlayerVO.getRoomNo());
 			lobbyExitBroadcast();
 			
-			ro.getRoom(thisPlayerVO.getRoomNo()).setMasterNo(thisPlayerVO.getNo());
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
-			roomIndex = 0;
 			packet.setPlayerVO(thisPlayerVO);
-			packet.setAction(Protocol.ENTEROTHERROOM);
+			packet.setMotion(0+"");		//방장 인덱스
+			packet.setAction(Protocol.MAKEROOM);
 			
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
 			
-			packet.setAction(Protocol.CHANGEMASTER);
-			packet.setMotion(0+"");
-			Packing.sender(thisPlayerVO.getPwSocket(), packet);
-//			this.packetAnalysiser(packet.setAction(Protocol.CHANGEMASTER));
+//			packet.setAction(Protocol.CHANGEMASTER);
+//			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 
 			break;
 
 		case Protocol.EXITROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
-			packet.setAction(Protocol.EXITOTHERROOM);
-			packet.setMotion(Integer.toString(roomIndex));
 			
 			thisPlayerVO.setRoomNo(0);
 			room.exitPlayer(thisPlayerVO);
-			room.roomSpeaker(packet);
-			ro.getRoom(thisPlayerVO.getRoomNo()).roomChat(new Packet(Protocol.MESSAGE, "알림 ["+ thisPlayerVO.getNic() + "]님이 퇴실하셨습니다."));
 			
-			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
-				ro.removeRoom(thisPlayerVO.getRoomNo());
-				lobbyReloadBroadcast();
-			}
+			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
+			
+			
 			thisPlayerVO.setRoomNo(0);
 			
 			break;
@@ -107,13 +92,15 @@ public class ServerPacketController extends ServerMethod {
 		case Protocol.ENTERROOM:
 			int roomNo = packet.getPlayerVO().getRoomNo();	//입장할 방 번호 받음
 			thisPlayerVO.setRoomNo(roomNo);
-			Packet pak = new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO);
 			int index = ro.joinRoom(roomNo, thisPlayerVO);
-			roomIndex = index;	//index 저장
 			thisPlayerVO.setIndex(index);	//자신이 몇번쨰 index인지 저장
+			Packet pak = new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO);
 			pak.setMotion(index +"");
-			ro.getRoom(roomNo).roomSpeaker(pak);
+			pak.setPlayerVO(thisPlayerVO);
+			ro.getRoom(roomNo).roomSpeakerNotThisPlayer(pak,thisPlayerVO.getNo());
 			packet.setRoomPlayerList(ro.getRoom(roomNo).getList());
+			packet.setPlayerVO(thisPlayerVO);
+			packet.setMotion(ro.getRoom(roomNo).getMasterIndex().toString());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
 			lobbyExitBroadcast();
