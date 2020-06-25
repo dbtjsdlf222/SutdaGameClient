@@ -29,6 +29,7 @@ public class RoomOperator {
 	}
 
 	public int makeRoom(PlayerVO pVO) {
+		System.out.println("makeRoom 작동 : "+ pVO.getNic());
 		Room room = new Room();
 		pVO.setRoomNo(room.getRoomNo());
 		room.setMaster(pVO.getNic());
@@ -39,7 +40,6 @@ public class RoomOperator {
 	}
 
 	public int joinRoom(int roomNo, PlayerVO playerVO) {
-		
 		return roomMap.get(roomNo).joinPlayer(playerVO);
 	}
 

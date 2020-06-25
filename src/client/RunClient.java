@@ -29,4 +29,4 @@ public class RunClient {
 		}
 		EventQueue.invokeLater(() -> new LoginFrame()); // 쓰레드 충돌 방지
 	} // main();
-} // class RunClient;2
+} // class RunClient;

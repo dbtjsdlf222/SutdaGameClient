@@ -78,14 +78,9 @@ public class ServerPacketController extends ServerMethod {
 
 		case Protocol.EXITROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
-			
-			thisPlayerVO.setRoomNo(0);
 			room.exitPlayer(thisPlayerVO);
-			
-			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
-			
-			
 			thisPlayerVO.setRoomNo(0);
+			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
 			
 			break;
 

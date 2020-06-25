@@ -26,6 +26,7 @@ public class CalcCardLevel implements Comparable {
 	
 	public CalcCardLevel() { }
 
+	@SuppressWarnings("unchecked")
 	public void getWinner(int roomNo,Map<Integer, PlayerVO> playerMap) {
 		
 		CardLevel(playerMap);
@@ -40,28 +41,21 @@ public class CalcCardLevel implements Comparable {
 			return;
 		}
 		
-		for (CalcCardLevel calcCardLevel : playerCardList) {
-			System.out.println(calcCardLevel.getCardLevel());
-		}
-		System.out.println("======정렬======");
 		Collections.sort(playerCardList);
-		
-		for (CalcCardLevel calcCardLevel : playerCardList) {
-			System.out.println(calcCardLevel.getCardLevel());
-		}
 		
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx());
 		} else {
 			System.out.println("동점 재경기");
-			for (int i = 0; i < 5; i++) {
+			for (int i = 2; i < 5; i++) {
 				try {
 					if(playerCardList.get(0).getCardLevel() != playerCardList.get(i).getCardLevel()) {
 						playerMap.get(playerCardList.get(i).getIdx()).setLive(false);
-						RoomOperator.getInstance().getRoom(roomNo).draw();
+						
 					}
 				} catch (Exception e) { } //try~catch
 			} //for
+			RoomOperator.getInstance().getRoom(roomNo).draw();
 		} //if~else
 	} // getWinner();
 
