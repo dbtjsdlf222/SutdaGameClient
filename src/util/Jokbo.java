@@ -44,34 +44,43 @@ public class Jokbo {
 		Jokbo c = new Jokbo("13광땡");
 		c.cardComboArr.add(new Card(1, 3));
 		jokboList.add(c);
-		// 땡
+		// 장땡
 		Jokbo da = new Jokbo("장땡");
 		da.cardComboArr.add(new Card(10,10.5f));
 		jokboList.add(da);
+		// 9땡
 		Jokbo db = new Jokbo("9땡");
 		db.cardComboArr.add(new Card(9,9.5f));
 		jokboList.add(db);
+		// 8땡
 		Jokbo dc = new Jokbo("8땡");
 		dc.cardComboArr.add(new Card(8,8.5f));
 		jokboList.add(dc);
+		// 7땡
 		Jokbo dd = new Jokbo("7땡");
 		dd.cardComboArr.add(new Card(7,7.5f));
 		jokboList.add(dd);
+		// 6땡
 		Jokbo de = new Jokbo("6땡");
 		de.cardComboArr.add(new Card(6,6.5f));
 		jokboList.add(de);
+		// 5땡
 		Jokbo df = new Jokbo("5땡");
 		df.cardComboArr.add(new Card(5,5.5f));
 		jokboList.add(df);
+		// 4땡
 		Jokbo dg = new Jokbo("4땡");
 		dg.cardComboArr.add(new Card(4,4.5f));
 		jokboList.add(dg);
+		// 3땡
 		Jokbo dh = new Jokbo("3땡");
 		dh.cardComboArr.add(new Card(3,3.5f));
 		jokboList.add(dh);
+		// 2땡
 		Jokbo di = new Jokbo("2땡");
 		di.cardComboArr.add(new Card(2,2.5f));
 		jokboList.add(di);
+		// 1땡
 		Jokbo dj = new Jokbo("1땡");
 		dj.cardComboArr.add(new Card(1,1.5f));
 		jokboList.add(dj);
