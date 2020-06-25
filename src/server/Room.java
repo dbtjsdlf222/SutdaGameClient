@@ -371,18 +371,20 @@ public class Room extends ServerMethod {
 			betMoney = beforeBet + (totalMoney / 2);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Quater:
 			betMoney = beforeBet + (totalMoney / 4);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Call:
 			betMoney = beforeBet;
 			totalMoney += betMoney;
-
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			for (int j = 0; j < 4; j++) {
 				if (playerMap.get(j) == null && !playerMap.get(j).isLive())
 					continue;
@@ -404,23 +406,27 @@ public class Room extends ServerMethod {
 			betMoney = beforeBet + playerMap.get(turn).getMoney();
 			totalMoney = betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Check:
 			betMoney = 0;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Pping:
 			betMoney = startMoney;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Ddadang:
 			betMoney = beforeBet * 2;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
 			break;
 
 		case Protocol.Die:
@@ -504,73 +510,33 @@ public class Room extends ServerMethod {
 		cardShuffle(); 		// 카드큐를 섞는다
 	}
 
-	public Map<Integer, PlayerVO> getList() {
-		return playerMap;
-	}
-
-	public void setList(Map<Integer, PlayerVO> map) {
-		this.playerMap = map;
-	}
-
-	public float[] getCardArr() {
-		return cardArr;
-	}
-
-	public void setCardArr(float[] cardArr) {
-		this.cardArr = cardArr;
-	}
-
-	public Queue<Float> getShuffledCard() {
-		return shuffledCard;
-	}
-
-	public void setShuffledCard(Queue<Float> shuffledCard) {
-		this.shuffledCard = shuffledCard;
-	}
-	
-	public String getMaster() {
-		return master;
-	}
-
-	public Integer getMasterIndex() {
-		return masterIndex;
-	}
-
-	public void setMasterIndex(Integer masterIndex) {
-		this.masterIndex = masterIndex;
-	}
 
 	public int getPlayerIndex(int playerNo) {
-
 		for (Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
 			if (entry.getValue().getNo() == playerNo) {
 				return entry.getKey();
 			}
 		}
 		return -1;
-
 	} // getPlayerIndex();
-
-	public void setMaster(String str) {
-		master = str;
-	}
-
+	
 	public void setMasterNo(int no) {
-
 		int index = getPlayerIndex(no);
 		if (index != -1) {
 			masterIndex = index;
 			setMaster(playerMap.get(index).getNic());
 		}
-
 	} // setMasterNo();
-
-	public boolean isGameStarted() {
-		return gameStarted;
-	}
-
-	public void setGameStarted(boolean gameStarted) {
-		this.gameStarted = gameStarted;
-	}
-
-}
+	public void setMaster(String str) { master = str; }
+	public Map<Integer, PlayerVO> getList() { return playerMap; }
+	public void setList(Map<Integer, PlayerVO> map) { 		this.playerMap = map; }
+	public float[] getCardArr() { return cardArr; }
+	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
+	public Queue<Float> getShuffledCard() { return shuffledCard; }
+	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
+	public String getMaster() { return master; }
+	public Integer getMasterIndex() { 		return masterIndex; }
+	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
+	public boolean isGameStarted() { return gameStarted; }
+	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+} //class

@@ -94,7 +94,7 @@ public class Lobby {
 						} else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-							RoomScreen.getInstance().mainScreen();
+//							RoomScreen.getInstance().mainScreen();
 							((JFrame)SwingUtilities.getRoot((Component)e.getSource())).dispose();
 						}
 					}
@@ -177,7 +177,7 @@ public class Lobby {
 				if (e.getSource() == newBtn) {
 					lobbyJF.dispose();
 					ClientPacketSender.instance.makeRoom();
-					RoomScreen.getInstance().mainScreen();
+//					RoomScreen.getInstance().mainScreen();
 				}
 			} // action
 		}); // listener

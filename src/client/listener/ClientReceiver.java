@@ -16,11 +16,8 @@ public class ClientReceiver extends Thread {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	
 	private Socket socket;
-	public ClientReceiver(Socket socket) {
-		this.socket = socket;
-	}
+	public ClientReceiver(Socket socket) { this.socket = socket; }
 
 	@Override
 	public void run() {

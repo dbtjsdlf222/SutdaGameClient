@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -67,6 +65,7 @@ public class ClientPacketController {
 		case Protocol.MESSAGE: // 채팅
 			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+	
 			break;
 
 		case Protocol.ENTERLOBBY:
@@ -117,13 +116,14 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.MAKEROOM:
+			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
 			break;
 			
 		case Protocol.ENTERROOM:
-//			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
@@ -185,6 +185,7 @@ public class ClientPacketController {
 			
 		case Protocol.DRAW:
 			System.out.println("[Receive]DRAW");
+			JOptionPane.showMessageDialog(null, "재경기");
 			break;
 			
 			
