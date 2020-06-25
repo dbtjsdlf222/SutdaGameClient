@@ -65,16 +65,15 @@ public class RoomScreen extends JFrame {
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_" };
 	private int mySit;	//서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
+	JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
-	private JButton gameStartBtn = null;
-	private JLabel[] nicText = new JLabel[5];
-	private JLabel[] moneyText = new JLabel[5];
-	private JLabel[] betText = new JLabel[5];
-	private JLabel[] profile = new JLabel[5];
-	private JLabel[] beticon = new JLabel[5];
+	JLabel[] nicText = new JLabel[5];
+	JLabel[] moneyText = new JLabel[5];
+	JLabel[] betText = new JLabel[5];
+	JLabel[] profile = new JLabel[5];
+	JLabel[] beticon = new JLabel[5];
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart = false;
 	private int roomMaster = 0;
@@ -199,7 +198,7 @@ public class RoomScreen extends JFrame {
 				btn[i] = new JButton(
 						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
 
-//				logger.debug(buttonArray[i] + ": " + (buttonArray[i].indexOf("_") == -1));
+				logger.debug(buttonArray[i] + ": " + (buttonArray[i].indexOf("_") == -1));
 
 				if (buttonArray[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
@@ -260,28 +259,25 @@ public class RoomScreen extends JFrame {
 	
 	// 게임시작 버튼
 	public void startBtnSet() {
-		
-		if(gameStartBtn!=null) return;
-		
 		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
 		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
-		gameStartBtn = new JButton(gameStartBasic);
-		gameStartBtn.setBounds(510, 230, 240, 140);
-		gameStartBtn.setBorderPainted(false);
-		gameStartBtn.setContentAreaFilled(false);
-		gameStartBtn.setFocusPainted(false);
-		gameStartBtn.addMouseListener(new MouseAdapter() {
+		JButton gameStart = new JButton(gameStartBasic);
+		gameStart.setBounds(510, 230, 240, 140);
+		gameStart.setBorderPainted(false);
+		gameStart.setContentAreaFilled(false);
+		gameStart.setFocusPainted(false);
+		gameStart.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				gameStartBtn.setIcon(gameStartEnter);
-				gameStartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				gameStart.setIcon(gameStartEnter);
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				gameStartBtn.setIcon(gameStartBasic);
-				gameStartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				gameStart.setIcon(gameStartBasic);
+				gameStart.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			@Override
@@ -295,14 +291,13 @@ public class RoomScreen extends JFrame {
 				if (tempCount >= 2) {
 					RoomScreen.getInstance().gameStart = true;
 					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-					remove(gameStartBtn);
-					gameStartBtn = null;
+					gameStart.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(null, "플레이어가 2명 이상일 때만 시작 가능합니다.", "알림", JOptionPane.WARNING_MESSAGE);
 				}
 			} // mousePressed();
 		});
-		add(gameStartBtn);
+		add(gameStart);
 	}
 	
 	public void mainScreen() {
@@ -317,7 +312,7 @@ public class RoomScreen extends JFrame {
 			if (i == 0) { panlist[i].setBounds(460, 440, 350, 180); } else 
 			if (i == 1) { panlist[i].setBounds(  0, 215, 350, 180); } else 
 			if (i == 2) { panlist[i].setBounds(  0,  30, 350, 180);	} else
-			if (i == 3) { panlist[i].setBounds(915,  30,3590, 180); } else
+			if (i == 3) { panlist[i].setBounds(915,  30, 350, 180); } else
 			if (i == 4) { panlist[i].setBounds(915, 215, 350, 180); }
 			add(panlist[i]);
 		}
@@ -398,6 +393,8 @@ public class RoomScreen extends JFrame {
 			} //actionPerformed();
 		}); //addActionListener();
 
+		// 게임 시작 버튼
+		startBtnSet();
 		
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
@@ -463,7 +460,7 @@ public class RoomScreen extends JFrame {
 
 	public void betIcon(int idx, String bet) {
 		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png"));
-		
+		System.err.println("betIcon idx: " + idx);
 		beticon[idx] = new JLabel(iCon);
 		switch (idx) {
 		case 0:
@@ -475,7 +472,7 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(314, 20, 95, 55);
+			beticon[idx].setBounds(314, 26, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 3:
@@ -490,7 +487,6 @@ public class RoomScreen extends JFrame {
 	} //betIcon();
 
 	public ImageIcon cardFormat(float card) {
-		System.out.println("cardFormat: "+String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png");
 		return  new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
 				String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png"));
 	}
@@ -499,7 +495,9 @@ public class RoomScreen extends JFrame {
 		
 		for (int i = 0; i < 5; i++) {
 			if(cardMap.get(i)==null) continue;
-			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) { e.printStackTrace(); }
 			int idx = (i - mySit + 5) % 5;
 			
 			float c1 = cardMap.get(i).getCard1();
@@ -507,9 +505,6 @@ public class RoomScreen extends JFrame {
 			
 			card1[idx].setIcon(cardFormat(c1));
 			card2[idx].setIcon(cardFormat(c2));
-			
-			try { Thread.sleep(500); }
-			catch (InterruptedException e) { e.printStackTrace(); }
 		}
 	} // openCard();
 
@@ -538,10 +533,6 @@ public class RoomScreen extends JFrame {
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
 		RoomScreen.getInstance().gameStart = false;
-		if(mySit == roomMaster) {
-			startBtnSet();
-		}
-		RoomScreen.getInstance().startBtnSet();
 	}
 
 	/**
@@ -564,8 +555,8 @@ public class RoomScreen extends JFrame {
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
 
-			// 0번과 1번과 2번 자리 앉은 사람은 이미지 반전
-			if (i==0||i == 1 || i == 2) {
+			// 1번과 2번 자리 앉은 사람은 이미지 반전
+			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(
 						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
@@ -575,23 +566,19 @@ public class RoomScreen extends JFrame {
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);
 			panlist[i].setBackground(new Color(0, 0, 0));
+			card1[i].setBounds(115, 10, 110, 160);
+			card2[i].setBounds(230, 10, 110, 160);
 			
-			if (i==0||i==1||i==2) {
-				profile[i].setBounds(10, 10, 90, 100);
-				card1[i].setBounds(115, 10, 110, 160);
-				card2[i].setBounds(230, 10, 110, 160);
-				betText[i].setBounds(10, 10, 90, 20);
-				nicText[i].setBounds(10, 125, 90, 20);
-				moneyText[i].setBounds(10, 150, 90, 20);
-
-			} else if (i==3||i==4) {
-				profile[i].setBounds(250, 10, 90, 100);
-				card1[i].setBounds(10, 10, 110, 160);
-				card2[i].setBounds(125, 10, 110, 160);
-				betText[i].setBounds(250, 10, 90, 20);
-				nicText[i].setBounds(250, 125, 90, 20);
-				moneyText[i].setBounds(250, 150, 90, 20);
-			}
+			int w=0;
+			
+			if (i==0||i==1||i==2) w= 10;  else 
+			if (i==3||i==4)  	  w=250;
+			
+			profile[i].setBounds(w, 10, 90, 100);
+			betText[i].setBounds(w, 10, 90, 20);
+			nicText[i].setBounds(w, 125, 90, 20);
+			moneyText[i].setBounds(w, 150, 90, 20);
+			
 			
 			profile[i].setOpaque(false);
 			profile[i].setBackground(new Color(34, 116, 28));
@@ -622,35 +609,32 @@ public class RoomScreen extends JFrame {
 //				break;
 //			}
 //		} //for
-		System.out.println("indexindex: "+ index);
+
 		mySit = index;
+
 		for (int i = 0; i < 5; i++) {
 			int j;
+
+			j = (mySit - i + 5) % 5;
 			
-			j = (mySit + i) % 5;
 			PlayerVO setVO = voList.get(j);
-			System.out.println("voList.get(j) : "+j);
+
 			if (setVO == null)
 				continue;
-			System.out.println("setSit(i, setVO)  i: "+i+" setVO: "+setVO);
+			
 			setSit(i, setVO);
+
 		} // for
 	} // enterPlayerList();
 
-	/**
-	 * 자신이 들어오거나 다른 사람이 들어올때 실행
-	 * @param vo	자신의 PlayerVO
-	 * @param index 서버상 자신의 index
-	 */
 	public void enterPlayer(PlayerVO vo, int index) {
-		
-		if (PlayerVO.myVO.getNo() == vo.getNo()) {	//들어온 사람이 자기 자신이면 return
+		System.err.println("       " + index +" | "+ vo);
+		if (PlayerVO.myVO.getNo() == vo.getNo())
 			mySit = vo.getIndex();
-		}
-		
+
 		index = (index - mySit + 5) % 5;
 		setSit(index, vo);
-	} // enterPlayer();
+	} // enterPlayerList();
 
 	public static void main(String[] args) {
 		Map<Integer, PlayerVO> voList = new HashMap<Integer, PlayerVO>();
