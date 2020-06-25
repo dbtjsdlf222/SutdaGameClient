@@ -268,6 +268,7 @@ public class Room extends ServerMethod {
 			Packet packet = new Packet();
 			packet.setAction(Protocol.EXITOTHERROOM);
 			packet.setMotion(Integer.toString(playerIndex));
+			roomSpeaker(packet);
 			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
 		
 			if (masterIndex == playerIndex) {
@@ -286,9 +287,8 @@ public class Room extends ServerMethod {
 							masterIndex = idx;
 							this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
 							break;
-						}
-					}
-					
+						}	//if
+					} //if~else
 				} //for
 			}
 		} //if(playerMap.size() <= 0)
