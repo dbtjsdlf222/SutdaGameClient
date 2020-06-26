@@ -136,6 +136,7 @@ public class Room extends ServerMethod {
 		gameReset();
 		handOutCard();		// 1라운드 카드배분
 		turnProgress();
+		gameStarted = true;
 		roomSpeaker(new Packet(Protocol.TURN, masterIndex + ""));
 		roomSpeaker(new Packet(Protocol.STARTPAY, startMoney + ""));
 		lobbyReloadBroadcast(); 
@@ -295,31 +296,7 @@ public class Room extends ServerMethod {
 		lobbyReloadBroadcast();
 	} // exitPlayer();
 
-	public static int getIncreaseRoomNo() {
-		return increaseRoomNo;
-	}
-
-	public static void setIncreaseRoomNo(int increaseRoomNo) {
-		Room.increaseRoomNo = increaseRoomNo;
-	}
-
-	public int getRoomNo() {
-		return roomNo;
-	}
-
-	public void setRoomNo(int roomNo) {
-		this.roomNo = roomNo;
-	}
-
-	public int getStartMoney() {
-		return startMoney;
-	}
-
-	public void setStartMoney(int startMoney) {
-		this.startMoney = startMoney;
-	}
-
-	// public void moneyCheck() {
+		// public void moneyCheck() {
 	// if (money >= startMoney) {
 	// System.out.println("입장");
 	// } else if (list.money < startMoney) {
@@ -394,7 +371,7 @@ public class Room extends ServerMethod {
 						round = 2;
 						handOutCard(); // 2번째 카드 카드 배분
 						beforeBet = 0;
-					} else if (round == 2) {
+					} else { // round 2~3
 						gameResult();
 					}
 					break;
@@ -458,7 +435,7 @@ public class Room extends ServerMethod {
 			break; // case die;
 		} // switch
 		beforeBet = betMoney;
-		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 Vo에서 뺌
+		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 
 		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
 
@@ -487,15 +464,14 @@ public class Room extends ServerMethod {
 		//플레이어 DB에 저장
 		for (int i = 0; i < 5; i++) {
 			try {
-				if(winerIdx==i) {
+				if(winerIdx==i)
 					playerMap.get(i).gameWin();
-				} else {
+				else 
 					playerMap.get(i).gameLose();
-				}
-			dao.playerSave(playerMap.get(i));
+				
+				dao.playerSave(playerMap.get(i));
 			} catch (NullPointerException e) {}
 		}
-		
 		lobbyReloadBroadcast();
 	} // gameOver();
 
@@ -508,6 +484,9 @@ public class Room extends ServerMethod {
 		gameStarted = true;
 		setLiveTrue();
 		cardShuffle(); 		// 카드큐를 섞는다
+		lastBetIdx = 0;
+		beforeBet = 0;
+		totalMoney = 0;
 	}
 
 
@@ -527,6 +506,7 @@ public class Room extends ServerMethod {
 			setMaster(playerMap.get(index).getNic());
 		}
 	} // setMasterNo();
+	
 	public void setMaster(String str) { master = str; }
 	public Map<Integer, PlayerVO> getList() { return playerMap; }
 	public void setList(Map<Integer, PlayerVO> map) { 		this.playerMap = map; }
@@ -539,4 +519,10 @@ public class Room extends ServerMethod {
 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
 	public boolean isGameStarted() { return gameStarted; }
 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+	public static int getIncreaseRoomNo() { return increaseRoomNo; }
+	public static void setIncreaseRoomNo(int increaseRoomNo) { Room.increaseRoomNo = increaseRoomNo; }
+	public int getRoomNo() { return roomNo; }
+	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
+	public int getStartMoney() { return startMoney; }
+	public void setStartMoney(int startMoney) { this.startMoney = startMoney; }
 } //class

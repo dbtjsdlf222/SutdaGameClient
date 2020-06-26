@@ -184,6 +184,8 @@ public class RoomScreen extends JFrame {
 
 			} // actionPerformed();
 		};
+		
+	
 
 		remove(betButtonPan);
 
@@ -280,7 +282,7 @@ public class RoomScreen extends JFrame {
 		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
 		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
 		gameStartBtn = new JButton(gameStartBasic);
-		gameStartBtn.setBounds(510, 230, 240, 140);
+		gameStartBtn.setBounds(510, 350, 240, 115);
 		gameStartBtn.setBorderPainted(false);
 		gameStartBtn.setContentAreaFilled(false);
 		gameStartBtn.setFocusPainted(false);
@@ -475,8 +477,8 @@ public class RoomScreen extends JFrame {
 
 	public void betIcon(int idx, String bet) {
 		
-		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/button/하프.png"));
-		System.err.println("betIcon idx: " + idx);
+		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
+		System.err.println("BetIcon INDEX: [" + idx + "]");
 		beticon[idx] = new JLabel(iCon);
 		switch (idx) {
 		case 0:
@@ -496,7 +498,7 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(840, 260, 95, 55);
+			beticon[idx].setBounds(840, 26, 95, 55);
 			add(beticon[idx]);
 			break;
 		}
@@ -545,6 +547,7 @@ public class RoomScreen extends JFrame {
 	} // receiveCard1();
 
 	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
+		logger.info("gameOver();");
 		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
@@ -552,6 +555,11 @@ public class RoomScreen extends JFrame {
 		if(mySit == roomMaster) {
 			startBtnSet();
 		}
+		beticon = new JLabel[5];
+		totalMoney.setText("게임 대기중...");
+		card1 = new JLabel[5];
+		card2 = new JLabel[5];
+		
 	}
 
 	/**
@@ -614,6 +622,9 @@ public class RoomScreen extends JFrame {
 			moneyText[i].setOpaque(false);
 			panlist[i].add(moneyText[i]);
 
+			revalidate();
+			repaint();
+			
 		} catch (Exception e) {
 			logger.info(Arrays.toString(panlist));
 			logger.error(e.getMessage(), e);
