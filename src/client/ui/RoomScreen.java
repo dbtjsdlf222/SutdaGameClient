@@ -16,7 +16,6 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -30,6 +29,7 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -272,6 +272,8 @@ public class RoomScreen extends JFrame {
 			panlist[i].setBorder(null);	
 		}
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
+		revalidate();
+		repaint();
 	} //turn();
 	
 	// 게임시작 버튼
@@ -451,6 +453,17 @@ public class RoomScreen extends JFrame {
 		groupLayout
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
+		
+		for(int i = 0; i < timers.length; i++) {
+			final int j = i;
+			timers[i] = new Timer(1000, e -> {
+				remove(beticon[j]);
+				revalidate();
+				repaint();
+			});
+			timers[i].setRepeats(false);
+		}
+		
 	} //mainScreen();
 
 	// 시작 돈을 걷고 Text에 적용
@@ -474,34 +487,47 @@ public class RoomScreen extends JFrame {
 		betText[idx].setText(bet);
 		betIcon(idx, bet);
 	} // betAlert();
-
+	
+	public Timer[] timers = new Timer[5];
+	
 	public void betIcon(int idx, String bet) {
 		
 		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
 		System.err.println("BetIcon INDEX: [" + idx + "]");
 		beticon[idx] = new JLabel(iCon);
+		
+		timers[idx].stop();
+		
 		switch (idx) {
 		case 0:
-			beticon[idx].setBounds(729, 468, 95, 55);
+			beticon[idx].setBounds(587, 412, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 1:
-			beticon[idx].setBounds(314, 70, 95, 55);
+			beticon[idx].setBounds(322, 277, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(314, 26, 95, 55);
+			beticon[idx].setBounds(322, 92, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 3:
-			beticon[idx].setBounds(840, 70, 95, 55);
+			beticon[idx].setBounds(887, 92, 95, 55);
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(840, 26, 95, 55);
+			beticon[idx].setBounds(887, 277, 95, 55);
 			add(beticon[idx]);
 			break;
 		}
+		
+		add(panlist[idx]);
+		add(back);
+		revalidate();
+		repaint();
+		
+		timers[idx].start();
+		
 	} //betIcon();
 
 	public ImageIcon cardFormat(float card) {
