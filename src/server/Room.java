@@ -489,7 +489,6 @@ public class Room extends ServerMethod {
 		totalMoney = 0;
 	}
 
-
 	public int getPlayerIndex(int playerNo) {
 		for (Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
 			if (entry.getValue().getNo() == playerNo) {
@@ -519,8 +518,6 @@ public class Room extends ServerMethod {
 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
 	public boolean isGameStarted() { return gameStarted; }
 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
-	public static int getIncreaseRoomNo() { return increaseRoomNo; }
-	public static void setIncreaseRoomNo(int increaseRoomNo) { Room.increaseRoomNo = increaseRoomNo; }
 	public int getRoomNo() { return roomNo; }
 	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
 	public int getStartMoney() { return startMoney; }

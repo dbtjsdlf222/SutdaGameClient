@@ -135,7 +135,7 @@ public class Jokbo {
 		l.cardComboArr.add(new Card(4, 7));
 		jokboList.add(l);
 		// 구사 재경기
-		Jokbo m = new Jokbo("구사 재경기");
+		Jokbo m = new Jokbo("구사");
 		m.cardComboArr.add(new Card(4, 9.5f));
 		m.cardComboArr.add(new Card(4.5f, 9));
 		m.cardComboArr.add(new Card(4.5f, 9.5f));
