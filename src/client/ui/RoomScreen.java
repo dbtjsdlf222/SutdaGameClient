@@ -488,7 +488,7 @@ public class RoomScreen extends JFrame {
 		betIcon(idx, bet);
 	} // betAlert();
 	
-	public Timer[] timers = new Timer[5];
+	public Timer[] timers = new Timer[8];
 	
 	public void betIcon(int idx, String bet) {
 		
