@@ -419,9 +419,11 @@ public class Room extends ServerMethod {
 			} // for
 
 			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
-			if (i <= 1)
+			if (i <= 1) {
 				gameOver(winerIdx);
-
+				roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
+				return;
+			}
 			// 방장이 죽으면 다음 턴 사람한테 넘어간다
 			if (turn == masterIndex) {
 				for (int j = turn; j < 5; j++) {
