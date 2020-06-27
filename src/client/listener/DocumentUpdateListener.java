@@ -12,8 +12,8 @@ public abstract class DocumentUpdateListener implements DocumentListener {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	@Override public void insertUpdate(DocumentEvent e) { update(e); }
-	@Override public void removeUpdate(DocumentEvent e) { update(e); }
+	@Override public void insertUpdate(DocumentEvent e)  { update(e); }
+	@Override public void removeUpdate(DocumentEvent e)  { update(e); }
 	@Override public void changedUpdate(DocumentEvent e) { update(e); }
 	
 	public void update(DocumentEvent e) {
