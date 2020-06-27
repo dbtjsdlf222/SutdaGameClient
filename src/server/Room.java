@@ -8,12 +8,9 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.swing.JOptionPane;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import util.CalcCardLevel;
-import util.Jokbo;
 import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
@@ -372,7 +369,10 @@ public class Room extends ServerMethod {
 						handOutCard(); // 2번째 카드 카드 배분
 						beforeBet = 0;
 					} else { // round 2~3
+						playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
+						roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
 						gameResult();
+						return;
 					}
 					break;
 				} // if
