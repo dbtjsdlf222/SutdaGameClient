@@ -323,6 +323,7 @@ public class RoomScreen extends JFrame {
 			} // mousePressed();
 		});
 		add(gameStartBtn);
+		add(back);
 		revalidate();
 		repaint();
 	}
