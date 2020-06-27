@@ -139,7 +139,6 @@ public class ClientPacketController {
 
 		case Protocol.CHANGEMASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
-			
 			break;
 
 		case Protocol.CARD:
@@ -188,6 +187,9 @@ public class ClientPacketController {
 			JOptionPane.showMessageDialog(null, "재경기");
 			break;
 			
+		case Protocol.RUNOUTMONEY:
+			System.out.println("[Receive]RUNOUTMONEY");
+			break;
 			
 		} // switch
 	} // controller();

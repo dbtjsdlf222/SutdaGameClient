@@ -307,7 +307,7 @@ public class Room extends ServerMethod {
 			turn++;
 			turn %= 5;
 			try {
-				if(playerMap.get(turn).isLive()) { 
+				if(playerMap.get(turn).isLive()) {
 					break;
 				}
 			} catch (NullPointerException e) { }

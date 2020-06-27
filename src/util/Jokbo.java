@@ -126,6 +126,11 @@ public class Jokbo {
 		j.cardComboArr.add(new Card(4.5f, 6));
 		j.cardComboArr.add(new Card(4.5f, 6.5f));
 		jokboList.add(j);
+		
+		jokboList.add(new Jokbo("갑오"));
+		
+		jokboList.add(new Jokbo("끗"));
+		
 		// 땡잡이
 		Jokbo k = new Jokbo("땡잡이");
 		k.cardComboArr.add(new Card(3, 7));

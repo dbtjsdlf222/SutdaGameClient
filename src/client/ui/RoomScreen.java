@@ -574,6 +574,7 @@ public class RoomScreen extends JFrame {
 
 	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
 		logger.info("gameOver();");
+		gameStart = false;
 		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
@@ -583,9 +584,10 @@ public class RoomScreen extends JFrame {
 		}
 		beticon = new JLabel[5];
 		totalMoney.setText("게임 대기중...");
-		card1 = new JLabel[5];
-		card2 = new JLabel[5];
-		
+		for (int j = 0; j < 5; j++) {
+			remove(card1[j]);
+			remove(card2[j]);
+		}
 	}
 
 	/**

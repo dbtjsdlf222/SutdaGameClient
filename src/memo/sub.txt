@@ -1,4 +1,3 @@
-카드 한장 받고 조합별로 불들어오는 기능
 
 도배 방지
 ChattingOperator에
