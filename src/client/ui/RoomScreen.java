@@ -59,7 +59,6 @@ public class RoomScreen extends JFrame {
 
 	private Container content;
 	private Background back = new Background();
-	private JTextField tf;
 	private JButton[] btn = new JButton[6];
 	private JPanel mat = new JPanel();
 	private JPanel betButtonPan = new JPanel();
@@ -76,7 +75,9 @@ public class RoomScreen extends JFrame {
 	private JLabel[] betText = new JLabel[5];
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
+	private boolean[] liveList = {false,false,false,false,false};
 	private JButton gameStartBtn = null;
+	
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart= false;
 	private int roomMaster = 0;
@@ -105,7 +106,7 @@ public class RoomScreen extends JFrame {
 	public void exitPlayer(int index) {
 
 		index = (index - mySit + 5) % 5;
-
+		liveList[index] = false;
 		remove(panlist[index]);
 		panlist[index] = new JPanel();
 
@@ -185,8 +186,6 @@ public class RoomScreen extends JFrame {
 			} // actionPerformed();
 		};
 		
-	
-
 		remove(betButtonPan);
 
 		betButtonPan = new JPanel();
@@ -240,7 +239,7 @@ public class RoomScreen extends JFrame {
 		String data[][] ={{"1450만원","5000만원","9600만원","2억4천만원"}};
 	       
 		DefaultTableModel model = new DefaultTableModel(data,a);
-		JTable tbl =new JTable(model);
+		JTable tbl = new JTable(model);
 		mat.add(tbl);
 		mat.add(totalMoney);
 	}
@@ -262,8 +261,8 @@ public class RoomScreen extends JFrame {
 //		mat.add(manyMoney);
 //		tf = new JTextField(15);
 //		tf.setBounds(300, 300, 300, 150);
-		
 	}
+	
 	private boolean initialized = false;
 	public void turn(int index) {
 		index = (index - mySit + 5) % 5;
@@ -464,16 +463,14 @@ public class RoomScreen extends JFrame {
 			});
 			timers[i].setRepeats(false);
 		}
-		
 	} //mainScreen();
 
 	// 시작 돈을 걷고 Text에 적용
 	public void startPay(long sMoney) {
 		int count = 0;
 		for (int i = 0; i < 5; i++) {
-			if (moneyText[i] == null) {
+			if (moneyText[i] == null) 
 				continue;
-			}
 			count++;
 			moneyText[i].setText(Long.parseLong(moneyText[i].getText().replaceAll(",", "")) - sMoney + "");
 		} // for
@@ -485,6 +482,14 @@ public class RoomScreen extends JFrame {
 		moneyText[idx].setText(money);
 		long calcMoney = Long.parseLong(totalMoney.getText());
 		totalMoney.setText(calcMoney + Long.parseLong(money) + "");
+		if(bet.equals(Protocol.Die)) {
+			liveList[idx] = false;
+			try {
+				remove(card1[idx]);
+				remove(card2[idx]);
+			} catch (NullPointerException e) {}
+		}
+		
 		betText[idx].setText(bet);
 		betIcon(idx, bet);
 	} // betAlert();
@@ -547,9 +552,14 @@ public class RoomScreen extends JFrame {
 
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
-			
-			card1[idx].setIcon(cardFormat(c1));
-			card2[idx].setIcon(cardFormat(c2));
+			try {
+				card1[idx].setIcon(cardFormat(c1));
+				card2[idx].setIcon(cardFormat(c2));
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				System.err.println(cardFormat(c1));
+				System.err.println(cardFormat(c2));
+			}
 		}
 	} // openCard();
 
@@ -566,12 +576,18 @@ public class RoomScreen extends JFrame {
 		if (card[1] != 0)
 			card2[0].setIcon(cardFormat(card[1]));
 
-		for (int i = 1; i < 5; i++) {
-			if (profile[i] != null) {
-				card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
-			}
+		for (int i = 1; i < 5; i++) {	//다른 사람의 뒷패를 돌리므로 1부터
+			if (liveList[i]) {
+				
+				if(card[0] != 0)
+					card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
+				
+				if(card[1] != 0)
+					card2[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
+				
+			} //if
 		} // for
-	} // receiveCard1();
+	} // receiveCard();
 
 	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
 		logger.info("gameOver();");
@@ -580,14 +596,17 @@ public class RoomScreen extends JFrame {
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winMoney);
 		RoomScreen.getInstance().gameStart= false;
-		if(mySit == roomMaster) {
+		if(mySit == roomMaster) 
 			startBtnSet();
-		}
 		beticon = new JLabel[5];
 		totalMoney.setText("게임 대기중...");
 		for (int j = 0; j < 5; j++) {
-			remove(card1[j]);
-			remove(card2[j]);
+			try {
+				remove(card1[j]);
+				remove(card2[j]);
+			} catch (NullPointerException e) { }
+			
+			liveList[j] = false;
 		}
 	}
 
@@ -597,6 +616,7 @@ public class RoomScreen extends JFrame {
 	 */
 	public void setSit(int i, PlayerVO setVO) {
 		try {
+			liveList[i] = true;
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
 

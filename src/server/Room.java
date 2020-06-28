@@ -359,23 +359,27 @@ public class Room extends ServerMethod {
 			betMoney = beforeBet;
 			totalMoney += betMoney;
 			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
-			for (int j = 0; j < 4; j++) {
-				if (playerMap.get(j) == null && !playerMap.get(j).isLive())
+			int nextIdx = turn ;
+			for (int j = 1; j < 5; j++) {
+				nextIdx = (nextIdx + j) % 5;
+				
+				if (playerMap.get(nextIdx) == null || !playerMap.get(nextIdx).isLive()) {
 					continue;
-
-				if (j == lastBetIdx) { // 마지막 배팅한 사람이 내 다음 사람이면
-					if (round == 1) { // 1번째 카드 승부
-						round = 2;
-						handOutCard(); // 2번째 카드 카드 배분
-						beforeBet = 0;
-					} else { // round 2~3
-						playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
-						roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
-						gameResult();
-						return;
+				} else {
+					if(nextIdx == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
+						if (round == 1) { 	// 1번째 카드 승부
+							round = 2;
+							handOutCard(); 	// 2번째 카드 카드 배분
+							beforeBet = 0;
+						} else { // round 2~3
+							playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
+							roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
+							gameResult();
+							return;
+						}
+						break;
 					}
-					break;
-				} // if
+				}
 			} // for
 			break; // Call
 
