@@ -501,23 +501,23 @@ public class RoomScreen extends JFrame {
 		
 		switch (idx) {
 		case 0:
-			beticon[idx].setBounds(587, 412, 95, 55);
+			beticon[idx].setBounds(455, 420, 100, 30);
 			add(beticon[idx]);
 			break;
 		case 1:
-			beticon[idx].setBounds(322, 277, 95, 55);
+			beticon[idx].setBounds(350, 250,  30, 100);
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(322, 92, 95, 55);
+			beticon[idx].setBounds(350, 65, 30, 100);
 			add(beticon[idx]);
 			break;
 		case 3:
-			beticon[idx].setBounds(887, 92, 95, 55);
+			beticon[idx].setBounds(885, 65, 30, 100);
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(887, 277, 95, 55);
+			beticon[idx].setBounds(885, 250, 30, 100);
 			add(beticon[idx]);
 			break;
 		}
