@@ -62,7 +62,7 @@ public class Room extends ServerMethod {
 					float card = pollOneCard();
 					s.getValue().setCard2(card);
 					packet.setCard_(0, card);
-					turn = masterIndex;
+//					turn = masterIndex;
 					round2First = true;
 				}  else if (round == 3) { // 재경기시 1,2번 카드 배분
 					float c1 = pollOneCard();
@@ -116,7 +116,7 @@ public class Room extends ServerMethod {
 		}
 		arr[3] = Protocol.Quater;
 		arr[4] = Protocol.Half;
-		arr[5] = Protocol.Allin;
+		arr[5] = Protocol.Allin+"_";
 
 		if (round == 1) {
 			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
