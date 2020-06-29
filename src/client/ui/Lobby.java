@@ -136,6 +136,7 @@ public class Lobby {
 		ClientPacketController.userCha.setBounds(30, 50, 80, 100);
 		ClientPacketController.userCha.setOpaque(false);
 		
+		//인포 닉네임 출력
 		JLabel infolbl2 = new JLabel();
 		infolbl2.setText(PlayerVO.myVO.getNic());
 		infolbl2.setBounds(130, 30, 120, 30);
@@ -145,7 +146,8 @@ public class Lobby {
 		infolbl2.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 22));
 		infolbl2.setOpaque(true);
 		infoPan.add(infolbl2);
-
+	
+		//인포 머니 출력
 		JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/infoMoney.png")));
 		infoMoneyLbl.setOpaque(true);
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
@@ -154,7 +156,8 @@ public class Lobby {
 		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
 		infoMoneyLbl.setBounds(120, 70, 230,30);
 		infoPan.add(infoMoneyLbl);
-
+		
+		//인포 전적 출력
 		JLabel infoRatingLbl = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/Rating.png")));
 		infoRatingLbl.setOpaque(true);
 		infoRatingLbl.setBackground(new Color(63, 28, 6));
