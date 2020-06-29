@@ -493,8 +493,12 @@ public class RoomScreen extends JFrame {
 //	public Timer[] timers = new Timer[5];
 	
 	public void betIcon(int idx, String bet) {
-		
-		ImageIcon iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
+		ImageIcon iCon;
+		if(idx == 0) {
+			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon_.png"));
+		}else {
+			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
+		}
 		System.err.println("BetIcon INDEX: [" + idx + "]");
 		beticon[idx] = new JLabel(iCon);
 		
@@ -502,23 +506,23 @@ public class RoomScreen extends JFrame {
 		
 		switch (idx) {
 		case 0:
-			beticon[idx].setBounds(455, 420, 100, 30);
+			beticon[idx].setBounds(530, 380, 200, 60);
 			add(beticon[idx]);
 			break;
 		case 1:
-			beticon[idx].setBounds(350, 250,  30, 100);
+			beticon[idx].setBounds(350, 250, 60, 200);
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(350, 65, 30, 100);
+			beticon[idx].setBounds(350, 65, 60, 200);
 			add(beticon[idx]);
 			break;
 		case 3:
-			beticon[idx].setBounds(885, 65, 30, 100);
+			beticon[idx].setBounds(885, 65, 60, 200);
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(885, 250, 30, 100);
+			beticon[idx].setBounds(885, 250, 60, 200);
 			add(beticon[idx]);
 			break;
 		}
