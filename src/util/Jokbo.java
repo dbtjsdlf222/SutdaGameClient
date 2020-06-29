@@ -1,6 +1,14 @@
 package util;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import client.ui.RoomScreen;
 
 class Card {
 	private float card1;
@@ -14,15 +22,14 @@ class Card {
 
 public class Jokbo {
 	private static Jokbo instance;
-	private ArrayList<Jokbo> jokboList;
+	private static ArrayList<Jokbo> jokboList = new ArrayList<Jokbo>();
 	private String name;
-	private ArrayList<Card> cardComboArr;
+	private ArrayList<Card> cardComboArr= new ArrayList<>();
 
 	private Jokbo() {
 		// 생성자가 실행되면 모든 족보 add
-		jokboList = new ArrayList<Jokbo>();
-		cardComboArr = new ArrayList<>();
-
+	setArr();
+	}
 //		jokboList.add(new Jokbo(3,8,"38광땡"));
 //		jokboList.add(new Jokbo(1,8,"18광땡"));
 //		jokboList.add(new Jokbo(1,3,"13광땡"));
@@ -31,7 +38,7 @@ public class Jokbo {
 //			if(i==10)
 //				jokboList.add(new Jokbo(10, (float) 10.5, "장땡"));
 //		}
-
+	public void setArr() {
 		// 38광땡
 		Jokbo a = new Jokbo("38광땡");
 		a.cardComboArr.add(new Card(3, 8));
@@ -177,5 +184,65 @@ public class Jokbo {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public void jokboPan(float card1, float card2) {
+
+		JPanel jokboPan2 = new JPanel();
+		jokboPan2.setBounds(10, 10, 400, 30);
+		jokboPan2.setLayout(new FlowLayout());
+		jokboPan2.setBackground(new Color(0, 0, 0));
+		RoomScreen.jokboPan1.add(jokboPan2);
+
+		JPanel jokboPan3 = new JPanel();
+		jokboPan3.setBounds(10, 45, 400, 30);
+		jokboPan3.setLayout(new FlowLayout());
+		jokboPan3.setBackground(new Color(0, 0, 0));
+		RoomScreen.jokboPan1.add(jokboPan3);
+
+		JPanel jokboPan4 = new JPanel();
+		jokboPan4.setBounds(10, 80, 400, 30);
+		jokboPan4.setLayout(new FlowLayout());
+		jokboPan4.setBackground(new Color(0, 0, 0));
+		RoomScreen.jokboPan1.add(jokboPan4);
+
+		JPanel jokboPan5 = new JPanel();
+		jokboPan5.setBounds(10, 115, 400, 30);
+		jokboPan5.setLayout(new FlowLayout());
+		jokboPan5.setBackground(new Color(0, 0, 0));
+		RoomScreen.jokboPan1.add(jokboPan5);
+
+		JPanel jokboPan6 = new JPanel();
+		jokboPan6.setBounds(10, 150, 400, 30);
+		jokboPan6.setLayout(new FlowLayout());
+		jokboPan6.setBackground(new Color(0, 0, 0));
+		RoomScreen.jokboPan1.add(jokboPan6);
+
+		JLabel[] jokboLbl = new JLabel[25];
+		Jokbo jokboArray = Jokbo.getInstance();
+		int a = 0;
+		for (Jokbo jokbo : jokboArray.getJokboList()) {
+			System.out.println(a + jokbo.getName());
+			a++;
+		}
+
+		for (int i = 0; i < 25; i++) {
+
+			jokboLbl[i] = new JLabel(jokboArray.getJokboList().get(i).getName());
+
+			if (i < 3)
+				jokboPan2.add(jokboLbl[i]);
+			else if (i > 2 && i < 13)
+				jokboPan3.add(jokboLbl[i]);
+			else if (i > 12 && i < 19)
+				jokboPan4.add(jokboLbl[i]);
+			else if (i > 18 && i < 21)
+				jokboPan5.add(jokboLbl[i]);
+			else if (i > 20 && i < 25)
+				jokboPan6.add(jokboLbl[i]);
+
+			jokboLbl[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
+			jokboLbl[i].setForeground(Color.YELLOW);
+		}
+
+	} 
 
 } // class

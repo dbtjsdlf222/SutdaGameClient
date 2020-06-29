@@ -42,6 +42,7 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
+import util.Jokbo;
 import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
@@ -77,7 +78,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] beticon = new JLabel[5];
 	private boolean[] liveList = {false,false,false,false,false};
 	private JButton gameStartBtn = null;
-	
+	public static JPanel jokboPan1 = new JPanel();
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart= false;
 	private int roomMaster = 0;
@@ -414,9 +415,12 @@ public class RoomScreen extends JFrame {
 		}); //addActionListener();
 
 		// 나가기 버튼
-		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/gExitBtn.PNG")));
-		exitBtn.setBounds(1105, 560, 150, 50);
-		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/smallExit.PNG")));
+		exitBtn.setBounds(1235, 5, 20, 20);
+		exitBtn.setBackground(new Color(0, 0, 0, 0));
+		exitBtn.setFocusable(false);
+		exitBtn.setContentAreaFilled(false);
+		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
 		add(exitBtn);
 
 		exitBtn.addActionListener(new ActionListener() {
@@ -426,6 +430,10 @@ public class RoomScreen extends JFrame {
 				new Lobby();
 			}
 		});
+		
+	
+		
+		
 
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
@@ -588,6 +596,16 @@ public class RoomScreen extends JFrame {
 				
 			} //if
 		} // for
+	Jokbo jokbo= Jokbo.getInstance();
+		
+		jokboPan1.setBounds(850, 420, 415, 200);
+		jokboPan1.setBackground(new Color(0, 0, 0));
+		jokboPan1.setLayout(null);
+		add(jokboPan1);
+	
+		jokbo.jokboPan(card[0], card[1]);
+	
+	
 	} // receiveCard();
 
 	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
