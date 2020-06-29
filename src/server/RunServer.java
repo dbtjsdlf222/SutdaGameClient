@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import client.RunClient;
 import dao.PlayerDAO;
 
 public class RunServer {
@@ -40,11 +41,11 @@ public class RunServer {
 
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
-				
+
 				new Thread(new ServerReceiver(socket)).start();
-				
+
 //				pool.execute(new ServerReceiver(socket));
-				
+
 //				Runnable task = () -> {
 //					try {
 //					} catch (InterruptedException e) {
@@ -55,7 +56,6 @@ public class RunServer {
 //				runnableTasks.add(task);
 //				runnableTasks.forEach(executor::executeTask);
 //				executor.waitForAllThreadsToCompletion();
-
 
 			} // while
 

@@ -93,11 +93,9 @@ public class RoomScreen extends JFrame {
 
 	@Override
 	public void dispose() {
-
 		instance = null;
 		ClientPacketSender.instance.exitRoom();
 		super.dispose();
-
 	} // dispose();
 
 	/**
@@ -110,12 +108,12 @@ public class RoomScreen extends JFrame {
 		remove(panlist[index]);
 		panlist[index] = new JPanel();
 
-		int[] x = { 460, 0, 0, 915, 915 };
-		int[] y = { 440, 215, 30, 30, 215 };
+		int[] x = { 460,   0,  0, 915, 915 };
+		int[] y = { 440, 215, 30,  30, 215 };
 
 		panlist[index].setBounds(x[index], y[index], 350, 180);
 		panlist[index].setLayout(null);
-		panlist[index].setBackground(new Color(0, 0, 0));
+		panlist[index].setBackground(new Color(0, 0, 0,122));
 		add(panlist[index]);
 
 		getContentPane().add(back, BorderLayout.CENTER);
@@ -468,6 +466,8 @@ public class RoomScreen extends JFrame {
 	// 시작 돈을 걷고 Text에 적용
 	public void startPay(long sMoney) {
 		int count = 0;
+		gameStart = true;
+		
 		for (int i = 0; i < 5; i++) {
 			if (moneyText[i] == null) 
 				continue;
@@ -556,11 +556,13 @@ public class RoomScreen extends JFrame {
 				card1[idx].setIcon(cardFormat(c1));
 				card2[idx].setIcon(cardFormat(c2));
 			} catch (NullPointerException e) {
+				System.out.println("card1[idx] "+card1[idx]);
+				System.out.println("card2[idx] "+card2[idx]);
 				e.printStackTrace();
 				System.err.println(cardFormat(c1));
 				System.err.println(cardFormat(c2));
 			}
-		}
+		} 
 	} // openCard();
 
 	/**
@@ -581,7 +583,6 @@ public class RoomScreen extends JFrame {
 				
 				if(card[0] != 0)
 					card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
-				
 				if(card[1] != 0)
 					card2[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
 				
@@ -602,8 +603,9 @@ public class RoomScreen extends JFrame {
 		totalMoney.setText("게임 대기중...");
 		for (int j = 0; j < 5; j++) {
 			try {
-				remove(card1[j]);
-				remove(card2[j]);
+				card1[j].setIcon(null);
+				card2[j].setIcon(null);
+				panlist[j].setBorder(null);
 			} catch (NullPointerException e) { }
 			
 			liveList[j] = false;
@@ -642,13 +644,17 @@ public class RoomScreen extends JFrame {
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);
 			panlist[i].setBackground(new Color(0, 0, 0));
-			card1[i].setBounds(115, 10, 110, 160);
-			card2[i].setBounds(230, 10, 110, 160);
 			
-			int w=0;
+			int w = 0, t = 0;
 			
-			if (i==0||i==1||i==2) w= 10;  else 
-			if (i==3||i==4)  	  w=250;
+			if (i==0||i==1||i==2) { w= 10; t=105;}  else 
+			if (i==3||i==4)  	  { w=250; }
+			
+//			card1[i].setBounds(115, 10, 110, 160);
+//			card2[i].setBounds(230, 10, 110, 160);
+			
+			card1[i].setBounds( 10+t, 10, 110, 160);
+			card2[i].setBounds(125+t, 10, 110, 160);
 			
 			profile[i].setBounds(w, 10, 90, 100);
 			betText[i].setBounds(w, 10, 90, 20);

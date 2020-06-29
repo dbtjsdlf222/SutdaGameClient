@@ -328,14 +328,14 @@ public class Room extends ServerMethod {
 
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
-			if(Protocol.Die!=proBet) {
+			if(!proBet.equals(Protocol.Die)) {
 				round1First = false;
 			}
 		}
 		
 		// 2라운드 첫 배팅한 사람이 죽을 경우 다음 사람도 체크 삥 버튼으로 보냄
 		if(round2First) {
-			if(Protocol.Die!=proBet) {
+			if(!Protocol.Die.equals(proBet)) {
 				round2First = false;
 			}
 		} //if(round2First);
@@ -359,14 +359,19 @@ public class Room extends ServerMethod {
 			betMoney = beforeBet;
 			totalMoney += betMoney;
 			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"]");
-			int nextIdx = turn ;
+			int nextTurn = turn ;
+			
+			System.out.println("lastBetIdx ["+lastBetIdx+"]");
+			
 			for (int j = 1; j < 5; j++) {
-				nextIdx = (nextIdx + j) % 5;
+				nextTurn = (nextTurn + j) % 5;
 				
-				if (playerMap.get(nextIdx) == null || !playerMap.get(nextIdx).isLive()) {
+				if (playerMap.get(nextTurn) == null || !playerMap.get(nextTurn).isLive()) {
 					continue;
 				} else {
-					if(nextIdx == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
+					System.out.println("lastBetIdx ["+lastBetIdx+"]");
+					System.out.println("nextTurn ["+nextTurn+"]");
+					if(nextTurn == lastBetIdx) {	//다음 사람이 마지막 판돈 올린 사람이면
 						if (round == 1) { 	// 1번째 카드 승부
 							round = 2;
 							handOutCard(); 	// 2번째 카드 카드 배분
@@ -378,8 +383,8 @@ public class Room extends ServerMethod {
 							return;
 						}
 						break;
-					}
-				}
+					} //if
+				} //if
 			} // for
 			break; // Call
 
@@ -430,12 +435,15 @@ public class Room extends ServerMethod {
 			}
 			// 방장이 죽으면 다음 턴 사람한테 넘어간다
 			if (turn == masterIndex) {
-				for (int j = turn; j < 5; j++) {
-					if (playerMap.get(j) == null || !(playerMap.get(j).isLive()))
+				int temp = 0;
+				for (int j = 1; j < 5; j++) {
+					temp = turn + j;
+					if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
 						continue;
 
-					Packet packet = new Packet(Protocol.CHANGEMASTER, j + "");
+					Packet packet = new Packet(Protocol.CHANGEMASTER, temp + "");
 					roomSpeaker(packet);
+					break;
 				} // for
 			} // if (turn == masterIndex)
 			break; // case die;

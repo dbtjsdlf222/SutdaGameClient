@@ -14,6 +14,22 @@ public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
+	public RunClient() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); // OS 호환
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException
+				| UnsupportedLookAndFeelException e) {
+			try {
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				logger.error(e1.getMessage(), e1);
+			}
+		}
+		EventQueue.invokeLater(() -> new LoginFrame()); // 쓰레드 충돌 방지
+
+	}
+	
 	public static void main(String[] args) {
 
 		try {

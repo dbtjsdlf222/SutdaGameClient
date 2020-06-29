@@ -138,6 +138,7 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.CHANGEMASTER:
+			System.out.println("방장변경 ["+packet.getMotion()+"]");
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
 
