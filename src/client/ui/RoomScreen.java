@@ -643,7 +643,7 @@ public class RoomScreen extends JFrame {
 			}
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);
-			panlist[i].setBackground(new Color(0, 0, 0));
+			panlist[i].setBackground(new Color(0, 0, 0, 122));
 			
 			int w = 0, t = 0;
 			
