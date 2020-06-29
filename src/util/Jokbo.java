@@ -168,7 +168,6 @@ public class Jokbo {
 		jokboList.add(n);
 	}
 
-
 	/**
 	 *  어떤 카드 조합이 나올 가능성이 있는지 판단 메소드
 	 * @param jo add할 카드 조합이 나올 가능성이 있는지
