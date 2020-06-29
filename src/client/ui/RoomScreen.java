@@ -699,11 +699,8 @@ public class RoomScreen extends JFrame {
 
 		for (int i = 0; i < 5; i++) {
 			int j;
-
 			j = (mySit + i  + 5) % 5;
-			
 			PlayerVO setVO = voList.get(j);
-
 			if (setVO == null)
 				continue;
 			
