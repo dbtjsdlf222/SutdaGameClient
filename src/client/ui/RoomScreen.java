@@ -252,14 +252,6 @@ public class RoomScreen extends JFrame {
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
 		
 		add(mat); // 배팅 금액 패널
-
-//		JLabel littleMoney = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/littleMoney.PNG")));
-//		JLabel manyMoney = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/manyMoney.PNG")));
-//		littleMoney.setBounds(10, 10, 420, 280);
-//		manyMoney.setBounds(10, 10, 420, 280);
-//		mat.add(manyMoney);
-//		tf = new JTextField(15);
-//		tf.setBounds(300, 300, 300, 150);
 	}
 	
 	private boolean initialized = false;
@@ -431,10 +423,6 @@ public class RoomScreen extends JFrame {
 			}
 		});
 		
-	
-		
-		
-
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
 		setTitle("섯다 온라인");

@@ -18,6 +18,8 @@ class Card {
 		this.card1 = card1;
 		this.card2 = card2;
 	}
+	public float getCard1() { return card1; }
+	public float getCard2() { return card2; }
 }
 
 public class Jokbo {
@@ -28,8 +30,16 @@ public class Jokbo {
 
 	private Jokbo() {
 		// 생성자가 실행되면 모든 족보 add
-	setArr();
+		setArr();
 	}
+	
+	public static Jokbo getInstance() {
+		if (instance == null) {
+			instance = new Jokbo();
+		}
+		return instance;
+	}
+	
 //		jokboList.add(new Jokbo(3,8,"38광땡"));
 //		jokboList.add(new Jokbo(1,8,"18광땡"));
 //		jokboList.add(new Jokbo(1,3,"13광땡"));
@@ -158,32 +168,35 @@ public class Jokbo {
 		jokboList.add(n);
 	}
 
-	public static Jokbo getInstance() {
-		if (instance == null) {
-			instance = new Jokbo();
-		}
-		return instance;
-	}
 
-	public ArrayList<Jokbo> getJokboList() {
-		return jokboList;
-	}
-
-	public Jokbo(String name) {
-		this.name = name;
-	}
-
-	public void setJokboList(ArrayList<Jokbo> jokboList) {
-		this.jokboList = jokboList;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	/**
+	 *  어떤 카드 조합이 나올 가능성이 있는지 판단 메소드
+	 * @param jo add할 카드 조합이 나올 가능성이 있는지
+	 * @param c1 플레이어가 받은 첫 번째 카드
+	 * @param c2 플레이어가 받은 두 번째 카드 (한장만 보려면 0)
+	 * @return 이 조합이 나올 가능성이 있다면 true
+	 */
+	public boolean inCard(Jokbo jo,float c1,float c2) {
+		//카드 몇장인지 판단
+		if(Math.abs(c2) == 0) {
+			for (Card card : jo.cardComboArr) {
+				if((card.getCard1() == c1 && card.getCard2() == c2) || (card.getCard2() == c1 && card.getCard1() == c2 )) {
+					return true;
+				}
+			} //for
+		} else {
+			for (Card card : jo.cardComboArr) {
+				if(card.getCard1() == c1) {
+					return true;			
+				} //if
+				if(card.getCard2() == c1) {
+					return true;
+				} //if
+			} //for
+		} //if~else
+		return false;
+	} //inCard();
+	
 	public void jokboPan(float card1, float card2) {
 
 		JPanel jokboPan2 = new JPanel();
@@ -245,4 +258,12 @@ public class Jokbo {
 
 	} 
 
+	public ArrayList<Jokbo> getJokboList() { return jokboList; }
+	public Jokbo(String name) { this.name = name; }
+	public ArrayList<Card> getCardComboArr() { return cardComboArr; }
+	public void setCardComboArr(ArrayList<Card> cardComboArr) { this.cardComboArr = cardComboArr; }
+	public void setJokboList(ArrayList<Jokbo> jokboList) { this.jokboList = jokboList; }
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
+	
 } // class
