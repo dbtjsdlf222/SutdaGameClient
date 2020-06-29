@@ -544,19 +544,19 @@ public class RoomScreen extends JFrame {
 			try { 
 				Thread.sleep(500);
 			} catch (InterruptedException e) { e.printStackTrace(); }
-			int idx = (i + mySit + 5) % 5;
+			int idx = (i - mySit + 5) % 5;
 
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
 			System.out.println("idx ["+idx+"]");
 			try {
-//				card1[idx].setIcon(cardFormat(c1));
-//				card2[idx].setIcon(cardFormat(c2));
-				card1[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
-				String.format("%." +((int) c1 == c1 ? "0" : "1")+"f", c1) +".png")));
-				
-				card2[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
-						String.format("%." +((int) c2 == c2 ? "0" : "1")+"f", c2) +".png")));
+				card1[idx].setIcon(cardFormat(c1));
+				card2[idx].setIcon(cardFormat(c2));
+//				card1[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
+//				String.format("%." +((int) c1 == c1 ? "0" : "1")+"f", c1) +".png")));
+//				
+//				card2[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
+//						String.format("%." +((int) c2 == c2 ? "0" : "1")+"f", c2) +".png")));
 				
 			} catch (NullPointerException e) {
 				System.out.println("card1[idx] "+card1[idx]);
