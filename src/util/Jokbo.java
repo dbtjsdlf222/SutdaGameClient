@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import client.ui.RoomScreen;
 
@@ -27,6 +28,7 @@ public class Jokbo {
 	private static ArrayList<Jokbo> jokboList = new ArrayList<Jokbo>();
 	private String name;
 	private ArrayList<Card> cardComboArr= new ArrayList<>();
+	private float beforeCard1;
 
 	private Jokbo() {
 		// 생성자가 실행되면 모든 족보 add
@@ -175,26 +177,31 @@ public class Jokbo {
 	 * @param c2 플레이어가 받은 두 번째 카드 (한장만 보려면 0)
 	 * @return 이 조합이 나올 가능성이 있다면 true
 	 */
-	public boolean inCard(Jokbo jo,float c1,float c2) {
-		//카드 몇장인지 판단
-		if(Math.abs(c2) == 0) {
-			for (Card card : jo.cardComboArr) {
-				if((card.getCard1() == c1 && card.getCard2() == c2) || (card.getCard2() == c1 && card.getCard1() == c2 )) {
-					return true;
-				}
-			} //for
-		} else {
-			for (Card card : jo.cardComboArr) {
-				if(card.getCard1() == c1) {
-					return true;			
-				} //if
-				if(card.getCard2() == c1) {
-					return true;
-				} //if
-			} //for
-		} //if~else
-		return false;
-	} //inCard();
+	 public boolean inCard(Jokbo jo, float c1, float c2) {
+	      // 카드 몇장인지 판단
+	      if (Math.abs(c2) != 0) {
+	         System.out.println("2번째 판단" +c2);
+	         c1 = beforeCard1;
+	         for (Card card : jo.cardComboArr) {
+	            if ((card.getCard1() == c1 && card.getCard2() == c2)
+	                  || (card.getCard2() == c1 && card.getCard1() == c2)) {
+	               return true;
+	            }
+	         } // for
+	      } else {
+	         beforeCard1 = c1;
+	         for (Card card : jo.cardComboArr) {
+	            if (card.getCard1() == c1) {
+	               return true;
+	            } // if
+	            if (card.getCard2() == c1) {
+	               return true;
+	            } // if
+	         } // for
+	      } // if~else
+	      return false;
+	   } // inCard();
+
 	
 	public void jokboPan(float card1, float card2) {
 
@@ -251,11 +258,17 @@ public class Jokbo {
 			else if (i > 20 && i < 25)
 				jokboPan6.add(jokboLbl[i]);
 
-			jokboLbl[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
-			jokboLbl[i].setForeground(Color.YELLOW);
-		}
+			 jokboLbl[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
+	         jokboLbl[i].setBorder(null);
+	         jokboLbl[i].setForeground(Color.white);
 
-	} 
+	         if (inCard(jokboArray.getJokboList().get(i), card1, card2)) {
+	            jokboLbl[i].setBorder(new LineBorder(Color.orange, 1));
+	         }
+
+	      } // for문
+	   }// jokboPan
+
 
 	public ArrayList<Jokbo> getJokboList() { return jokboList; }
 	public Jokbo(String name) { this.name = name; }

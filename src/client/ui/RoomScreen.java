@@ -595,7 +595,8 @@ public class RoomScreen extends JFrame {
 				
 			} //if
 		} // for
-	Jokbo jokbo= Jokbo.getInstance();
+		 remove(jokboPan1);
+		Jokbo jokbo= Jokbo.getInstance();
 		
 		jokboPan1.setBounds(850, 420, 415, 200);
 		jokboPan1.setBackground(new Color(0, 0, 0));
