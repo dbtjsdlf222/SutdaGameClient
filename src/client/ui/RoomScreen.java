@@ -510,19 +510,19 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		case 1:
-			beticon[idx].setBounds(350, 250, 60, 200);
+			beticon[idx].setBounds(350, 235, 60, 140);
 			add(beticon[idx]);
 			break;
 		case 2:
-			beticon[idx].setBounds(350, 65, 60, 200);
+			beticon[idx].setBounds(350, 50, 60, 140);
 			add(beticon[idx]);
 			break;
 		case 3:
-			beticon[idx].setBounds(885, 65, 60, 200);
+			beticon[idx].setBounds(855, 50, 60, 140);
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(885, 250, 60, 200);
+			beticon[idx].setBounds(855, 50, 60, 140);
 			add(beticon[idx]);
 			break;
 		}
