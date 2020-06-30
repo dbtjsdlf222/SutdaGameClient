@@ -180,7 +180,6 @@ public class Jokbo {
 	 public boolean inCard(Jokbo jo, float c1, float c2) {
 	      // 카드 몇장인지 판단
 	      if (Math.abs(c2) != 0) {
-	         System.out.println("2번째 판단" +c2);
 	         c1 = beforeCard1;
 	         for (Card card : jo.cardComboArr) {
 	            if ((card.getCard1() == c1 && card.getCard2() == c2)
@@ -239,7 +238,6 @@ public class Jokbo {
 		Jokbo jokboArray = Jokbo.getInstance();
 		int a = 0;
 		for (Jokbo jokbo : jokboArray.getJokboList()) {
-			System.out.println(a + jokbo.getName());
 			a++;
 		}
 

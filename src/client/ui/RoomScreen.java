@@ -160,8 +160,6 @@ public class RoomScreen extends JFrame {
 		if(buttonArray!=null)
 			showNeedMoney(buttonArray);
 		
-		logger.debug(Arrays.toString(buttonArray));
-
 		ActionListener action = new ActionListener() {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
 			@Override
@@ -196,8 +194,6 @@ public class RoomScreen extends JFrame {
 			try {
 				btn[i] = new JButton(
 						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
-
-				logger.debug(buttonArray[i] + ": " + (buttonArray[i].indexOf("_") == -1));
 
 				if (buttonArray[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
@@ -522,7 +518,7 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		case 4:
-			beticon[idx].setBounds(855, 50, 60, 140);
+			beticon[idx].setBounds(855, 235, 60, 140);
 			add(beticon[idx]);
 			break;
 		}
@@ -544,7 +540,7 @@ public class RoomScreen extends JFrame {
 	public void openCard(Map<Integer,PlayerVO> cardMap) {
 		
 		for (int i = 0; i < 5; i++) {
-			if(cardMap.get(i)==null) continue;
+			if(cardMap.get(i)==null || !cardMap.get(i).isLive()) continue;
 			try { 
 				Thread.sleep(500);
 			} catch (InterruptedException e) { e.printStackTrace(); }
@@ -596,6 +592,7 @@ public class RoomScreen extends JFrame {
 			} //if
 		} // for
 		 remove(jokboPan1);
+		 System.out.println("receiveCard");
 		Jokbo jokbo= Jokbo.getInstance();
 		
 		jokboPan1.setBounds(850, 420, 415, 200);
@@ -644,7 +641,6 @@ public class RoomScreen extends JFrame {
 			nicText[i].setForeground(Color.white);
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-			System.out.println("nicText: "+nicText);
 			
 			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
 			moneyText[i].setForeground(new Color(255, 252, 128));
