@@ -7,8 +7,10 @@
 프로젝트 분할
 /gameResult
 /카드 뒷면 돌리는 판단문 제대로 작동안함 receiveCard()
-게임 끝나면 카드 비우기
+/게임 끝나면 카드 비우기
 올인 활성화
+
+게임 끝날때 승자가 나가면
 
 room.turnProgress()
 
