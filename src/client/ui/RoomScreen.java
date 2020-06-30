@@ -619,7 +619,7 @@ public class RoomScreen extends JFrame {
 		if(mySit == roomMaster)
 			startBtnSet();
 		beticon = new JLabel[5];
-		totalMoney.setText("게임 대기중...");
+//		totalMoney.setText("게임 대기중...");
 		for (int j = 0; j < 5; j++) {
 			try {
 				card1[j].setIcon(null);

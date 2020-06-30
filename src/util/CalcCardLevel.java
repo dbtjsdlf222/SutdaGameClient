@@ -8,6 +8,7 @@ import java.util.Map;
 import operator.RoomOperator;
 import vo.PlayerVO;
 
+@SuppressWarnings("rawtypes")
 public class CalcCardLevel implements Comparable {
 
 	private static List<CalcCardLevel> playerCardList = new ArrayList<>();
