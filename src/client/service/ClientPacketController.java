@@ -89,7 +89,7 @@ public class ClientPacketController {
 			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
 				((DefaultTableModel) roomJT.getModel()).removeRow(i);
 			}
-
+			
 			rLmodel.getDataVector().removeAllElements();
 			rLmodel.fireTableDataChanged();
 			Map<Integer, Room> map = packet.getRoomMap();
