@@ -27,7 +27,7 @@ public class ClientPacketSender {
 	} // exitRoom();
 
 	public void login(String id, String pw) {
-		PlayerVO.myVO.setID(id);
+		PlayerVO.myVO.setId(id);
 		PlayerVO.myVO.setPassword(pw);
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
 	} // login();

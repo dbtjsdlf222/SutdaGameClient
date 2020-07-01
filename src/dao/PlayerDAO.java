@@ -55,6 +55,46 @@ public class PlayerDAO {
 			logger.error(e.getMessage(), e);
 		}
 	}
+	
+	public PlayerVO selectOnePlayerWithNo(int playerNo) {
+		
+		String sql = "SELECT * FROM player WHERE no=?";
+		ResultSet rs = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, playerNo);
+			rs = pstmt.executeQuery();
+			rs.next();
+
+			try {
+				int no = rs.getInt(1);
+				String rsID = rs.getString(2);
+				String rsPW = rs.getString(3);
+				String nickname = rs.getString(4);
+				long money = rs.getInt(5);
+				int win = rs.getInt(6);
+				int lose = rs.getInt(7);
+				boolean online = rs.getBoolean(8);
+				int character = rs.getInt(10);
+				String ip = null;
+				try {
+					ip = InetAddress.getLocalHost().getHostAddress();
+				} catch (UnknownHostException e) {
+					logger.error(e.getMessage(), e);
+				}
+
+				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
+			} catch (SQLException e) {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		return null;
+	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		InetAddress local = null;
@@ -71,7 +111,7 @@ public class PlayerDAO {
 		int character = 0;
 		int result = 0;
 
-		id = vo.getID();
+		id = vo.getId();
 		pw = vo.getPassword();
 		nick = vo.getNic();
 		character = vo.getCha();
@@ -171,7 +211,7 @@ public class PlayerDAO {
 				String rsID = rs.getString(2);
 				String rsPW = rs.getString(3);
 				String nickname = rs.getString(4);
-				int money = rs.getInt(5);
+				long money = rs.getInt(5);
 				int win = rs.getInt(6);
 				int lose = rs.getInt(7);
 				boolean online = rs.getBoolean(8);
@@ -221,7 +261,7 @@ public class PlayerDAO {
 		String query = "UPDATE player SET money = ?, win = ?, lose = ? WHERE no = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, vo.getMoney());
+			pstmt.setLong(1, vo.getMoney());
 			pstmt.setInt(2, vo.getWin());
 			pstmt.setInt(3, vo.getLose());
 			pstmt.setInt(4, vo.getNo());

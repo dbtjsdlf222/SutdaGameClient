@@ -18,22 +18,23 @@ import vo.Protocol;
 
 public class Room extends ServerMethod {
 
-	private static int increaseRoomNo = 1;
+	private static int increaseRoomNo = 10000;
 	private int roomNo;		// 방 번호
-	private int startMoney; // 시작 금액
+	private long startMoney; // 시작 금액
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
 	private String master; 		 // 방장(선)이 누구인지
-	private int totalMoney; 	 // 총 배팅액의 합
-	private int beforeBet;	 	 // 전 플레이어의 배팅액
+	private long totalMoney; 	 // 총 배팅액의 합
+	private long beforeBet;	 	 // 전 플레이어의 배팅액
 	private int round; 			 // 몇번째 카드 배팅인지
 	private int lastBetIdx;	 	 // 마지막으로 배팅한 플레이어가 몇번째 사람인지
 	private int turn; 			 // 누구의 차례인지
 	private boolean round1First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
+	private boolean allIn = false;
 
 	// 생성자
 	public Room() {
@@ -78,9 +79,10 @@ public class Room extends ServerMethod {
 		} // for
 	} // setPlayerCard();
 
-	public void setLiveTrue() {
+	public void resetLiveAndAllIn() {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			s.getValue().setLive(true);
+			s.getValue().setAllInMoney(0);
 		}
 	}
 
@@ -106,19 +108,36 @@ public class Room extends ServerMethod {
 
 	public String[] setButton() {
 		String[] arr = new String[6];
+		long turnHaveMoney = playerMap.get(turn).getMoney();
+		
 		arr[0] = Protocol.Die;
-
+		
 		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
 		if (round2First) {
 			arr[1] = Protocol.Check;
+			
 			arr[2] = Protocol.Pping;
+			if(startMoney > turnHaveMoney) 
+				arr[2] += "_";
+				
 		} else {
+			if(beforeBet > turnHaveMoney)
+				allIn = true;
+			
 			arr[1] = Protocol.Call;
 			arr[2] = Protocol.Ddadang;
+			if(beforeBet * 2 > turnHaveMoney)
+				arr[2] += "_";
 		}
 		arr[3] = Protocol.Quater;
+			if((totalMoney/4) + beforeBet > turnHaveMoney)
+				arr[3]+= "_";
+				
 		arr[4] = Protocol.Half;
-		arr[5] = Protocol.Allin+"_";
+			if((totalMoney/2) + beforeBet > turnHaveMoney)
+				arr[4]+= "_";
+		
+		arr[5] = Protocol.Allin;
 
 		if (round == 1) {
 			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
@@ -127,7 +146,11 @@ public class Room extends ServerMethod {
 				arr[3] += "_";
 			}
 			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
-		}
+		} else {
+			if(beforeBet > playerMap.get(turn).getMoney()) {
+				arr[3] += "_";
+			}
+		} //if (round == 1) {
 		return arr;
 	}
 
@@ -303,8 +326,12 @@ public class Room extends ServerMethod {
 	// }
 	// } // 판돈 체크 후 입장 여부 확인
 
+	/**
+	 * 턴을 증가시키고 사용자 사용가능 버튼을 전송하고 누구 턴인지 브로드캐스트
+	 */
 	public void turnProgress() {
 		
+		//다음 턴 사람의 index를 turn에 넣음
 		for (int i = 0; i < 4; i++) {
 			turn++;
 			turn %= 5;
@@ -315,8 +342,6 @@ public class Room extends ServerMethod {
 			} catch (NullPointerException e) { }
 		} //for
 		
-		logger.info("["+roomNo+"번방] "+playerMap.get(turn)+"님의 차례");
-		
 		String[] arr = setButton();
 		
 		//차례 클라이언트에게 button배열 전송
@@ -326,7 +351,7 @@ public class Room extends ServerMethod {
 	} //turnProgress();
 
 	public void bet(String proBet) {
-		int betMoney = 0;
+		long betMoney = 0;
 
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
@@ -358,8 +383,14 @@ public class Room extends ServerMethod {
 			break;
 
 		case Protocol.Call:
-			betMoney = beforeBet;
-			totalMoney += betMoney;
+			if(playerMap.get(turn).getMoney() < beforeBet) {
+				playerMap.get(turn).setAllInMoney(playerMap.get(turn).getMoney());
+				totalMoney += playerMap.get(turn).getMoney();
+			} else {
+				betMoney = beforeBet;
+				totalMoney += betMoney;
+			}
+			
 			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
 			int nextTurn = turn ;
 			
@@ -428,7 +459,7 @@ public class Room extends ServerMethod {
 			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 			if (i <= 1) {
 				gameOver(winerIdx);
-				roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
+				roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 				return;
 			}
 			// 방장이 죽으면 다음 턴 사람한테 넘어간다
@@ -450,7 +481,7 @@ public class Room extends ServerMethod {
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 
-		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
+		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 
 		turnProgress();
 	} // bet();
@@ -471,7 +502,12 @@ public class Room extends ServerMethod {
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx) {
 		playerMap.get(winerIdx).winMoney(totalMoney);
-		roomSpeaker(new Packet(Protocol.GAMEOVER,"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다./" + winerIdx + "/" + playerMap.get(winerIdx).getMoney()));
+		roomSpeaker(new Packet(Protocol.GAMEOVER,
+				"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다."
+				+ "/"
+				+ winerIdx
+				+ "/"  
+				+ playerMap.get(winerIdx).getMoney()));
 		gameStarted = false;
 		
 		//플레이어 DB에 저장
@@ -483,8 +519,15 @@ public class Room extends ServerMethod {
 					playerMap.get(i).gameLose();
 				
 				dao.playerSave(playerMap.get(i));
+
 			} catch (NullPointerException e) {}
 		}
+		
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			PlayerVO vo = dao.selectOnePlayerWithNo(s.getValue().getNo());
+			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOADMYVO,vo)); 
+		}
+		
 		lobbyReloadBroadcast();
 	} // gameOver();
 
@@ -495,7 +538,7 @@ public class Room extends ServerMethod {
 		turn = masterIndex-1; // turnProgress()에서 turn+1 을하고 진행
 		startMoney = 100000;
 		gameStarted = true;
-		setLiveTrue();
+		resetLiveAndAllIn();
 		cardShuffle(); 		// 카드큐를 섞는다
 		lastBetIdx = 0;
 		beforeBet = 0;
@@ -536,6 +579,6 @@ public class Room extends ServerMethod {
 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
 	public int getRoomNo() { return roomNo; }
 	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
-	public int getStartMoney() { return startMoney; }
-	public void setStartMoney(int startMoney) { this.startMoney = startMoney; }
+	public long getStartMoney() { return startMoney; }
+	public void setStartMoney(long startMoney) { this.startMoney = startMoney; }
 } //class

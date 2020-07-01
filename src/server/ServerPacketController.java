@@ -41,7 +41,7 @@ public class ServerPacketController extends ServerMethod {
 			packet.setAction(Protocol.ENTERLOBBY);
 			this.packetAnalysiser(packet);
 
-			String id = packet.getPlayerVO().getID();
+			String id = packet.getPlayerVO().getId();
 			String pw = packet.getPlayerVO().getPassword();
 
 			PlayerVO vo = dao.login(id, pw);
@@ -120,12 +120,13 @@ public class ServerPacketController extends ServerMethod {
 				thisPlayerVO.setSocketWithBrPw(socket);
 			}
 			lobbyPlayerList.add(thisPlayerVO); // 로비 리스트에 자신 추가
-			packet.setPlayerList(lobbyPlayerList); // 자신에게 로비에 출력할 입장된 사람 보냄
-			packet.setRoomMap(ro.getAllRoom());
 			
-			lobbyReloadBroadcast();
-
+//			packet.setPlayerList(lobbyPlayerList); // 자신에게 로비에 출력할 입장된 사람 보냄
+//			packet.setRoomMap(ro.getAllRoom());
 //			Packing.sender(thisPlayerVO.getPwSocket(), packet);
+			
+			thisPlayerVO.saveExceptPw(dao.selectOnePlayerWithNo(thisPlayerVO.getNo()));
+			lobbyReloadBroadcast();
 			break;
 
 		case Protocol.RELOADLOBBYLIST:

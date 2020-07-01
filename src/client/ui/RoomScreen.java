@@ -472,17 +472,16 @@ public class RoomScreen extends JFrame {
 		totalMoney.setText(count * sMoney + "");
 	} // startPay();
 
-	public void betAlert(int idx, String bet, String money) {
+	public void betAlert(int idx, String bet, String money,String total) {
 		idx = (idx - mySit + 5) % 5;
+		
 		moneyText[idx].setText(money);
-		try {
-			long calcMoney = Long.parseLong(totalMoney.getText());
-			totalMoney.setText(calcMoney + Long.parseLong(money) + "");
-		} catch (Exception e) {}
+		
+		totalMoney.setText(total);
+			
 		if(bet.equals(Protocol.Die)) {
 			liveList[idx] = false;
 			try {
-				System.out.println("card1[idx].setIcon(null)");
 				card1[idx].setIcon(null);
 				card2[idx].setIcon(null);
 			} catch (NullPointerException e) { }
@@ -553,7 +552,6 @@ public class RoomScreen extends JFrame {
 
 			float c1 = cardMap.get(i).getCard1();
 			float c2 = cardMap.get(i).getCard2();
-			System.out.println("idx ["+idx+"]");
 			try {
 				card1[idx].setIcon(cardFormat(c1));
 				card2[idx].setIcon(cardFormat(c2));
@@ -607,14 +605,19 @@ public class RoomScreen extends JFrame {
 	
 		jokbo.jokboPan(card[0], card[1]);
 	
-	
 	} // receiveCard();
 
-	public void gameOver(String winerMsg, int winerIdx, String winMoney) {
+	/**
+	 * @param msg 알림창에 넣을 내용
+	 * @param winerIdx 승자 서버 인덱스
+	 * @param winerTotalMoney 승자가 소유한 돈
+	 */
+	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
 		gameStart = false;
-		JOptionPane.showMessageDialog(null, winerMsg, "알림", JOptionPane.WARNING_MESSAGE);
+		roomMaster = winerIdx;
+		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
-		moneyText[winerIdx].setText(winMoney);
+		moneyText[winerIdx].setText(winerTotalMoney);
 		RoomScreen.getInstance().gameStart= false;
 		if(mySit == roomMaster)
 			startBtnSet();

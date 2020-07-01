@@ -31,7 +31,7 @@ public class ClientPacketController {
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
 	private DecimalFormat fm = new DecimalFormat("###,###");
-	private static String[][] pn = new String[99][99];
+	private static String[][] pn = new String[255][255];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -166,11 +166,11 @@ public class ClientPacketController {
 			}
 			break;
 
-		// Motion(Protocol.OTHERBET, turn + "/" + proBet +"/"+money)
+		// Motion(Protocol.OTHERBET, turn + "/" + proBet +"/"+money+"/"totalMoney)
 		case Protocol.OTHERBET:
 			try {
 				String[] sp = packet.getMotion().split("/");
-				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[2]);
+				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[2],sp[3]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -190,6 +190,10 @@ public class ClientPacketController {
 			
 		case Protocol.RUNOUTMONEY:
 			System.out.println("[Receive]RUNOUTMONEY");
+			break;
+			
+		case Protocol.RELOADMYVO:
+			PlayerVO.myVO.saveExceptPw(packet.getPlayerVO());
 			break;
 			
 		} // switch

@@ -45,6 +45,7 @@ public class Protocol {
 	public static final String DRAW = "33";
 	public static final String SETSTARTBUTTON = "34"; 
 	public static final String RUNOUTMONEY = "35"; 
+	public static final String RELOADMYVO = "36"; 
 	
 	public static String getName(String str) {
 		
@@ -84,6 +85,8 @@ public class Protocol {
 			case "33": str = "DRAW"; break;
 			case "34": str = "SHOWSTARTBTN"; break;
 			case "35": str = "RUNOUTMONEY"; break;
+			case "36": str = "RELOADMYVO"; break;
+			
 			default  : str = "UnknownProtocol"; break;
 		}
 		

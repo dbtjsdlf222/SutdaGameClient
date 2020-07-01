@@ -27,7 +27,7 @@ public class PlayerVO {
 	private String id = null;
 	private String password = null;
 	private String nic = null;
-	private int money = 0;
+	private long money = 0;
 	private boolean admin;
 	private int win = 0;
 	private int lose = 0;
@@ -41,6 +41,7 @@ public class PlayerVO {
 	private int index;
 	private String ip;
 	private int roomNo; // 0이면 로비
+	private long allInMoney;	//올인한 money
 
 	@JsonIgnore
 	private Socket socket;
@@ -49,34 +50,9 @@ public class PlayerVO {
 	@JsonIgnore
 	private PrintWriter pwSocket;
 
-	public int getRoomNo() {
-		return roomNo;
-	}
+	public PlayerVO() { }
 
-	public void setRoomNo(int roomNo) {
-		this.roomNo = roomNo;
-	}
-
-	public PlayerVO() {
-	}
-
-	public void pay(int money) {
-		this.money -= money;
-	}
-
-	public void joinPlayer(String id, String pw, String nic) {
-		this.id = id;
-		this.password = pw;
-		this.nic = nic;
-	}
-
-//	public void enterPlayer(String nic, int cha, int money) {
-//		this.nic = nic;
-//		this.cha = cha;
-//		this.money = money;
-//	}
-
-	public PlayerVO(int no, String id, String password, String nic, int money, boolean admin, int win, int lose,
+	public PlayerVO(int no, String id, String password, String nic, long money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
 		this.no = no;
 		this.id = id;
@@ -90,8 +66,8 @@ public class PlayerVO {
 		this.cha = cha;
 		this.ip = ip;
 	}
-
-	public PlayerVO(Socket socket, int no, String id, String password, String nic, int money, boolean admin, int win,
+	
+	public PlayerVO(Socket socket, int no, String id, String password, String nic, long money, boolean admin, int win,
 			int lose, boolean online, int cha, boolean live, float card1, float card2, int cardLevel, String cardName,
 			BufferedReader brSocket, PrintWriter pwSocket) {
 		this.socket = socket;
@@ -113,45 +89,32 @@ public class PlayerVO {
 		this.brSocket = brSocket;
 		this.pwSocket = pwSocket;
 	}
+	
+	public void pay(long money) {
+		if((this.money -= money) < 0)
+			this.money = 0;
+	}
+
+	public void joinPlayer(String id, String pw, String nic) {
+		this.id = id;
+		this.password = pw;
+		this.nic = nic;
+	}
+
 
 	public PlayerVO(String string, int i, int j) {
 		this.nic = string;
 		this.cha = i;
 		this.money = j;
 	}
-
-	public float getCard1() {
-		return card1;
+	
+	public void saveExceptPw(PlayerVO vo) {
+		win = vo.getWin();
+		lose = vo.getLose();
+		money = vo.getMoney();
+		allInMoney = 0;
 	}
-
-	public void setCard1(float card1) {
-		this.card1 = card1;
-	}
-
-	public float getCard2() {
-		return card2;
-	}
-
-	public void setCard2(float card2) {
-		this.card2 = card2;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
+	
 	public void setSocketWithBrPw(Socket socket) {
 		this.socket = socket;
 		try {
@@ -161,151 +124,68 @@ public class PlayerVO {
 			logger.error(e.getMessage(), e);
 		}
 	}
+	
+	public void gameWin() {
+		win++;
+	}
 
+	public void gameLose() {
+		lose++;
+	}
+	
 	@Override
 	public String toString() {
 		return "PlayerVO [no=" + no + ", id=" + id + ", nic=" + nic + ", money=" + money + ", live=" + live + ", card1="
 				+ card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index="
 				+ index + ", roomNo=" + roomNo + "]";
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getCardLevel() {
-		return cardLevel;
-	}
-
-	public void setCardLevel(int cardLevel) {
-		this.cardLevel = cardLevel;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public BufferedReader getBrSocket() {
-		return brSocket;
-	}
-
-	public void setBrSocket(BufferedReader brSocket) {
-		this.brSocket = brSocket;
-	}
-
-	public PrintWriter getPwSocket() {
-		return pwSocket;
-	}
-
-	public void setPwSocket(PrintWriter pwSocket) {
-		this.pwSocket = pwSocket;
-	}
-
-	public Socket getSocket() {
-		return socket;
-	}
-
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
-
-	public boolean isLive() {
-		return live;
-	}
-
-	public void setLive(boolean live) {
-		this.live = live;
-	}
-
-	public int getNo() {
-		return this.no;
-	}
-
-	public void setNo(int no) {
-		this.no = no;
-	}
-
-	public int getCha() {
-		return cha;
-	}
-
-	public void setCha(int cha) {
-		this.cha = cha;
-	}
-
-	public String getID() {
-		return this.id;
-	}
-
-	public void setID(String id) {
-		this.id = id;
-	}
-
-	public String getNic() {
-		return this.nic;
-	}
-
-	public void setNic(String nic) {
-		this.nic = nic;
-	}
-
-	public int getMoney() {
-		return this.money;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
-	public void winMoney(int money) {
-		this.money += money;
-	}
 	
-	public boolean isAdmin() {
-		return this.admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	public int getWin() {
-		return this.win;
-	}
-
-	public void setWin(int win) {
-		this.win = win;
-	}
-
-	public int getLose() {
-		return this.lose;
-	}
-
-	public void setLose(int lose) {
-		this.lose = lose;
-	}
+	public int  getRoomNo() { return roomNo;}
+	public int  getIndex()  { return index; }
+	public float getCard1() { return card1; }
+	public float getCard2() { return card2; }
+	public int 	getNo()    { return this.no;}
+	public int 	getCha()   { return cha; }
+	public int 	getWin()   { return this.win;   }
+	public int 	getLose()  { return this.lose;  }
+	public long getMoney() { return this.money; }
+	public long getAllInMoney(){ return allInMoney; } 
+	public int 	getCardLevel() { return cardLevel;  } 
+	public boolean 	isAdmin()  { return this.admin; } 
+	public boolean 	isLive()   { return live; }
+	public boolean	isOnline() { return this.online; }
+	public String 	getPassword() { return password; }
+	public String 	getCardName() { return cardName; }
+	public String	getId()  { return this.id; }
+	public String 	getNic() { return this.nic; }
+	public String 	getIp() 	 { return ip; }
+	public Socket 	getSocket() { return socket; }
 	
-	public void gameLose() {
-		lose++;
-	}
-
-	public void gameWin() {
-		win++;
-	}
+	public BufferedReader getBrSocket() { return brSocket; }
+	public PrintWriter 	  getPwSocket() { return pwSocket; }
 	
-	public boolean isOnline() {
-		return this.online;
-	}
-
-	public void setOnline(boolean online) {
-		this.online = online;
-	}
+	public void setAllInMoney(long allInMoney) { this.allInMoney = allInMoney; } 
+	public void	setPassword(String password)   { this.password = password; }
+	public void	setCardLevel(int cardLevel)    { this.cardLevel = cardLevel; }
+	public void	setCardName(String cardName)   { this.cardName = cardName; }
+	public void	setBrSocket(BufferedReader brSocket) { this.brSocket = brSocket; }
+	public void	setPwSocket(PrintWriter pwSocket) 	 { this.pwSocket = pwSocket; }
+	public void	setSocket(Socket socket)  { this.socket = socket; }
+	public void	setLive(boolean live) 	  { this.live = live; }
+	public void	setOnline(boolean online) { this.online = online; }
+	public void	setNo(int no) 	{ this.no = no; }
+	public void	setCha(int cha) { this.cha = cha; }
+	public void	setId(String id)   { this.id = id; }
+	public void	setNic(String nic) { this.nic = nic; }
+	public void	setMoney(long money) 	{this.money = money; } 
+	public void	winMoney(long money) 	{ this.money += money; }
+	public void	setAdmin(boolean admin) { this.admin = admin; }
+	public void	setWin(int win)   { this.win = win; }
+	public void	setLose(int lose) { this.lose = lose; } 
+	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
+	public void setCard1(float card1) { this.card1 = card1; }
+	public void setCard2(float card2) { this.card2 = card2; }
+	public void setIp(String ip) 	{ this.ip = ip; }
+	public void setIndex(int index) { this.index = index; }
+	
 }
