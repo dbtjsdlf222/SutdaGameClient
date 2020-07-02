@@ -251,6 +251,7 @@ public class Jokbo {
 	         lowCard = false;
 	         }
 	      } // for문
+
 		int sum = (int) (Math.abs(card1)+Math.abs(card2));
 		if(lowCard) {
 			if( sum == 10) 
@@ -260,7 +261,6 @@ public class Jokbo {
 			else
 				jokboLbl[20].setBorder(new LineBorder(Color.orange, 1));
 		}
-	
 	}// jokboPan
 
 

@@ -242,7 +242,6 @@ public class Lobby {
 				chatBtn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
-		add(chatBtn);
 
 		chatPan.add(chatBtn);
 		JRootPane rootPane = lobbyJF.getRootPane();
@@ -337,11 +336,6 @@ public class Lobby {
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
 		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	private void add(JButton chatBtn) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void initialize() {
