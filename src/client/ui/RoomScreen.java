@@ -78,7 +78,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] beticon = new JLabel[5];
 	private boolean[] liveList = {false,false,false,false,false};
 	private JButton gameStartBtn = null;
-	public static JPanel jokboPan1 = new JPanel();
+	public static JPanel jokboPanel;
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart= false;
 	private int roomMaster = 0;
@@ -594,15 +594,20 @@ public class RoomScreen extends JFrame {
 				
 			} //if
 		} // for
-		 remove(jokboPan1);
-		 System.out.println("receiveCard");
+		try {
+		remove(jokboPanel);
+		}catch(NullPointerException e) {
+		}
+		
+		System.out.println("receiveCard");
 		Jokbo jokbo= Jokbo.getInstance();
 		
-		jokboPan1.setBounds(850, 420, 415, 200);
-		jokboPan1.setBackground(new Color(0, 0, 0));
-		jokboPan1.setLayout(null);
-		add(jokboPan1);
-	
+		jokboPanel = new JPanel();
+		jokboPanel.setBounds(850, 420, 415, 200);
+		jokboPanel.setBackground(new Color(0, 0, 0));
+		jokboPanel.setLayout(null);
+		add(jokboPanel);
+		
 		jokbo.jokboPan(card[0], card[1]);
 	
 	} // receiveCard();
