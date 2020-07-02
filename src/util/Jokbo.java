@@ -150,6 +150,8 @@ public class Jokbo {
 		
 		jokboList.add(new Jokbo("끗"));
 		
+		jokboList.add(new Jokbo("망통"));
+		
 		// 땡잡이
 		Jokbo k = new Jokbo("땡잡이");
 		k.cardComboArr.add(new Card(3, 7));
@@ -203,58 +205,42 @@ public class Jokbo {
 
 	
 	public void jokboPan(float card1, float card2) {
-
-		JPanel jokboPan2 = new JPanel();
-		jokboPan2.setBounds(10, 10, 400, 30);
-		jokboPan2.setLayout(new FlowLayout());
-		jokboPan2.setBackground(new Color(0, 0, 0));
-		RoomScreen.jokboPan1.add(jokboPan2);
-
-		JPanel jokboPan3 = new JPanel();
-		jokboPan3.setBounds(10, 45, 400, 30);
-		jokboPan3.setLayout(new FlowLayout());
-		jokboPan3.setBackground(new Color(0, 0, 0));
-		RoomScreen.jokboPan1.add(jokboPan3);
-
-		JPanel jokboPan4 = new JPanel();
-		jokboPan4.setBounds(10, 80, 400, 30);
-		jokboPan4.setLayout(new FlowLayout());
-		jokboPan4.setBackground(new Color(0, 0, 0));
-		RoomScreen.jokboPan1.add(jokboPan4);
-
-		JPanel jokboPan5 = new JPanel();
-		jokboPan5.setBounds(10, 115, 400, 30);
-		jokboPan5.setLayout(new FlowLayout());
-		jokboPan5.setBackground(new Color(0, 0, 0));
-		RoomScreen.jokboPan1.add(jokboPan5);
-
-		JPanel jokboPan6 = new JPanel();
-		jokboPan6.setBounds(10, 150, 400, 30);
-		jokboPan6.setLayout(new FlowLayout());
-		jokboPan6.setBackground(new Color(0, 0, 0));
-		RoomScreen.jokboPan1.add(jokboPan6);
-
-		JLabel[] jokboLbl = new JLabel[25];
+		JPanel[] jokboP = new JPanel[5];
+		JLabel[] jokboLbl = new JLabel[26];
 		Jokbo jokboArray = Jokbo.getInstance();
-		int a = 0;
-		for (Jokbo jokbo : jokboArray.getJokboList()) {
-			a++;
+		boolean lowCard = true;
+		
+		for (int i = 0; i < jokboP.length; i++) {
+			jokboP[i] = new JPanel();
+			if(i==0)
+			jokboP[i].setBounds(10, 10, 400, 30);
+			else if(i==1)
+			jokboP[i].setBounds(10, 45, 400, 30);
+			else if(i==2)
+			jokboP[i].setBounds(10, 80, 400, 30);
+			else if(i==3)
+			jokboP[i].setBounds(10, 115, 400, 30);
+			else if(i==4)
+			jokboP[i].setBounds(10, 150, 400, 30);
+		
+			jokboP[i].setLayout(new FlowLayout());
+			jokboP[i].setBackground(new Color(0, 0, 0));
+			RoomScreen.jokboPanel.add(jokboP[i]);
 		}
 
-		for (int i = 0; i < 25; i++) {
-
+		for (int i = 0; i < 26; i++) {
 			jokboLbl[i] = new JLabel(jokboArray.getJokboList().get(i).getName());
 
 			if (i < 3)
-				jokboPan2.add(jokboLbl[i]);
+				jokboP[0].add(jokboLbl[i]);
 			else if (i > 2 && i < 13)
-				jokboPan3.add(jokboLbl[i]);
+				jokboP[1].add(jokboLbl[i]);
 			else if (i > 12 && i < 19)
-				jokboPan4.add(jokboLbl[i]);
-			else if (i > 18 && i < 21)
-				jokboPan5.add(jokboLbl[i]);
-			else if (i > 20 && i < 25)
-				jokboPan6.add(jokboLbl[i]);
+				jokboP[2].add(jokboLbl[i]);
+			else if (i > 18 && i < 22)
+				jokboP[3].add(jokboLbl[i]);
+			else if (i > 21 && i < 26)
+				jokboP[4].add(jokboLbl[i]);
 
 			 jokboLbl[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
 	         jokboLbl[i].setBorder(null);
@@ -262,10 +248,20 @@ public class Jokbo {
 
 	         if (inCard(jokboArray.getJokboList().get(i), card1, card2)) {
 	            jokboLbl[i].setBorder(new LineBorder(Color.orange, 1));
+	         lowCard = false;
 	         }
-
 	      } // for문
-	   }// jokboPan
+		int sum = (int) (Math.abs(card1)+Math.abs(card2));
+		if(lowCard) {
+			if( sum == 10) 
+				jokboLbl[22].setBorder(new LineBorder(Color.orange, 1));
+			else if (sum == 9 || sum == 19)
+				jokboLbl[21].setBorder(new LineBorder(Color.orange, 1));
+			else
+				jokboLbl[20].setBorder(new LineBorder(Color.orange, 1));
+		}
+	
+	}// jokboPan
 
 
 	public ArrayList<Jokbo> getJokboList() { return jokboList; }
