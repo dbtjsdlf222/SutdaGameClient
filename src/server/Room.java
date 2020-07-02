@@ -27,7 +27,7 @@ public class Room extends ServerMethod {
 	private Integer masterIndex; // 방장 or 선판 이긴거
 	private String master; 		 // 방장(선)이 누구인지
 	private long totalMoney; 	 // 총 배팅액의 합
-	private long beforeBet;	 	 // 전 플레이어의 배팅액
+	private long beforeBetMoney;	 	 // 전 플레이어의 배팅액
 	private int round; 			 // 몇번째 카드 배팅인지
 	private int lastBetIdx;	 	 // 마지막으로 배팅한 플레이어가 몇번째 사람인지
 	private int turn; 			 // 누구의 차례인지
@@ -107,7 +107,9 @@ public class Room extends ServerMethod {
 	public String[] setButton() {
 		String[] arr = new String[6];
 		long turnHaveMoney = playerMap.get(turn).getMoney();
-		
+		System.out.println("turnHaveMoney "+turnHaveMoney);
+		System.out.println("totalMoney : "+totalMoney);
+		System.out.println("beforeBetMoney : "+beforeBetMoney);
 		arr[0] = Protocol.Die;
 		
 		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
@@ -119,20 +121,20 @@ public class Room extends ServerMethod {
 				arr[2] += "_";
 				
 		} else {
-			if(beforeBet > turnHaveMoney)
+			if(beforeBetMoney > turnHaveMoney)
 				allIn = true;
 			
 			arr[1] = Protocol.Call;
 			arr[2] = Protocol.Ddadang;
-			if(beforeBet * 2 > turnHaveMoney)
+			if(beforeBetMoney * 2 > turnHaveMoney)
 				arr[2] += "_";
 		}
 		arr[3] = Protocol.Quater;
-			if((totalMoney/4) + beforeBet > turnHaveMoney)
+			if((totalMoney/4) + beforeBetMoney > turnHaveMoney)
 				arr[3]+= "_";
 				
 		arr[4] = Protocol.Half;
-			if((totalMoney/2) + beforeBet > turnHaveMoney)
+			if((totalMoney/2) + beforeBetMoney > turnHaveMoney)
 				arr[4]+= "_";
 		
 		arr[5] = Protocol.Allin;
@@ -145,7 +147,7 @@ public class Room extends ServerMethod {
 			}
 			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
 		} else {
-			if(beforeBet > playerMap.get(turn).getMoney()) {
+			if(beforeBetMoney > playerMap.get(turn).getMoney()) {
 				arr[5] += "_";
 			}
 		} //if (round == 1) else
@@ -332,7 +334,6 @@ public class Room extends ServerMethod {
 	 */
 	public void turnProgress() {
 		
-		System.out.println("전turn : "+turn);
 		//다음 턴 사람의 index를 turn에 넣음
 		for (int i = 0; i < 4; i++) {
 			turn++;
@@ -343,7 +344,6 @@ public class Room extends ServerMethod {
 				break;
 			
 		} //for
-		System.out.println("후turn : "+turn);
 		String[] arr = setButton();
 		
 		//차례 클라이언트에게 button배열 전송
@@ -371,29 +371,29 @@ public class Room extends ServerMethod {
 		
 		switch (proBet) {
 		case Protocol.Half:
-			betMoney = beforeBet + (totalMoney / 2);
+			betMoney = beforeBetMoney + (totalMoney / 2);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Quater:
-			betMoney = beforeBet + (totalMoney / 4);
+			betMoney = beforeBetMoney + (totalMoney / 4);
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Call:
-			if(playerMap.get(turn).getMoney() < beforeBet) {
+			if(playerMap.get(turn).getMoney() < beforeBetMoney) {
 				playerMap.get(turn).setAllIn(true);
 				totalMoney += playerMap.get(turn).getMoney();
 			} else {
-				betMoney = beforeBet;
+				betMoney = beforeBetMoney;
 				totalMoney += betMoney;
 			}
 			
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			int nextTurn = turn ;
 			
 			for (int j = 1; j < 5; j++) {
@@ -406,7 +406,7 @@ public class Room extends ServerMethod {
 						if (round == 1) { 	// 1번째 카드 승부
 							round = 2;
 							handOutCard(); 	// 2번째 카드 카드 배분
-							beforeBet = 0;
+							beforeBetMoney = 0;
 						} else { // round 2~3
 							playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 							roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
@@ -420,31 +420,31 @@ public class Room extends ServerMethod {
 			break; // Call
 
 		case Protocol.Allin:
-			betMoney = beforeBet + playerMap.get(turn).getMoney();
+			betMoney = beforeBetMoney + playerMap.get(turn).getMoney();
 			playerMap.get(turn).setAllIn(true);
 			totalMoney = betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Check:
 			betMoney = 0;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Pping:
 			betMoney = startMoney;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Ddadang:
-			betMoney = beforeBet * 2;
+			betMoney = beforeBetMoney * 2;
 			totalMoney += betMoney;
 			lastBetIdx = turn;
-			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
+			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
 
 		case Protocol.Die:
@@ -480,7 +480,7 @@ public class Room extends ServerMethod {
 			} // if (turn == masterIndex)
 			break; // case die;
 		} // switch
-		beforeBet = betMoney;
+		beforeBetMoney = betMoney;
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 
@@ -565,7 +565,7 @@ public class Room extends ServerMethod {
 		gameStarted = true;
 		cardShuffle(); 		// 카드큐를 섞는다
 		lastBetIdx = 0;
-		beforeBet = 0;
+		beforeBetMoney = 0;
 		for (Entry<Integer, PlayerVO> playerVO : playerMap.entrySet()) {
 			playerVO.getValue().setLive(true);
 			playerVO.getValue().pay(startMoney);

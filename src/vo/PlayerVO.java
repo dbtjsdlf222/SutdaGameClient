@@ -105,7 +105,7 @@ public class PlayerVO {
 			betMoney += this.money;
 			this.money = 0;
 		} else {
-			this.money =- money;
+			this.money -= money;
 		}
 	} //pay();
 	
