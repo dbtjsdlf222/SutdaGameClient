@@ -2,6 +2,7 @@ package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -29,6 +30,7 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -412,13 +414,29 @@ public class RoomScreen extends JFrame {
 		exitBtn.setContentAreaFilled(false);
 		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
 		add(exitBtn);
-
-		exitBtn.addActionListener(new ActionListener() {
+		
+		exitBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				sendOff();
+			public void mouseClicked(MouseEvent e) {
+				int i = 1;
+				if(e.getSource() == exitBtn) {
+					i++;
+					if(i%2 == 0) {
+						sendOff();
+					}else {
+						roomOut = false;
+						JOptionPane.showMessageDialog(null, "나가기 예약이 취소 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
+					}
+				}
 			}
 		});
+		
+//		addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				sendOff();
+//			}
+//		});
 		
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
@@ -457,11 +475,12 @@ public class RoomScreen extends JFrame {
 	} //mainScreen();
 
 	public void sendOff() {
-		if(gameStart) {
+		if(!gameStart) {
 			dispose();
 			new Lobby();
 		}else {
 			roomOut = true;
+			JOptionPane.showMessageDialog(null, "나가기 예약이 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 	
