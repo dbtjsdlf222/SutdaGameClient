@@ -423,23 +423,14 @@ public class RoomScreen extends JFrame {
 					System.out.println(i);
 					if(i%2 == 0) {
 						sendOff();
-						System.out.println("여기들어와요1");
 					}else {
 						roomOut = false;
 						JOptionPane.showMessageDialog(null, "나가기 예약이 취소 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
-						System.out.println("여기들어와요2");
 					}
 					i++;
 				}
 			}
 		});
-		
-//		addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				sendOff();
-//			}
-//		});
 		
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
@@ -477,6 +468,11 @@ public class RoomScreen extends JFrame {
 //		}
 	} //mainScreen();
 
+	/**
+	 * gameStart 가 ture이면 게임 실행중 
+	 * gameStart가 false이면 바로 나가고 true면 roomOut을 true로 변경
+	 * roomOut가 true일 경우 게임종료시 나감
+	 */
 	public void sendOff() {
 		if(!gameStart) {
 			dispose();
