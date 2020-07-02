@@ -1,9 +1,13 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import org.apache.logging.log4j.MarkerManager.Log4jMarker;
 
 import operator.RoomOperator;
 import vo.PlayerVO;
@@ -11,7 +15,7 @@ import vo.PlayerVO;
 @SuppressWarnings("rawtypes")
 public class CalcCardLevel implements Comparable {
 
-	private static List<CalcCardLevel> playerCardList = new ArrayList<>();
+	private List<CalcCardLevel> playerCardList = new ArrayList<>();
 	private int idx;
 	private float card1;
 	private float card2;
@@ -42,23 +46,33 @@ public class CalcCardLevel implements Comparable {
 			return;
 		}
 		
-		Collections.sort(playerCardList);
+		Collections.sort(playerCardList);	//점수가 높은순으로 정렬
 		
+		//1등과 2등의 점수가 다르면 1등 승
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx());
 		} else {
-			System.out.println("동점 재경기");
+			
+			for (CalcCardLevel calcCardLevel : playerCardList) {
+				System.out.println("재경기 디버깅 idx["+playerMap.get(calcCardLevel.getIdx())+"] "+calcCardLevel);
+			}
+			
 			for (int i = 2; i < 5; i++) {
 				try {
 					if(playerCardList.get(0).getCardLevel() != playerCardList.get(i).getCardLevel()) {
 						playerMap.get(playerCardList.get(i).getIdx()).setLive(false);
-						
 					}
-				} catch (Exception e) { } //try~catch
+				} catch (NullPointerException e) { } //try~catch
 			} //for
 			RoomOperator.getInstance().getRoom(roomNo).draw();
 		} //if~else
 	} // getWinner();
+
+	@Override
+	public String toString() {
+		return "[card1=" + card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName="
+				+ cardName + "]";
+	}
 
 	public void CardLevel(Map<Integer, PlayerVO> playerMap) {
 		for (int i = 0; i < 5; i++) {

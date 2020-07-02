@@ -79,13 +79,6 @@ public class Room extends ServerMethod {
 		} // for
 	} // setPlayerCard();
 
-	public void resetLiveAndAllIn() {
-		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-			s.getValue().setLive(true);
-			s.getValue().setAllInMoney(0);
-		}
-	}
-
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -106,6 +99,9 @@ public class Room extends ServerMethod {
 		return shuffledCard.poll();
 	} // pollOneCard();
 
+	/**
+	 * @return 플레이어가 배팅 가능한 버튼 배열 return
+	 */
 	public String[] setButton() {
 		String[] arr = new String[6];
 		long turnHaveMoney = playerMap.get(turn).getMoney();
@@ -148,12 +144,15 @@ public class Room extends ServerMethod {
 			arr[5] += "_"; // 1라운드 올인 버튼 비활성화
 		} else {
 			if(beforeBet > playerMap.get(turn).getMoney()) {
-				arr[3] += "_";
+				arr[5] += "_";
 			}
-		} //if (round == 1) {
+		} //if (round == 1) else
 		return arr;
-	}
+	} //setButton();
 
+	/**
+	 * 게임시작 
+	 */
 	public void gameStart() {
 		gameReset();
 		handOutCard();		// 1라운드 카드배분
@@ -301,16 +300,16 @@ public class Room extends ServerMethod {
 					
 					if(playerMap.get(idx)==null) continue;
 					
-					if(!isGameStarted()) {
-						masterIndex = idx;
-						this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
-						break;
-					} else {
-						if(playerMap.get(idx).isLive()) {
+					if(isGameStarted()) {
+						if(playerMap.get(idx).isLive()) { 
 							masterIndex = idx;
 							this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
 							break;
-						}	//if
+						}	//if						
+					} else {
+						masterIndex = idx;
+						this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+						break;
 					} //if~else
 				} //for
 			}
@@ -384,7 +383,7 @@ public class Room extends ServerMethod {
 
 		case Protocol.Call:
 			if(playerMap.get(turn).getMoney() < beforeBet) {
-				playerMap.get(turn).setAllInMoney(playerMap.get(turn).getMoney());
+				playerMap.get(turn).setAllIn(true);
 				totalMoney += playerMap.get(turn).getMoney();
 			} else {
 				betMoney = beforeBet;
@@ -419,6 +418,7 @@ public class Room extends ServerMethod {
 
 		case Protocol.Allin:
 			betMoney = beforeBet + playerMap.get(turn).getMoney();
+			playerMap.get(turn).setAllIn(true);
 			totalMoney = betMoney;
 			lastBetIdx = turn;
 			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBet+"]");
@@ -486,6 +486,10 @@ public class Room extends ServerMethod {
 		turnProgress();
 	} // bet();
 
+	/**
+	 * 플레이어 패 비교
+	 * OPENCARD 브로드캐스팅
+	 */
 	public void gameResult() {
 		round = 3;	//재경기시 카드 2개를 주기위함
 		roomSpeaker(new Packet(Protocol.OPENCARD,playerMap));
@@ -493,44 +497,67 @@ public class Room extends ServerMethod {
 	} // gameResult();
 	
 	public void draw() {
-		logger.info("draw()");
 		roomSpeaker(new Packet(Protocol.DRAW));
 		handOutCard();
 		turnProgress();
 	}
 	
+	/**
+	 * @param winerIdx 승자 idx
+	 */
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx) {
-		playerMap.get(winerIdx).winMoney(totalMoney);
-		roomSpeaker(new Packet(Protocol.GAMEOVER,
-				"승자는 "+playerMap.get(winerIdx).getNic()+" 입니다."
-				+ "/"
-				+ winerIdx
-				+ "/"  
-				+ playerMap.get(winerIdx).getMoney()));
+		try {
+			if(playerMap.get(winerIdx).isAllIn()) {
+				int winerNo = playerMap.get(winerIdx).getNo();
+				long winerBetMoney = playerMap.get(winerIdx).getBetMoney();
+				for (Entry<Integer,PlayerVO> s : playerMap.entrySet()) {
+					if(s.getValue().getNo() == winerNo) 
+						continue;
+					if(winerBetMoney > s.getValue().getBetMoney()) {
+						
+						
+					}
+				} //for
+			} else {
+			
+				
+				
+				
+			}
+			playerMap.get(winerIdx).winMoney(totalMoney);
+			
+			
+		} catch (NullPointerException e) {
+			roomSpeaker(new Packet(Protocol.GAMEOVER,"승자가 게임을 포기하였습니다."));
+		}
+		
 		gameStarted = false;
 		
 		//플레이어 DB에 저장
 		for (int i = 0; i < 5; i++) {
-			try {
-				if(winerIdx==i)
-					playerMap.get(i).gameWin();
-				else 
-					playerMap.get(i).gameLose();
+			if(playerMap.get(i) == null)
+				continue;
 				
-				dao.playerSave(playerMap.get(i));
-
-			} catch (NullPointerException e) {}
-		}
+			if(winerIdx==i) 
+				playerMap.get(i).gameWin();
+			 else 
+				playerMap.get(i).gameLose();
+			
+			dao.playerSave(playerMap.get(i));
+		} //for
 		
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			PlayerVO vo = dao.selectOnePlayerWithNo(s.getValue().getNo());
 			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOADMYVO,vo)); 
-		}
+		} //for
 		
 		lobbyReloadBroadcast();
 	} // gameOver();
 
+	/**
+	 * Room 초기화
+	 */
 	public void gameReset() {
 		round = 1;	 // 1라운드
 		round1First = true;
@@ -538,7 +565,6 @@ public class Room extends ServerMethod {
 		turn = masterIndex-1; // turnProgress()에서 turn+1 을하고 진행
 		startMoney = 100000;
 		gameStarted = true;
-		resetLiveAndAllIn();
 		cardShuffle(); 		// 카드큐를 섞는다
 		lastBetIdx = 0;
 		beforeBet = 0;
@@ -547,7 +573,11 @@ public class Room extends ServerMethod {
 			totalMoney += startMoney;
 		}
 	}
-
+	
+	/**
+	 * @param playerNo  
+	 * @return 서버상 몇번째 idx return
+	 */
 	public int getPlayerIndex(int playerNo) {
 		for (Entry<Integer, PlayerVO> entry : playerMap.entrySet()) {
 			if (entry.getValue().getNo() == playerNo) {

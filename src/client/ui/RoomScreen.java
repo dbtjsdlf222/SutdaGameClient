@@ -609,8 +609,8 @@ public class RoomScreen extends JFrame {
 
 	/**
 	 * @param msg 알림창에 넣을 내용
-	 * @param winerIdx 승자 서버 인덱스
-	 * @param winerTotalMoney 승자가 소유한 돈
+	 * @param winerIdx 승자 서버 인덱스 (생략시 승자 탈주 처리)
+	 * @param winerTotalMoney 승자가 소유한 돈 (생략시 승자 탈주 처리)
 	 */
 	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
 		gameStart = false;
@@ -622,7 +622,7 @@ public class RoomScreen extends JFrame {
 		if(mySit == roomMaster)
 			startBtnSet();
 		beticon = new JLabel[5];
-//		totalMoney.setText("게임 대기중...");
+		totalMoney.setText("대기중");
 		for (int j = 0; j < 5; j++) {
 			try {
 				card1[j].setIcon(null);
@@ -634,6 +634,13 @@ public class RoomScreen extends JFrame {
 		}
 	} //gameOver();
 
+	
+	public void gameOver(String msg) {
+		gameStart = false;
+		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
+		RoomScreen.getInstance().gameStart= false;
+	}  //gameOver();
+	
 	/**
 	 * @param i     몇번째 자리
 	 * @param setVO 자리에 앉을 사람의 VO

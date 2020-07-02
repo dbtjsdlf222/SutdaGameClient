@@ -41,7 +41,8 @@ public class PlayerVO {
 	private int index;
 	private String ip;
 	private int roomNo; // 0이면 로비
-	private long allInMoney;	//올인한 money
+	private long betMoney;	//room에서 건 돈 저장 (올인시 자신이 건돈만큼만 따기 위함)
+	private boolean allIn = false;	//올인여부
 
 	@JsonIgnore
 	private Socket socket;
@@ -49,6 +50,11 @@ public class PlayerVO {
 	private BufferedReader brSocket;
 	@JsonIgnore
 	private PrintWriter pwSocket;
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
 	public PlayerVO() { }
 
@@ -90,9 +96,21 @@ public class PlayerVO {
 		this.pwSocket = pwSocket;
 	}
 	
+	/**
+	 *  배팅한 돈을 betMoney에 더한다
+	 * @param money	 배팅할 돈
+	 */
 	public void pay(long money) {
-		if((this.money -= money) < 0)
+		if(this.money - money < 0) {
+			betMoney += this.money;
 			this.money = 0;
+		} else {
+			this.money =- money;
+		}
+	} //pay();
+	
+	public void balance(int money) {
+		this.money += money;
 	}
 
 	public void joinPlayer(String id, String pw, String nic) {
@@ -100,7 +118,6 @@ public class PlayerVO {
 		this.password = pw;
 		this.nic = nic;
 	}
-
 
 	public PlayerVO(String string, int i, int j) {
 		this.nic = string;
@@ -112,7 +129,7 @@ public class PlayerVO {
 		win = vo.getWin();
 		lose = vo.getLose();
 		money = vo.getMoney();
-		allInMoney = 0;
+		betMoney = 0;
 	}
 	
 	public void setSocketWithBrPw(Socket socket) {
@@ -127,10 +144,18 @@ public class PlayerVO {
 	
 	public void gameWin() {
 		win++;
+		resetVO();
 	}
 
 	public void gameLose() {
 		lose++;
+		resetVO();
+	}
+	
+	public void resetVO() {
+		betMoney = 0;
+		allIn = false;
+		live = true;
 	}
 	
 	@Override
@@ -144,15 +169,16 @@ public class PlayerVO {
 	public int  getIndex()  { return index; }
 	public float getCard1() { return card1; }
 	public float getCard2() { return card2; }
-	public int 	getNo()    { return this.no;}
-	public int 	getCha()   { return cha; }
-	public int 	getWin()   { return this.win;   }
-	public int 	getLose()  { return this.lose;  }
-	public long getMoney() { return this.money; }
-	public long getAllInMoney(){ return allInMoney; } 
+	public int 	 getNo()    { return this.no;}
+	public int 	 getCha()   { return cha; }
+	public int 	 getWin()   { return this.win;   }
+	public int 	 getLose()  { return this.lose;  }
+	public long  getMoney() { return this.money; }
+	public long getBetMoney()  { return betMoney; }
 	public int 	getCardLevel() { return cardLevel;  } 
 	public boolean 	isAdmin()  { return this.admin; } 
-	public boolean 	isLive()   { return live; }
+	public boolean 	isLive()   { return live;  }
+	public boolean isAllIn()   { return allIn; } 
 	public boolean	isOnline() { return this.online; }
 	public String 	getPassword() { return password; }
 	public String 	getCardName() { return cardName; }
@@ -164,7 +190,8 @@ public class PlayerVO {
 	public BufferedReader getBrSocket() { return brSocket; }
 	public PrintWriter 	  getPwSocket() { return pwSocket; }
 	
-	public void setAllInMoney(long allInMoney) { this.allInMoney = allInMoney; } 
+	public void setBetMoney(long betMoney) { this.betMoney = betMoney; }
+	public void setAllIn(boolean allIn) {this.allIn = allIn;} 
 	public void	setPassword(String password)   { this.password = password; }
 	public void	setCardLevel(int cardLevel)    { this.cardLevel = cardLevel; }
 	public void	setCardName(String cardName)   { this.cardName = cardName; }

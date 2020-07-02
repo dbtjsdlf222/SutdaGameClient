@@ -177,10 +177,16 @@ public class ClientPacketController {
 			break;
 			
 		// Motion(String winerMsg / int winerIdx / String winMoney)
+		// [승자가 나갈시] Motion(String winerMsg
 		case Protocol.GAMEOVER :
-			String[] strArr = packet.getMotion().split("/");
-			RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
-			RoomScreen.getInstance().changeMaster(Integer.parseInt(strArr[1]));
+			if(packet.getMotion().indexOf("/") != -1) {
+				String[] strArr = packet.getMotion().split("/");
+				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
+				RoomScreen.getInstance().changeMaster(Integer.parseInt(strArr[1]));
+			} else {
+				
+			}
+			
 			break;
 			
 		case Protocol.DRAW:

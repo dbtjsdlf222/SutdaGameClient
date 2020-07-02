@@ -46,6 +46,7 @@ public class Protocol {
 	public static final String SETSTARTBUTTON = "34"; 
 	public static final String RUNOUTMONEY = "35"; 
 	public static final String RELOADMYVO = "36"; 
+	public static final String KICKOUT = "37"; 
 	
 	public static String getName(String str) {
 		
@@ -86,12 +87,10 @@ public class Protocol {
 			case "34": str = "SHOWSTARTBTN"; break;
 			case "35": str = "RUNOUTMONEY"; break;
 			case "36": str = "RELOADMYVO"; break;
+			case "37": str = "KICKOUT"; break;
 			
 			default  : str = "UnknownProtocol"; break;
 		}
-		
 		return str;
-		
 	}
-	
 }
