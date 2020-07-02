@@ -81,6 +81,7 @@ public class RoomScreen extends JFrame {
 	public static JPanel jokboPanel;
 	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart= false;
+	private boolean roomOut= false;
 	private int roomMaster = 0;
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -222,6 +223,7 @@ public class RoomScreen extends JFrame {
 		}
 	} // buttonReset();
 
+	
 	public void reLoadMoney(int playerIdx, String money) {
 		playerIdx = (playerIdx - mySit + 5) % 5;
 		moneyText[playerIdx].setText(money);
@@ -414,8 +416,7 @@ public class RoomScreen extends JFrame {
 		exitBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				new Lobby();
+				sendOff();
 			}
 		});
 		
@@ -455,6 +456,15 @@ public class RoomScreen extends JFrame {
 //		}
 	} //mainScreen();
 
+	public void sendOff() {
+		if(gameStart) {
+			dispose();
+			new Lobby();
+		}else {
+			roomOut = true;
+		}
+	}
+	
 	// 시작 돈을 걷고 Text에 적용
 	public void startPay(long sMoney) {
 		int count = 0;
@@ -636,6 +646,11 @@ public class RoomScreen extends JFrame {
 				remove(beticon[j]);
 			} catch (NullPointerException e) { }
 			liveList[j] = false;
+		}
+		if(roomOut) {
+			dispose();
+			new Lobby();
+			
 		}
 	} //gameOver();
 

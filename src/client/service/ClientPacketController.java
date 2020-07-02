@@ -201,6 +201,10 @@ public class ClientPacketController {
 		case Protocol.RELOADMYVO:
 			PlayerVO.myVO.saveExceptPw(packet.getPlayerVO());
 			break;
+
+		case Protocol.SENDOFF:
+			RoomScreen.getInstance().sendOff();
+			break;
 			
 		} // switch
 	} // controller();
