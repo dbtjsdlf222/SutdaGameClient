@@ -416,17 +416,20 @@ public class RoomScreen extends JFrame {
 		add(exitBtn);
 		
 		exitBtn.addMouseListener(new MouseAdapter() {
+			int i = 0;
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int i = 1;
 				if(e.getSource() == exitBtn) {
-					i++;
+					System.out.println(i);
 					if(i%2 == 0) {
 						sendOff();
+						System.out.println("여기들어와요1");
 					}else {
 						roomOut = false;
 						JOptionPane.showMessageDialog(null, "나가기 예약이 취소 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
+						System.out.println("여기들어와요2");
 					}
+					i++;
 				}
 			}
 		});
