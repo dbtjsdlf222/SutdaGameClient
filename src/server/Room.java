@@ -48,7 +48,6 @@ public class Room extends ServerMethod {
 	}
 
 	public void handOutCard() {
-		System.out.println("handOutCard");
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packet packet = new Packet();
 			packet.setAction(Protocol.CARD);
@@ -79,6 +78,9 @@ public class Room extends ServerMethod {
 		} // for
 	} // setPlayerCard();
 
+	/**
+	 * 카드 큐 섞기
+	 */
 	public void cardShuffle() {
 		float cardSetNo = 1;
 
@@ -330,17 +332,18 @@ public class Room extends ServerMethod {
 	 */
 	public void turnProgress() {
 		
+		System.out.println("전turn : "+turn);
 		//다음 턴 사람의 index를 turn에 넣음
 		for (int i = 0; i < 4; i++) {
 			turn++;
 			turn %= 5;
-			try {
-				if(playerMap.get(turn).isLive()) {
-					break;
-				}
-			} catch (NullPointerException e) { }
+			if(playerMap.get(turn)==null)
+				continue;
+			if(playerMap.get(turn).isLive())
+				break;
+			
 		} //for
-		
+		System.out.println("후turn : "+turn);
 		String[] arr = setButton();
 		
 		//차례 클라이언트에게 button배열 전송
@@ -508,25 +511,20 @@ public class Room extends ServerMethod {
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx) {
 		try {
+			//올인시 자신이 건돈 만큼만 사람들한테서 받음
 			if(playerMap.get(winerIdx).isAllIn()) {
 				int winerNo = playerMap.get(winerIdx).getNo();
 				long winerBetMoney = playerMap.get(winerIdx).getBetMoney();
 				for (Entry<Integer,PlayerVO> s : playerMap.entrySet()) {
 					if(s.getValue().getNo() == winerNo) 
 						continue;
-					if(winerBetMoney > s.getValue().getBetMoney()) {
-						
-						
+					if(winerBetMoney < s.getValue().getBetMoney()) {
+						s.getValue().balance(winerBetMoney - s.getValue().getBetMoney());
 					}
 				} //for
 			} else {
-			
-				
-				
-				
+				playerMap.get(winerIdx).winMoney(totalMoney);
 			}
-			playerMap.get(winerIdx).winMoney(totalMoney);
-			
 			
 		} catch (NullPointerException e) {
 			roomSpeaker(new Packet(Protocol.GAMEOVER,"승자가 게임을 포기하였습니다."));
@@ -569,6 +567,7 @@ public class Room extends ServerMethod {
 		lastBetIdx = 0;
 		beforeBet = 0;
 		for (Entry<Integer, PlayerVO> playerVO : playerMap.entrySet()) {
+			playerVO.getValue().setLive(true);
 			playerVO.getValue().pay(startMoney);
 			totalMoney += startMoney;
 		}

@@ -211,7 +211,7 @@ public class PlayerDAO {
 				String rsID = rs.getString(2);
 				String rsPW = rs.getString(3);
 				String nickname = rs.getString(4);
-				long money = rs.getInt(5);
+				long money = rs.getLong(5);
 				int win = rs.getInt(6);
 				int lose = rs.getInt(7);
 				boolean online = rs.getBoolean(8);

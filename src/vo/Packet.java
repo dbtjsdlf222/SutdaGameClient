@@ -24,6 +24,7 @@ public class Packet {
 	public Packet() {}
 
 	public Packet(String action, PlayerVO playerVO) {
+		
 		this.action = action;
 		this.playerVO = playerVO;
 	}

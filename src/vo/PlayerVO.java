@@ -109,7 +109,7 @@ public class PlayerVO {
 		}
 	} //pay();
 	
-	public void balance(int money) {
+	public void balance(long money) {
 		this.money += money;
 	}
 
