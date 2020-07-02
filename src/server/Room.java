@@ -141,7 +141,7 @@ public class Room extends ServerMethod {
 
 		if (round == 1) {
 			if(round1First) {	//1라운드 첫 턴은 다이 하프만 가능
-				arr[1] += "_";	
+				arr[1] += "_";
 				arr[2] += "_";
 				arr[3] += "_";
 			}
@@ -409,7 +409,7 @@ public class Room extends ServerMethod {
 							beforeBetMoney = 0;
 						} else { // round 2~3
 							playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
-							roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()));
+							roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 							gameResult();
 							return;
 						}
@@ -472,7 +472,7 @@ public class Room extends ServerMethod {
 					temp = turn + j;
 					if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
 						continue;
-
+					
 					Packet packet = new Packet(Protocol.CHANGEMASTER, temp + "");
 					roomSpeaker(packet);
 					break;
@@ -483,12 +483,12 @@ public class Room extends ServerMethod {
 		beforeBetMoney = betMoney;
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
-
+		
 		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
-
+		
 		turnProgress();
 	} // bet();
-
+	
 	/**
 	 * 플레이어 패 비교
 	 * OPENCARD 브로드캐스팅
@@ -516,10 +516,13 @@ public class Room extends ServerMethod {
 				int winerNo = playerMap.get(winerIdx).getNo();
 				long winerBetMoney = playerMap.get(winerIdx).getBetMoney();
 				for (Entry<Integer,PlayerVO> s : playerMap.entrySet()) {
-					if(s.getValue().getNo() == winerNo) 
+					if(s.getValue().getNo() == winerNo)
 						continue;
 					if(winerBetMoney < s.getValue().getBetMoney()) {
 						s.getValue().balance(winerBetMoney - s.getValue().getBetMoney());
+					}
+					if(s.getValue().isAllIn()) {
+						Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SENDOFF));
 					}
 				} //for
 			} else {
