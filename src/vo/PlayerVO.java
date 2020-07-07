@@ -165,8 +165,8 @@ public class PlayerVO {
 				+ index + ", roomNo=" + roomNo + "]";
 	}
 	
-	public int  getRoomNo() { return roomNo;}
-	public int  getIndex()  { return index; }
+	public int   getRoomNo(){ return roomNo;}
+	public int   getIndex() { return index; }
 	public float getCard1() { return card1; }
 	public float getCard2() { return card2; }
 	public int 	 getNo()    { return this.no;}
@@ -178,7 +178,7 @@ public class PlayerVO {
 	public int 	getCardLevel() { return cardLevel;  } 
 	public boolean 	isAdmin()  { return this.admin; } 
 	public boolean 	isLive()   { return live;  }
-	public boolean isAllIn()   { return allIn; } 
+	public boolean 	isAllIn()  { return allIn; } 
 	public boolean	isOnline() { return this.online; }
 	public String 	getPassword() { return password; }
 	public String 	getCardName() { return cardName; }

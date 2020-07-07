@@ -532,8 +532,13 @@ public class Room extends ServerMethod {
 		} catch (NullPointerException e) {
 			roomSpeaker(new Packet(Protocol.GAMEOVER,"승자가 게임을 포기하였습니다."));
 		}
-		
 		gameStarted = false;
+		roomSpeaker(new Packet(Protocol.GAMEOVER,
+					playerMap.get(winerIdx).getNic()+"님의 승입니다. "+"/"+
+					winerIdx+"/" +
+					totalMoney + "/" +
+					playerMap.get(winerIdx).getMoney()					
+				));
 		
 		//플레이어 DB에 저장
 		for (int i = 0; i < 5; i++) {
