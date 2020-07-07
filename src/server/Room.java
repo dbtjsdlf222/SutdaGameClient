@@ -105,7 +105,7 @@ public class Room extends ServerMethod {
 	 * @return 플레이어가 배팅 가능한 버튼 배열 return
 	 */
 	public String[] setButton() {
-		String[] arr = new String[6];
+		String[] arr = new String[10];
 		long turnHaveMoney = playerMap.get(turn).getMoney();
 		System.out.println("turnHaveMoney "+turnHaveMoney);
 		System.out.println("totalMoney : "+totalMoney);
@@ -115,25 +115,32 @@ public class Room extends ServerMethod {
 		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다
 		if (round2First) {
 			arr[1] = Protocol.Check;
+			arr[6] = "-";
 			
 			arr[2] = Protocol.Pping;
-			if(startMoney > turnHaveMoney) 
+			arr[7] = startMoney + "";
+			if(startMoney > turnHaveMoney)
 				arr[2] += "_";
-				
+			
 		} else {
 			if(beforeBetMoney > turnHaveMoney)
 				allIn = true;
 			
 			arr[1] = Protocol.Call;
+			arr[6] = beforeBetMoney + "";
+					
 			arr[2] = Protocol.Ddadang;
+			arr[7] = beforeBetMoney*2 + "";
 			if(beforeBetMoney * 2 > turnHaveMoney)
 				arr[2] += "_";
 		}
 		arr[3] = Protocol.Quater;
+		arr[8] = (totalMoney/4) + beforeBetMoney + "";
 			if((totalMoney/4) + beforeBetMoney > turnHaveMoney)
 				arr[3]+= "_";
 				
 		arr[4] = Protocol.Half;
+		arr[9] = (totalMoney/2) + beforeBetMoney + "";
 			if((totalMoney/2) + beforeBetMoney > turnHaveMoney)
 				arr[4]+= "_";
 		
@@ -509,7 +516,7 @@ public class Room extends ServerMethod {
 	 * @param winerIdx 승자 idx
 	 */
 	// 승자에게 돈 이동
-	public void gameOver(int winerIdx) {
+	public void gameOver(int winerIdx, String cardName) {
 		try {
 			//올인시 자신이 건돈 만큼만 사람들한테서 받음
 			if(playerMap.get(winerIdx).isAllIn()) {
@@ -534,7 +541,7 @@ public class Room extends ServerMethod {
 		}
 		gameStarted = false;
 		roomSpeaker(new Packet(Protocol.GAMEOVER,
-					playerMap.get(winerIdx).getNic()+"님의 승입니다. "+"/"+
+					playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/"+
 					winerIdx+"/" +
 					totalMoney + "/" +
 					playerMap.get(winerIdx).getMoney()					

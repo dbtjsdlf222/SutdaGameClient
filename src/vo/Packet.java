@@ -19,7 +19,7 @@ public class Packet {
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
 	private	float[] card = new float[2];
-	private String[] buttonArr = new String[6]; 
+	private String[] buttonArr = new String[10];
 	
 	public Packet() {}
 

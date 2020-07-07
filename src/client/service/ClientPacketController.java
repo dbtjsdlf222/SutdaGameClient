@@ -155,7 +155,7 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.SETBUTTON:
-			RoomScreen.getInstance().setButton(packet.getButtonArr()); // 버튼 세팅
+			RoomScreen.getInstance().setButtonAndPrice(packet.getButtonArr()); // 버튼&베팅비용 세팅
 			break;
 			
 		case Protocol.STARTPAY:

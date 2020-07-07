@@ -62,8 +62,8 @@ public class RoomScreen extends JFrame {
 	private JButton[] btn = new JButton[6];
 	private JPanel mat = new JPanel();
 	private JPanel betButtonPan = new JPanel();
-	private String[] betBtnInitArr = { Protocol.Die + "_", Protocol.Ddadang + "_", Protocol.Call + "_",
-			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_" };
+	private String[] betAndBtnInitArr = { Protocol.Die + "_", Protocol.Ddadang + "_", Protocol.Call + "_",
+			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_","-","-","-","-"};
 	private int mySit;	//서버상 내 index
 	private JLabel totalMoney = new JLabel();
 	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
@@ -156,9 +156,9 @@ public class RoomScreen extends JFrame {
 		repaint();
 	} // 게임 진행 순서
 
-	public void setButton(String[] buttonArray) {
-		if(buttonArray!=null)
-			showNeedMoney(buttonArray);
+	public void setButtonAndPrice(String[] arr) {
+		if(arr!=null)
+			showNeedMoney(arr);
 		
 		ActionListener action = new ActionListener() {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
@@ -166,17 +166,17 @@ public class RoomScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (e.getSource() == btn[0]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[0]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[0]);
 				} else if (e.getSource() == btn[1]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[1]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[1]);
 				} else if (e.getSource() == btn[2]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[2]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[2]);
 				} else if (e.getSource() == btn[3]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[3]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[3]);
 				} else if (e.getSource() == btn[4]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[4]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[4]);
 				} else if (e.getSource() == btn[5]) {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, buttonArray[5]);
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[5]);
 				}
 				buttonReset();
 
@@ -193,16 +193,16 @@ public class RoomScreen extends JFrame {
 		for (int i = 0; i < 6; i++) {
 			try {
 				btn[i] = new JButton(
-						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + buttonArray[i] + ".PNG")));
+						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + arr[i] + ".PNG")));
 
-				if (buttonArray[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
+				if (arr[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
 					btn[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				} else {
 					btn[i].setEnabled(false);
 				}
 			} catch (Exception e) {
-				System.err.println(buttonArray[i] + ".PNG");
+				System.err.println(arr[i] + ".PNG");
 			} // try~catch
 			btn[i].setOpaque(false);
 			betButtonPan.add(btn[i]);
@@ -217,7 +217,7 @@ public class RoomScreen extends JFrame {
 	public void buttonReset() {
 		for (int i = 0; i < 6; i++) {
 			btn[i].setIcon(
-					new ImageIcon(RoomScreen.class.getResource("../../img/button/" + betBtnInitArr[i] + ".PNG")));
+					new ImageIcon(RoomScreen.class.getResource("../../img/button/" + betAndBtnInitArr[i] + ".PNG")));
 			btn[i].setEnabled(false);
 		}
 	} // buttonReset();
@@ -228,12 +228,18 @@ public class RoomScreen extends JFrame {
 		moneyText[playerIdx].setText(money);
 	}
 
-	public void showNeedMoney(String columnNames[]) {
-		String[] a = {columnNames[1],columnNames[2],columnNames[3],columnNames[4]};
+	public void showNeedMoney(String[] arr) {
+		
+		/**
+		 * 라벨 8개 추가해서 테이블 형식으로 바꿈
+		 * 콜    따당    쿼터    하프
+		 * 1억   2억    3억5천	 5억1천    
+		 */
+		
+		String[] a = {arr[1],arr[2],arr[3],arr[4]};
 	      
 		// 테이블에 출력할 데이터 배열
-		String data[][] ={{"1450만원","5000만원","9600만원","2억4천만원"}};
-	       
+			String data[][] ={{arr[6],arr[7],arr[8],arr[9]}};
 		DefaultTableModel model = new DefaultTableModel(data,a);
 		JTable tbl = new JTable(model);
 		mat.add(tbl);
@@ -259,6 +265,9 @@ public class RoomScreen extends JFrame {
 			panlist[i].setBorder(null);	
 		}
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
+		try {
+			beticon[index].setBounds(0, 0, 0, 0);
+		} catch (NullPointerException e) { }
 		revalidate();
 		repaint();
 	} //turn();
@@ -316,18 +325,18 @@ public class RoomScreen extends JFrame {
 	}
 	
 	public void mainScreen() {
-		
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
+			panlist[i].setBackground(new Color(0, 0, 0, 122));
 			if (i == 0) { panlist[i].setBounds(460, 440, 350, 180); } else 
 			if (i == 1) { panlist[i].setBounds(  0, 215, 350, 180); } else 
 			if (i == 2) { panlist[i].setBounds(  0,  30, 350, 180);	} else
 			if (i == 3) { panlist[i].setBounds(915,  30, 350, 180); } else
 			if (i == 4) { panlist[i].setBounds(915, 215, 350, 180); }
 			add(panlist[i]);
-		}
+		} //for
 
-		setButton(betBtnInitArr);
+		setButtonAndPrice(betAndBtnInitArr);
 		buttonReset();
 		if (initialized)
 			return;
@@ -526,16 +535,20 @@ public class RoomScreen extends JFrame {
 	
 	public void betIcon(int idx, String bet) {
 		ImageIcon iCon;
-		if(idx == 0) {
+		if(idx == 0)
 			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon_.png"));
-		}else {
+		else
 			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
-		}
-		System.err.println("BetIcon INDEX: [" + idx + "]");
+
+//		remove(beticon[idx]); // 실행 의미 없음
+		
+		try {
+			beticon[idx].setBounds(0, 0, 0, 0);
+		} catch (NullPointerException e) { }
+		
 		beticon[idx] = new JLabel(iCon);
 		
 //		timers[idx].stop();
-		remove(beticon[idx]);
 		switch (idx) {
 		case 0:
 			beticon[idx].setBounds(530, 380, 200, 60);
@@ -626,11 +639,8 @@ public class RoomScreen extends JFrame {
 			} //if
 		} // for
 		try {
-		remove(jokboPanel);
-		}catch(NullPointerException e) {
-		}
-		
-		System.out.println("receiveCard");
+			remove(jokboPanel);
+		} catch(NullPointerException e) { }
 		Jokbo jokbo= Jokbo.getInstance();
 		
 		jokboPanel = new JPanel();
@@ -657,21 +667,20 @@ public class RoomScreen extends JFrame {
 		RoomScreen.getInstance().gameStart= false;
 		if(mySit == roomMaster)
 			startBtnSet();
-		beticon = new JLabel[5];
 		totalMoney.setText("대기중");
 		for (int j = 0; j < 5; j++) {
 			try {
 				card1[j].setIcon(null);
 				card2[j].setIcon(null);
 				panlist[j].setBorder(null);
-				remove(beticon[j]);
+				beticon[j].setBounds(0, 0, 0, 0);
 			} catch (NullPointerException e) { }
 			liveList[j] = false;
 		}
+		beticon = new JLabel[5];
 		if(roomOut) {
 			dispose();
 			new Lobby();
-			
 		}
 	} //gameOver();
 
@@ -754,6 +763,11 @@ public class RoomScreen extends JFrame {
 		}
 	} // setSit();
 
+	/**
+	 * 나중에 들어온 플레이어한테 방에 있는 플레이어 목록을 
+	 * @param voList 방 플레이어 리스트
+	 * @param index	서버상 자신의 index
+	 */
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
 		
 //		for (Entry<Integer, PlayerVO> set : voList.entrySet()) {
@@ -778,7 +792,6 @@ public class RoomScreen extends JFrame {
 	} // enterPlayerList();
 
 	public void enterPlayer(PlayerVO vo, int index) {
-		System.err.println("       " + index +" | "+ vo);
 		if (PlayerVO.myVO.getNo() == vo.getNo())
 			mySit = vo.getIndex();
 

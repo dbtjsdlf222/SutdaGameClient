@@ -183,7 +183,7 @@ public class Jokbo {
 	 */
 	 public boolean inCard(Jokbo jo, float c1, float c2) {
 	      // 카드 몇장인지 판단
-	      if (Math.abs(c2) != 0) {
+	      if (Math.floor(c2) != 0) {
 	         c1 = beforeCard1;
 	         for (Card card : jo.cardComboArr) {
 	            if ((card.getCard1() == c1 && card.getCard2() == c2)
@@ -254,9 +254,10 @@ public class Jokbo {
 	         }
 	      } // for문
 
-		int sum = (int) (Math.abs(card1)+Math.abs(card2));
+		int sum = (int) (Math.floor(card1)+Math.floor(card2));
+		System.out.println(sum+"="+Math.floor(card1)+" + "+Math.floor(card2));
 		if(lowCard) {
-			if( sum == 10) 
+			if(sum == 10)
 				jokboLbl[22].setBorder(new LineBorder(Color.orange, 1));
 			else if (sum == 9 || sum == 19)
 				jokboLbl[21].setBorder(new LineBorder(Color.orange, 1));
