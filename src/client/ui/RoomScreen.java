@@ -606,7 +606,6 @@ public class RoomScreen extends JFrame {
 	/**
 	 * @param card card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용
 	 */
-
 	public void receiveCard(float[] card) {
 		
 		if (card[0] != 0)
