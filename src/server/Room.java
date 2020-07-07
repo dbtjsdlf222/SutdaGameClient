@@ -468,7 +468,7 @@ public class Room extends ServerMethod {
 
 			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 			if (i <= 1) {
-				gameOver(winerIdx);
+				gameOver(winerIdx,null);
 				roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 				return;
 			}
@@ -540,8 +540,14 @@ public class Room extends ServerMethod {
 			roomSpeaker(new Packet(Protocol.GAMEOVER,"승자가 게임을 포기하였습니다."));
 		}
 		gameStarted = false;
+		String winMsg;
+		if(cardName==null) {
+			winMsg = playerMap.get(winerIdx).getNic()+"님이 기권승입니다. "+"/";
+		} else {
+			winMsg = playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/";
+		}
 		roomSpeaker(new Packet(Protocol.GAMEOVER,
-					playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/"+
+					winMsg+
 					winerIdx+"/" +
 					totalMoney + "/" +
 					playerMap.get(winerIdx).getMoney()					
