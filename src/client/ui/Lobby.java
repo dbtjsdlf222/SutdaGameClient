@@ -91,7 +91,11 @@ public class Lobby {
 							JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
 									JOptionPane.WARNING_MESSAGE);
 							return;
-						} else {
+						}else if(PlayerVO.myVO.getMoney() < 100000) {
+							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
+									JOptionPane.WARNING_MESSAGE);
+							return;
+						}else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
 //							RoomScreen.getInstance().mainScreen();

@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import client.ui.RoomScreen;
+import server.Room;
+import vo.Protocol;
 
 class Card {
 	private float card1;
@@ -271,5 +273,8 @@ public class Jokbo {
 	public void setJokboList(ArrayList<Jokbo> jokboList) { this.jokboList = jokboList; }
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }
-	
+
 } // class
+
+
+

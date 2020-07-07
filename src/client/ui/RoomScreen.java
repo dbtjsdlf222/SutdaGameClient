@@ -2,7 +2,6 @@ package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -30,8 +29,6 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -423,11 +420,9 @@ public class RoomScreen extends JFrame {
 					System.out.println(i);
 					if(i%2 == 0) {
 						sendOff();
-						System.out.println("여기들어와요1");
 					}else {
 						roomOut = false;
 						JOptionPane.showMessageDialog(null, "나가기 예약이 취소 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
-						System.out.println("여기들어와요2");
 					}
 					i++;
 				}
@@ -477,6 +472,11 @@ public class RoomScreen extends JFrame {
 //		}
 	} //mainScreen();
 
+	/**
+	 * gameStart 가 ture이면 게임 실행중 
+	 * gameStart가 false이면 바로 나가고 true면 roomOut을 true로 변경
+	 * roomOut가 true일 경우 게임종료시 나감
+	 */
 	public void sendOff() {
 		if(!gameStart) {
 			dispose();
@@ -676,7 +676,6 @@ public class RoomScreen extends JFrame {
 		}
 	} //gameOver();
 
-	
 	public void gameOver(String msg) {
 		gameStart = false;
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
@@ -731,7 +730,6 @@ public class RoomScreen extends JFrame {
 			betText[i].setBounds(w, 10, 90, 20);
 			nicText[i].setBounds(w, 125, 90, 20);
 			moneyText[i].setBounds(w, 150, 90, 20);
-			
 			
 			profile[i].setOpaque(false);
 			profile[i].setBackground(new Color(34, 116, 28));
