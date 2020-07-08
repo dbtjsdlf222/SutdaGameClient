@@ -84,7 +84,7 @@ public class LoginFrame implements LoginResultHandler {
 		lblErrorMessage = new JLabel("");
 		lblErrorMessage.setForeground(Color.RED);
 		lblErrorMessage.setFont(new Font("돋움", Font.PLAIN, 24));
-		panelErrorMessage.add(lblErrorMessage);
+		panelErrorMessage.add(lblErrorMessage); 
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
@@ -145,7 +145,7 @@ public class LoginFrame implements LoginResultHandler {
 				if((int)(e.getPoint().getX() / 186. * 108) + 7 < e.getPoint().getY())
 					try {
 						loginService.login(textFieldId.getText(), new String(passwordField.getPassword()));
-					} catch (IOException e1) { 
+					} catch (IOException e1) {
 						logger.error(e1.getMessage(), e1);
 					}
 				else {
