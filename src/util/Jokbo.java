@@ -254,8 +254,8 @@ public class Jokbo {
 	         }
 	      } // for문
 
-		int sum = (int) (Math.floor(card1)+Math.floor(card2));
-		System.out.println(sum+"="+Math.floor(card1)+" + "+Math.floor(card2));
+		int sum = (int)(beforeCard1+Math.floor(card2));
+		System.out.println(sum+"="+ beforeCard1 +" + "+Math.floor(card2));
 		if(lowCard) {
 			if(sum == 10)
 				jokboLbl[22].setBorder(new LineBorder(Color.orange, 1));
