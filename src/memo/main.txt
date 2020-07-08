@@ -20,9 +20,7 @@
 /방 나갔는데 방 제거 안됨
 동점처리 안내문
 
-money int > long
-
-
+/money int > long
 
 음악출력 끄기
 

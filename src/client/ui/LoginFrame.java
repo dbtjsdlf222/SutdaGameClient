@@ -61,7 +61,7 @@ public class LoginFrame implements LoginResultHandler {
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/Logo.jpg")));
+		lblLogo.setIcon(new ImageIcon(LoginFrame.class.getResource("/img/resources/Logo.jpg")));
 		GridBagConstraints gbc_lblLogo = new GridBagConstraints();
 		gbc_lblLogo.gridwidth = 2;
 		gbc_lblLogo.insets = new Insets(0, 0, 5, 5);
@@ -107,7 +107,7 @@ public class LoginFrame implements LoginResultHandler {
 		
 		JButton btnLoginJoin = new JButton("");
 		btnLoginJoin.setMargin(new Insets(-3, -3, -3, -3));
-		btnLoginJoin.setIcon(new ImageIcon(LoginFrame.class.getResource("/resources/img/BtnLoginJoin.png")));
+		btnLoginJoin.setIcon(new ImageIcon(LoginFrame.class.getResource("/img/resources/BtnLoginJoin.png")));
 		btnLoginJoin.setFocusPainted(false);
 		btnLoginJoin.setContentAreaFilled(false);
 		btnLoginJoin.setBorderPainted(false);
@@ -145,7 +145,7 @@ public class LoginFrame implements LoginResultHandler {
 				if((int)(e.getPoint().getX() / 186. * 108) + 7 < e.getPoint().getY())
 					try {
 						loginService.login(textFieldId.getText(), new String(passwordField.getPassword()));
-					}catch (IOException e1) { 
+					} catch (IOException e1) { 
 						logger.error(e1.getMessage(), e1);
 					}
 				else {

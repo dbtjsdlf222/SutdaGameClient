@@ -429,7 +429,7 @@ public class Room extends ServerMethod {
 		case Protocol.Allin:
 			betMoney = beforeBetMoney + playerMap.get(turn).getMoney();
 			playerMap.get(turn).setAllIn(true);
-			totalMoney = betMoney;
+			totalMoney += betMoney;    
 			lastBetIdx = turn;
 			logger.debug("Bet:[" + proBet+"] totalMoney:["+ totalMoney+"] betMoney:["+betMoney+"] beforeBet:["+beforeBetMoney+"]");
 			break;
@@ -529,7 +529,8 @@ public class Room extends ServerMethod {
 						s.getValue().balance(winerBetMoney - s.getValue().getBetMoney());
 					}
 					if(s.getValue().isAllIn()) {
-						Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SENDOFF));
+						if(s.getValue().getMoney() < startMoney)
+							Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SENDOFF));
 					}
 				} //for
 			} else {
@@ -542,7 +543,7 @@ public class Room extends ServerMethod {
 		gameStarted = false;
 		String winMsg;
 		if(cardName==null) {
-			winMsg = playerMap.get(winerIdx).getNic()+"님이 기권승입니다. "+"/";
+			winMsg = playerMap.get(winerIdx).getNic()+"님의 기권승입니다. "+"/";
 		} else {
 			winMsg = playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/";
 		}
@@ -550,7 +551,7 @@ public class Room extends ServerMethod {
 					winMsg+
 					winerIdx+"/" +
 					totalMoney + "/" +
-					playerMap.get(winerIdx).getMoney()					
+					playerMap.get(winerIdx).getMoney()
 				));
 		
 		//플레이어 DB에 저장
