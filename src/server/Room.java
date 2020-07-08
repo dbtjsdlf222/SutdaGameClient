@@ -201,7 +201,7 @@ public class Room extends ServerMethod {
 	} // roomSpeaker();
 	
 	/**
-	 * 
+	 * 특정 플레이어를 제외하고 브로드케스팅
 	 * @param pac	packet
 	 * @param no	제외할 playerNo
 	 */

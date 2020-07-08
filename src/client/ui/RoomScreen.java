@@ -106,7 +106,9 @@ public class RoomScreen extends JFrame {
 
 		index = (index - mySit + 5) % 5;
 		liveList[index] = false;
-		remove(panlist[index]);
+		
+		panlist[index].setBounds(0, 0, 0, 0);
+		
 		panlist[index] = new JPanel();
 
 		int[] x = { 460,   0,  0, 915, 915 };
