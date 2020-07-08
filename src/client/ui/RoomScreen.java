@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -238,20 +239,44 @@ public class RoomScreen extends JFrame {
 		 * 1억   2억    3억5천	 5억1천    
 		 */
 		
-		String[] a = {arr[1],arr[2],arr[3],arr[4]};
-	      
-		// 테이블에 출력할 데이터 배열
-			String data[][] ={{arr[6],arr[7],arr[8],arr[9]}};
-		DefaultTableModel model = new DefaultTableModel(data,a);
-		JTable tbl = new JTable(model);
-		mat.add(tbl);
+		JPanel[] panMoney = new JPanel[8];
+//		for (int i = 0; i < panMoney.length; i++) {
+//			panMoney[i] = new JPanel();
+//			
+//			if(i==0)
+//				panMoney[i].setBounds(0, 120, 145, 50);
+//			else if(i==1)
+//				panMoney[i].setBounds(145, 120, 145, 50);
+//			else if(i==2)
+//				panMoney[i].setBounds(290, 120, 145, 50);
+//			else if(i==3)
+//				panMoney[i].setBounds(435, 120, 145, 50);
+//			else if(i==4)
+//				panMoney[i].setBounds(10, 150, 400, 30);
+//			else if(i==5)
+//				panMoney[i].setBounds(10, 150, 400, 30);
+//			else if(i==6)
+//				panMoney[i].setBounds(10, 150, 400, 30);
+//			else if(i==7)
+//				panMoney[i].setBounds(10, 150, 400, 30);
+//			
+//			panMoney[i].setBackground(Color.white);
+//			mat.add(panMoney[i]);
+//		}
+		
+//		String[] a = {arr[1],arr[2],arr[3],arr[4]};
+//	      
+//		// 테이블에 출력할 데이터 배열
+//			String data[][] ={{arr[6],arr[7],arr[8],arr[9]}};
+//		DefaultTableModel model = new DefaultTableModel(data,a);
+//		JTable tbl = new JTable(model);
+//		mat.add(tbl);
 		mat.add(totalMoney);
 	}
 	
 	public void mat() {
-		mat.setBounds(410, 50, 440, 300);
-		mat.setBackground(new Color(0, 0, 0, 122));
-		totalMoney.setBounds(10, 10, 420, 50);
+		mat.setBounds(465, 50, 350, 70);
+		totalMoney.setBounds(10, 10, 380, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
 		totalMoney.setForeground(Color.yellow);
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
@@ -428,7 +453,6 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getSource() == exitBtn) {
-					System.out.println(i);
 					if(i%2 == 0) {
 						sendOff();
 					}else {
@@ -457,6 +481,7 @@ public class RoomScreen extends JFrame {
 		content.add(back, BorderLayout.CENTER);
 		back.setOpaque(false);
 		setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+//		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true); // 배경화면

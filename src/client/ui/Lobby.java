@@ -323,7 +323,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == exitBtn) {
-					System.exit(0);
+					lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				}
 			}
 		});
@@ -339,7 +339,7 @@ public class Lobby {
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
-		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void initialize() {

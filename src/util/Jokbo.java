@@ -257,13 +257,13 @@ public class Jokbo {
 		int sum = (int)(beforeCard1+Math.floor(card2));
 		System.out.println(sum+"="+ beforeCard1 +" + "+Math.floor(card2));
 		if(lowCard) {
-			if(sum == 10)
-				jokboLbl[22].setBorder(new LineBorder(Color.orange, 1));
-			else if (sum == 9 || sum == 19)
+			if(sum == 10) 
 				jokboLbl[21].setBorder(new LineBorder(Color.orange, 1));
-			else
-				jokboLbl[20].setBorder(new LineBorder(Color.orange, 1));
-		}
+			else if (sum == 9 || sum == 19) 
+				jokboLbl[19].setBorder(new LineBorder(Color.orange, 1));
+			else 
+				jokboLbl[20].setBorder(new LineBorder(Color.orange, 1));	
+			}
 	}// jokboPan
 
 
