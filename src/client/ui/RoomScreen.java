@@ -62,10 +62,11 @@ public class RoomScreen extends JFrame {
 	private Background back = new Background();
 	private JButton[] btn = new JButton[6];
 	private JPanel mat = new JPanel();
+	private JPanel showMoneyPan = new JPanel();
 	private JPanel betButtonPan = new JPanel();
 	private String[] betAndBtnInitArr = { Protocol.Die + "_", Protocol.Ddadang + "_", Protocol.Call + "_",
-			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_","-","-","-","-"};
-	private int mySit;	//서버상 내 index
+			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_", "-", "-", "-", "-" };
+	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
 	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
@@ -76,13 +77,14 @@ public class RoomScreen extends JFrame {
 	private JLabel[] betText = new JLabel[5];
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
-	private boolean[] liveList = {false,false,false,false,false};
+	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
 	public static DecimalFormat fm = new DecimalFormat("###,###");
-	private boolean gameStart= false;
-	private boolean roomOut= false;
+	private boolean gameStart = false;
+	private boolean roomOut = false;
 	private int roomMaster = 0;
+
 	public static RoomScreen getInstance() {
 		if (instance == null)
 			instance = new RoomScreen();
@@ -107,17 +109,17 @@ public class RoomScreen extends JFrame {
 
 		index = (index - mySit + 5) % 5;
 		liveList[index] = false;
-		
+
 		panlist[index].setBounds(0, 0, 0, 0);
-		
+
 		panlist[index] = new JPanel();
 
-		int[] x = { 460,   0,  0, 915, 915 };
-		int[] y = { 440, 215, 30,  30, 215 };
+		int[] x = { 460, 0, 0, 915, 915 };
+		int[] y = { 440, 215, 30, 30, 215 };
 
 		panlist[index].setBounds(x[index], y[index], 350, 180);
 		panlist[index].setLayout(null);
-		panlist[index].setBackground(new Color(0, 0, 0,122));
+		panlist[index].setBackground(new Color(0, 0, 0, 122));
 		add(panlist[index]);
 
 		getContentPane().add(back, BorderLayout.CENTER);
@@ -133,9 +135,9 @@ public class RoomScreen extends JFrame {
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
 
-		if(!gameStart&& roomMaster==mySit)
+		if (!gameStart && roomMaster == mySit)
 			RoomScreen.getInstance().startBtnSet();
-		
+
 		if (idx == 0) {
 			// frame.setBounds(450, 430, 370, 190);
 			masterSticker.setBounds(430, 440, 15, 15);
@@ -160,9 +162,9 @@ public class RoomScreen extends JFrame {
 	} // 게임 진행 순서
 
 	public void setButtonAndPrice(String[] arr) {
-		if(arr!=null)
+		if (arr != null)
 			showNeedMoney(arr);
-		
+
 		ActionListener action = new ActionListener() {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
 			@Override
@@ -185,7 +187,7 @@ public class RoomScreen extends JFrame {
 
 			} // actionPerformed();
 		};
-		
+
 		remove(betButtonPan);
 
 		betButtonPan = new JPanel();
@@ -225,85 +227,109 @@ public class RoomScreen extends JFrame {
 		}
 	} // buttonReset();
 
-	
 	public void reLoadMoney(int playerIdx, String money) {
 		playerIdx = (playerIdx - mySit + 5) % 5;
 		moneyText[playerIdx].setText(money);
 	}
 
 	public void showNeedMoney(String[] arr) {
-		
+
 		/**
-		 * 라벨 8개 추가해서 테이블 형식으로 바꿈
-		 * 콜    따당    쿼터    하프
-		 * 1억   2억    3억5천	 5억1천    
+		 * 라벨 8개 추가해서 테이블 형식으로 바꿈 콜 따당 쿼터 하프 1억 2억 3억5천 5억1천
 		 */
 		
-		JPanel[] panMoney = new JPanel[8];
-//		for (int i = 0; i < panMoney.length; i++) {
-//			panMoney[i] = new JPanel();
-//			
-//			if(i==0)
-//				panMoney[i].setBounds(0, 120, 145, 50);
-//			else if(i==1)
-//				panMoney[i].setBounds(145, 120, 145, 50);
-//			else if(i==2)
-//				panMoney[i].setBounds(290, 120, 145, 50);
-//			else if(i==3)
-//				panMoney[i].setBounds(435, 120, 145, 50);
-//			else if(i==4)
-//				panMoney[i].setBounds(10, 150, 400, 30);
-//			else if(i==5)
-//				panMoney[i].setBounds(10, 150, 400, 30);
-//			else if(i==6)
-//				panMoney[i].setBounds(10, 150, 400, 30);
-//			else if(i==7)
-//				panMoney[i].setBounds(10, 150, 400, 30);
-//			
-//			panMoney[i].setBackground(Color.white);
-//			mat.add(panMoney[i]);
-//		}
 		
-//		String[] a = {arr[1],arr[2],arr[3],arr[4]};
-//	      
-//		// 테이블에 출력할 데이터 배열
-//			String data[][] ={{arr[6],arr[7],arr[8],arr[9]}};
-//		DefaultTableModel model = new DefaultTableModel(data,a);
-//		JTable tbl = new JTable(model);
+		showMoneyPan.setBounds(400, 120, 480, 100);
+		showMoneyPan.setBackground(new Color(0,0, 0, 122));
+		showMoneyPan.setLayout(null);
+		add(showMoneyPan);
+		JPanel[] panMoney = new JPanel[8];
+		JLabel[] lblMoney = new JLabel[8];
+		String[] a = {arr[1],arr[2],arr[3],arr[4]};
+		String data[][] ={{arr[6],arr[7],arr[8],arr[9]}};
+
+		for (int i = 0; i < panMoney.length; i++) {
+			panMoney[i] = new JPanel();
+			lblMoney[i] = new JLabel();
+			if (i == 0) {
+				panMoney[i].setBounds(0, 0, 120, 50);
+				lblMoney[i].setText(arr[1]);
+			}else if (i == 1) {
+				panMoney[i].setBounds(120, 0, 120, 50);
+				lblMoney[i].setText(arr[2]);
+			}else if (i == 2) {
+				panMoney[i].setBounds(240, 0, 120, 50);
+				lblMoney[i].setText(arr[3]);
+			}else if (i == 3) {
+				panMoney[i].setBounds(360, 0, 120, 50);
+				lblMoney[i].setText(arr[4]);
+			}else if (i == 4) {
+				panMoney[i].setBounds(0, 50, 120, 50);
+				lblMoney[i].setText(arr[6]+"");
+			}else if (i == 5) {
+				panMoney[i].setBounds(120, 50, 120, 50);
+				lblMoney[i].setText(arr[7]+"");
+			}else if (i == 6) {
+				panMoney[i].setBounds(240, 50, 120, 50);
+				lblMoney[i].setText(arr[8]+"");
+			}else if (i == 7) {
+				panMoney[i].setBounds(360, 50, 120, 50);
+				lblMoney[i].setText(arr[9]+"");
+			}
+			
+			panMoney[i].add(lblMoney[i]);
+			lblMoney[i].setForeground(Color.orange);
+			panMoney[i].setBackground(new Color(0,0,0));
+			panMoney[i].setBorder(new LineBorder(Color.orange, 1));
+			showMoneyPan.add(panMoney[i]);
+		}
+
+		
+	      
+		// 테이블에 출력할 데이터 배열
+			
+		DefaultTableModel model = new DefaultTableModel(data,a);
+		JTable tbl = new JTable(model);
 //		mat.add(tbl);
 		mat.add(totalMoney);
 	}
-	
+
 	public void mat() {
 		mat.setBounds(465, 50, 350, 70);
+		mat.setBackground(new Color(0, 0, 0, 122));
 		totalMoney.setBounds(10, 10, 380, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
 		totalMoney.setForeground(Color.yellow);
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		add(mat); // 배팅 금액 패널
 	}
-	
+
 	private boolean initialized = false;
+
 	public void turn(int index) {
 		index = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
-			if(panlist[i]==null) continue;
-			panlist[i].setBorder(null);	
+			if (panlist[i] == null)
+				continue;
+			panlist[i].setBorder(null);
 		}
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
 		try {
 			beticon[index].setBounds(0, 0, 0, 0);
-		} catch (NullPointerException e) { }
+		} catch (NullPointerException e) {
+		}
 		revalidate();
 		repaint();
-	} //turn();
-	
+	} // turn();
+
 	// 게임시작 버튼
 	public void startBtnSet() {
-		
-		if(gameStartBtn!=null) { return; }
-		
+
+		if (gameStartBtn != null) {
+			return;
+		}
+
 		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
 		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
 		gameStartBtn = new JButton(gameStartBasic);
@@ -329,14 +355,14 @@ public class RoomScreen extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				int tempCount = 0;
 				for (int i = 0; i < 5; i++) {
-						if (profile[i] != null) {
-							tempCount++;
-						}
+					if (profile[i] != null) {
+						tempCount++;
+					}
 				} // for
 				if (tempCount >= 2) {
-					RoomScreen.getInstance().gameStart= true;
+					RoomScreen.getInstance().gameStart = true;
 					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
-					if(gameStartBtn!=null) {
+					if (gameStartBtn != null) {
 						remove(gameStartBtn);
 						gameStartBtn = null;
 					}
@@ -350,18 +376,24 @@ public class RoomScreen extends JFrame {
 		revalidate();
 		repaint();
 	}
-	
+
 	public void mainScreen() {
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
 			panlist[i].setBackground(new Color(0, 0, 0, 122));
-			if (i == 0) { panlist[i].setBounds(460, 440, 350, 180); } else 
-			if (i == 1) { panlist[i].setBounds(  0, 215, 350, 180); } else 
-			if (i == 2) { panlist[i].setBounds(  0,  30, 350, 180);	} else
-			if (i == 3) { panlist[i].setBounds(915,  30, 350, 180); } else
-			if (i == 4) { panlist[i].setBounds(915, 215, 350, 180); }
+			if (i == 0) {
+				panlist[i].setBounds(460, 440, 350, 180);
+			} else if (i == 1) {
+				panlist[i].setBounds(0, 215, 350, 180);
+			} else if (i == 2) {
+				panlist[i].setBounds(0, 30, 350, 180);
+			} else if (i == 3) {
+				panlist[i].setBounds(915, 30, 350, 180);
+			} else if (i == 4) {
+				panlist[i].setBounds(915, 215, 350, 180);
+			}
 			add(panlist[i]);
-		} //for
+		} // for
 
 		setButtonAndPrice(betAndBtnInitArr);
 		buttonReset();
@@ -436,8 +468,8 @@ public class RoomScreen extends JFrame {
 						chatText.setText("");
 					}
 				}
-			} //actionPerformed();
-		}); //addActionListener();
+			} // actionPerformed();
+		}); // addActionListener();
 
 		// 나가기 버튼
 		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/smallExit.PNG")));
@@ -445,17 +477,18 @@ public class RoomScreen extends JFrame {
 		exitBtn.setBackground(new Color(0, 0, 0, 0));
 		exitBtn.setFocusable(false);
 		exitBtn.setContentAreaFilled(false);
-		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
+		exitBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(exitBtn);
-		
+
 		exitBtn.addMouseListener(new MouseAdapter() {
 			int i = 0;
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getSource() == exitBtn) {
-					if(i%2 == 0) {
+				if (e.getSource() == exitBtn) {
+					if (i % 2 == 0) {
 						sendOff();
-					}else {
+					} else {
 						roomOut = false;
 						JOptionPane.showMessageDialog(null, "나가기 예약이 취소 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
 					}
@@ -463,14 +496,14 @@ public class RoomScreen extends JFrame {
 				}
 			}
 		});
-		 
+
 //		addActionListener(new ActionListener() {
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
 //				sendOff();
 //			}
 //		});
-		
+
 		new Thread(new MusicPlayer()).start(); // 배경음악
 
 		setTitle("섯다 온라인");
@@ -496,7 +529,7 @@ public class RoomScreen extends JFrame {
 		groupLayout
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
-		
+
 //		for(int i = 0; i < timers.length; i++) {
 //			final int j = i;
 //			timers[i] = new Timer(1000, e -> {
@@ -506,28 +539,27 @@ public class RoomScreen extends JFrame {
 //			});
 //			timers[i].setRepeats(false);
 //		}
-	} //mainScreen();
+	} // mainScreen();
 
 	/**
-	 * gameStart 가 ture이면 게임 실행중 
-	 * gameStart가 false이면 바로 나가고 true면 roomOut을 true로 변경
+	 * gameStart 가 ture이면 게임 실행중 gameStart가 false이면 바로 나가고 true면 roomOut을 true로 변경
 	 * roomOut가 true일 경우 게임종료시 나감
 	 */
 	public void sendOff() {
-		if(!gameStart) {
+		if (!gameStart) {
 			dispose();
 			new Lobby();
-		}else {
+		} else {
 			roomOut = true;
 			JOptionPane.showMessageDialog(null, "나가기 예약이 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);
 		}
 	}
-	
+
 	// 시작 돈을 걷고 Text에 적용
 	public void startPay(long sMoney) {
 		int count = 0;
 		gameStart = true;
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (moneyText[i] == null)
 				continue;
@@ -535,46 +567,49 @@ public class RoomScreen extends JFrame {
 			moneyText[i].setText(Long.parseLong(moneyText[i].getText().replaceAll(",", "")) - sMoney + "");
 			try {
 				liveList[i] = true;
-			} catch (NullPointerException e) { }
+			} catch (NullPointerException e) {
+			}
 		} // for
 		totalMoney.setText(count * sMoney + "");
 	} // startPay();
 
-	public void betAlert(int idx, String bet, String money,String total) {
+	public void betAlert(int idx, String bet, String money, String total) {
 		idx = (idx - mySit + 5) % 5;
-		
+
 		moneyText[idx].setText(money);
-		
+
 		totalMoney.setText(total);
-			
-		if(bet.equals(Protocol.Die)) {
+
+		if (bet.equals(Protocol.Die)) {
 			liveList[idx] = false;
 			try {
 				card1[idx].setIcon(null);
 				card2[idx].setIcon(null);
-			} catch (NullPointerException e) { }
-		} //if
+			} catch (NullPointerException e) {
+			}
+		} // if
 		betText[idx].setText(bet);
 		betIcon(idx, bet);
 	} // betAlert();
-	
+
 //	public Timer[] timers = new Timer[5];
-	
+
 	public void betIcon(int idx, String bet) {
 		ImageIcon iCon;
-		if(idx == 0)
-			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon_.png"));
+		if (idx == 0)
+			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/" + bet + "Icon_.png"));
 		else
-			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/"+bet+"Icon.png"));
+			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/" + bet + "Icon.png"));
 
 //		remove(beticon[idx]); // 실행 의미 없음
-		
+
 		try {
 			beticon[idx].setBounds(0, 0, 0, 0);
-		} catch (NullPointerException e) { }
-		
+		} catch (NullPointerException e) {
+		}
+
 		beticon[idx] = new JLabel(iCon);
-		
+
 //		timers[idx].stop();
 		switch (idx) {
 		case 0:
@@ -598,28 +633,31 @@ public class RoomScreen extends JFrame {
 			add(beticon[idx]);
 			break;
 		}
-		
+
 		add(panlist[idx]);
 		add(back);
 		revalidate();
 		repaint();
-		
+
 //		timers[idx].start();
-		
-	} //betIcon();
+
+	} // betIcon();
 
 	public ImageIcon cardFormat(float card) {
-		return  new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
-				String.format("%." +((int) card == card ? "0" : "1")+"f", card) +".png"));
+		return new ImageIcon(RoomScreen.class.getResource(
+				"../../img/card/" + String.format("%." + ((int) card == card ? "0" : "1") + "f", card) + ".png"));
 	}
-	
-	public void openCard(Map<Integer,PlayerVO> cardMap) {
-		
+
+	public void openCard(Map<Integer, PlayerVO> cardMap) {
+
 		for (int i = 0; i < 5; i++) {
-			if(cardMap.get(i)==null || !cardMap.get(i).isLive()) continue;
+			if (cardMap.get(i) == null || !cardMap.get(i).isLive())
+				continue;
 			try {
 				Thread.sleep(500);
-			} catch (InterruptedException e) { e.printStackTrace(); }
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			int idx = (i - mySit + 5) % 5;
 
 			float c1 = cardMap.get(i).getCard1();
@@ -632,57 +670,57 @@ public class RoomScreen extends JFrame {
 //				
 //				card2[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
 //						String.format("%." +((int) c2 == c2 ? "0" : "1")+"f", c2) +".png")));
-				
+
 			} catch (NullPointerException e) {
-				System.out.println("card1[idx] "+card1[idx]);
-				System.out.println("card2[idx] "+card2[idx]);
+				System.out.println("card1[idx] " + card1[idx]);
+				System.out.println("card2[idx] " + card2[idx]);
 				e.printStackTrace();
 				System.err.println(cardFormat(c1));
 				System.err.println(cardFormat(c2));
 			}
-		} 
+		}
 	} // openCard();
 
 	/**
 	 * @param card card[] 배열안에 카드의 번호(!=0)가 들어있다면 적용
 	 */
 	public void receiveCard(float[] card) {
-		
+
 		if (card[0] != 0)
 			card1[0].setIcon(cardFormat(card[0]));
-			
 
 		if (card[1] != 0)
 			card2[0].setIcon(cardFormat(card[1]));
 
-		for (int i = 1; i < 5; i++) {	//다른 사람의 뒷패를 돌리므로 1부터
+		for (int i = 1; i < 5; i++) { // 다른 사람의 뒷패를 돌리므로 1부터
 			if (liveList[i]) {
-				
-				if(card[0] != 0)
+
+				if (card[0] != 0)
 					card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
-				if(card[1] != 0)
+				if (card[1] != 0)
 					card2[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
-				
-			} //if
+
+			} // if
 		} // for
 		try {
 			remove(jokboPanel);
-		} catch(NullPointerException e) { }
-		Jokbo jokbo= Jokbo.getInstance();
-		
+		} catch (NullPointerException e) {
+		}
+		Jokbo jokbo = Jokbo.getInstance();
+
 		jokboPanel = new JPanel();
 		jokboPanel.setBounds(850, 420, 415, 200);
 		jokboPanel.setBackground(new Color(0, 0, 0));
 		jokboPanel.setLayout(null);
 		add(jokboPanel);
-		
+
 		jokbo.jokboPan(card[0], card[1]);
-	
+
 	} // receiveCard();
 
 	/**
-	 * @param msg 알림창에 넣을 내용
-	 * @param winerIdx 승자 서버 인덱스 (생략시 승자 탈주 처리)
+	 * @param msg             알림창에 넣을 내용
+	 * @param winerIdx        승자 서버 인덱스 (생략시 승자 탈주 처리)
 	 * @param winerTotalMoney 승자가 소유한 돈 (생략시 승자 탈주 처리)
 	 */
 	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
@@ -691,8 +729,8 @@ public class RoomScreen extends JFrame {
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(winerTotalMoney);
-		RoomScreen.getInstance().gameStart= false;
-		if(mySit == roomMaster)
+		RoomScreen.getInstance().gameStart = false;
+		if (mySit == roomMaster)
 			startBtnSet();
 		totalMoney.setText("대기중");
 		for (int j = 0; j < 5; j++) {
@@ -701,22 +739,23 @@ public class RoomScreen extends JFrame {
 				card2[j].setIcon(null);
 				panlist[j].setBorder(null);
 				beticon[j].setBounds(0, 0, 0, 0);
-			} catch (NullPointerException e) { }
+			} catch (NullPointerException e) {
+			}
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
-		if(roomOut) {
+		if (roomOut) {
 			dispose();
 			new Lobby();
 		}
-	} //gameOver();
+	} // gameOver();
 
 	public void gameOver(String msg) {
 		gameStart = false;
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
-		RoomScreen.getInstance().gameStart= false;
-	}  //gameOver();
-	
+		RoomScreen.getInstance().gameStart = false;
+	} // gameOver();
+
 	/**
 	 * @param i     몇번째 자리
 	 * @param setVO 자리에 앉을 사람의 VO
@@ -726,14 +765,14 @@ public class RoomScreen extends JFrame {
 			liveList[i] = true;
 			card1[i] = new JLabel();
 			card2[i] = new JLabel();
-			
+
 			nicText[i] = new JLabel(setVO.getNic());
 			nicText[i].setForeground(Color.white);
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
-			
+
 //			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
-			moneyText[i] = new JLabel(setVO.getMoney()+"");
+			moneyText[i] = new JLabel(setVO.getMoney() + "");
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
@@ -749,30 +788,34 @@ public class RoomScreen extends JFrame {
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);
 			panlist[i].setBackground(new Color(0, 0, 0, 122));
-			
+
 			int w = 0, t = 0;
-			
-			if (i==0||i==1||i==2) { w= 10; t=105;}  else 
-			if (i==3||i==4)  	  { w=250; }
-			
+
+			if (i == 0 || i == 1 || i == 2) {
+				w = 10;
+				t = 105;
+			} else if (i == 3 || i == 4) {
+				w = 250;
+			}
+
 //			card1[i].setBounds(115, 10, 110, 160);
 //			card2[i].setBounds(230, 10, 110, 160);
-			
-			card1[i].setBounds( 10+t, 10, 110, 160);
-			card2[i].setBounds(125+t, 10, 110, 160);
-			
+
+			card1[i].setBounds(10 + t, 10, 110, 160);
+			card2[i].setBounds(125 + t, 10, 110, 160);
+
 			profile[i].setBounds(w, 10, 90, 100);
 			betText[i].setBounds(w, 10, 90, 20);
 			nicText[i].setBounds(w, 125, 90, 20);
 			moneyText[i].setBounds(w, 150, 90, 20);
-			
+
 			profile[i].setOpaque(false);
 			profile[i].setBackground(new Color(34, 116, 28));
 			panlist[i].add(profile[i]);
 			card1[i].setOpaque(false);
 			card2[i].setOpaque(false);
 			panlist[i].add(card1[i]);
-			panlist[i].add(card2[i]); 
+			panlist[i].add(card2[i]);
 			betText[i].setOpaque(false);
 			betText[i].setForeground(Color.black);
 			panlist[i].add(betText[i]);
@@ -783,7 +826,7 @@ public class RoomScreen extends JFrame {
 
 			revalidate();
 			repaint();
-			
+
 		} catch (Exception e) {
 			logger.info(Arrays.toString(panlist));
 			logger.error(e.getMessage(), e);
@@ -791,12 +834,13 @@ public class RoomScreen extends JFrame {
 	} // setSit();
 
 	/**
-	 * 나중에 들어온 플레이어한테 방에 있는 플레이어 목록을 
+	 * 나중에 들어온 플레이어한테 방에 있는 플레이어 목록을
+	 * 
 	 * @param voList 방 플레이어 리스트
-	 * @param index	서버상 자신의 index
+	 * @param index  서버상 자신의 index
 	 */
 	public void enterPlayerList(Map<Integer, PlayerVO> voList, int index) {
-		
+
 //		for (Entry<Integer, PlayerVO> set : voList.entrySet()) {
 //			if (PlayerVO.myVO.getNo() == set.getValue().getNo()) {
 //				mySit = set.getValue().getIndex();
@@ -808,11 +852,11 @@ public class RoomScreen extends JFrame {
 
 		for (int i = 0; i < 5; i++) {
 			int j;
-			j = (mySit + i  + 5) % 5;
+			j = (mySit + i + 5) % 5;
 			PlayerVO setVO = voList.get(j);
 			if (setVO == null)
 				continue;
-			
+
 			setSit(i, setVO);
 
 		} // for
