@@ -77,6 +77,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] betText = new JLabel[5];
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
+	private JPanel[] panMoney;
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
@@ -238,7 +239,12 @@ public class RoomScreen extends JFrame {
 		 * 라벨 8개 추가해서 테이블 형식으로 바꿈 콜 따당 쿼터 하프 1억 2억 3억5천 5억1천
 		 */
 		
-		
+		try {
+			remove(showMoneyPan);
+		}catch(NullPointerException e) {
+			System.out.println("널포이트");
+		}
+		showMoneyPan = new JPanel(); 
 		showMoneyPan.setBounds(400, 120, 480, 100);
 		showMoneyPan.setBackground(new Color(0,0, 0, 122));
 		showMoneyPan.setLayout(null);
@@ -276,7 +282,7 @@ public class RoomScreen extends JFrame {
 				panMoney[i].setBounds(360, 50, 120, 50);
 				lblMoney[i].setText(arr[9]+"");
 			}
-			
+			System.out.println(arr[i]);
 			panMoney[i].add(lblMoney[i]);
 			lblMoney[i].setForeground(Color.orange);
 			panMoney[i].setBackground(new Color(0,0,0));
