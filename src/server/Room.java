@@ -107,9 +107,6 @@ public class Room extends ServerMethod {
 	public String[] setButton() {
 		String[] arr = new String[10];
 		long turnHaveMoney = playerMap.get(turn).getMoney();
-		System.out.println("turnHaveMoney "+turnHaveMoney);
-		System.out.println("totalMoney : "+totalMoney);
-		System.out.println("beforeBetMoney : "+beforeBetMoney);
 		arr[0] = Protocol.Die;
 		
 		// 두번째 라운드때 첫번째 사람은 따당 콜 대신 체크를 넣는다

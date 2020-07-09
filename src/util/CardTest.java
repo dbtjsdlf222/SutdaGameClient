@@ -11,26 +11,26 @@ public class CardTest {
 		Map<Integer,PlayerVO> map = new HashMap<>();
 		
 		PlayerVO player =  new PlayerVO();
-		player.setCard1(1F);
-		player.setCard2(1.5F);
+		player.setCard1(10);
+		player.setCard2(10.5F);
 		map.put(1, player);
 		
 		player =  new PlayerVO();
-		player.setCard1(2F);
-		player.setCard2(2.5F);
+		player.setCard1(1);
+		player.setCard2(2);
 		map.put(2, player);
 		
 		player =  new PlayerVO();
-		player.setCard1(3F);
-		player.setCard2(3.5F);
+		player.setCard1(4);
+		player.setCard2(7);
 		map.put(3, player);
 		
 		player =  new PlayerVO();
 		player.setCard1(3F);
-		player.setCard2(5.5F);
+		player.setCard2(7F);
 		map.put(4, player);
 		
-		new CalcCardLevel().CardLevel(map);
+		new CalcCardLevel().getWinner(1,map);
 		
 	}
 }
