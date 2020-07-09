@@ -37,11 +37,9 @@ public class CalcCardLevel implements Comparable {
 		CardLevel(playerMap);
 		
 		if(mungGusa!=null) {
-			System.out.println("멍구사 재경기");
 			RoomOperator.getInstance().getRoom(roomNo).handOutCard();
 			return;
 		} else if (gusa!=null) {
-			System.out.println("구사 재경기");
 			RoomOperator.getInstance().getRoom(roomNo).handOutCard();
 			return;
 		}
@@ -160,7 +158,6 @@ public class CalcCardLevel implements Comparable {
 			 || ((Math.floor(card1) == 7) && (Math.floor(card2) == 3))) {
 				cal.cardLevel = 0;
 				cal.cardName = "땡잡이";
-				ddaeng = i;
 				if (ddaeng!=null && playerCardList.get(ddaeng).cardLevel != 1000) {	//떙을 가진 사람이 있으면 9땡보다 높게 책정
 					cal.cardLevel = 950;	//장땡은 못잡으니 1000 보다 아래인 950으로 책정
 				} else {
@@ -189,7 +186,7 @@ public class CalcCardLevel implements Comparable {
 				}
 				cal.cardLevel = 3;
 				cal.setCardName("3끗");
-				continue;
+				
 			} else if ((card1 == 4 && card2 == 9) || (card1 == 9 && card2 == 4)) {
 				cal.setCardName("멍구사");
 				if(kwang138==null && kwang38==null) {
@@ -203,12 +200,14 @@ public class CalcCardLevel implements Comparable {
 				cal.cardLevel = 3;
 			}
 
-			cal.cardLevel = (int) ((Math.floor(card1) + Math.floor(card2)) % 10); // 끗
-
-			if (cal.cardLevel == 0) {
-				cal.setCardName("망통");
-			} else {
-				cal.setCardName(cal.cardLevel + "끗");
+			if(cal.cardLevel == 0) {
+				cal.cardLevel = (int) ((Math.floor(card1) + Math.floor(card2)) % 10); // 끗
+	
+				if (cal.cardLevel == 0) {
+					cal.setCardName("망통");
+				} else {
+					cal.setCardName(cal.cardLevel + "끗");
+				}
 			}
 			
 			playerCardList.add(cal);
