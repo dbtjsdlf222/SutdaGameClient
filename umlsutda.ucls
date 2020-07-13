@@ -49,7 +49,7 @@
   </package>  
   <class id="8" language="java" name="client.service.ClientPacketSender" project="SutDa" 
     file="/SutDa/src/client/service/ClientPacketSender.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3739" y="129"/>    
+    <position height="-1" width="-1" x="3740" y="58"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -58,7 +58,7 @@
   </class>  
   <class id="9" language="java" name="music.MusicPlayer" project="SutDa" file="/SutDa/src/music/MusicPlayer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3906" y="138"/>    
+    <position height="-1" width="-1" x="3907" y="67"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -76,7 +76,7 @@
   </class>  
   <class id="11" language="java" name="client.RunClient" project="SutDa" file="/SutDa/src/client/RunClient.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="121" width="113" x="3797" y="278"/>    
+    <position height="121" width="113" x="3828" y="230"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -140,7 +140,7 @@
   </class>  
   <class id="19" language="java" name="util.Card" project="SutDa" file="/SutDa/src/util/Jokbo.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3590" y="220"/>    
+    <position height="-1" width="-1" x="3598" y="176"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -149,7 +149,7 @@
   </class>  
   <class id="20" language="java" name="server.ServerReceiver" project="SutDa" 
     file="/SutDa/src/server/ServerReceiver.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="3577" y="-145"/>    
+    <position height="-1" width="-1" x="3595" y="-145"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -246,26 +246,21 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="33" language="java" name="resources.img" project="SutDa" file="/SutDa/src/resources/img" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="4539" y="152"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <class id="34" language="java" name="client.listener.ClientReceiver" project="SutDa" 
+  <class id="33" language="java" name="client.listener.ClientReceiver" project="SutDa" 
     file="/SutDa/src/client/listener/ClientReceiver.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="4557" y="-144"/>    
+    <position height="-1" width="-1" x="4613" y="-147"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="35" language="java" name="util" project="SutDa" file="/SutDa/src/util" binary="false" 
+  <package id="34" language="java" name="util" project="SutDa" file="/SutDa/src/util" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4679" y="154"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="36" language="java" name="util.CalcCardLevel" project="SutDa" file="/SutDa/src/util/CalcCardLevel.java" 
+  <class id="35" language="java" name="util.CalcCardLevel" project="SutDa" file="/SutDa/src/util/CalcCardLevel.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4892" y="71"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -274,7 +269,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="37" language="java" name="client.service.LoginResultHandler.Focus" project="SutDa" 
+  <enumeration id="36" language="java" name="client.service.LoginResultHandler.Focus" project="SutDa" 
     file="/SutDa/src/client/service/LoginResultHandler.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6760" y="175"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -283,7 +278,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="38" language="java" name="client.ui.JoinFrame" project="SutDa" file="/SutDa/src/client/ui/JoinFrame.java" 
+  <class id="37" language="java" name="client.ui.JoinFrame" project="SutDa" file="/SutDa/src/client/ui/JoinFrame.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6338" y="674"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -292,11 +287,11 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="39" language="java" name="dao" project="SutDa" file="/SutDa/src/dao" binary="false" corner="BOTTOM_RIGHT">    
+  <package id="38" language="java" name="dao" project="SutDa" file="/SutDa/src/dao" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4397" y="70"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="40" language="java" name="client.Background" project="SutDa" file="/SutDa/src/client/Background.java" 
+  <class id="39" language="java" name="client.Background" project="SutDa" file="/SutDa/src/client/Background.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6079" y="-68"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -305,12 +300,12 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="41" language="java" name="memo" project="SutDa" file="/SutDa/src/memo" binary="false" 
+  <package id="40" language="java" name="memo" project="SutDa" file="/SutDa/src/memo" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4538" y="70"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="42" language="java" name="dao.PlayerDAO" project="SutDa" file="/SutDa/src/dao/PlayerDAO.java" 
+  <class id="41" language="java" name="dao.PlayerDAO" project="SutDa" file="/SutDa/src/dao/PlayerDAO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6077" y="515"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -319,7 +314,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="43" language="java" name="server.ServerPacketController" project="SutDa" 
+  <class id="42" language="java" name="server.ServerPacketController" project="SutDa" 
     file="/SutDa/src/server/ServerPacketController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6347" y="142"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -328,12 +323,12 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <package id="44" language="java" name="connection" project="SutDa" file="/SutDa/src/connection" binary="false" 
+  <package id="43" language="java" name="connection" project="SutDa" file="/SutDa/src/connection" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4679" y="70"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="45" language="java" name="server.ServerMethod" project="SutDa" file="/SutDa/src/server/ServerMethod.java" 
+  <class id="44" language="java" name="server.ServerMethod" project="SutDa" file="/SutDa/src/server/ServerMethod.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="6520" y="-105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -342,7 +337,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="46" language="java" name="client.listener.DocumentUpdateListener" project="SutDa" 
+  <class id="45" language="java" name="client.listener.DocumentUpdateListener" project="SutDa" 
     file="/SutDa/src/client/listener/DocumentUpdateListener.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="4460" y="451"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -351,102 +346,105 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="47">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="48" name="loginService">        
+  <association id="46">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="47" name="jokboList">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="49" minimum="0" maximum="1">        
+      <multiplicity id="48" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="50" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <bendpoint x="5605" y="1511"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="53" name="roomPlayerList">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="56" name="playerCardList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <bendpoint x="6413" y="850"/>    
+    <bendpoint x="6413" y="1511"/>    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="59" name="lobbyPlayerList">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="62" name="cardComboArr">        
+        <position height="0" width="0" x="8" y="-44"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="8" y="-44"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <bendpoint x="6392" y="850"/>    
+    <bendpoint x="6392" y="1511"/>    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="65" name="thisPlayerVO">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="68" name="loginService">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="50">    
-    <bendpoint x="5647" y="1511"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="51" name="playerList">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="52" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="53">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="54" name="joinFrame">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="55" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="38" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="56">    
-    <bendpoint x="5605" y="1511"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="57" name="roomPlayerList">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="58" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="59">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="60" name="instance">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="61" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="62">    
-    <bendpoint x="6392" y="850"/>    
-    <bendpoint x="6392" y="1511"/>    
-    <end type="SOURCE" refId="45" navigable="false">      
-      <attribute id="63" name="thisPlayerVO">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="64" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="65">    
-    <bendpoint x="7154" y="850"/>    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="30"/>  
-  </realization>  
-  <generalization id="66">    
-    <bendpoint x="6371" y="850"/>    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="45"/>  
-  </generalization>  
-  <association id="67">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="68" name="roomMap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="69" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="70">    
@@ -462,256 +460,253 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="73">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="74" name="roomMap">        
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="74" name="ro">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="75" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="76">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="37"/>  
-  </nesting>  
-  <association id="77">    
-    <bendpoint x="6434" y="850"/>    
-    <end type="SOURCE" refId="45" navigable="false">      
-      <attribute id="78" name="dao">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="79" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="80">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="81" name="cardComboArr">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="82" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="83">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="84" name="playerDAO">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="85" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="86">    
-    <end type="SOURCE" refId="45" navigable="false">      
-      <attribute id="87" name="ro">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="88" minimum="0" maximum="1">        
+      <multiplicity id="75" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="89">    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="90" name="playerDAO">        
+  <association id="76">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="77" name="imgP">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="91" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="92">    
-    <bendpoint x="5775" y="1511"/>    
-    <end type="SOURCE" refId="24" navigable="false">      
-      <attribute id="93" name="playerVO">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="94" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="95">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="96" name="resultHandler">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="97" minimum="0" maximum="1">        
+      <multiplicity id="78" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="30" navigable="true"/>    
+    <end type="TARGET" refId="39" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="98">    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="99" name="myVO">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="100" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="101">    
+  <association id="79">    
     <bendpoint x="5626" y="1511"/>    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="102" name="playerVO">        
+      <attribute id="80" name="playerVO">        
         <position height="0" width="0" x="-8" y="-33"/>      
       </attribute>      
-      <multiplicity id="103" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="104">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="105" name="instance">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="106" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="107">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="108" name="ro">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="109" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="110">    
-    <end type="SOURCE" refId="38" navigable="false">      
-      <attribute id="111" name="playerDAO">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="112" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="42" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="113">    
-    <end type="SOURCE" refId="43"/>    
-    <end type="TARGET" refId="45"/>  
-  </generalization>  
-  <association id="114">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="115" name="jokboList">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="116" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="117">    
-    <bendpoint x="6413" y="850"/>    
-    <bendpoint x="6413" y="1511"/>    
-    <end type="SOURCE" refId="45" navigable="false">      
-      <attribute id="118" name="lobbyPlayerList">        
-        <position height="0" width="0" x="-8" y="-33"/>      
-      </attribute>      
-      <multiplicity id="119" minimum="0" maximum="2147483647">        
+      <multiplicity id="81" minimum="0" maximum="1">        
         <position height="0" width="0" x="-8" y="-33"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="120">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="121" name="instance">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="122" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="123">    
-    <end type="SOURCE" refId="32" navigable="false">      
-      <attribute id="124" name="imgP">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="125" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="40" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="126">    
+  <association id="82">    
     <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="127" name="back">        
+      <attribute id="83" name="instance">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="128" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="40" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="129">    
-    <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="130" name="instance">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="131" minimum="0" maximum="1">        
+      <multiplicity id="84" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="132">    
-    <end type="SOURCE" refId="36" navigable="false">      
-      <attribute id="133" name="playerCardList">        
+  <association id="85">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="86" name="joinFrame">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="134" minimum="0" maximum="2147483647">        
+      <multiplicity id="87" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="36" navigable="true"/>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="88">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="89" name="back">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="90" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="91">    
+    <bendpoint x="5647" y="1511"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="92" name="playerList">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="93" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="95" name="playerDAO">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="96" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="97">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="98" name="roomMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="99" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="100">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="101" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="102" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="103">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="104" name="playerDAO">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="105" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="106">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="44"/>  
+  </generalization>  
+  <association id="107">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="108" name="roomMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="109" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="110">    
+    <bendpoint x="7154" y="850"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="30"/>  
+  </realization>  
+  <association id="111">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="112" name="myVO">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="113" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="114">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="36"/>  
+  </nesting>  
+  <association id="115">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="116" name="resultHandler">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="117" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="119" name="instance">        
+        <position height="0" width="0" x="1" y="-71"/>      
+      </attribute>      
+      <multiplicity id="120" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1" y="-71"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="122" name="ro">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="123" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="124">    
+    <bendpoint x="6371" y="850"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="44"/>  
+  </generalization>  
+  <association id="125">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="126" name="playerDAO">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="127" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="128">    
+    <bendpoint x="5775" y="1511"/>    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="129" name="playerVO">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </attribute>      
+      <multiplicity id="130" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-8" y="-33"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="131">    
+    <bendpoint x="6434" y="850"/>    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="132" name="dao">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="133" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

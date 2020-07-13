@@ -1,13 +1,9 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-
-import org.apache.logging.log4j.MarkerManager.Log4jMarker;
 
 import operator.RoomOperator;
 import vo.PlayerVO;
@@ -46,10 +42,6 @@ public class CalcCardLevel implements Comparable {
 		
 		Collections.sort(playerCardList);	//점수가 높은순으로 정렬
 
-		for (CalcCardLevel calcCardLevel : playerCardList) {
-			System.out.println(calcCardLevel.getCardName()+" ["+calcCardLevel.getCardLevel()+"] [" + calcCardLevel.getCard1() +","+ calcCardLevel.getCard2()+"]");
-		}
-		
 		//1등과 2등의 점수가 다르면 1등 승
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx(),playerCardList.get(0).getCardName());
