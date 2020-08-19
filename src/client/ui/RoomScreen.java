@@ -339,7 +339,7 @@ public class RoomScreen extends JFrame {
 		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
 		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
 		gameStartBtn = new JButton(gameStartBasic);
-		gameStartBtn.setBounds(510, 350, 240, 115);
+		gameStartBtn.setBounds(510, 310, 240, 115);
 		gameStartBtn.setBorderPainted(false);
 		gameStartBtn.setContentAreaFilled(false);
 		gameStartBtn.setFocusPainted(false);

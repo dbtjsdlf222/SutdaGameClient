@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -340,6 +342,13 @@ public class Lobby {
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
 //		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		lobbyJF.setIconImage(img);
+		lobbyJF.setTitle("섯다 온라인");
+		
+		
 	}
 
 	private void initialize() {

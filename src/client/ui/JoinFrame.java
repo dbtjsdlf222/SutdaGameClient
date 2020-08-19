@@ -5,7 +5,9 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -62,6 +64,11 @@ public class JoinFrame {
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 444, 444);
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		frame.setIconImage(img);
+		frame.setTitle("섯다 온라인");
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 16, 0, 0, 64, 0, 16 };
 		gridBagLayout.rowHeights = new int[] { 32, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 64, 16 };

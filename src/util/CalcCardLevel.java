@@ -56,7 +56,7 @@ public class CalcCardLevel implements Comparable {
 					if(playerCardList.get(0).getCardLevel() != playerCardList.get(i).getCardLevel()) {
 						playerMap.get(playerCardList.get(i).getIdx()).setLive(false);
 					}
-				} catch (NullPointerException e) { } //try~catch
+				} catch (NullPointerException|IndexOutOfBoundsException e) { } //try~catch
 			} //for
 			RoomOperator.getInstance().getRoom(roomNo).draw();
 		} //if~else
