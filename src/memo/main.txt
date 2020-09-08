@@ -26,9 +26,9 @@
 
 /카드 한장 받고 조합별로 불들어오는 기능
 
-UI
-경로 변경
-resources.img > img.resources
+/UI
+/경로 변경
+/resources.img > img.resources
 
 /승부가 끝나고 패공개시 
 
