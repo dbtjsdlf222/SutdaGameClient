@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.listener.ClientReceiver;
+import client.service.ClientReceiver;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
@@ -392,7 +392,6 @@ public class Login extends JFrame {
 									men.setBounds(120, 520, 50, 50);
 									women.setBounds(340, 520, 50, 50);
 
-									JPanel sexPal = new JPanel();
 									JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/men.png")));
 									JLabel wLbl = new JLabel(
 											new ImageIcon(Login.class.getResource("../img/women.png")));

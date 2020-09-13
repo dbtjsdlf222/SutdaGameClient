@@ -1,4 +1,4 @@
-package client.listener;
+package client.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import client.service.ClientPacketController;
 import vo.Packet;
 
 public class ClientReceiver extends Thread {

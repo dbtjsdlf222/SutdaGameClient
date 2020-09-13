@@ -1,5 +1,12 @@
 package client.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 import util.Packing;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -32,4 +39,21 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
 	} // login();
 	
+	public boolean connectToServer(String ip) {
+		
+		try(Socket socket = new Socket(ip, 4888)) {
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			if(br.readLine().equals(Protocol.CONNECTSUCCESS)) {
+				socket.close();
+				return true;
+			} else {
+				socket.close();
+				return false;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	} // connectToServer();
 } // class

@@ -1,4 +1,4 @@
-package client.listener;
+package client.service.login;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

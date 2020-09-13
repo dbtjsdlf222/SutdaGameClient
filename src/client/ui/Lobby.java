@@ -351,7 +351,6 @@ public class Lobby {
 		
 	}
 
-	private void initialize() {
-	}
+	private void initialize() { }
 
 }

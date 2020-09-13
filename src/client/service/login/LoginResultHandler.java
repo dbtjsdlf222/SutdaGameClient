@@ -1,5 +1,5 @@
 
-package client.service;
+package client.service.login;
 
 import vo.PlayerVO;
 

@@ -26,8 +26,8 @@ import javax.swing.border.MatteBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.service.LoginResultHandler;
-import client.service.LoginService;
+import client.service.login.LoginResultHandler;
+import client.service.login.LoginService;
 import vo.PlayerVO;
 
 public class LoginFrame implements LoginResultHandler {
@@ -155,9 +155,7 @@ public class LoginFrame implements LoginResultHandler {
 						logger.error(e1.getMessage(), e1);
 					}
 				else {
-					
 					EventQueue.invokeLater(() -> joinFrame = new JoinFrame(loginService.getPlayerDAO()));
-					
 				}
 				
 			}

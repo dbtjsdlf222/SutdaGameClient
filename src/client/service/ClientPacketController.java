@@ -68,6 +68,10 @@ public class ClientPacketController {
 	
 			break;
 
+		case Protocol.CONNECTSUCCESS:
+			
+			break;
+			
 		case Protocol.ENTERLOBBY:
 		case Protocol.RELOADLOBBYLIST:
 
@@ -98,8 +102,8 @@ public class ClientPacketController {
 			while (keys.hasNext()) {
 				int key = keys.next();
 				Room value = map.get(key);
-				rn[i][0] = value.getRoomNo() + "";
-				rn[i][1] = value.getMaster() + "";
+				rn[i][0] = Integer.toString(value.getRoomNo());
+				rn[i][1] = value.getMaster();
 				rn[i][2] = value.getPlayerSize() + "/5";
 				rn[i][3] = value.isGameStarted() ? "게임중" : "대기중";
 				rLmodel.addRow(rn[i]);

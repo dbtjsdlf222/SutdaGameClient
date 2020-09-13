@@ -3,7 +3,7 @@ package vo;
 public class Protocol {
 	
 	//Server
-//	public static final String FIRSTENTER = "0";	//첫 로비 입장
+	public static final String CONNECTSUCCESS= "0"; //서버 연결 성공
 	public static final String MESSAGE = "1";		//메세지
 	public static final String MAKEROOM = "2";		//방만들기
 	
@@ -46,11 +46,14 @@ public class Protocol {
 	public static final String SETSTARTBUTTON = "34"; 
 	public static final String RUNOUTMONEY = "35"; 
 	public static final String RELOADMYVO = "36"; 
-	public static final String SENDOFF = "37"; 
+	public static final String SENDOFF = "37";
+	
+	
 	
 	public static String getName(String str) {
 		
 		switch(str) {
+			case "0": str = "CONNECTSUCCESS"; break;
 			case "1": str = "MESSAGE"; break;
 			case "2": str = "MAKEROOM"; break;
 			case "3": str = "ENTERROOM"; break;

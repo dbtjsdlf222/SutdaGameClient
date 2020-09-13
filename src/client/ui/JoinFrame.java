@@ -28,7 +28,7 @@ import javax.swing.event.DocumentListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.listener.DocumentUpdateListener;
+import client.service.login.DocumentUpdateListener;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
@@ -42,8 +42,6 @@ public class JoinFrame {
 	private boolean idCheck;
 	private boolean passwordCheck;
 	private boolean passwordCheck2;
-	private boolean cha;
-
 	private JFrame frame;
 	private JTextField textFieldNickname;
 	private JTextField textFieldId;
