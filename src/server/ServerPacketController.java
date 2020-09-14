@@ -20,7 +20,8 @@ public class ServerPacketController extends ServerMethod {
 	
 	public ServerPacketController(Socket socket) {
 		super.socket = socket;
-	}
+		thisPlayerVO.setSocketWithBrPw(socket);
+	} //ServerPacketController();
 	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 		
@@ -40,26 +41,22 @@ public class ServerPacketController extends ServerMethod {
 			break;
 
 		case Protocol.LOGIN:
-			lobbyPlayerList.add(thisPlayerVO);
-			packet.setAction(Protocol.ENTERLOBBY);
-			this.packetAnalysiser(packet);
 
 			String id = packet.getPlayerVO().getId();
 			String pw = packet.getPlayerVO().getPassword();
 
 			PlayerVO vo = dao.login(id, pw);
 
-			if (vo != null)
+			if (vo != null) {
 				thisPlayerVO = vo;
-
-			try {
+				lobbyPlayerList.add(thisPlayerVO);
+				packet.setAction(Protocol.ENTERLOBBY);
 				packet.setPlayerVO(vo);
-				PrintWriter socketPw;
-				socketPw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-				Packing.sender(socketPw, Protocol.LOGIN, vo);
-			} catch (IOException e) {
-				logger.error(e.getMessage(), e);
+				this.packetAnalysiser(packet);
+			} else {
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
 			}
+			
 			break;
 
 		case Protocol.MAKEROOM:
@@ -153,7 +150,6 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		} // switch
-	} // runMainGame
+	} // packetAnalysiser();
  
-	
-}
+} // ServerPacketController();
