@@ -44,14 +44,13 @@ public class LoginFrame implements LoginResultHandler {
 	
 	private JoinFrame joinFrame;
 	
-	private PlayerDAO playerDAO = new PlayerDAO();
 	
 	public LoginFrame() {
 		initialize();
 		frame.setVisible(true);
 	} //LoginFrame();
 	
-	public PlayerDAO getPlayerDAO() { return playerDAO; }
+	
 	
 	private void initialize() {
 		frame = new JFrame();

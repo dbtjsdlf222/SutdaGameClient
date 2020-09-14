@@ -18,9 +18,13 @@ public class LoginService {
 	
 	private LoginResultHandler resultHandler;
 	
+	private PlayerDAO playerDAO = new PlayerDAO();
+	
 	public LoginService(LoginResultHandler resultHandler) {
 		this.resultHandler = resultHandler;
 	} //Login();
+	
+	public PlayerDAO getPlayerDAO() { return playerDAO; }
 	
 	public void login(String id, String password) throws IOException {
 		
@@ -36,7 +40,7 @@ public class LoginService {
 		String packetStr = "";
 		PlayerVO player = null;
 		ObjectMapper mapper = new ObjectMapper();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(PlayerVO.myVO.getSocket().getInputStream(), "UTF-8"))) {
 			ClientPacketSender.instance.login(id, password);	//서버에 로그인 정보 요청
 			packetStr = br.readLine();	//결과 받음
 			Packet packet = mapper.readValue(packetStr, Packet.class);
