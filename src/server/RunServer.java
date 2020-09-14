@@ -35,7 +35,7 @@ public class RunServer {
 
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 
-			dao.setServerIP();
+//			dao.setServerIP();
 
 //			List<Runnable> runnableTasks = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import dao.ServerDAO;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -14,6 +15,8 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
+	
+	private ServerDAO serverDAO = new ServerDAO();
 	
 	public ServerPacketController(Socket socket) {
 		super.socket = socket;
@@ -144,6 +147,11 @@ public class ServerPacketController extends ServerMethod {
 		case Protocol.BET:
 			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).bet(packet.getMotion());
 			break;
+			
+		case Protocol.JOIN:
+			serverDAO.playerJoin(packet.getPlayerVO());
+			break;
+			
 		} // switch
 	} // runMainGame
  
