@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -10,7 +12,11 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import client.service.ClientPacketController;
 import connection.DBCon;
+import vo.Packet;
 import vo.PlayerVO;
 
 public class PlayerDAO {
@@ -271,4 +277,21 @@ public class PlayerDAO {
 			logger.error(e.getMessage(), e);
 		}
 	}
+	
+	public Packet getResponse() {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			BufferedReader br = PlayerVO.myVO.getBrSocket();
+			String packetStr = "";
+			packetStr = br.readLine();
+			logger.debug(packetStr);
+			Packet packet = mapper.readValue(packetStr, Packet.class);
+			
+			return packet;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	} //getResponse
+	
 }
