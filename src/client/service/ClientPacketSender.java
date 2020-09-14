@@ -39,6 +39,27 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
 	} // login();
 	
+	public void join(PlayerVO vo) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.JOIN, vo);
+	}// join();
+	
+	public void selectId(String id) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTID, id);
+	}//selectId();
+	
+	public void selectNick(String nick) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTNICK, nick);
+	}//selectNick();
+	
+	public void playerSave(PlayerVO vo) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PLAYERSAVE, vo);
+	}
+	
+	public void selectOnePlayerWithNo(int playerVO) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, Integer.toString(playerVO));
+	}
+	
+	
 	public boolean connectToServer(String ip) {
 		
 		try(Socket socket = new Socket(ip, 4888)) {

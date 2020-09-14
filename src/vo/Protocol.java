@@ -13,6 +13,12 @@ public class Protocol {
 	public static final String EXITLOBBY = "6";		//방 퇴실
 	
 	public static final String LOGIN = "7";
+	public static final String JOIN = "38";
+	public static final String SELECTID = "39";
+	public static final String SELECTNICK= "40";
+	public static final String PLAYERSAVE = "41";
+	public static final String SELECTONEPLAYERWITHNO = "42";
+	
 	
 	public static final String ENTEROTHERROOM = "8";  	//다른 사람이 룸에 입실
 	public static final String ENTEROTHERLOBBY = "9";	//다른 사람이 로비 입실

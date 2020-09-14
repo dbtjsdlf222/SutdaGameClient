@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.service.ClientPacketController;
+import client.service.ClientPacketSender;
+import client.ui.Lobby;
 import connection.DBCon;
 import vo.Packet;
 import vo.PlayerVO;
@@ -103,40 +105,48 @@ public class PlayerDAO {
 	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
-		InetAddress local = null;
-		try {
-			local = InetAddress.getLocalHost();
-		} catch (UnknownHostException e1) {
-			logger.error(e1.getMessage(), e1);
-		}
-
-		String id = null;
-		String pw = null;
-		String nick = null;
-		String ip = local.getHostAddress();
-		int character = 0;
-		int result = 0;
-
-		id = vo.getId();
-		pw = vo.getPassword();
-		nick = vo.getNic();
-		character = vo.getCha();
-
-		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `ip`, `character`) VALUES (?,?,?,?,?)";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
-			pstmt.setString(3, nick);
-			pstmt.setString(4, ip);
-			pstmt.setInt(5, character);
-
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return result;
+		ClientPacketSender.instance.join(vo);
+		Packet result = getResponse();
+		if(result.getMotion().equals("true")) 
+			return 1;
+		else 
+			return 0;
 	}
+	
+	public PlayerVO login(String id, String pw) {
+		ClientPacketSender.instance.login(id, pw);
+		Packet result = getResponse();
+		if(result.getPlayerVO() != null)
+			return result.getPlayerVO();
+		else
+			return null;
+	}
+	
+	public boolean selectID(String id) {
+		ClientPacketSender.instance.selectId(id);
+		Packet result = getResponse();
+		if(result.getMotion().equals("true")) 
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean selectNick(String nick) {
+		ClientPacketSender.instance.selectNick(nick);
+		Packet result = getResponse();
+		if(result.getMotion().equals("true"))
+			return true;
+		else 
+			return false;
+	}
+	
+	public void playerSave(PlayerVO vo) {
+		ClientPacketSender.instance.playerSave(vo);
+	}
+	
+	public 
+	
+	
 
 //	public ArrayList<PlayerVO> listAll() {
 //		ResultSet rs;
@@ -159,124 +169,103 @@ public class PlayerDAO {
 //		return list;
 //	}
 
-	public boolean selectID(String id) {
-		ResultSet rs;
-		String query = "SELECT EXISTS (select * from player where id= ? ) AS SUCCESS";
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
-
-			rs = pstmt.executeQuery();
-			rs.next();
-			if (rs.getInt(1) == 1) {
-				return true;
-			} else
-				return false;
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return true;
-	}
-
-	public boolean selectNick(String nick) {
-		ResultSet rs;
-		String query = "select EXISTS (select * from player where nickname= ? ) as success";
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, nick);
-
-			rs = pstmt.executeQuery();
-			rs.next();
-			if (rs.getInt(1) == 1) {
-				return true;
-			} else
-				return false;
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return true;
-	}
-
-	public PlayerVO login(String id, String pw) {
-		String sql = "SELECT * FROM player WHERE id=? AND password=?";
-		ResultSet rs = null;
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
-			rs = pstmt.executeQuery();
-			rs.next();
-
-			try {
-				int no = rs.getInt(1);
-				String rsID = rs.getString(2);
-				String rsPW = rs.getString(3);
-				String nickname = rs.getString(4);
-				long money = rs.getLong(5);
-				int win = rs.getInt(6);
-				int lose = rs.getInt(7);
-				boolean online = rs.getBoolean(8);
-				int character = rs.getInt(10);
-				String ip = null;
-				try {
-					ip = InetAddress.getLocalHost().getHostAddress();
-				} catch (UnknownHostException e) {
-					logger.error(e.getMessage(), e);
-				}
-
-				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
-			} catch (SQLException e) {
-				return null;
-			}
-
-		} catch (
-
-		SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
-
-	public boolean selectPW(String pw) {
-		ResultSet rs;
-		String query = "select EXISTS (select * from player where password= ? ) as success";
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, pw);
-
-			rs = pstmt.executeQuery();
-			rs.next();
-			if (rs.getInt(1) == 1) {
-				return true;
-			} else
-				return false;
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-
-		return true;
-	}
-
-	public void playerSave(PlayerVO vo) {
-		String query = "UPDATE player SET money = ?, win = ?, lose = ? WHERE no = ?";
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setLong(1, vo.getMoney());
-			pstmt.setInt(2, vo.getWin());
-			pstmt.setInt(3, vo.getLose());
-			pstmt.setInt(4, vo.getNo());
-
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
+//	public boolean selectID(String id) {
+//		ResultSet rs;
+//		String query = "SELECT EXISTS (select * from player where id= ? ) AS SUCCESS";
+//
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setString(1, id);
+//
+//			rs = pstmt.executeQuery();
+//			rs.next();
+//			if (rs.getInt(1) == 1) {
+//				return true;
+//			} else
+//				return false;
+//		} catch (SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//
+//		return true;
+//	}
+//
+//	public boolean selectNick(String nick) {
+//		ResultSet rs;
+//		String query = "select EXISTS (select * from player where nickname= ? ) as success";
+//
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setString(1, nick);
+//
+//			rs = pstmt.executeQuery();
+//			rs.next();
+//			if (rs.getInt(1) == 1) {
+//				return true;
+//			} else
+//				return false;
+//		} catch (SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//
+//		return true;
+//	}
+//
+//	public PlayerVO login(String id, String pw) {
+//		String sql = "SELECT * FROM player WHERE id=? AND password=?";
+//		ResultSet rs = null;
+//
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, id);
+//			pstmt.setString(2, pw);
+//			rs = pstmt.executeQuery();
+//			rs.next();
+//
+//			try {
+//				int no = rs.getInt(1);
+//				String rsID = rs.getString(2);
+//				String rsPW = rs.getString(3);
+//				String nickname = rs.getString(4);
+//				long money = rs.getLong(5);
+//				int win = rs.getInt(6);
+//				int lose = rs.getInt(7);
+//				boolean online = rs.getBoolean(8);
+//				int character = rs.getInt(10);
+//				String ip = null;
+//				try {
+//					ip = InetAddress.getLocalHost().getHostAddress();
+//				} catch (UnknownHostException e) {
+//					logger.error(e.getMessage(), e);
+//				}
+//
+//				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
+//			} catch (SQLException e) {
+//				return null;
+//			}
+//
+//		} catch (
+//
+//		SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//		return null;
+//	}
+//
+//	public void playerSave(PlayerVO vo) {
+//		String query = "UPDATE player SET money = ?, win = ?, lose = ? WHERE no = ?";
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setLong(1, vo.getMoney());
+//			pstmt.setInt(2, vo.getWin());
+//			pstmt.setInt(3, vo.getLose());
+//			pstmt.setInt(4, vo.getNo());
+//
+//			pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			logger.error(e.getMessage(), e);
+//		}
+//	}
 	
 	public Packet getResponse() {
 		ObjectMapper mapper = new ObjectMapper();

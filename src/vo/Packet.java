@@ -12,9 +12,9 @@ import server.Room;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet {
-	private String action;
-	private String motion;
-	private PlayerVO playerVO;
+	private String action;		//protocol
+	private String motion;		//value
+	private PlayerVO playerVO;	
 	private Map<Integer, Room> roomMap;
 	private ArrayList<PlayerVO> playerList;
 	private Map<Integer, PlayerVO> roomPlayerList;
