@@ -37,7 +37,7 @@ public class RunServer {
 
 			dao.setServerIP();
 
-			List<Runnable> runnableTasks = new ArrayList<>();
+//			List<Runnable> runnableTasks = new ArrayList<>();
 
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다

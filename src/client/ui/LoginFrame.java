@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import client.service.login.LoginResultHandler;
 import client.service.login.LoginService;
+import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class LoginFrame implements LoginResultHandler {
@@ -43,10 +44,14 @@ public class LoginFrame implements LoginResultHandler {
 	
 	private JoinFrame joinFrame;
 	
+	private PlayerDAO playerDAO = new PlayerDAO();
+	
 	public LoginFrame() {
 		initialize();
 		frame.setVisible(true);
 	} //LoginFrame();
+	
+	public PlayerDAO getPlayerDAO() { return playerDAO; }
 	
 	private void initialize() {
 		frame = new JFrame();
