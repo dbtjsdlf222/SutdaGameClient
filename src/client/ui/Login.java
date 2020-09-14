@@ -135,9 +135,9 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == logBtn) {
-					if (idTxt.getText().equals("") || (pwTxt.getText().equals(""))) {
+					if (idTxt.getText().equals("") || (pwTxt.getPassword().equals(""))) {
 						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
-					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getText())) != null) {
+					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getPassword())) != null) {
 						if (playerVO.isOnline() == false) {
 
 							try {
@@ -155,7 +155,7 @@ public class Login extends JFrame {
 						} else if (playerVO.isOnline() == true) {
 							logLbl.setText("이미 접속하고 있는 아이디입니다.");
 						}
-					} else if (playerDAO.login(idTxt.getText(), pwTxt.getText()) == null) {
+					} else if (playerDAO.login(idTxt.getText(), pwTxt.getPassword()) == null) {
 						logLbl.setText("가입을 하지 않은 아이디 입니다.");
 					}
 				}
@@ -272,7 +272,7 @@ public class Login extends JFrame {
 						@Override
 						public void keyPressed(KeyEvent e) {
 
-							if (joPwTxt.getText().length() >= 4 && joPwTxt.getText().length() <= 9) {
+							if (joPwTxt.getPassword().length >= 4 && joPwTxt.getPassword().length <= 9) {
 								joLbl2.setText("가능한 비밀번호입니다.");
 								pwCheck2 = true;
 								joPwTxt2.addKeyListener(new KeyListener() {
@@ -284,10 +284,10 @@ public class Login extends JFrame {
 
 									@Override
 									public void keyReleased(KeyEvent e) {
-										if (joPwTxt.getText().equals(joPwTxt2.getText())) {
+										if (joPwTxt.getPassword().equals(joPwTxt2.getPassword())) {
 											joLbl3.setText("일치");
 											pwCheck = true;
-										} else if (!(joPwTxt.getText().equals(joPwTxt2.getText()))) {
+										} else if (!(joPwTxt.getPassword().equals(joPwTxt2.getPassword()))) {
 											joLbl3.setText("불일치");
 											pwCheck = false;
 										}
@@ -362,7 +362,7 @@ public class Login extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							if (e.getSource() == joBtn2) {
-								if (!(joPwTxt.getText().equals(joPwTxt2.getText()))) {
+								if (!(joPwTxt.getPassword().equals(joPwTxt2.getPassword()))) {
 									pwCheck2 = false;
 									joLbl2.setText("");
 									joLbl3.setText("비밀번호가 일치 하지 않습니다.");
@@ -415,7 +415,7 @@ public class Login extends JFrame {
 													playerVO.setCha(1);
 												}
 												try {
-													playerVO.joinPlayer(joIdTxt.getText(), joPwTxt.getText(),
+													playerVO.joinPlayer(joIdTxt.getText(), joPwTxt.getPassword().toString(),
 															joNickTxt.getText());
 													if (1 == playerDAO.playerJoin(playerVO)) {
 														JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
