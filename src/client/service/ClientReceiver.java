@@ -25,7 +25,9 @@ public class ClientReceiver extends Thread {
 		ObjectMapper mapper = new ObjectMapper();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"))) {
 			while (true) {
+				System.out.println("5" + br.readLine());
 				packetStr = br.readLine();
+				System.out.println("6");
 				logger.debug(packetStr);
 				Packet packet = mapper.readValue(packetStr, Packet.class);
 				packetController.controller(packet);

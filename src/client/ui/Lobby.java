@@ -45,7 +45,7 @@ public class Lobby {
 	public JPanel infoPan = new JPanel();
 	
 	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
-		ClientPacketSender.instance.enterLobby();
+//		ClientPacketSender.instance.enterLobby();
 		lobbyScreen();
 	}
 

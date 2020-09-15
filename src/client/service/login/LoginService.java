@@ -43,25 +43,26 @@ public class LoginService {
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(PlayerVO.myVO.getSocket().getInputStream(), "UTF-8"))) {
 			ClientPacketSender.instance.login(id, password);	//서버에 로그인 정보 요청
 			packetStr = br.readLine();	//결과 받음
-			Packet packet = mapper.readValue(packetStr, Packet.class);
-			player = packet.getPlayerVO();
-
-			if(player == null) {
+			if(packetStr == null) {
 				resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
 				return;
 			}
 			
-			if(player.isOnline()) {
-				resultHandler.loginFailure(Focus.ID, "다른 PC에서 접속중인 아이디 입니다.");
-				return;
-			}
+			Packet packet = mapper.readValue(packetStr, Packet.class);
+			player = packet.getPlayerVO();
+
+			
+			
+//			if(player.isOnline()) {
+//				resultHandler.loginFailure(Focus.ID, "다른 PC에서 접속중인 아이디 입니다.");
+//				return;
+//			}
 			
 			player.setSocketWithBrPw(PlayerVO.myVO.getSocket());
 			PlayerVO.myVO = player;
 			
 			new Thread(new ClientReceiver(player.getSocket())).start();
 			resultHandler.loginSuccess(player);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} //try~catch
