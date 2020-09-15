@@ -875,20 +875,4 @@ public class RoomScreen extends JFrame {
 		index = (index - mySit + 5) % 5;
 		setSit(index, vo);
 	} // enterPlayerList();
-
-	public static void main(String[] args) {
-		Map<Integer, PlayerVO> voList = new HashMap<Integer, PlayerVO>();
-
-		voList.put(0, new PlayerVO("1hyo", 3, 600000));
-		voList.put(1, new PlayerVO("2hyo", 3, 34600000));
-		voList.put(2, new PlayerVO("3hyo", 3, 1345000));
-		voList.put(3, new PlayerVO("4hyo", 3, 120000));
-		voList.put(4, new PlayerVO("5hyo", 3, 4000));
-
-		RoomScreen ms = new RoomScreen();
-		ms.mainScreen();
-		ms.enterPlayerList(voList, 2);
-		ms.exitPlayer(1);
-		ms.turn(0);
-	}
 }

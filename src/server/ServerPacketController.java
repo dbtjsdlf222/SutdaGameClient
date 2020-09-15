@@ -48,8 +48,8 @@ public class ServerPacketController extends ServerMethod {
 			PlayerVO vo = dao.login(id, pw);
 
 			if (vo != null) {
+				vo.setSocketWithBrPw(thisPlayerVO.getSocket()); 
 				thisPlayerVO = vo;
-				lobbyPlayerList.add(thisPlayerVO);
 				packet.setAction(Protocol.ENTERLOBBY);
 				packet.setPlayerVO(vo);
 				this.packetAnalysiser(packet);

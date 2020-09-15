@@ -68,10 +68,6 @@ public class ClientPacketController {
 	
 			break;
 
-		case Protocol.CONNECTSUCCESS:
-			
-			break;
-			
 		case Protocol.ENTERLOBBY:
 		case Protocol.RELOADLOBBYLIST:
 
@@ -108,14 +104,6 @@ public class ClientPacketController {
 				rn[i][3] = value.isGameStarted() ? "게임중" : "대기중";
 				rLmodel.addRow(rn[i]);
 				i++;
-			}
-			break;
-
-		case Protocol.LOGIN:
-			if (packet.getPlayerVO().getNic() == null) {
-//            System.out.println("아이디나 비밀번호가 틀렸습니다.");
-			} else {
-				new Lobby();
 			}
 			break;
 
