@@ -165,7 +165,7 @@ public class PlayerVO {
 	
 	@Override
 	public String toString() {
-		return "PlayerVO [no=" + no + ", id=" + id + ", nic=" + nic + ", money=" + money + ", live=" + live + ", card1="
+		return "PlayerVO [no=" + no + ", id=" + id + ", pw=" + password + ", nic=" + nic + ", money=" + money + ", live=" + live + ", card1="
 				+ card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName + ", index="
 				+ index + ", roomNo=" + roomNo + "]";
 	}
