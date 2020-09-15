@@ -134,31 +134,31 @@ public class Login extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == logBtn) {
-					if (idTxt.getText().equals("") || (pwTxt.getPassword().equals(""))) {
-						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
-					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getPassword())) != null) {
-						if (playerVO.isOnline() == false) {
-
-							try {
-								logJF.dispose();
-								playerVO.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
-								new Thread(new ClientReceiver(playerVO.getSocket())).start();
-								new Lobby();
-
-							} catch (UnknownHostException e1) {
-								logger.error(e1.getMessage(), e1);
-							} catch (IOException e1) {
-								logger.error(e1.getMessage(), e1);
-							}
-
-						} else if (playerVO.isOnline() == true) {
-							logLbl.setText("이미 접속하고 있는 아이디입니다.");
-						}
-					} else if (playerDAO.login(idTxt.getText(), pwTxt.getPassword()) == null) {
-						logLbl.setText("가입을 하지 않은 아이디 입니다.");
-					}
-				}
+//				if (e.getSource() == logBtn) {
+//					if (idTxt.getText().equals("") || (pwTxt.getPassword().equals(""))) {
+//						logLbl.setText("아이디 또는 비밀번호를 입력하세요.");
+//					} else if ((playerVO = playerDAO.login(idTxt.getText(), pwTxt.getPassword())) != null) {
+//						if (playerVO.isOnline() == false) {
+//
+//							try {
+//								logJF.dispose();
+//								playerVO.setSocketWithBrPw(new Socket(playerDAO.getServerIP(), 4888));
+//								new Thread(new ClientReceiver(playerVO.getSocket())).start();
+//								new Lobby();
+//
+//							} catch (UnknownHostException e1) {
+//								logger.error(e1.getMessage(), e1);
+//							} catch (IOException e1) {
+//								logger.error(e1.getMessage(), e1);
+//							}
+//
+//						} else if (playerVO.isOnline() == true) {
+//							logLbl.setText("이미 접속하고 있는 아이디입니다.");
+//						}
+//					} else if (playerDAO.login(idTxt.getText(), pwTxt.getPassword()) == null) {
+//						logLbl.setText("가입을 하지 않은 아이디 입니다.");
+//					}
+//				}
 			}
 		});
 

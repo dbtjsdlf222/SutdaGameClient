@@ -36,21 +36,9 @@ public class PlayerDAO {
 		}
 	}
 
-	public String getServerIP() {
-		String sql = "SELECT ip FROM player WHERE id = 'SERVER'";
-		PreparedStatement ps;
-		try {
-			ps = conn.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			rs.next();
-			String ip = rs.getString(1);
-
-			return ip;
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		}
-		return null;
-	}
+//	public String getServerIP() {
+//		return "192.168.0.79";
+//	}
 
 	public void setServerIP() {
 		String sql = "UPDATE player SET ip = ? WHERE id = 'SERVER'";

@@ -1,6 +1,8 @@
 package server;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -31,7 +33,7 @@ public class RunServer {
 	public void run() {
 		logger.info("서버 실행");
 //		ExecutorService pool = Executors.newFixedThreadPool(5); // 최대 스레드가 2개인 스레드풀 생성
-		PlayerDAO dao = new PlayerDAO();
+//		PlayerDAO dao = new PlayerDAO();
 
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 
@@ -41,7 +43,9 @@ public class RunServer {
 
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
-
+				
+//				new PrintWriter(new OutputStreamWriter(socket.getOutputStream())).println();
+				
 				new Thread(new ServerReceiver(socket)).start();
 
 //				pool.execute(new ServerReceiver(socket));
@@ -60,7 +64,7 @@ public class RunServer {
 			} // while
 
 		} catch (BindException e) {
-			logger.error(e.getMessage(), e);
+			logger.error("서버가 이미 실행중입니다");
 		} catch (UnknownHostException e) {
 			logger.error(e.getMessage(), e);
 		} catch (IOException e) {

@@ -21,7 +21,7 @@ public class PlayerVO {
 	private static final Logger logger = LogManager.getLogger();
 
 	@JsonIgnore
-	public static PlayerVO myVO;
+	public static PlayerVO myVO = new PlayerVO();
 
 	private int no;
 	private String id = null;
@@ -58,6 +58,11 @@ public class PlayerVO {
 
 	public PlayerVO() { }
 
+	public PlayerVO(String id, String pw) {
+		this.id = id;
+		this.password = pw;
+	}
+	
 	public PlayerVO(int no, String id, String password, String nic, long money, boolean admin, int win, int lose,
 			boolean online, int cha, String ip) {
 		this.no = no;

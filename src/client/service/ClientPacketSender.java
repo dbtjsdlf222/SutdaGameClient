@@ -34,22 +34,20 @@ public class ClientPacketSender {
 	} // exitRoom();
 
 	public void login(String id, String pw) {
-		PlayerVO.myVO.setId(id);
-		PlayerVO.myVO.setPassword(pw);
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, PlayerVO.myVO);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, new PlayerVO(id, pw));
 	} // login();
 	
 	public void join(PlayerVO vo) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.JOIN, vo);
-	}// join();
+	} // join();
 	
 	public void selectId(String id) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTID, id);
-	}//selectId();
+	} //selectId();
 	
 	public void selectNick(String nick) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTNICK, nick);
-	}//selectNick();
+	} //selectNick();
 	
 	public void playerSave(PlayerVO vo) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PLAYERSAVE, vo);

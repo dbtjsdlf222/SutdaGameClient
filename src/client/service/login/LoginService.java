@@ -56,8 +56,9 @@ public class LoginService {
 				return;
 			}
 			
-			//	player.setSocketWithBrPw(new Socket(서버 IP, 4888));
+			player.setSocketWithBrPw(PlayerVO.myVO.getSocket());
 			PlayerVO.myVO = player;
+			
 			new Thread(new ClientReceiver(player.getSocket())).start();
 			resultHandler.loginSuccess(player);
 			
