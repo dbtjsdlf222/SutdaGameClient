@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dao.PlayerDAO;
+import dao.ServerDAO;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -18,7 +19,7 @@ public class ServerMethod {
 	protected PlayerVO thisPlayerVO = new PlayerVO();
 	protected static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 
-	protected PlayerDAO dao = new PlayerDAO();
+	protected ServerDAO dao = new ServerDAO();
 	protected Socket socket;
 	
 	public void exitPlayer() {
