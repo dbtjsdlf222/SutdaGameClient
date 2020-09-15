@@ -147,20 +147,20 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.JOIN:
 			try {
-				thisPlayerVO.getPwSocket().println(serverDAO.playerJoin(packet.getPlayerVO()));
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.JOIN, Integer.toString(serverDAO.playerJoin(packet.getPlayerVO())));
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 			break;
 			
 		case Protocol.SELECTID:
-			thisPlayerVO.getPwSocket().println(serverDAO.selectID(packet.getMotion()));
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
 			
 		case Protocol.SELECTNICK:
-			thisPlayerVO.getPwSocket().println(serverDAO.selectNick(packet.getMotion()));
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTNICK, serverDAO.selectNick(packet.getMotion()) ? "true" : "false");
 					
-		case Protocol.PLAYERSAVE:
-			thisPlayerVO.getPwSocket().println(serverDAO.playerSave(packet.getPlayerVO()));
+		case Protocol.SELECTONEPLAYERWITHNO:
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, serverDAO.selectOnePlayerWithNo(packet.getPlayerVO().getNo()));
 					
 		} // switch
 	} // packetAnalysiser();
