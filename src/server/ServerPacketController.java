@@ -47,14 +47,14 @@ public class ServerPacketController extends ServerMethod {
 
 			PlayerVO vo = dao.login(id, pw);
 
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
+			
 			if (vo != null) {
-				vo.setSocketWithBrPw(thisPlayerVO.getSocket()); 
+				vo.setSocketWithBrPw(thisPlayerVO.getSocket());
 				thisPlayerVO = vo;
 				packet.setAction(Protocol.ENTERLOBBY);
 				packet.setPlayerVO(vo);
 				this.packetAnalysiser(packet);
-			} else {
-				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
 			}
 			
 			break;
