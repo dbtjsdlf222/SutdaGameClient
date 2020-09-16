@@ -225,71 +225,98 @@ public class JoinFrame {
 		textFieldNickname.getDocument().addDocumentListener(new DocumentUpdateListener() {
 
 			private Pattern nicknamePattern = Pattern.compile("^[a-zA-Z0-9가-힣]*$");
+			private Thread t;
 
 			@Override
 			public void action(String text) {
-
-				nicknameCheck = false;
-
-				Matcher match = nicknamePattern.matcher(text);
-				if (match.find()) {
-					if (text.equals("")) {
-						lblNicknameErrorMessage.setForeground(Color.RED);
-						lblNicknameErrorMessage.setText("닉네임을 입력해주세요.");
-					} else if (2 > text.length() || text.length() > 6) {
-						lblNicknameErrorMessage.setForeground(Color.RED);
-						lblNicknameErrorMessage.setText("2 ~ 6자리 미만만 가능합니다.");
-					} else if (playerDAO.selectNick(text)) {
-						lblNicknameErrorMessage.setForeground(Color.RED);
-						lblNicknameErrorMessage.setText("이미 생성된 닉네임 입니다.");
-					} else if (text.length() <= 6 && text.length() >= 2) {
-						lblNicknameErrorMessage.setForeground(Color.GREEN);
-						lblNicknameErrorMessage.setText("생성 가능한 닉네임 입니다.");
-						nicknameCheck = true;
-					}
-				} else {
-					lblNicknameErrorMessage.setForeground(Color.RED);
-					lblNicknameErrorMessage.setText("특수문자는 불가능합니다.");
-				}
-
+				
+				if(t != null && !t.isInterrupted()) t.interrupt();
+				
+				t = new Thread(() -> {
+					
+					try {
+						
+						nicknameCheck = false;
+						String _text = null;
+						
+						Matcher match = nicknamePattern.matcher(text);
+						if (match.find()) {
+							if (text.equals("")) {
+								_text = "닉네임을 입력해주세요.";
+							} else if (2 > text.length() || text.length() > 6) {
+								_text = "2 ~ 6자리 미만만 가능합니다.";
+							} else if (playerDAO.selectNick(text)) {
+								_text = "이미 생성된 닉네임 입니다.";
+							} else if (text.length() <= 6 && text.length() >= 2) {
+								_text = "생성 가능한 닉네임 입니다.";
+								Thread.sleep(0);
+								nicknameCheck = true;
+							}
+						} else {
+							_text = "특수문자는 불가능합니다.";
+						}
+						
+						Thread.sleep(0);
+						lblNicknameErrorMessage.setForeground(nicknameCheck ? Color.GREEN : Color.RED);
+						lblNicknameErrorMessage.setText(_text);
+						
+					}catch (InterruptedException e) { logger.debug("nickname validate check intruppeted"); }
+					
+				});
+				
+				t.start();
+				
 			}
 		});
 
 		textFieldId.getDocument().addDocumentListener(new DocumentUpdateListener() {
-
+			
 			private Pattern idPattern = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
-
+			private Thread t;
+			
 			@Override
 			public void action(String text) {
-
-				idCheck = false;
-
-				Matcher match = idPattern.matcher(text);
-				if (match.find()) {
-					if (text.equals("")) {
-						lblIdErrorMessage.setForeground(Color.RED);
-						lblIdErrorMessage.setText("아이디를 입력해주세요.");
-					} else if (text.length() < 5 && text.length() > 10) {
-						lblIdErrorMessage.setForeground(Color.RED);
-						lblIdErrorMessage.setText("5 ~ 10자리 이하만 가능합니다.");
-					} else if (playerDAO.selectID(text)) {
-						lblIdErrorMessage.setForeground(Color.RED);
-						lblIdErrorMessage.setText("이미 생성된 아이디 입니다.");
-					} else if (text.length() <= 10 && text.length() >= 5) {
-						lblIdErrorMessage.setForeground(Color.GREEN);
-						lblIdErrorMessage.setText("생성 가능한 아이디 입니다.");
-						idCheck = true;
-					}
-				} else if (!(text.matches("^[a-zA-Z0-9]*$"))) {
-					lblIdErrorMessage.setForeground(Color.RED);
-					lblIdErrorMessage.setText("영어와 숫자만 입력 가능합니다.");
-				} else if (!(text.matches("^[a-zA-Z]{1}$"))) {
-					lblIdErrorMessage.setForeground(Color.RED);
-					lblIdErrorMessage.setText("앞자리는 영어만 가능합니다.");
-				}
-
+				
+				if(t != null && !t.isInterrupted()) t.interrupt();
+				
+				t = new Thread(() -> {
+					
+					try {
+						
+						idCheck = false;
+						String _text = null;
+						
+						Matcher match = idPattern.matcher(text);
+						if (match.find()) {
+							if (text.equals("")) {
+								_text = "아이디를 입력해주세요.";
+							} else if (text.length() < 5 && text.length() > 10) {
+								_text = "5 ~ 10자리 이하만 가능합니다.";
+							} else if (playerDAO.selectID(text)) {
+								_text = "이미 생성된 아이디 입니다.";
+							} else if (text.length() <= 10 && text.length() >= 5) {
+								_text = "생성 가능한 아이디 입니다.";
+								Thread.sleep(0);
+								idCheck = true;
+							}
+						} else if (!(text.matches("^[a-zA-Z0-9]*$"))) {
+							_text = "영어와 숫자만 입력 가능합니다.";
+						} else if (!(text.matches("^[a-zA-Z]{1}$"))) {
+							_text = "앞자리는 영어만 가능합니다.";
+						}
+						
+						Thread.sleep(0);
+						lblIdErrorMessage.setForeground(idCheck ? Color.GREEN : Color.RED);
+						lblIdErrorMessage.setText(_text);
+						
+					}catch (InterruptedException e) { logger.debug("id validate check intruppeted"); }
+					
+				});
+				
+				t.start();
+				
 			}
-
+			
 		});
 
 		passwordField.getDocument().addDocumentListener(new DocumentUpdateListener() {
