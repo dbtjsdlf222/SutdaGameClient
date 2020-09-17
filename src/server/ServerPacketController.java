@@ -5,6 +5,7 @@ import java.net.Socket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import dao.ServerDAO;
+import operator.ChattingOperator;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -94,6 +95,8 @@ public class ServerPacketController extends ServerMethod {
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setMotion(ro.getRoom(roomNo).getMasterIndex().toString());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
+			
+			
 			
 			lobbyExitBroadcast();
 

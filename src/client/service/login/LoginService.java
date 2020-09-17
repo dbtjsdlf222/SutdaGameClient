@@ -40,7 +40,8 @@ public class LoginService {
 		String packetStr = "";
 		PlayerVO player = null;
 		ObjectMapper mapper = new ObjectMapper();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(PlayerVO.myVO.getSocket().getInputStream(), "UTF-8"))) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(PlayerVO.myVO.getSocket().getInputStream(), "UTF-8"));
+		try  {
 			ClientPacketSender.instance.login(id, password);	//서버에 로그인 정보 요청
 			packetStr = br.readLine();	//결과 받음
 			if(packetStr == null) {

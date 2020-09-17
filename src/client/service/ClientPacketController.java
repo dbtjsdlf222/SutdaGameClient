@@ -69,8 +69,8 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.ENTERLOBBY:
+			ChattingOperator.chatArea.setText("");
 		case Protocol.RELOADLOBBYLIST:
-
 			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
 			// playerList
 			for (int i = 0; i < ((DefaultTableModel) playerJT.getModel()).getRowCount(); i++) {
@@ -112,12 +112,14 @@ public class ClientPacketController {
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
+			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
 			break;
 			
 		case Protocol.ENTERROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
+			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
 			break;
 			
 		case Protocol.ENTEROTHERROOM:
@@ -127,6 +129,7 @@ public class ClientPacketController {
 
 		case Protocol.EXITOTHERROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
+			
 			break;
 
 		case Protocol.CHANGEMASTER:
