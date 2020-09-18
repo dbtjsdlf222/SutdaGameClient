@@ -155,13 +155,13 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.SELECTID:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
-			
+			break;
 		case Protocol.SELECTNICK:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTNICK, serverDAO.selectNick(packet.getMotion()) ? "true" : "false");
-					
+			break;		
 		case Protocol.SELECTONEPLAYERWITHNO:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, serverDAO.selectOnePlayerWithNo(packet.getPlayerVO().getNo()));
-					
+			break;
 		} // switch
 	} // packetAnalysiser();
  
