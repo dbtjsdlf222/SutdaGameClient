@@ -17,7 +17,9 @@ import vo.PlayerVO;
 public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
-	public static final String SERVERIP = "192.168.0.69";
+
+//	public static final String SERVERIP = "192.168.0.56";	//현호 IP (확인 요망)
+	public static final String SERVERIP = "192.168.56.1";	//선일 IP
 	
 	public static void main(String[] args) {
 
