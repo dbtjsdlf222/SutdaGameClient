@@ -64,7 +64,7 @@ public class RoomScreen extends JFrame {
 	private JPanel mat = new JPanel();
 	private JPanel showMoneyPan = new JPanel();
 	private JPanel betButtonPan = new JPanel();
-	private String[] betAndBtnInitArr = { Protocol.Die + "_", Protocol.Ddadang + "_", Protocol.Call + "_",
+	private String[] betAndBtnInitArr = { Protocol.Die + "_", Protocol.Call + "_", Protocol.Ddadang + "_",
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_", "-", "-", "-", "-" };
 	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
@@ -245,7 +245,7 @@ public class RoomScreen extends JFrame {
 			System.out.println("널포이트");
 		}
 		showMoneyPan = new JPanel(); 
-		showMoneyPan.setBounds(400, 120, 480, 100);
+		showMoneyPan.setBounds(440, 180, 400, 100);
 		showMoneyPan.setBackground(new Color(0,0, 0, 122));
 		showMoneyPan.setLayout(null);
 		add(showMoneyPan);
@@ -258,38 +258,42 @@ public class RoomScreen extends JFrame {
 			panMoney[i] = new JPanel();
 			lblMoney[i] = new JLabel();
 			if (i == 0) {
-				panMoney[i].setBounds(0, 0, 120, 50);
-				lblMoney[i].setText(arr[1]);
+				panMoney[i].setBounds(0, 0, 100, 50);
+				lblMoney[i].setText(arr[1].contains("Call")?"콜":"체크");
 			}else if (i == 1) {
-				panMoney[i].setBounds(120, 0, 120, 50);
-				lblMoney[i].setText(arr[2]);
+				panMoney[i].setBounds(100, 0, 100, 50);
+				lblMoney[i].setText(arr[2].contains("Ddadang")?"따당":"삥");
 			}else if (i == 2) {
-				panMoney[i].setBounds(240, 0, 120, 50);
-				lblMoney[i].setText(arr[3]);
+				panMoney[i].setBounds(200, 0, 100, 50);
+				lblMoney[i].setText(arr[3].contains("Quater")?"쿼터":"쿼터");
 			}else if (i == 3) {
-				panMoney[i].setBounds(360, 0, 120, 50);
-				lblMoney[i].setText(arr[4]);
+				panMoney[i].setBounds(300, 0, 100, 50);
+				lblMoney[i].setText(arr[4].contains("Half")?"하프":"하프");
 			}else if (i == 4) {
-				panMoney[i].setBounds(0, 50, 120, 50);
+				panMoney[i].setBounds(0, 50, 100, 50);
 				lblMoney[i].setText(arr[6]+"");
 			}else if (i == 5) {
-				panMoney[i].setBounds(120, 50, 120, 50);
+				panMoney[i].setBounds(100, 50, 100, 50);
 				lblMoney[i].setText(arr[7]+"");
 			}else if (i == 6) {
-				panMoney[i].setBounds(240, 50, 120, 50);
+				panMoney[i].setBounds(200, 50, 100, 50);
 				lblMoney[i].setText(arr[8]+"");
 			}else if (i == 7) {
-				panMoney[i].setBounds(360, 50, 120, 50);
+				panMoney[i].setBounds(300, 50, 100, 50);
 				lblMoney[i].setText(arr[9]+"");
 			}
 			System.out.println(arr[i]);
 			panMoney[i].add(lblMoney[i]);
 			lblMoney[i].setForeground(Color.orange);
+			if(i<=3)
+				lblMoney[i].setFont(new Font("Rosewood Std", Font.BOLD, 25));
+			else
+				lblMoney[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
 			panMoney[i].setBackground(new Color(0,0,0));
 			panMoney[i].setBorder(new LineBorder(Color.orange, 1));
 			showMoneyPan.add(panMoney[i]);
 		}
-
+		
 		
 	      
 		// 테이블에 출력할 데이터 배열
@@ -584,7 +588,7 @@ public class RoomScreen extends JFrame {
 		idx = (idx - mySit + 5) % 5;
 
 		moneyText[idx].setText(money);
-
+		
 		totalMoney.setText(total);
 
 		if (bet.equals(Protocol.Die)) {
