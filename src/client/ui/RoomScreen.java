@@ -555,6 +555,7 @@ public class RoomScreen extends JFrame {
 		if (!gameStart) {
 			dispose();
 			new Lobby();
+			ChattingOperator.chatArea.setText("");
 		} else {
 			roomOut = true;
 			JOptionPane.showMessageDialog(null, "나가기 예약이 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);

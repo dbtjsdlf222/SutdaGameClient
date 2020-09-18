@@ -69,7 +69,6 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.ENTERLOBBY:
-			ChattingOperator.chatArea.setText("");
 		case Protocol.RELOADLOBBYLIST:
 			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
 			// playerList
