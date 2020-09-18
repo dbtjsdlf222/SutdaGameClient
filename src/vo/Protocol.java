@@ -30,20 +30,20 @@ public class Protocol {
 	public static final String GAMESTART = "18";				//game 시작 상태 만들기
 	public static final String CHANGEMASTER = "19";				//선 변경
 	
-	public static final String CARD = "20";
-	public static final String OPENCARD = "21";
-	public static final String SETMONEY = "22";
-	public static final String SETBUTTON = "23";
-	public static final String STARTPAY = "24";
-	public static final String TURN = "25";
-	public static final String OTHERBET = "26";
-	public static final String BET = "27";
-	public static final String GAMEOVER = "28";
-	public static final String DRAW = "29";
-	public static final String SETSTARTBUTTON = "30"; 
-	public static final String RUNOUTMONEY = "31"; 
-	public static final String RELOADMYVO = "32"; 
-	public static final String SENDOFF = "33";
+	public static final String CARD = "20";						//카드전송
+	public static final String OPENCARD = "21";					//패 공개
+	public static final String SETMONEY = "22";					//게임머니 설정
+	public static final String SETBUTTON = "23";				//배팅 버튼 활성화
+	public static final String STARTPAY = "24";					//시작금액 설정
+	public static final String TURN = "25";						//턴
+	public static final String OTHERBET = "26";					//다른플레이어 배팅
+	public static final String BET = "27";						//자신이 배팅
+	public static final String GAMEOVER = "28";					//게임종료
+	public static final String DRAW = "29";						//동점
+	public static final String SETSTARTBUTTON = "30"; 			//게임시작버튼 보이기
+	public static final String RUNOUTMONEY = "31"; 				//게임머니 부족
+	public static final String RELOADMYVO = "32"; 				//서버의 저장된 자신의 정보와 동기화 
+	public static final String SENDOFF = "33";					//나가기 예약
 	
 
 	public static final String Half = "Half";

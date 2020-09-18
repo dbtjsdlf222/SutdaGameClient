@@ -200,6 +200,21 @@ public class ClientPacketController {
 			RoomScreen.getInstance().sendOff();
 			break;
 			
+		case Protocol.JOIN:
+			break;
+			
+		case Protocol.SELECTID:
+			break;
+			
+		case Protocol.SELECTNICK:
+			break;
+			
+		case Protocol.PLAYERSAVE:
+			break;
+			
+		case Protocol.SELECTONEPLAYERWITHNO:
+			break;
+
 		} // switch
 	} // controller();
 } // class
