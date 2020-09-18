@@ -55,7 +55,7 @@ public class PlayerDAO {
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		ClientPacketSender.instance.join(vo);
 		Packet result = getResponse();
-		if(result.getMotion().equals("true")) 
+		if(result.getMotion().equals("1"))
 			return 1;
 		else 
 			return 0;
