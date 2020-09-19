@@ -3,6 +3,7 @@ package client;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import javax.swing.UIManager;
@@ -18,7 +19,7 @@ public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1" };
+	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1", "18.222.254.67" };
 	
 	public static final String SERVERIP = "192.168.0.69";	//현호 IP
 //	public static final String SERVERIP = "192.168.56.1";	//선일 IP
@@ -55,7 +56,7 @@ public class RunClient {
 					init(new Socket(serverIp, 4888));
 				}
 				catch (UnknownHostException e) { e.printStackTrace(); }
-				catch (IOException e) { if(initialized) logger.debug("[" + serverIp + "] " + e.getMessage()); }
+				catch (IOException e) { if(!initialized) logger.debug("[" + serverIp + "] " + e.getMessage()); }
 				
 			}).start();
 			
@@ -64,13 +65,13 @@ public class RunClient {
 	} // main();
 	
 	private static boolean initialized = false;
-	private static synchronized void init(Socket socket) {
+	private static synchronized void init(Socket socket) throws SocketException {
 		
 		if(initialized)
 			return;
 		initialized = true;
 		
-		logger.info("서버 접속 성공");
+		logger.info("서버\"" + socket.getRemoteSocketAddress() + "\"에 접속 성공");
 		PlayerVO.myVO.setSocketWithBrPw(socket);
 		
 		try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } // OS 호환
