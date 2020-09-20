@@ -65,6 +65,7 @@ public class RunServer {
 
 		} catch (BindException e) {
 			logger.error("서버가 이미 실행중입니다");
+			e.printStackTrace();
 		} catch (UnknownHostException e) {
 			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
