@@ -33,13 +33,10 @@ public class DBCon {
 	
 	public Connection dbconn(String driver,String dburl, String dbid, String dbpw) {
 		try {
-			Class.forName ("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
 		} 
 		catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 		
 		return conn;
