@@ -288,7 +288,7 @@ public class Room extends ServerMethod {
 		playerMap.remove(playerIndex);
 		if(isGameStarted()) {
 			vo.gameLose();
-			dao.playerSave(vo);
+			serverDAO.playerSave(vo);
 		}
 		
 		if(playerMap.size() <= 0) {
@@ -561,11 +561,11 @@ public class Room extends ServerMethod {
 			 else 
 				playerMap.get(i).gameLose();
 			
-			dao.playerSave(playerMap.get(i));
+			serverDAO.playerSave(playerMap.get(i));
 		} //for
 		
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-			PlayerVO vo = dao.selectOnePlayerWithNo(s.getValue().getNo());
+			PlayerVO vo = serverDAO.selectOnePlayerWithNo(s.getValue().getNo());
 			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOADMYVO,vo)); 
 		} //for
 		

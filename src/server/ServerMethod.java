@@ -19,7 +19,7 @@ public class ServerMethod {
 	protected PlayerVO thisPlayerVO = new PlayerVO();
 	protected static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 
-	protected ServerDAO dao = new ServerDAO();
+	protected ServerDAO serverDAO = new ServerDAO();
 	protected Socket socket;
 	
 	public void exitPlayer() {

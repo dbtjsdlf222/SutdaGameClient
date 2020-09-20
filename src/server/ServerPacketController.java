@@ -14,8 +14,6 @@ import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
 	
-	private ServerDAO serverDAO = new ServerDAO();
-	
 	public ServerPacketController(Socket socket) {
 		super.socket = socket;
 		thisPlayerVO.setSocketWithBrPw(socket);
@@ -43,7 +41,7 @@ public class ServerPacketController extends ServerMethod {
 			String id = packet.getPlayerVO().getId();
 			String pw = packet.getPlayerVO().getPassword();
 
-			PlayerVO vo = dao.login(id, pw);
+			PlayerVO vo = serverDAO.login(id, pw);
 
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
 			
@@ -126,7 +124,7 @@ public class ServerPacketController extends ServerMethod {
 //			packet.setRoomMap(ro.getAllRoom());
 //			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
-			thisPlayerVO.saveExceptPw(dao.selectOnePlayerWithNo(thisPlayerVO.getNo()));
+			thisPlayerVO.saveExceptPw(serverDAO.selectOnePlayerWithNo(thisPlayerVO.getNo()));
 			lobbyReloadBroadcast();
 			break;
 
