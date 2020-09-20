@@ -24,7 +24,7 @@ public class RunServer {
 
 	private static final Logger logger = LogManager.getLogger();
 
-	private int port = 4887;
+	private int port = 4886;
 
 	public static void main(String[] args) {
 		new RunServer().run();

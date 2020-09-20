@@ -23,7 +23,7 @@ public class DBCon {
 //	}
 	
 	public Connection getMysqlConn() throws ClassNotFoundException {
-		String driver = "com.mysql.jdbc.Driver";
+		String driver = "com.mysql.cj.jdbc.Driver";
 		String dburl = "jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC";
 		String dbid = "sunx";
 		String dbpw = "sun123@@";

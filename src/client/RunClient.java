@@ -20,7 +20,7 @@ public class RunClient {
 	private static final Logger logger = LogManager.getLogger();
 	
 	public static final String[] SERVERS_IP = { "52.23.205.231","localhost"};
-	private static int port = 4887;
+	private static int port = 4886;
 	
 	public static final String SERVERIP = "192.168.0.69";	//현호 IP
 //	public static final String SERVERIP = "192.168.56.1";	//선일 IP
