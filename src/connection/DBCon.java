@@ -23,7 +23,7 @@ public class DBCon {
 //	}
 	
 	public Connection getMysqlConn() throws ClassNotFoundException {
-		String driver = "com.mysql.jdbc.Driver";
+		String driver = "com.mysql.cj.jdbc.Driver";
 		String dburl = "jdbc:mysql://sunx.cafe24.com:3306/sunx?characterEncoding=UTF-8&serverTimezone=UTC";
 		String dbid = "sunx";
 		String dbpw = "sun123@@";
@@ -33,7 +33,7 @@ public class DBCon {
 	
 	public Connection dbconn(String driver,String dburl, String dbid, String dbpw) {
 		try {
-			Class.forName ("com.mysql.jdbc.Driver");
+			Class.forName ("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
 		} 
 		catch (SQLException e) {
