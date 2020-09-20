@@ -28,15 +28,17 @@ public class DBCon {
 		String dbid = "sunx";
 		String dbpw = "sun123@@";
 		
-		return new DBCon().dbconn(driver, dburl, dbid, dbpw);
+		return new DBCon().dbconn(driver,dburl, dbid, dbpw);
 	}
 	
-	public Connection dbconn(String driver,String dburl, String dbid, String dbpw) {
+	public Connection dbconn(String driver, String dburl, String dbid, String dbpw) {
 		try {
+			Class.forName(driver);
 			conn = DriverManager.getConnection(dburl, dbid, dbpw);
-		} 
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 		return conn;
