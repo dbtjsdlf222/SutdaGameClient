@@ -1,35 +1,214 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>SutDa</groupId>
-  <artifactId>SutDa</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <dependencies>
-    <!-- Log4j -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.11.1</version>
-    </dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>SutDa</groupId>
+	<artifactId>SutDa</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- <build> -->
+	<!-- <plugins> -->
+	<!-- <plugin> -->
+	<!-- <groupId>org.apache.maven.plugins</groupId> -->
+	<!-- <artifactId>maven-jar-plugin</artifactId> -->
+	<!-- <configuration> -->
+	<!-- <archive> -->
+	<!-- <manifest> -->
+	<!-- <mainClass>server.RunServer</mainClass> -->
+	<!-- <addClasspath>true</addClasspath> -->
+	<!-- <classpathPrefix>libs/</classpathPrefix> -->
+	<!-- </manifest> -->
+	<!-- </archive> -->
+	<!-- </configuration> -->
+	<!-- </plugin> -->
+	<!-- <plugin> -->
+	<!-- <groupId>org.apache.maven.plugins</groupId> -->
+	<!-- <artifactId>maven-dependency-plugin</artifactId> -->
+	<!-- <version>2.5.1</version> -->
+	<!-- <executions> -->
+	<!-- <execution> -->
+	<!-- <id>copy-dependencies</id> -->
+	<!-- <phase>package</phase> -->
+	<!-- <goals> -->
+	<!-- <goal>copy-dependencies</goal> -->
+	<!-- </goals> -->
+	<!-- <configuration> -->
+	<!-- <includeScope>runtime</includeScope> -->
+	<!-- <outputDirectory>${project.build.directory}/libs/</outputDirectory> -->
+	<!-- </configuration> -->
+	<!-- </execution> -->
+	<!-- </executions> -->
+	<!-- </plugin> -->
+	<!-- </plugins> -->
+	<!-- </build> -->
+	<!-- <plugin> -->
+	<!-- <artifactId>maven-eclipse-plugin</artifactId> -->
+	<!-- <version>2.9</version> -->
+	<!-- <configuration> -->
+	<!-- <additionalProjectnatures> -->
+	<!-- <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature> -->
+	<!-- </additionalProjectnatures> -->
+	<!-- <additionalBuildcommands> -->
+	<!-- <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand> -->
+	<!-- </additionalBuildcommands> -->
+	<!-- <downloadSources>true</downloadSources> -->
+	<!-- <downloadJavadocs>true</downloadJavadocs> -->
+	<!-- </configuration> -->
+	<!-- </plugin> -->
+	<!-- <plugin> -->
+	<!-- <groupId>org.apache.maven.plugins</groupId> -->
+	<!-- <artifactId>maven-compiler-plugin</artifactId> -->
+	<!-- <version>2.5.1</version> -->
+	<!-- <configuration> -->
+	<!-- <source>1.8</source> -->
+	<!-- <target>1.8</target> -->
+	<!-- <compilerArgument>-Xlint:all</compilerArgument> -->
+	<!-- <showWarnings>true</showWarnings> -->
+	<!-- <showDeprecation>true</showDeprecation> -->
+	<!-- </configuration> -->
+	<!-- </plugin> -->
+	<!-- <plugin> -->
+	<!-- <groupId>org.codehaus.mojo</groupId> -->
+	<!-- <artifactId>exec-maven-plugin</artifactId> -->
+	<!-- <version>1.2.1</version> -->
+	<!-- <configuration> -->
+	<!-- <archive> -->
+	<!-- <manifest> -->
+	<!-- <mainClass>server.RunServer</mainClass> -->
+	<!-- </manifest> -->
+	<!-- </archive> -->
+	<!-- </configuration> -->
+	<!-- </plugin> -->
+
+	<!-- <plugin> -->
+	<!-- <artifactId>maven-assembly-plugin</artifactId> -->
+	<!-- <executions> -->
+	<!-- <execution> -->
+	<!-- <phase>server</phase> -->
+	<!-- <goals> -->
+	<!-- <goal>single</goal> -->
+	<!-- </goals> -->
+	<!-- </execution> -->
+	<!-- </executions> -->
+	<!-- <configuration> -->
+	<!-- <archive> -->
+	<!-- <manifest> -->
+	<!-- <addClasspath>true</addClasspath> -->
+	<!-- <mainClass>server.RunServer</mainClass> -->
+	<!-- </manifest> -->
+	<!-- </archive> -->
+	<!-- <descriptorRefs> -->
+	<!-- <descriptorRef>jar-with-dependencies</descriptorRef> -->
+	<!-- </descriptorRefs> -->
+	<!-- </configuration> -->
+	<!-- </plugin> -->
+	<!-- </plugins> -->
+	<!-- </build> -->
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>server.RunServer</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
+	<dependencies>
+		<!-- Log4j -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javazoom/jlayer -->
+		<dependency>
+			<groupId>javazoom</groupId>
+			<artifactId>jlayer</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.49</version>
+		</dependency>
+
+
+	</dependencies>
 </project>
