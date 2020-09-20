@@ -19,7 +19,8 @@ public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1", "aws.laziness.me" ,"ec2-52-23-205-231.compute-1.amazonaws.com"};
+	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1", "aws.laziness.me" ,"52.23.205.231"};
+	private static int port = 4887;
 	
 	public static final String SERVERIP = "192.168.0.69";	//현호 IP
 //	public static final String SERVERIP = "192.168.56.1";	//선일 IP
@@ -53,7 +54,7 @@ public class RunClient {
 				logger.info("\"" + serverIp + "\"에 연결 시도");
 				
 				try {
-					init(new Socket(serverIp, 4888));
+					init(new Socket(serverIp, port));
 				}
 				catch (UnknownHostException e) { e.printStackTrace(); }
 				catch (IOException e) { if(!initialized) logger.debug("[" + serverIp + "] " + e.getMessage()); }
