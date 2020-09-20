@@ -19,7 +19,7 @@ public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1", "aws.laziness.me" };
+	public static final String[] SERVERS_IP = { "localhost", "192.168.0.69", "192.168.56.1", "aws.laziness.me" ,"ec2-52-23-205-231.compute-1.amazonaws.com"};
 	
 	public static final String SERVERIP = "192.168.0.69";	//현호 IP
 //	public static final String SERVERIP = "192.168.56.1";	//선일 IP
