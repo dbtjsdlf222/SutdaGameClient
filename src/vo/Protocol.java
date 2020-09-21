@@ -45,6 +45,9 @@ public class Protocol {
 	public static final String RELOADMYVO = "32"; 				//서버의 저장된 자신의 정보와 동기화 
 	public static final String SENDOFF = "33";					//나가기 예약
 	
+	public static final String ONLINE = "34";					//로그인
+	public static final String OFFLINE = "35";					//로그아웃
+	
 
 	public static final String Half = "Half";
 	public static final String Quater = "Quater";
@@ -92,6 +95,8 @@ public class Protocol {
 			case "31": str = "RUNOUTMONEY"; break;
 			case "32": str = "RELOADMYVO"; break;
 			case "33": str = "SENDOFF"; break;
+			case "34": str = "ONLINE"; break;
+			case "35": str = "OFFLINE"; break;
 			case "Half": str = "Half"; break;
 			case "Quater": str = "Quater"; break;
 			case "Check": str = "Check"; break;

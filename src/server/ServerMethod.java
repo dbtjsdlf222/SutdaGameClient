@@ -1,7 +1,9 @@
 package server;
 
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +23,7 @@ public class ServerMethod {
 	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected ServerDAO serverDAO = new ServerDAO();
 	protected Socket socket;
+	protected static HashMap<String, PrintWriter> playerOnlineList = new HashMap<String, PrintWriter>();
 	
 	public void exitPlayer() {
 

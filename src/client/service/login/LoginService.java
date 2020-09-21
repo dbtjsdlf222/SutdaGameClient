@@ -11,8 +11,10 @@ import client.service.ClientPacketSender;
 import client.service.ClientReceiver;
 import client.service.login.LoginResultHandler.Focus;
 import dao.PlayerDAO;
+import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class LoginService {
 	
@@ -44,29 +46,31 @@ public class LoginService {
 		try  {
 			ClientPacketSender.instance.login(id, password);	//서버에 로그인 정보 요청
 			packetStr = br.readLine();	//결과 받음
-			if(packetStr == null) {
-				resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
-				return;
-			}
-			
-			Packet packet = mapper.readValue(packetStr, Packet.class);
-			player = packet.getPlayerVO();
+			try {
+				Packet packet = mapper.readValue(packetStr, Packet.class);
+				player = packet.getPlayerVO();
 
-			
-			
-//			if(player.isOnline()) {
-//				resultHandler.loginFailure(Focus.ID, "다른 PC에서 접속중인 아이디 입니다.");
-//				return;
-//			}
+				if(packet.getAction().equals(Protocol.ONLINE)) {
+					resultHandler.loginFailure(Focus.PASSWORD, "접속중인 아이디 입니다.");
+					return;
+				}
+				
+			}catch(NullPointerException e) {
+					if(packetStr == null) {
+						resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
+						return;
+					}
+			}
 			
 			player.setSocketWithBrPw(PlayerVO.myVO.getSocket());
 			PlayerVO.myVO = player;
 			
 			new Thread(new ClientReceiver(player.getSocket())).start();
 			resultHandler.loginSuccess(player);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
-		} //try~catch
+		}
+		//try~catch
 	} //login();
 	
 } //class Login();

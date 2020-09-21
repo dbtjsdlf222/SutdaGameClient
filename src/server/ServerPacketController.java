@@ -42,17 +42,21 @@ public class ServerPacketController extends ServerMethod {
 			String pw = packet.getPlayerVO().getPassword();
 
 			PlayerVO vo = serverDAO.login(id, pw);
-
-			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
-			
-			if (vo != null) {
+			if(vo == null) {
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
+			}else {			
+				if(playerOnlineList.containsKey(vo.getNic())) {
+					Packing.sender(thisPlayerVO.getPwSocket(), Protocol.ONLINE, vo);
+					return;
+				}				
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
+				playerOnlineList.put(vo.getNic(), vo.getPwSocket());
 				vo.setSocketWithBrPw(thisPlayerVO.getSocket());
 				thisPlayerVO = vo;
 				packet.setAction(Protocol.ENTERLOBBY);
 				packet.setPlayerVO(vo);
 				this.packetAnalysiser(packet);
 			}
-			
 			break;
 
 		case Protocol.MAKEROOM:
