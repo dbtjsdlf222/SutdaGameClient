@@ -1,5 +1,6 @@
 package server;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,6 +52,7 @@ public class ServerPacketController extends ServerMethod {
 				}				
 				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
 				playerOnlineList.put(vo.getNic(), vo.getPwSocket());
+				System.out.println(playerOnlineList);
 				vo.setSocketWithBrPw(thisPlayerVO.getSocket());
 				thisPlayerVO = vo;
 				packet.setAction(Protocol.ENTERLOBBY);
@@ -58,7 +60,18 @@ public class ServerPacketController extends ServerMethod {
 				this.packetAnalysiser(packet);
 			}
 			break;
-
+			
+		case Protocol.OFFLINE:
+			playerOnlineList.remove(packet.getPlayerVO().getNic());
+			try {
+				socket.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+				System.out.println(packet.getPlayerVO().getNic());
+				System.out.println(playerOnlineList);
+			break;
+			
 		case Protocol.MAKEROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
 			lobbyExitBroadcast();

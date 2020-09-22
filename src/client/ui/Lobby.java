@@ -326,7 +326,7 @@ public class Lobby {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == exitBtn) {
 					ClientPacketSender.instance.offline(PlayerVO.myVO);
-					lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					System.exit(0);
 				}
 			}
 		});
@@ -342,7 +342,6 @@ public class Lobby {
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
-//		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
