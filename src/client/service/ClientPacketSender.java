@@ -37,6 +37,10 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.LOGIN, new PlayerVO(id, pw));
 	} // login();
 	
+	public void offline(PlayerVO vo) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.OFFLINE, vo);
+	} // offline();
+
 	public void join(PlayerVO vo) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.JOIN, vo);
 	} // join();
@@ -56,6 +60,7 @@ public class ClientPacketSender {
 	public void selectOnePlayerWithNo(int playerVO) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, Integer.toString(playerVO));
 	}
+	
 	
 	
 	public boolean connectToServer(String ip) {

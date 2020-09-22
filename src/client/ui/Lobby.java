@@ -325,6 +325,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == exitBtn) {
+					ClientPacketSender.instance.offline(PlayerVO.myVO);
 					lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				}
 			}
