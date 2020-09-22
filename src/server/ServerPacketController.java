@@ -43,7 +43,7 @@ public class ServerPacketController extends ServerMethod {
 
 			PlayerVO vo = serverDAO.login(id, pw);
 			if(vo == null) {
-				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN);
 			}else {			
 				if(playerOnlineList.containsKey(vo.getNic())) {
 					Packing.sender(thisPlayerVO.getPwSocket(), Protocol.ONLINE, vo);

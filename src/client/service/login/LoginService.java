@@ -46,21 +46,21 @@ public class LoginService {
 		try  {
 			ClientPacketSender.instance.login(id, password);	//서버에 로그인 정보 요청
 			packetStr = br.readLine();	//결과 받음
-			try {
-				Packet packet = mapper.readValue(packetStr, Packet.class);
-				player = packet.getPlayerVO();
+			
+			Packet packet = mapper.readValue(packetStr, Packet.class);
+			player = packet.getPlayerVO();
 
-				if(packet.getAction().equals(Protocol.ONLINE)) {
-					resultHandler.loginFailure(Focus.PASSWORD, "접속중인 아이디 입니다.");
-					return;
-				}
-				
-			}catch(NullPointerException e) {
-					if(packetStr == null) {
-						resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
-						return;
-					}
+			if(packet.getAction().equals(Protocol.ONLINE)) {
+				resultHandler.loginFailure(Focus.PASSWORD, "접속중인 아이디 입니다.");
+				return;
 			}
+		
+			if(player == null) {
+				resultHandler.loginFailure(Focus.PASSWORD, "없는 아이디거나 비밀번호가 틀립니다.");
+				return;
+			}
+				
+			
 			
 			player.setSocketWithBrPw(PlayerVO.myVO.getSocket());
 			PlayerVO.myVO = player;
