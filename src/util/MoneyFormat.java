@@ -1,6 +1,7 @@
 package util;
 
 import java.text.DecimalFormat;
+import java.util.regex.Pattern;
 
 public class MoneyFormat {
 	
@@ -31,37 +32,35 @@ public class MoneyFormat {
 		String[] unit = new String[]{"만","억","조","경"};
 		String[] sp = money.split("");
 		long maxUnit=0;
-		long adad=0;
+		long unitCnt=0;
 		long total=0;
 		for (int i = 3; i >= 0; i--) {
 			if(money.indexOf(unit[i]) != -1) {
 				maxUnit=i;
-				adad=maxUnit+1;
+				unitCnt=maxUnit+1;
 				break;
 			}
 		} //for
 		String temp = "";
 		for (int i = 0; i < money.length(); i++) {
-			if(!(sp[i].equals(unit[3])||sp[i].equals(unit[2])||sp[i].equals(unit[1])||sp[i].equals(unit[0]))) {
+			if(Pattern.matches("[0-9]",sp[i])) {
 				temp = temp + sp[i];
 			} else {
-					adad-=1;
+					unitCnt-=1;
 					if(temp!="") {
-						if(adad==3) {
+						if(unitCnt==3) {
 							total+=(Long.parseLong(temp)*10000000000000000L);		
-						} else if(adad==2) {
+						} else if(unitCnt==2) {
 							total+=(Long.parseLong(temp)*1000000000000L);
-						} else if(adad==1){
+						} else if(unitCnt==1){
 							total+=(Long.parseLong(temp)*100000000L);
 						} else {
 							total+=(Long.parseLong(temp)*10000L);
 						}
 					}
-					
 				temp="";
 			} //else
 		}
-		System.out.println("total" +total);
 		return total;
 	} //reformat();
 } //MoneyFormat
