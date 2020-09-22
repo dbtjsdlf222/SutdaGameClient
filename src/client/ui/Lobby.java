@@ -33,6 +33,7 @@ import client.Background;
 import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import operator.ChattingOperator;
+import util.MoneyFormat;
 import vo.PlayerVO;
 
 public class Lobby {
@@ -158,7 +159,7 @@ public class Lobby {
 		infoMoneyLbl.setOpaque(true);
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
 		infoMoneyLbl.setForeground(new Color(163, 95, 56));
-		infoMoneyLbl.setText("머니 : " +RoomScreen.fm.format(PlayerVO.myVO.getMoney()));
+		infoMoneyLbl.setText("머니 : " +MoneyFormat.format(PlayerVO.myVO.getMoney()));
 		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
 		infoMoneyLbl.setBounds(120, 70, 230,30);
 		infoPan.add(infoMoneyLbl);

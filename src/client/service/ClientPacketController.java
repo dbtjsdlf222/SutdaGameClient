@@ -1,6 +1,7 @@
 package client.service;
 
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,6 +20,7 @@ import client.ui.Lobby;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
+import util.MoneyFormat;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -30,7 +32,6 @@ public class ClientPacketController {
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
-	private DecimalFormat fm = new DecimalFormat("###,###");
 	private static String[][] pn = new String[255][255];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
@@ -80,7 +81,7 @@ public class ClientPacketController {
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				pn[i][0] = lobbyPlayerList.get(i).getNic();
 				pn[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
-				pn[i][2] = fm.format((lobbyPlayerList.get(i).getMoney())) + "";
+				pn[i][2] = MoneyFormat.format((lobbyPlayerList.get(i).getMoney())) + "";
 				pLmodel.addRow(pn[i]);
 			}
 			

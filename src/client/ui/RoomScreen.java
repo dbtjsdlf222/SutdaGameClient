@@ -43,6 +43,7 @@ import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
 import util.Jokbo;
+import util.MoneyFormat;
 import util.Packing;
 import vo.Packet;
 import vo.PlayerVO;
@@ -81,7 +82,6 @@ public class RoomScreen extends JFrame {
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
-	public static DecimalFormat fm = new DecimalFormat("###,###");
 	private boolean gameStart = false;
 	private boolean roomOut = false;
 	private int roomMaster = 0;
@@ -230,7 +230,7 @@ public class RoomScreen extends JFrame {
 
 	public void reLoadMoney(int playerIdx, String money) {
 		playerIdx = (playerIdx - mySit + 5) % 5;
-		moneyText[playerIdx].setText(money);
+		moneyText[playerIdx].setText(MoneyFormat.format(money));
 	}
 
 	public void showNeedMoney(String[] arr) {
@@ -271,18 +271,17 @@ public class RoomScreen extends JFrame {
 				lblMoney[i].setText(arr[4].contains("Half")?"하프":"하프");
 			}else if (i == 4) {
 				panMoney[i].setBounds(0, 50, 100, 50);
-				lblMoney[i].setText(arr[6]+"");
+				lblMoney[i].setText(MoneyFormat.format(arr[6])+"");
 			}else if (i == 5) {
 				panMoney[i].setBounds(100, 50, 100, 50);
-				lblMoney[i].setText(arr[7]+"");
+				lblMoney[i].setText(MoneyFormat.format(arr[7])+"");
 			}else if (i == 6) {
 				panMoney[i].setBounds(200, 50, 100, 50);
-				lblMoney[i].setText(arr[8]+"");
+				lblMoney[i].setText(MoneyFormat.format(arr[8])+"");
 			}else if (i == 7) {
 				panMoney[i].setBounds(300, 50, 100, 50);
-				lblMoney[i].setText(arr[9]+"");
+				lblMoney[i].setText(MoneyFormat.format(arr[9])+"");
 			}
-			System.out.println(arr[i]);
 			panMoney[i].add(lblMoney[i]);
 			lblMoney[i].setForeground(Color.orange);
 			if(i<=3)
@@ -575,21 +574,20 @@ public class RoomScreen extends JFrame {
 			if (moneyText[i] == null)
 				continue;
 			count++;
-			moneyText[i].setText(Long.parseLong(moneyText[i].getText().replaceAll(",", "")) - sMoney + "");
+			moneyText[i].setText(MoneyFormat.format(MoneyFormat.reformat(moneyText[i].getText()) - sMoney) + "");
 			try {
 				liveList[i] = true;
-			} catch (NullPointerException e) {
-			}
+			} catch (NullPointerException e) { }
 		} // for
-		totalMoney.setText(count * sMoney + "");
+		totalMoney.setText(MoneyFormat.format(count * sMoney) + "");
 	} // startPay();
 
 	public void betAlert(int idx, String bet, String money, String total) {
 		idx = (idx - mySit + 5) % 5;
 
-		moneyText[idx].setText(money);
+		moneyText[idx].setText(MoneyFormat.format(money));
 		
-		totalMoney.setText(total);
+		totalMoney.setText(MoneyFormat.format(total));
 
 		if (bet.equals(Protocol.Die)) {
 			liveList[idx] = false;
@@ -683,11 +681,7 @@ public class RoomScreen extends JFrame {
 //						String.format("%." +((int) c2 == c2 ? "0" : "1")+"f", c2) +".png")));
 
 			} catch (NullPointerException e) {
-				System.out.println("card1[idx] " + card1[idx]);
-				System.out.println("card2[idx] " + card2[idx]);
 				e.printStackTrace();
-				System.err.println(cardFormat(c1));
-				System.err.println(cardFormat(c2));
 			}
 		}
 	} // openCard();
@@ -739,7 +733,7 @@ public class RoomScreen extends JFrame {
 		roomMaster = winerIdx;
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
-		moneyText[winerIdx].setText(winerTotalMoney);
+		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));
 		RoomScreen.getInstance().gameStart = false;
 		if (mySit == roomMaster)
 			startBtnSet();
@@ -783,7 +777,7 @@ public class RoomScreen extends JFrame {
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
 
 //			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
-			moneyText[i] = new JLabel(setVO.getMoney() + "");
+			moneyText[i] = new JLabel(MoneyFormat.format(setVO.getMoney()) + "");
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
 			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
