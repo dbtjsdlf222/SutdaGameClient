@@ -43,7 +43,7 @@ public class MoneyFormat {
 		} //for
 		String temp = "";
 		
-		for (int i = 0; i < money.length(); i++) {
+		for (int i = 0; i < sArr.length; i++) {
 			if(Pattern.matches("[0-9]",sArr[i])) {
 				temp = temp + sArr[i];
 			} else {
@@ -51,16 +51,10 @@ public class MoneyFormat {
 				if(temp!="") {
 					while(!sArr[i].equals(unit[unitCnt]))
 						unitCnt--;
-					
-					if(unitCnt==3) {
-						total+=(Long.parseLong(temp)*1000000000000L);		
-					} else if(unitCnt==2) {
-						total+=(Long.parseLong(temp)*100000000L);
-					} else if(unitCnt==1){
-						total+=(Long.parseLong(temp)*10000L);
-					} else {
-						total+=(Long.parseLong(temp)*1L);
-					}
+					if(unitCnt==3) { total+=(Long.parseLong(temp)*1000000000000L); } else	
+					if(unitCnt==2) { total+=(Long.parseLong(temp)*100000000L);  } else
+					if(unitCnt==1) { total+=(Long.parseLong(temp)*10000L);	} else
+									 total+=(Long.parseLong(temp)*1L);
 				}
 				temp="";
 			} //else
@@ -70,7 +64,7 @@ public class MoneyFormat {
 	} // reformat();
 
 	public static void main(String[] args) {
-		reformat(format(1000084307000L));
+		System.out.println((long)Math.pow(10, 12));
 	}
 
 } // MoneyFormat
