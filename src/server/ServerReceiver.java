@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import vo.Packet;
 
 public class ServerReceiver extends Thread { // Server
-	
+
 	private static final Logger logger = LogManager.getLogger();
-	
+
 	private Socket socket;
 
 	public ServerReceiver(Socket socket) {
@@ -27,7 +27,7 @@ public class ServerReceiver extends Thread { // Server
 	public void run() {
 		ServerPacketController packetController = new ServerPacketController(socket);
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 			String packetStr = "";
 			try {
@@ -35,9 +35,9 @@ public class ServerReceiver extends Thread { // Server
 					packetStr = br.readLine();
 					if (packetStr == null) {
 						logger.error("[Receive(ERROR(" +
-											packetController.getThisPlayerVO().getNo() + ", " +
-											packetController.getThisPlayerVO().getNic() +
-											"))] NULL Entered");
+								packetController.getThisPlayerVO().getNo() + ", " +
+								packetController.getThisPlayerVO().getNic() +
+								"))] NULL Entered");
 						break;
 					}
 					Packet packet = mapper.readValue(packetStr, Packet.class);
@@ -45,24 +45,18 @@ public class ServerReceiver extends Thread { // Server
 				} // while
 			} catch (NullPointerException e) {
 				logger.error(e.getMessage(), e);
-				
+
 			} catch (SocketException e) {
 				logger.error("[" + e.getMessage() + 
-								   "(" + packetController.getThisPlayerVO().getNo() + ", "
-								   	   + packetController.getThisPlayerVO().getNic() + 
-								   ")]");
+						"(" + packetController.getThisPlayerVO().getNo() + ", "
+						+ packetController.getThisPlayerVO().getNic() + 
+						")]");
 				packetController.exitPlayer();
 			}
 
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
-		} finally {
-			try {
-				socket.close();
-			} catch (IOException e2) {
-				logger.error(e2.getMessage(), e2);
-			}
-		} // try~catch;
+		}
 	} // run();
 
 } // ReceiveClientPacket();
