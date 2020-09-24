@@ -49,18 +49,24 @@ public class MoneyFormat {
 					unitCnt-=1;
 					if(temp!="") {
 						if(unitCnt==3) {
-							total+=(Long.parseLong(temp)*10000000000000000L);		
+							total+=(Long.parseLong(temp)*1000000000000L);		
 						} else if(unitCnt==2) {
-							total+=(Long.parseLong(temp)*1000000000000L);
-						} else if(unitCnt==1){
 							total+=(Long.parseLong(temp)*100000000L);
-						} else {
+						} else if(unitCnt==1){
 							total+=(Long.parseLong(temp)*10000L);
+						} else {
+							total+=(Long.parseLong(temp)*1L);
 						}
 					}
 				temp="";
 			} //else
 		}
+		System.out.println("result "+total);
 		return total;
 	} //reformat();
+	
+	public static void main(String[] args) {
+		reformat(format(18430000000L));
+	}
+	
 } //MoneyFormat
