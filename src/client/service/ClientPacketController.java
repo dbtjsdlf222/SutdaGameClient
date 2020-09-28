@@ -68,6 +68,11 @@ public class ClientPacketController {
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 	
 			break;
+			
+		case Protocol.WHISPER:
+			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
+			
+			break;
 
 		case Protocol.ENTERLOBBY:
 		case Protocol.RELOADLOBBYLIST:

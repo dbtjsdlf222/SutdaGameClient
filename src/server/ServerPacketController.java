@@ -36,6 +36,12 @@ public class ServerPacketController extends ServerMethod {
 				ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
 
 			break;
+			
+		case Protocol.WHISPER:
+			
+			packet.setMotion(thisPlayerVO.getNic() + ": " + packet.getMotion());
+			Packing.sender(playerOnlineList.get(packet.getPlayerVO().getNic()),packet);
+			break;
 
 		case Protocol.LOGIN:
 
@@ -51,9 +57,8 @@ public class ServerPacketController extends ServerMethod {
 					return;
 				}				
 				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.LOGIN, vo);
-				playerOnlineList.put(vo.getNic(), vo.getPwSocket());
-				System.out.println(playerOnlineList);
 				vo.setSocketWithBrPw(thisPlayerVO.getSocket());
+				playerOnlineList.put(vo.getNic(), vo.getPwSocket());
 				thisPlayerVO = vo;
 				packet.setAction(Protocol.ENTERLOBBY);
 				packet.setPlayerVO(vo);
