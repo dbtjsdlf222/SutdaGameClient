@@ -22,9 +22,10 @@ public class ChattingOperator {
 	public void chatting(String msg) {
 		if(msg.substring(0, 1).equals("/")) {
 			oneChatting(msg);
+		}else {
+			Packet pac = new Packet(Protocol.MESSAGE, msg, PlayerVO.myVO);
+			Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
 		}
-		Packet pac = new Packet(Protocol.MESSAGE, msg, PlayerVO.myVO);
-		Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
 	} //chatting();
 	
 	
@@ -41,7 +42,7 @@ public class ChattingOperator {
 			String[] oneMsg = msg.split(msgCheck[0] + " " + nic);
 			
 			if(!PlayerVO.myVO.getNic().equals(nic)) {
-				Packet pac = new Packet(Protocol.MESSAGE, oneMsg[1], vo);
+				Packet pac = new Packet(Protocol.WHISPER, oneMsg[1], vo);
 				Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
 			}
 			

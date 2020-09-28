@@ -27,7 +27,7 @@ public class ServerPacketController extends ServerMethod {
 		switch (packet.getAction()) {
 
 		case Protocol.MESSAGE:
-			packet.setMotion(thisPlayerVO.getNic() + ": " + packet.getMotion());
+			packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
 			if (thisPlayerVO.getRoomNo() == 0) {
 				for (PlayerVO playerVO : lobbyPlayerList) {
 					Packing.sender(playerVO.getPwSocket(), packet);
@@ -39,7 +39,7 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.WHISPER:
 			
-			packet.setMotion(thisPlayerVO.getNic() + ": " + packet.getMotion());
+			packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
 			Packing.sender(playerOnlineList.get(packet.getPlayerVO().getNic()),packet);
 			break;
 

@@ -70,7 +70,7 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.WHISPER:
-			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
+			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
 			
 			break;
 
