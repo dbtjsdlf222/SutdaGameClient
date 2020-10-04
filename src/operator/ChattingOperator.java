@@ -22,7 +22,7 @@ public class ChattingOperator {
 	public void chatting(String msg) {
 		if(msg.substring(0, 1).equals("/")) {
 			oneChatting(msg);
-		}else {
+		} else {
 			Packet pac = new Packet(Protocol.MESSAGE, msg, PlayerVO.myVO);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
 		}
