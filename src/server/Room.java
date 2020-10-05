@@ -21,6 +21,7 @@ public class Room extends ServerMethod {
 	private static int increaseRoomNo = 10000;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
+	private String roomTitle = "야 여기로와";
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
@@ -613,6 +614,7 @@ public class Room extends ServerMethod {
 		}
 	} // setMasterNo();
 	
+	public void setRoomTitle(String str) {roomTitle = str; }
 	public void setMaster(String str) { master = str; }
 	public Map<Integer, PlayerVO> getList() { return playerMap; }
 	public void setList(Map<Integer, PlayerVO> map) { 		this.playerMap = map; }
@@ -620,6 +622,7 @@ public class Room extends ServerMethod {
 	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
 	public Queue<Float> getShuffledCard() { return shuffledCard; }
 	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
+	public String getRoomTitle() { return roomTitle; }
 	public String getMaster() { return master; }
 	public Integer getMasterIndex() { 		return masterIndex; }
 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }

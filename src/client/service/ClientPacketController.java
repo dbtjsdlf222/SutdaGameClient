@@ -43,7 +43,7 @@ public class ClientPacketController {
 	public static JScrollPane plScroll = new JScrollPane(playerJT);
 	public static JPanel plobbyPan = new JPanel();
 
-	private static String rb[] = { "방번호", "방장 닉네임", "인원", "상태" };
+	private static String rb[] = { "방번호", "방제목","방장 닉네임", "인원", "상태" };
 	public static String[][] rn = new String[99][99];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
@@ -94,9 +94,14 @@ public class ClientPacketController {
 			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
 				((DefaultTableModel) roomJT.getModel()).removeRow(i);
 			}
-			
 			rLmodel.getDataVector().removeAllElements();
 			rLmodel.fireTableDataChanged();
+			
+			roomJT.getColumn("방번호").setPreferredWidth(200);
+			roomJT.getColumn("방제목").setPreferredWidth(1500);
+			roomJT.getColumn("방장 닉네임").setPreferredWidth(500);
+			roomJT.getColumn("인원").setPreferredWidth(300);
+			roomJT.getColumn("상태").setPreferredWidth(300);
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
 			int i = 0;
@@ -104,12 +109,14 @@ public class ClientPacketController {
 				int key = keys.next();
 				Room value = map.get(key);
 				rn[i][0] = Integer.toString(value.getRoomNo());
-				rn[i][1] = value.getMaster();
-				rn[i][2] = value.getPlayerSize() + "/5";
-				rn[i][3] = value.isGameStarted() ? "게임중" : "대기중";
+				rn[i][1] = value.getRoomTitle();
+				rn[i][2] = value.getMaster();
+				rn[i][3] = value.getPlayerSize() + "/5";
+				rn[i][4] = value.isGameStarted() ? "게임중" : "대기중";
 				rLmodel.addRow(rn[i]);
 				i++;
 			}
+			
 			break;
 
 		case Protocol.MAKEROOM:

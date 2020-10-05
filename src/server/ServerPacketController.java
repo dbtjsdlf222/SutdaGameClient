@@ -38,9 +38,14 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		case Protocol.WHISPER:
+			if(playerOnlineList.containsKey(packet.getPlayerVO().getNic())) {
+				packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
+				Packing.sender(playerOnlineList.get(packet.getPlayerVO().getNic()),packet);	
+			}else {
+				packet.setMotion("접속해 있지 않는 아이디 이거나 아아디를 잘못 입력하셨습니다.");
+				Packing.sender(thisPlayerVO.getPwSocket(), packet);
+			}
 			
-			packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
-			Packing.sender(playerOnlineList.get(packet.getPlayerVO().getNic()),packet);
 			break;
 
 		case Protocol.LOGIN:
@@ -80,6 +85,7 @@ public class ServerPacketController extends ServerMethod {
 		case Protocol.MAKEROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
 			lobbyExitBroadcast();
+			
 			
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			packet.setPlayerVO(thisPlayerVO);

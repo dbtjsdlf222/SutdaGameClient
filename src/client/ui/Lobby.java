@@ -6,17 +6,21 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
@@ -24,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -185,8 +190,9 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					lobbyJF.dispose();
-					ClientPacketSender.instance.makeRoom();
+					makeRoom();
+//					lobbyJF.dispose();
+//					ClientPacketSender.instance.makeRoom();
 //					RoomScreen.getInstance().mainScreen();
 				}
 			} // action
@@ -354,4 +360,49 @@ public class Lobby {
 
 	private void initialize() { }
 
+	private void makeRoom() {
+		JFrame roomJF = new JFrame("방 만들기");
+		con = roomJF.getContentPane();
+		imgP = new Background();
+		imgP.lobbyImage();
+		
+		JPanel titlePan = new JPanel();
+		JTextField titleField = new JTextField();
+		JLabel titlelbl = new JLabel("방 제목 : ");
+		titlelbl.setBounds(10, 0, 100, 30);
+		titlelbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
+		
+		titlePan.setBounds(0, 50, 250, 30);
+		titlePan.setBackground(new Color(0, 0, 0, 0));
+		titlePan.setLayout(null);
+		titlePan.add(titlelbl);
+		titlePan.add(titleField);
+		
+		
+		
+		
+		JPanel roomPan = new JPanel();
+		roomPan.setBounds(10, 10, 464, 241);
+		roomPan.setBackground(new Color(0, 0, 0, 0));
+		roomPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		roomPan.setLayout(null);
+		
+		roomPan.add(titlePan);
+		con.add(roomPan);
+		
+		
+		//JFrame 정보
+		con.add(imgP, BorderLayout.CENTER);
+		roomJF.setSize(500,300);
+		roomJF.setVisible(true);
+		roomJF.setResizable(false);
+		roomJF.setLocationRelativeTo(null);
+		roomJF.setLayout(null);
+		
+		
+		
+		
+		
+		
+	}
 }
