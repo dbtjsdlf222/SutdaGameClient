@@ -24,6 +24,9 @@ public class MoneyFormat {
 	}
 
 	public static String format(String money) {
+		if(money.equals("-")) {
+			return "-";
+		}
 		return format(Long.parseLong(money));
 	}
 
