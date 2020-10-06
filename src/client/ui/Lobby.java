@@ -289,7 +289,6 @@ public class Lobby {
 		playerPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 로비에 플레이어 접속자 목록
-
 		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
 		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel tcmSchedule = ClientPacketController.playerJT.getColumnModel();

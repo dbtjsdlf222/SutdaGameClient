@@ -1,7 +1,5 @@
 package client.service;
 
-import java.text.DecimalFormat;
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.ui.Lobby;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
@@ -44,7 +41,7 @@ public class ClientPacketController {
 	public static JPanel plobbyPan = new JPanel();
 
 	private static String rb[] = { "방번호", "방제목","방장 닉네임", "인원", "상태" };
-	public static String[][] rn = new String[99][99];
+	public static String[][] rn = new String[999][999];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -66,12 +63,10 @@ public class ClientPacketController {
 		case Protocol.MESSAGE: // 채팅
 			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
-	
 			break;
 			
 		case Protocol.WHISPER:
 			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
-			
 			break;
 
 		case Protocol.ENTERLOBBY:
@@ -116,7 +111,6 @@ public class ClientPacketController {
 				rLmodel.addRow(rn[i]);
 				i++;
 			}
-			
 			break;
 
 		case Protocol.MAKEROOM:
@@ -137,12 +131,10 @@ public class ClientPacketController {
 		case Protocol.ENTEROTHERROOM:
 //			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
-			
 			break;
 
 		case Protocol.EXITOTHERROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
-			
 			break;
 
 		case Protocol.CHANGEMASTER:
@@ -164,7 +156,6 @@ public class ClientPacketController {
 		case Protocol.SETBUTTON:
 			RoomScreen.getInstance().setButtonAndPrice(packet.getButtonArr()); // 버튼&베팅비용 세팅
 			break;
-			
 		case Protocol.STARTPAY:
 			try {
 				RoomScreen.getInstance().startPay(Integer.parseInt(packet.getMotion()));
@@ -212,22 +203,10 @@ public class ClientPacketController {
 		case Protocol.SENDOFF:
 			RoomScreen.getInstance().sendOff();
 			break;
-			
-		case Protocol.JOIN:
-			break;
-			
-		case Protocol.SELECTID:
-			break;
-			
-		case Protocol.SELECTNICK:
-			break;
-			
-		case Protocol.PLAYERSAVE:
-			break;
-			
-		case Protocol.SELECTONEPLAYERWITHNO:
-			break;
 
+			default :
+				//알수 없는 프로토콜 입니다.
+			
 		} // switch
 	} // controller();
 } // class
