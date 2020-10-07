@@ -16,7 +16,7 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
-public class c extends ServerMethod {
+public class Room extends ServerMethod {
 
 	private static int increaseRoomNo = 10000;
 	private int roomNo;		// 방 번호

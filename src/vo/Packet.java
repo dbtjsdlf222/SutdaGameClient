@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import server.Room;
+
 //import server.Room;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
@@ -15,7 +17,7 @@ public class Packet {
 	private String action;		//protocol
 	private String motion;		//value
 	private PlayerVO playerVO;
-	private Map<Integer, RoomVO> roomMap;
+	private Map<Integer, Room> roomMap;
 	private Map<Integer, PlayerVO> roomPlayerList;
 	private ArrayList<PlayerVO> playerList;
 	private	float[] card = new float[2];
@@ -95,11 +97,11 @@ public class Packet {
 		this.roomPlayerList = roomPlayerList;
 	}
 
-	public Map<Integer, RoomVO> getRoomMap() {
+	public Map<Integer, Room> getRoomMap() {
 		return roomMap;
 	}
 
-	public void setRoomMap(Map<Integer, RoomVO> room) {
+	public void setRoomMap(Map<Integer, Room> room) {
 		this.roomMap = room;
 	}
 
