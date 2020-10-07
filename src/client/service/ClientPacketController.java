@@ -16,11 +16,12 @@ import org.apache.logging.log4j.Logger;
 
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
-import server.Room;
+//import server.Room;
 import util.MoneyFormat;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
+import vo.RoomVO;
 
 @SuppressWarnings("serial")
 public class ClientPacketController {
@@ -97,12 +98,13 @@ public class ClientPacketController {
 			roomJT.getColumn("방장 닉네임").setPreferredWidth(500);
 			roomJT.getColumn("인원").setPreferredWidth(300);
 			roomJT.getColumn("상태").setPreferredWidth(300);
-			Map<Integer, Room> map = packet.getRoomMap();
+			
+			Map<Integer, RoomVO> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
 			int i = 0;
 			while (keys.hasNext()) {
 				int key = keys.next();
-				Room value = map.get(key);
+				RoomVO value = map.get(key);
 				rn[i][0] = Integer.toString(value.getRoomNo());
 				rn[i][1] = value.getRoomTitle();
 				rn[i][2] = value.getMaster();

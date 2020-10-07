@@ -16,13 +16,28 @@ import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
-public class Room extends ServerMethod {
+public class c extends ServerMethod {
 
+	private static int increaseRoomNo = 10000;
+	private int roomNo;		// 방 번호
+	private long startMoney; // 시작 금액
+	private String roomTitle = "야 여기로와";
+	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
+	private float[] cardArr = new float[20]; // 카드각
+	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
+	private Integer masterIndex; // 방장 or 선판 이긴거
+	private String master; 		 // 방장(선)이 누구인지
+	private long totalMoney; 	 // 총 배팅액의 합
+	private long beforeBetMoney;	 	 // 전 플레이어의 배팅액
+	private int round; 			 // 몇번째 카드 배팅인지
+	private int lastBetIdx;	 	 // 마지막으로 배팅한 플레이어가 몇번째 사람인지
+	private int turn; 			 // 누구의 차례인지
+	private boolean round1First = false;	// 첫 차례 버튼세팅 조건 변수
+	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
+	private boolean gameStarted = false;
+	private boolean allIn = false;
 	
 	
-	
-	
-
 	// 생성자
 	public Room() {
 		roomNo = increaseRoomNo++;
@@ -600,14 +615,22 @@ public class Room extends ServerMethod {
 		}
 	} // setMasterNo();
 	
-	public void setMaster(String str) { master = str; }
-	public float[] getCardArr() { return cardArr; }
-	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
-	public Queue<Float> getShuffledCard() { return shuffledCard; }
-	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
-	public String getMaster() { return master; }
-	public Integer getMasterIndex() { 		return masterIndex; }
-	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
-	public boolean isGameStarted() { return gameStarted; }
-	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+	public void setRoomTitle(String str) {roomTitle = str; }
+ 	public void setMaster(String str) { master = str; }
+	public Map<Integer, PlayerVO> getList() { return playerMap; }
+	public void setList(Map<Integer, PlayerVO> map) { 		this.playerMap = map; }
+ 	public float[] getCardArr() { return cardArr; }
+ 	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
+ 	public Queue<Float> getShuffledCard() { return shuffledCard; }
+ 	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
+	public String getRoomTitle() { return roomTitle; }
+ 	public String getMaster() { return master; }
+ 	public Integer getMasterIndex() { 		return masterIndex; }
+ 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
+ 	public boolean isGameStarted() { return gameStarted; }
+ 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+	public int getRoomNo() { return roomNo; }
+	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
+	public long getStartMoney() { return startMoney; }
+	public void setStartMoney(long startMoney) { this.startMoney = startMoney; }
 } //class

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class RoomVO {
 	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
@@ -27,6 +29,10 @@ public class RoomVO {
 	private boolean allIn = false;
 	
 	
+	@JsonIgnore
+	public int getPlayerSize() {
+		return playerMap.size();
+	}
 	
 	public static int getIncreaseRoomNo() {
 		return increaseRoomNo;
