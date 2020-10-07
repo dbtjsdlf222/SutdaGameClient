@@ -351,6 +351,7 @@ public class Lobby {
 		con.add(imgP, BorderLayout.CENTER);
 		lobbyJF.setSize(1280, 720);
 //		lobbyJF.setUndecorated(true);
+		lobbyJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lobbyJF.setVisible(true);
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);

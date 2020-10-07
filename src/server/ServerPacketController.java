@@ -78,8 +78,6 @@ public class ServerPacketController extends ServerMethod {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-				System.out.println(packet.getPlayerVO().getNic());
-				System.out.println(playerOnlineList);
 			break;
 			
 		case Protocol.MAKEROOM:
