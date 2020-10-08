@@ -81,9 +81,8 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		case Protocol.MAKEROOM:
-			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO));
+			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO,packet.getRoom()));
 			lobbyExitBroadcast();
-			
 			
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			packet.setPlayerVO(thisPlayerVO);
@@ -95,7 +94,7 @@ public class ServerPacketController extends ServerMethod {
 			
 //			packet.setAction(Protocol.CHANGEMASTER);
 //			Packing.sender(thisPlayerVO.getPwSocket(), packet);
-
+			
 			break;
 
 		case Protocol.EXITROOM:

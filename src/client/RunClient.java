@@ -19,10 +19,10 @@ public class RunClient {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
-	public static final String[] SERVERS_IP = {"192.168.0.69"};
+	public static final String[] SERVERS_IP = {"localhost"};
 	private static int port = 4886;
 	
-	public static final String SERVERIP = "192.168.0.69";	//현호 IP
+//	public static final String SERVERIP = "192.168.0.69";	//현호 IP
 //	public static final String SERVERIP = "192.168.219.110";	//현호 IP
 //	public static final String SERVERIP = "192.168.56.1";	//선일 IP
 	

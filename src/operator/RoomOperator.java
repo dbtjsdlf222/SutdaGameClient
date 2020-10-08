@@ -28,8 +28,7 @@ public class RoomOperator {
 		return roomMap;
 	}
 
-	public int makeRoom(PlayerVO pVO) {
-		Room room = new Room();
+	public int makeRoom(PlayerVO pVO,Room room) {
 		pVO.setRoomNo(room.getRoomNo());
 		room.setMaster(pVO.getNic());
 		room.joinPlayer(pVO);

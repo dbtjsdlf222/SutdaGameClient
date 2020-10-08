@@ -21,7 +21,7 @@ public class Room extends ServerMethod {
 	private static int increaseRoomNo = 10000;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
-	private String roomTitle = "야 여기로와";
+	private String roomTitle = "";
 	private String roomPw = "";
 	private String personnel = "5"; 
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트

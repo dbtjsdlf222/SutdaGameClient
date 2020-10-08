@@ -26,6 +26,9 @@ public class Packet {
 	
 	public Packet() {}
 
+	public Room getRoom() { return room; }
+	public void setRoom(Room room) { this.room = room; }
+
 	public Packet(String action, PlayerVO playerVO) {
 		
 		this.action = action;

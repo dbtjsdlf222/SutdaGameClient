@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
+import server.RunServer;
 //import server.Room;
 import util.MoneyFormat;
 import vo.Packet;
@@ -30,7 +31,7 @@ public class ClientPacketController {
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
-	private static String[][] pn = new String[255][255];
+	private static String[][] pn = new String[RunServer.MAXPLAYER][RunServer.MAXPLAYER];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -42,7 +43,7 @@ public class ClientPacketController {
 	public static JPanel plobbyPan = new JPanel();
 
 	private static String rb[] = { "방번호", "방제목","방장 닉네임", "인원", "상태" };
-	public static String[][] rn = new String[999][999];
+	public static String[][] rn = new String[RunServer.MAXROOM][RunServer.MAXROOM];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
 		public boolean isCellEditable(int row, int column) {

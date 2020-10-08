@@ -23,7 +23,9 @@ import dao.PlayerDAO;
 public class RunServer {
 
 	private static final Logger logger = LogManager.getLogger();
-
+	public static final int MAXROOM = 999;
+	public static final int MAXPLAYER = 999;
+	
 	private int port = 4886;
 
 	public static void main(String[] args) {
