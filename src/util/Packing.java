@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import server.Room;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -21,6 +22,16 @@ public class Packing {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			pw.println(mapper.writeValueAsString(new Packet(pro,vo)));
+		} catch (JsonProcessingException e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+
+	public static void sender(PrintWriter pw, String pro, Room room) {
+		logger.info("[Send(" + Protocol.getName(pro) +"(" + room.getRoomTitle()+", " + room.getRoomPw()+"))] " + room);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			pw.println(mapper.writeValueAsString(new Packet(pro,room)));
 		} catch (JsonProcessingException e) {
 			logger.error(e.getMessage(), e);
 		}

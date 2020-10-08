@@ -22,16 +22,16 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import client.Background;
+import client.service.ClientPacketSender;
 import server.Room;
 import util.Packing;
 import vo.PlayerVO;
+import vo.Protocol;
 
 public class MakeRoom {
       
    private Background imgP;
    private Container con;
-   private JButton okBtn;
-   private JButton cancelBtn;
    int i = 5; 
    
    public MakeRoom(){
@@ -182,7 +182,7 @@ public class MakeRoom {
       pPan.add(downBtn);
       
       //만들기 / 취소 버튼
-      okBtn = new JButton("만들기");
+      JButton okBtn = new JButton("만들기");
       okBtn.setBounds(50, 235, 153, 50);
 //      okBtn.setBackground(new Color(0, 0, 0, 0));
       okBtn.setFocusable(false);
@@ -194,18 +194,22 @@ public class MakeRoom {
          @Override
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()==okBtn) {
-               Room room = new Room();
-               room.setRoomTitle(titleField.getText());
-//               if(pwField.getText()!=null) 
-//                  room.setRoomPw(pwField.getText());
-//               room.setPersonnel(Integer.parseInt(pField.getText()));
+               if(titleField.getText()!=null) {
+            	   Room room = new Room();
+            	   room.setRoomTitle(titleField.getText());
+            	   if(pwField.getText()!=null) 
+            		   room.setRoomPw(pwField.getText());
+            	   room.setPersonnel(pField.getText());
                
-//               Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKEROOM, roomVO);
+            	   ClientPacketSender.instance.makeRoom(room);
+            	   
+               }
+            	   
             }
          }
-      });
+      });//addActionListener();
       
-      cancelBtn = new JButton("취소");
+      JButton cancelBtn = new JButton("취소");
       cancelBtn.setBounds(262, 235, 153, 50);
 //    cancelBtn.setBackground(new Color(0, 0, 0, 0));
       cancelBtn.setFocusable(false);

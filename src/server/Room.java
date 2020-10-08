@@ -22,6 +22,8 @@ public class Room extends ServerMethod {
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
 	private String roomTitle = "야 여기로와";
+	private String roomPw = "";
+	private String personnel = "5"; 
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
@@ -615,6 +617,94 @@ public class Room extends ServerMethod {
 		}
 	} // setMasterNo();
 	
+	public String getRoomPw() {
+		return roomPw;
+	}
+
+	public void setRoomPw(String roomPw) {
+		this.roomPw = roomPw;
+	}
+
+	public String getPersonnel() {
+		return personnel;
+	}
+
+	public void setPersonnel(String personnel) {
+		this.personnel = personnel;
+	}
+
+	public Map<Integer, PlayerVO> getPlayerMap() {
+		return playerMap;
+	}
+
+	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) {
+		this.playerMap = playerMap;
+	}
+
+	public long getTotalMoney() {
+		return totalMoney;
+	}
+
+	public void setTotalMoney(long totalMoney) {
+		this.totalMoney = totalMoney;
+	}
+
+	public long getBeforeBetMoney() {
+		return beforeBetMoney;
+	}
+
+	public void setBeforeBetMoney(long beforeBetMoney) {
+		this.beforeBetMoney = beforeBetMoney;
+	}
+
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int round) {
+		this.round = round;
+	}
+
+	public int getLastBetIdx() {
+		return lastBetIdx;
+	}
+
+	public void setLastBetIdx(int lastBetIdx) {
+		this.lastBetIdx = lastBetIdx;
+	}
+
+	public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+
+	public boolean isRound1First() {
+		return round1First;
+	}
+
+	public void setRound1First(boolean round1First) {
+		this.round1First = round1First;
+	}
+
+	public boolean isRound2First() {
+		return round2First;
+	}
+
+	public void setRound2First(boolean round2First) {
+		this.round2First = round2First;
+	}
+
+	public boolean isAllIn() {
+		return allIn;
+	}
+
+	public void setAllIn(boolean allIn) {
+		this.allIn = allIn;
+	}
+
 	public void setRoomTitle(String str) {roomTitle = str; }
  	public void setMaster(String str) { master = str; }
 	public Map<Integer, PlayerVO> getList() { return playerMap; }

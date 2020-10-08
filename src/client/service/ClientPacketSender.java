@@ -3,10 +3,9 @@ package client.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 
+import server.Room;
 import util.Packing;
 import vo.PlayerVO;
 import vo.Protocol;
@@ -20,8 +19,8 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTERLOBBY, PlayerVO.myVO);
 	} // enterLobby();
 
-	public void makeRoom() {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKEROOM, PlayerVO.myVO);
+	public void makeRoom(Room room) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKEROOM, room);
 	} // makeRoom();
 
 	public void enterRoom(int roomNo) {

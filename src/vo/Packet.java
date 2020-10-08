@@ -22,6 +22,7 @@ public class Packet {
 	private ArrayList<PlayerVO> playerList;
 	private	float[] card = new float[2];
 	private String[] buttonArr = new String[10];
+	private Room room;
 	
 	public Packet() {}
 
@@ -29,6 +30,12 @@ public class Packet {
 		
 		this.action = action;
 		this.playerVO = playerVO;
+	}
+	
+	public Packet(String action, Room room) {
+		
+		this.action = action;
+		this.room = room;
 	}
 
 	public Packet(String action, String motion, PlayerVO playerVO) {
