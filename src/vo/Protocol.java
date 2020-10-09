@@ -3,55 +3,56 @@ package vo;
 public class Protocol {
    
    //Server
-   public static final String CONNECTSUCCESS= "0";         		//서버 연결 성공
+   public static final String CONNECT_SUCCESS= "0";         		//서버 연결 성공
    public static final String MESSAGE = "1";               		//메세지
-   public static final String MAKEROOM = "2";               	//방만들기
+   public static final String MAKE_ROOM = "2";               	//방만들기
    
-   public static final String ENTERROOM = "3";              	//방 입실      입실시 vo에 roomNo 수정
-   public static final String EXITROOM = "4";            	   	//방 퇴실      vo roomNo = 널
-   public static final String ENTERLOBBY = "5";           		//로비입장
-   public static final String EXITLOBBY = "6";               	//방 퇴실
+   public static final String ENTER_ROOM = "3";              	//방 입실      입실시 vo에 roomNo 수정
+   public static final String EXIT_ROOM = "4";            	   	//방 퇴실      vo roomNo = 널
+   public static final String ENTER_LOBBY = "5";           		//로비입장
+   public static final String EXIT_LOBBY = "6";               	//방 퇴실
    
    public static final String LOGIN = "7";                  	//로그인
    public static final String JOIN = "8";                  		//회원가입
-   public static final String SELECTID = "9";              		//아이디 중복확인
-   public static final String SELECTNICK= "10";            		//닉네임 중복확인
-   public static final String PLAYERSAVE = "11";            	//플레이어 정보저장
-   public static final String SELECTONEPLAYERWITHNO = "12";   	//플레이어 정보조회
+   public static final String SELECT_ID = "9";              		//아이디 중복확인
+   public static final String SELECT_NICK= "10";            		//닉네임 중복확인
+   public static final String PLAYER_SAVE = "11";            	//플레이어 정보저장
+   public static final String SELECT_ONE_PLAYER_WITH_NO = "12";   	//플레이어 정보조회
    
    
-   public static final String ENTEROTHERROOM = "13";           	//다른 사람이 룸에 입실
-   public static final String ENTEROTHERLOBBY = "14";         	//다른 사람이 로비 입실
-   public static final String EXITOTHERROOM = "15";           	//다른 사람이 룸에 퇴실
-   public static final String EXITOTHERLOBBY = "16";         	//다른 사람이 로비 퇴실
-   public static final String RELOADLOBBYLIST = "17";         	//로비가 변했을때 새로고침
+   public static final String ENTER_OTHER_ROOM = "13";           	//다른 사람이 룸에 입실
+   public static final String ENTER_OTHER_LOBBY = "14";         	//다른 사람이 로비 입실
+   public static final String EXIT_OTHER_ROOM = "15";           	//다른 사람이 룸에 퇴실
+   public static final String EXIT_OTHER_LOBBY = "16";         	//다른 사람이 로비 퇴실
+   public static final String RELOAD_LOBBY_LIST = "17";         	//로비가 변했을때 새로고침
    
    //Game
-   public static final String GAMESTART = "18";            		//game 시작 상태 만들기
-   public static final String CHANGEMASTER = "19";            	//선 변경
+   public static final String GAME_START = "18";            		//game 시작 상태 만들기
+   public static final String CHANGE_MASTER = "19";            	//선 변경
    
    public static final String CARD = "20";                  	//카드전송
-   public static final String OPENCARD = "21";               	//패 공개
-   public static final String SETMONEY = "22";              	//게임머니 설정
-   public static final String SETBUTTON = "23";            		//배팅 버튼 활성화
-   public static final String STARTPAY = "24";               	//시작금액 설정
+   public static final String OPEN_CARD = "21";               	//패 공개
+   public static final String SET_MONEY = "22";              	//게임머니 설정
+   public static final String SET_BUTTON = "23";            		//배팅 버튼 활성화
+   public static final String START_PAY = "24";               	//시작금액 설정
    public static final String TURN = "25";                  	//턴
-   public static final String OTHERBET = "26";               	//다른플레이어 배팅
+   public static final String OTHER_BET = "26";               	//다른플레이어 배팅
    public static final String BET = "27";                  		//자신이 배팅
-   public static final String GAMEOVER = "28";               	//게임종료
+   public static final String GAME_OVER = "28";               	//게임종료
    public static final String DRAW = "29";                  	//동점
-   public static final String SETSTARTBUTTON = "30";          	//게임시작버튼 보이기
-   public static final String RUNOUTMONEY = "31";             	//게임머니 부족
-   public static final String RELOADMYVO = "32";             	//서버의 저장된 자신의 정보와 동기화 
-   public static final String SENDOFF = "33";               	//나가기 예약
+   public static final String SET_START_BUTTON = "30";          	//게임시작버튼 보이기
+   public static final String RUN_OUT_MONEY = "31";             	//게임머니 부족
+   public static final String RELOAD_MY_VO = "32";             	//서버의 저장된 자신의 정보와 동기화 
+   public static final String SEND_OFF = "33";               	//나가기 예약
    
    public static final String ONLINE = "34";               		//로그인
    public static final String OFFLINE = "35";               	//로그아웃
    public static final String WHISPER= "36";              	 	//귓속말
-   public static final String INVITE= "37";               		//초대
+   public static final String DO_INVITE= "37";               	//초대하기
    public static final String KICK= "38";                  		//추방
    public static final String PASSWORD= "39";                  	//비밀번호 체크
-   
+   public static final String GET_INVITE= "40";               	//초대받기
+   public static final String SERVER_MESSAGE= "41";                //경고문 출력
 
    public static final String Half = "Half";
    public static final String Quater = "Quater";

@@ -370,7 +370,7 @@ public class RoomScreen extends JFrame {
 				} // for
 				if (tempCount >= 2) {
 					RoomScreen.getInstance().gameStart = true;
-					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAMESTART));
+					Packing.sender(PlayerVO.myVO.getPwSocket(), new Packet(Protocol.GAME_START));
 					if (gameStartBtn != null) {
 						remove(gameStartBtn);
 						gameStartBtn = null;

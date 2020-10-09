@@ -10,6 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+import lombok.Setter;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;
@@ -21,8 +23,8 @@ public class Room extends ServerMethod {
 	private static int increaseRoomNo = 10000;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
-	private String roomTitle = "";
-	private String roomPw = "";
+	private String title = "";
+	private String password = "";
 	private String personnel = "5"; 
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
@@ -54,7 +56,7 @@ public class Room extends ServerMethod {
 	public void handOutCard() {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packet packet = new Packet();
-			packet.setAction(Protocol.CARD);
+			packet.setProtocol(Protocol.CARD);
 			if (s.getValue().isLive()) {
 
 				if (round == 1) { // 1라운드 일경우 첫번째 카드 배분
@@ -171,7 +173,7 @@ public class Room extends ServerMethod {
 		turnProgress();
 		gameStarted = true;
 		roomSpeaker(new Packet(Protocol.TURN, masterIndex + ""));
-		roomSpeaker(new Packet(Protocol.STARTPAY, startMoney + ""));
+		roomSpeaker(new Packet(Protocol.START_PAY, startMoney + ""));
 		lobbyReloadBroadcast(); 
 	} // gameStart();
 
@@ -192,7 +194,7 @@ public class Room extends ServerMethod {
 			message += ")";
 
 		}
-		message += ", " + Protocol.getName(pac.getAction()) + "))] " + pac;
+		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 
 		logger.info(message);
 
@@ -222,7 +224,7 @@ public class Room extends ServerMethod {
 			message += ")";
 			
 		}
-		message += ", " + Protocol.getName(pac.getAction()) + "))] " + pac;
+		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 		
 		logger.info(message);
 		
@@ -300,7 +302,7 @@ public class Room extends ServerMethod {
 			
 		} else {
 			Packet packet = new Packet();
-			packet.setAction(Protocol.EXITOTHERROOM);
+			packet.setProtocol(Protocol.EXIT_OTHER_ROOM);
 			packet.setMotion(Integer.toString(playerIndex));
 			roomSpeaker(packet);
 			roomSpeaker(new Packet(Protocol.MESSAGE, "알림 ["+ vo.getNic() + "]님이 퇴실하셨습니다."));
@@ -315,12 +317,12 @@ public class Room extends ServerMethod {
 					if(isGameStarted()) {
 						if(playerMap.get(idx).isLive()) { 
 							masterIndex = idx;
-							this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+							this.roomSpeaker(new Packet(Protocol.CHANGE_MASTER, masterIndex + ""));
 							break;
 						}	//if						
 					} else {
 						masterIndex = idx;
-						this.roomSpeaker(new Packet(Protocol.CHANGEMASTER, masterIndex + ""));
+						this.roomSpeaker(new Packet(Protocol.CHANGE_MASTER, masterIndex + ""));
 						break;
 					} //if~else
 				} //for
@@ -355,7 +357,7 @@ public class Room extends ServerMethod {
 		String[] arr = setButton();
 		
 		//차례 클라이언트에게 button배열 전송
-		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SETBUTTON, arr));
+		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
 		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
 	} //turnProgress();
@@ -417,7 +419,7 @@ public class Room extends ServerMethod {
 							beforeBetMoney = 0;
 						} else { // round 2~3
 							playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
-							roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+							roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 							gameResult();
 							return;
 						}
@@ -470,7 +472,7 @@ public class Room extends ServerMethod {
 			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 			if (i <= 1) {
 				gameOver(winerIdx,null);
-				roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+				roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 				return;
 			}
 			// 방장이 죽으면 다음 턴 사람한테 넘어간다
@@ -481,7 +483,7 @@ public class Room extends ServerMethod {
 					if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
 						continue;
 					
-					Packet packet = new Packet(Protocol.CHANGEMASTER, temp + "");
+					Packet packet = new Packet(Protocol.CHANGE_MASTER, temp + "");
 					roomSpeaker(packet);
 					break;
 				} // for
@@ -492,7 +494,7 @@ public class Room extends ServerMethod {
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
-		roomSpeaker(new Packet(Protocol.OTHERBET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 		
 		turnProgress();
 	} // bet();
@@ -503,7 +505,7 @@ public class Room extends ServerMethod {
 	 */
 	public void gameResult() {
 		round = 3;	//재경기시 카드 2개를 주기위함
-		roomSpeaker(new Packet(Protocol.OPENCARD,playerMap));
+		roomSpeaker(new Packet(Protocol.OPEN_CARD,playerMap));
 		new CalcCardLevel().getWinner(roomNo, playerMap);
 	} // gameResult();
 	
@@ -531,7 +533,7 @@ public class Room extends ServerMethod {
 					}
 					if(s.getValue().isAllIn()) {
 						if(s.getValue().getMoney() < startMoney)
-							Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SENDOFF));
+							Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SEND_OFF));
 					}
 				} //for
 			} else {
@@ -539,7 +541,7 @@ public class Room extends ServerMethod {
 			}
 			
 		} catch (NullPointerException e) {
-			roomSpeaker(new Packet(Protocol.GAMEOVER,"승자가 게임을 포기하였습니다."));
+			roomSpeaker(new Packet(Protocol.GAME_OVER,"승자가 게임을 포기하였습니다."));
 		}
 		gameStarted = false;
 		String winMsg;
@@ -548,7 +550,7 @@ public class Room extends ServerMethod {
 		} else {
 			winMsg = playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/";
 		}
-		roomSpeaker(new Packet(Protocol.GAMEOVER,
+		roomSpeaker(new Packet(Protocol.GAME_OVER,
 					winMsg+
 					winerIdx+"/" +
 					totalMoney + "/" +
@@ -570,7 +572,7 @@ public class Room extends ServerMethod {
 		
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			PlayerVO vo = serverDAO.selectOnePlayerWithNo(s.getValue().getNo());
-			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOADMYVO,vo)); 
+			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOAD_MY_VO,vo)); 
 		} //for
 		
 		lobbyReloadBroadcast();
@@ -617,110 +619,45 @@ public class Room extends ServerMethod {
 		}
 	} // setMasterNo();
 	
-	public String getRoomPw() {
-		return roomPw;
-	}
-
-	public void setRoomPw(String roomPw) {
-		this.roomPw = roomPw;
-	}
-
-	public String getPersonnel() {
-		return personnel;
-	}
-
-	public void setPersonnel(String personnel) {
-		this.personnel = personnel;
-	}
-
-	public Map<Integer, PlayerVO> getPlayerMap() {
-		return playerMap;
-	}
-
-	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) {
-		this.playerMap = playerMap;
-	}
-
-	public long getTotalMoney() {
-		return totalMoney;
-	}
-
-	public void setTotalMoney(long totalMoney) {
-		this.totalMoney = totalMoney;
-	}
-
-	public long getBeforeBetMoney() {
-		return beforeBetMoney;
-	}
-
-	public void setBeforeBetMoney(long beforeBetMoney) {
-		this.beforeBetMoney = beforeBetMoney;
-	}
-
-	public int getRound() {
-		return round;
-	}
-
-	public void setRound(int round) {
-		this.round = round;
-	}
-
-	public int getLastBetIdx() {
-		return lastBetIdx;
-	}
-
-	public void setLastBetIdx(int lastBetIdx) {
-		this.lastBetIdx = lastBetIdx;
-	}
-
-	public int getTurn() {
-		return turn;
-	}
-
-	public void setTurn(int turn) {
-		this.turn = turn;
-	}
-
-	public boolean isRound1First() {
-		return round1First;
-	}
-
-	public void setRound1First(boolean round1First) {
-		this.round1First = round1First;
-	}
-
-	public boolean isRound2First() {
-		return round2First;
-	}
-
-	public void setRound2First(boolean round2First) {
-		this.round2First = round2First;
-	}
-
-	public boolean isAllIn() {
-		return allIn;
-	}
-
-	public void setAllIn(boolean allIn) {
-		this.allIn = allIn;
-	}
-
-	public void setRoomTitle(String str) {roomTitle = str; }
- 	public void setMaster(String str) { master = str; }
+	public String getPassword() { return password; }
+	public String getPersonnel() { return personnel; }
+	public Map<Integer, PlayerVO> getPlayerMap() { return playerMap;}
+	public long getTotalMoney() { return totalMoney; }
+	public long getBeforeBetMoney() { return beforeBetMoney;} 
+	public int getRound() { return round;}
+	public int getLastBetIdx() { return lastBetIdx; }
+	public int getTurn() { return turn; } 
+	public boolean isRound1First() { return round1First; }
+	public boolean isRound2First() { return round2First; }
+	public boolean isAllIn() { return allIn; }
 	public Map<Integer, PlayerVO> getList() { return playerMap; }
-	public void setList(Map<Integer, PlayerVO> map) { 		this.playerMap = map; }
- 	public float[] getCardArr() { return cardArr; }
- 	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
- 	public Queue<Float> getShuffledCard() { return shuffledCard; }
- 	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
-	public String getRoomTitle() { return roomTitle; }
- 	public String getMaster() { return master; }
- 	public Integer getMasterIndex() { 		return masterIndex; }
- 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
- 	public boolean isGameStarted() { return gameStarted; }
- 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+	public float[] getCardArr() { return cardArr; }
+	public Queue<Float> getShuffledCard() { return shuffledCard; }
+	public String getTitle() { return title; }
+	public Integer getMasterIndex() { 		return masterIndex; }
+	public boolean isGameStarted() { return gameStarted; }
 	public int getRoomNo() { return roomNo; }
-	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
 	public long getStartMoney() { return startMoney; }
+	public String getMaster() { return master; }
+	
+	public void setPassword(String password) { this.password = password; }
+	public void setPersonnel(String personnel) { this.personnel = personnel; }
+	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) { this.playerMap = playerMap;}
+	public void setTotalMoney(long totalMoney) { this.totalMoney = totalMoney;}
+	public void setBeforeBetMoney(long beforeBetMoney) { this.beforeBetMoney = beforeBetMoney; }
+	public void setRound(int round) {this.round = round; } 
+	public void setLastBetIdx(int lastBetIdx) { this.lastBetIdx = lastBetIdx; }
+	public void setTurn(int turn) {this.turn = turn; } 
+	public void setRound1First(boolean round1First) { this.round1First = round1First; }
+	public void setRound2First(boolean round2First) { this.round2First = round2First; }
+	public void setAllIn(boolean allIn) { this.allIn = allIn; }
+	public void setTitle(String str) {title = str; }
+ 	public void setMaster(String str) { master = str; }
+	public void setList(Map<Integer, PlayerVO> map) { this.playerMap = map; }
+ 	public void setCardArr(float[] cardArr) { this.cardArr = cardArr; }
+ 	public void setShuffledCard(Queue<Float> shuffledCard) { this.shuffledCard = shuffledCard; }
+ 	public void setMasterIndex(Integer masterIndex) { this.masterIndex = masterIndex; }
+ 	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
+	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
 	public void setStartMoney(long startMoney) { this.startMoney = startMoney; }
 } //class

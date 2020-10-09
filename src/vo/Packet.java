@@ -1,6 +1,5 @@
 package vo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -14,12 +13,12 @@ import server.Room;
 
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Packet {
-	private String action;		//protocol
-	private String motion;		//value
+	private String protocol;		//protocol
+	private String motion;			//value
 	private PlayerVO playerVO;
 	private Map<Integer, Room> roomMap;
 	private Map<Integer, PlayerVO> roomPlayerList;
-	private ArrayList<PlayerVO> playerList;
+	private Map<String,PlayerVO> playerList;
 	private	float[] card = new float[2];
 	private String[] buttonArr = new String[10];
 	private Room room;
@@ -29,46 +28,45 @@ public class Packet {
 	public Room getRoom() { return room; }
 	public void setRoom(Room room) { this.room = room; }
 
-	public Packet(String action, PlayerVO playerVO) {
-		
-		this.action = action;
+	public Packet(String protocol, PlayerVO playerVO) {
+		this.protocol = protocol;
 		this.playerVO = playerVO;
 	}
 	
-	public Packet(String action, Room room) {
+	public Packet(String protocol, Room room) {
 		
-		this.action = action;
+		this.protocol = protocol;
 		this.room = room;
 	}
 
-	public Packet(String action, String motion, PlayerVO playerVO) {
-		this.action = action;
+	public Packet(String protocol, String motion, PlayerVO playerVO) {
+		this.protocol = protocol;
 		this.motion = motion;
 		this.playerVO = playerVO;
 	}
 
-	public Packet(String action, String motion) {
-		this.action = action;
+	public Packet(String protocol, String motion) {
+		this.protocol = protocol;
 		this.motion = motion;
 	}
 	
 	public Packet(String protocol) {
-		this.action = protocol;
+		this.protocol = protocol;
 	}
 
 	public Packet(String protocol, String[] buttonArr) {
-		this.action = protocol;
+		this.protocol = protocol;
 		this.buttonArr = buttonArr;
 	}
 
 	public Packet(String protocol, String[] buttonArr, String motion) {
-		this.action = protocol;
+		this.protocol = protocol;
 		this.buttonArr = buttonArr;
 		this.motion = motion;
 	}
 
 	public Packet(String protocol, Map<Integer, PlayerVO> playerMap) {
-		this.action = protocol;
+		this.protocol = protocol;
 		this.roomPlayerList = playerMap;
 	}
 
@@ -115,11 +113,11 @@ public class Packet {
 		this.roomMap = room;
 	}
 
-	public ArrayList<PlayerVO> getPlayerList() {
+	public Map<String, PlayerVO> getPlayerList() {
 		return playerList;
 	}
 
-	public void setPlayerList(ArrayList<PlayerVO> playerList) {
+	public void setPlayerList(Map<String,PlayerVO> playerList) {
 		this.playerList = playerList;
 	}
 
@@ -131,12 +129,12 @@ public class Packet {
 		this.playerVO = playerVO;
 	}
 
-	public String getAction() {
-		return action;
+	public String getProtocol() {
+		return protocol;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
 	public String getMotion() {

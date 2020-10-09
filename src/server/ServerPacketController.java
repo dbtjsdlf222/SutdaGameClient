@@ -2,11 +2,12 @@ package server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import dao.ServerDAO;
-import operator.ChattingOperator;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -22,15 +23,16 @@ public class ServerPacketController extends ServerMethod {
 	
 	public void packetAnalysiser(Packet packet) throws JsonProcessingException {
 		
-		logger.info("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 		
-		switch (packet.getAction()) {
+		switch (packet.getProtocol()) {
 
 		case Protocol.MESSAGE:
 			packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
 			if (thisPlayerVO.getRoomNo() == 0) {
-				for (PlayerVO playerVO : lobbyPlayerList) {
-					Packing.sender(playerVO.getPwSocket(), packet);
+				
+				for (Entry<String,PlayerVO> e: lobbyPlayerList.entrySet()) {
+					Packing.sender(e.getValue().getPwSocket(), packet);
 				}
 			} else
 				ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
@@ -41,7 +43,8 @@ public class ServerPacketController extends ServerMethod {
 			if(playerOnlineList.containsKey(packet.getPlayerVO().getNic())) {
 				packet.setMotion(thisPlayerVO.getNic() + " : " + packet.getMotion());
 				Packing.sender(playerOnlineList.get(packet.getPlayerVO().getNic()),packet);	
-			}else {
+			} else {
+				packet.setProtocol(Protocol.SERVER_MESSAGE);
 				packet.setMotion("접속해 있지 않는 아이디 이거나 아아디를 잘못 입력하셨습니다.");
 				Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			}
@@ -65,7 +68,7 @@ public class ServerPacketController extends ServerMethod {
 				vo.setSocketWithBrPw(thisPlayerVO.getSocket());
 				playerOnlineList.put(vo.getNic(), vo.getPwSocket());
 				thisPlayerVO = vo;
-				packet.setAction(Protocol.ENTERLOBBY);
+				packet.setProtocol(Protocol.ENTER_LOBBY);
 				packet.setPlayerVO(vo);
 				this.packetAnalysiser(packet);
 			}
@@ -80,14 +83,14 @@ public class ServerPacketController extends ServerMethod {
 			}
 			break;
 			
-		case Protocol.MAKEROOM:
+		case Protocol.MAKE_ROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO,packet.getRoom()));
 			lobbyExitBroadcast();
 			
 			thisPlayerVO.setIndex(0);	//첫 플레이어로 초기화
 			packet.setPlayerVO(thisPlayerVO);
 			packet.setMotion(0+"");		//방장 인덱스
-			packet.setAction(Protocol.MAKEROOM);
+			packet.setProtocol(Protocol.MAKE_ROOM);
 			
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			lobbyReloadBroadcast();
@@ -97,21 +100,21 @@ public class ServerPacketController extends ServerMethod {
 			
 			break;
 
-		case Protocol.EXITROOM:
+		case Protocol.EXIT_ROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
 			room.exitPlayer(thisPlayerVO);
 			thisPlayerVO.setRoomNo(0);
-			lobbyPlayerList.add(thisPlayerVO);
+			lobbyPlayerList.put(thisPlayerVO.getNic(),thisPlayerVO);
 			room.roomSpeakerNotThisPlayer(packet, thisPlayerVO.getNo());
 			lobbyReloadBroadcast();
 			break;
 
-		case Protocol.ENTERROOM:
+		case Protocol.ENTER_ROOM:
 			int roomNo = packet.getPlayerVO().getRoomNo();	//입장할 방 번호 받음
 			thisPlayerVO.setRoomNo(roomNo);
 			int index = ro.joinRoom(roomNo, thisPlayerVO);
 			thisPlayerVO.setIndex(index);	//자신이 몇번쨰 index인지 저장
-			Packet pak = new Packet(Protocol.ENTEROTHERROOM, thisPlayerVO);
+			Packet pak = new Packet(Protocol.ENTER_OTHER_ROOM, thisPlayerVO);
 			pak.setMotion(index +"");
 			pak.setPlayerVO(thisPlayerVO);
 			ro.getRoom(roomNo).roomSpeakerNotThisPlayer(pak,thisPlayerVO.getNo());
@@ -120,13 +123,11 @@ public class ServerPacketController extends ServerMethod {
 			packet.setMotion(ro.getRoom(roomNo).getMasterIndex().toString());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
-			
-			
 			lobbyExitBroadcast();
 
 			break;
 
-		case Protocol.EXITLOBBY:
+		case Protocol.EXIT_LOBBY:
 			for (int i = 0; i < lobbyPlayerList.size(); i++) {
 				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
 					lobbyPlayerList.remove(i);
@@ -138,12 +139,12 @@ public class ServerPacketController extends ServerMethod {
 			break;
 
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
-		case Protocol.ENTERLOBBY:
+		case Protocol.ENTER_LOBBY:
 			if (thisPlayerVO.getNic() == null) {
 				thisPlayerVO = packet.getPlayerVO();
 				thisPlayerVO.setSocketWithBrPw(socket);
 			}
-			lobbyPlayerList.add(thisPlayerVO); // 로비 리스트에 자신 추가
+			lobbyPlayerList.put(thisPlayerVO.getNic(),thisPlayerVO); // 로비 리스트에 자신 추가
 			
 //			packet.setPlayerList(lobbyPlayerList); // 자신에게 로비에 출력할 입장된 사람 보냄
 //			packet.setRoomMap(ro.getAllRoom());
@@ -153,7 +154,7 @@ public class ServerPacketController extends ServerMethod {
 			lobbyReloadBroadcast();
 			break;
 
-		case Protocol.RELOADLOBBYLIST:
+		case Protocol.RELOAD_LOBBY_LIST:
 			packet.setRoomMap(ro.getAllRoom());
 			packet.setPlayerList(lobbyPlayerList);
 			
@@ -161,7 +162,7 @@ public class ServerPacketController extends ServerMethod {
 
 			break;
 			
-		case Protocol.GAMESTART:
+		case Protocol.GAME_START:
 			ro.getRoom(thisPlayerVO.getRoomNo()).gameStart();
 			break;
 			
@@ -178,21 +179,69 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		case Protocol.PASSWORD:
-			String password = ro.getRoom(packet.getRoom().getRoomNo()).getRoomPw();
-			Packing.sender(thisPlayerVO.getPwSocket(),Protocol.PASSWORD,password.equals(packet.getMotion())? "ture":"false");
+			String password = ro.getRoom(packet.getRoom().getRoomNo()).getPassword();
+			if(password.equals(packet.getMotion())) {
+				packet.setProtocol(Protocol.ENTER_ROOM);
+				packetAnalysiser(packet);
+			} else {
+				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.PASSWORD,"false");
+			}
+			break;
+		
+		case Protocol.DO_INVITE:
+			boolean oftenTimer = false;
 			
-		break;
+			Timer t = new Timer();
+			TimerTask task = new TimerTask() {
+				@Override
+				public void run() {  oftenTimer=true;  }
+			};
 			
-		case Protocol.SELECTID:
-			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
+			
+			//본인 로비인 경우
+			if(thisPlayerVO.getRoomNo() == 0) {
+				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"로비엔 초대가 불가능 합니다.");
+			} else {
+				//본인 게임 시작 했을 경우
+				if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
+					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"게임중엔 초대가 불가능 합니다.");
+				}else {
+					//상대가 오프라인인 경우
+					if(playerOnlineList.get(packet.getMotion()) == null) {
+						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"없는 닉네임 이거나 접속중이지 않습니다.");
+					} else {
+						//상대가 로비에 없는 경우
+						if(lobbyPlayerList.get(packet.getMotion()) == null) {
+							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 다른 게임방에 있습니다.");
+						} else {
+						//초대
+							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 초대했습니다.");
+							
+							Packet packet1 = new Packet();
+							packet.setPlayerVO(thisPlayerVO);
+							packet.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
+							packet1.setProtocol(Protocol.GET_INVITE);
+
+							Packing.sender(lobbyPlayerList.get(packet.getMotion()).getPwSocket(),packet1);
+							new Thread()
+						}
+					}
+				}
+			}
+			
+			
 			break;
 			
-		case Protocol.SELECTNICK:
-			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTNICK, serverDAO.selectNick(packet.getMotion()) ? "true" : "false");
+		case Protocol.SELECT_ID:
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_ID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
+			break;
+			
+		case Protocol.SELECT_NICK:
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_NICK, serverDAO.selectNick(packet.getMotion()) ? "true" : "false");
 			break;		
 			
-		case Protocol.SELECTONEPLAYERWITHNO:
-			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, serverDAO.selectOnePlayerWithNo(packet.getPlayerVO().getNo()));
+		case Protocol.SELECT_ONE_PLAYER_WITH_NO:
+			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_ONE_PLAYER_WITH_NO, serverDAO.selectOnePlayerWithNo(packet.getPlayerVO().getNo()));
 			break;
 		} // switch
 	} // packetAnalysiser();

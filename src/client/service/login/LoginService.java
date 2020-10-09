@@ -50,7 +50,7 @@ public class LoginService {
 			Packet packet = mapper.readValue(packetStr, Packet.class);
 			player = packet.getPlayerVO();
 
-			if(packet.getAction().equals(Protocol.ONLINE)) {
+			if(packet.getProtocol().equals(Protocol.ONLINE)) {
 				resultHandler.loginFailure(Focus.PASSWORD, "접속중인 아이디 입니다.");
 				return;
 			}

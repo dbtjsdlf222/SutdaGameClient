@@ -32,7 +32,6 @@ public class ChattingOperator {
 	public void oneChatting(String msg) {
 		String[] msgCheck = msg.split(" ");
 
-		
 		switch (msgCheck[0]) {
 		case "/ㅈ":
 		case "/w":

@@ -25,7 +25,6 @@ public class ClientPacket {
 	public ClientPacket() {}
 
 	public ClientPacket(String action, PlayerVO playerVO) {
-		
 		this.action = action;
 		this.playerVO = playerVO;
 	}

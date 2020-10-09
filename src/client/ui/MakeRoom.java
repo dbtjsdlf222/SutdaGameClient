@@ -197,9 +197,9 @@ public class MakeRoom {
             if(e.getSource()==okBtn) {
                if(titleField.getText()!=null) {
             	   Room room = new Room();
-            	   room.setRoomTitle(titleField.getText());
+            	   room.setTitle(titleField.getText());
             	   if(pwField.getText()!=null) 
-            		   room.setRoomPw(pwField.getText());
+            		   room.setPassword(pwField.getText());
             	   room.setPersonnel(pField.getText());
             	   
             	   ClientPacketSender.instance.makeRoom(room);

@@ -16,20 +16,20 @@ public class ClientPacketSender {
 	private ClientPacketSender() {}
 
 	public void enterLobby() {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTERLOBBY, PlayerVO.myVO);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTER_LOBBY, PlayerVO.myVO);
 	} // enterLobby();
 
 	public void makeRoom(Room room) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKEROOM, room);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.MAKE_ROOM, room);
 	} // makeRoom();
 
 	public void enterRoom(int roomNo) {
 		PlayerVO.myVO.setRoomNo(roomNo);
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTERROOM, PlayerVO.myVO);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTER_ROOM, PlayerVO.myVO);
 	} // enterRoom();
 
 	public void exitRoom() {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXITROOM, PlayerVO.myVO);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXIT_ROOM, PlayerVO.myVO);
 	} // exitRoom();
 
 	public void login(String id, String pw) {
@@ -45,19 +45,19 @@ public class ClientPacketSender {
 	} // join();
 	
 	public void selectId(String id) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTID, id);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_ID, id);
 	} //selectId();
 	
 	public void selectNick(String nick) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTNICK, nick);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_NICK, nick);
 	} //selectNick();
 	
 	public void playerSave(PlayerVO vo) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PLAYERSAVE, vo);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PLAYER_SAVE, vo);
 	}
 	
 	public void selectOnePlayerWithNo(int playerVO) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECTONEPLAYERWITHNO, Integer.toString(playerVO));
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_ONE_PLAYER_WITH_NO, Integer.toString(playerVO));
 	}
 	
 	
@@ -67,7 +67,7 @@ public class ClientPacketSender {
 		try(Socket socket = new Socket(ip, 4888)) {
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			if(br.readLine().equals(Protocol.CONNECTSUCCESS)) {
+			if(br.readLine().equals(Protocol.CONNECT_SUCCESS)) {
 				socket.close();
 				return true;
 			} else {

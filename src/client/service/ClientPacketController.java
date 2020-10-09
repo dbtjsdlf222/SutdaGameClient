@@ -3,6 +3,7 @@ package client.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -59,9 +60,9 @@ public class ClientPacketController {
 
 	public void controller(Packet packet) {
 
-		logger.info("[Receive(" + Protocol.getName(packet.getAction()) + ")] " + packet);
+		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 
-		switch (packet.getAction()) {
+		switch (packet.getProtocol()) {
 		case Protocol.MESSAGE: // 채팅
 			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
@@ -71,25 +72,26 @@ public class ClientPacketController {
 			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
 			break;
 
-		case Protocol.ENTERLOBBY:
-		case Protocol.RELOADLOBBYLIST:
-			ArrayList<PlayerVO> lobbyPlayerList = packet.getPlayerList();
-			// playerList
+		case Protocol.ENTER_LOBBY:
+		case Protocol.RELOAD_LOBBY_LIST:
+			Map<String,PlayerVO> lobbyPlayerList = packet.getPlayerList();
+			// PlayerList
 			for (int i = 0; i < ((DefaultTableModel) playerJT.getModel()).getRowCount(); i++) {
 				((DefaultTableModel) playerJT.getModel()).removeRow(i);
 			}
 			pLmodel.getDataVector().removeAllElements();
 			pLmodel.fireTableDataChanged();
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				pn[i][0] = lobbyPlayerList.get(i).getNic();
-				pn[i][1] = (lobbyPlayerList.get(i).getWin() + lobbyPlayerList.get(i).getLose()) + "";
-				pn[i][2] = MoneyFormat.format((lobbyPlayerList.get(i).getMoney())) + "";
-				pLmodel.addRow(pn[i]);
+			int i = 0;
+			for (Entry<String, PlayerVO> e:lobbyPlayerList.entrySet()) {
+				pn[i][0] = e.getValue().getNic();
+				pn[i][1] = (e.getValue().getWin() + e.getValue().getLose()) + "";
+				pn[i][2] = MoneyFormat.format((e.getValue().getMoney())) + "";
+				pLmodel.addRow(pn[i++]);
 			}
 			
 			// roomList
-			for (int i = 0; i < ((DefaultTableModel) roomJT.getModel()).getRowCount(); i++) {
-				((DefaultTableModel) roomJT.getModel()).removeRow(i);
+			for (int j = 0; j < ((DefaultTableModel) roomJT.getModel()).getRowCount(); j++) {
+				((DefaultTableModel) roomJT.getModel()).removeRow(j);
 			}
 			rLmodel.getDataVector().removeAllElements();
 			rLmodel.fireTableDataChanged();
@@ -102,21 +104,20 @@ public class ClientPacketController {
 			
 			Map<Integer, Room> map = packet.getRoomMap();
 			Iterator<Integer> keys = map.keySet().iterator();
-			int i = 0;
+			int z = 0;
 			while (keys.hasNext()) {
 				int key = keys.next();
 				Room value = map.get(key);
-				rn[i][0] = Integer.toString(value.getRoomNo());
-				rn[i][1] = value.getRoomTitle();
-				rn[i][2] = value.getMaster();
-				rn[i][3] = value.getPlayerSize() + "/5";
-				rn[i][4] = value.isGameStarted() ? "게임중" : "대기중";
-				rLmodel.addRow(rn[i]);
-				i++;
+				rn[z][0] = Integer.toString(value.getRoomNo());
+				rn[z][1] = value.getTitle();
+				rn[z][2] = value.getMaster();
+				rn[z][3] = value.getPlayerSize() + "/5";
+				rn[z][4] = value.isGameStarted() ? "게임중" : "대기중";
+				rLmodel.addRow(rn[z++]);
 			}
 			break;
 
-		case Protocol.MAKEROOM:
+		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
@@ -124,23 +125,23 @@ public class ClientPacketController {
 			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
 			break;
 			
-		case Protocol.ENTERROOM:
+		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
 			break;
 			
-		case Protocol.ENTEROTHERROOM:
+		case Protocol.ENTER_OTHER_ROOM:
 //			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			break;
 
-		case Protocol.EXITOTHERROOM:
+		case Protocol.EXIT_OTHER_ROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
 			break;
 
-		case Protocol.CHANGEMASTER:
+		case Protocol.CHANGE_MASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
 
@@ -148,7 +149,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().receiveCard(packet.getCard());
 			break;
 
-		case Protocol.OPENCARD:
+		case Protocol.OPEN_CARD:
 				RoomScreen.getInstance().openCard(packet.getRoomPlayerList());
 			break;
 
@@ -156,10 +157,10 @@ public class ClientPacketController {
 			RoomScreen.getInstance().turn(Integer.parseInt(packet.getMotion()));	//이 차례의 사람 노란 테두리
 			break;
 
-		case Protocol.SETBUTTON:
+		case Protocol.SET_BUTTON:
 			RoomScreen.getInstance().setButtonAndPrice(packet.getButtonArr()); // 버튼&베팅비용 세팅
 			break;
-		case Protocol.STARTPAY:
+		case Protocol.START_PAY:
 			try {
 				RoomScreen.getInstance().startPay(Integer.parseInt(packet.getMotion()));
 			} catch (Exception e) {
@@ -168,7 +169,7 @@ public class ClientPacketController {
 			break;
 
 		// Motion(Protocol.OTHERBET, turn + "/" + proBet +"/"+money+"/"totalMoney)
-		case Protocol.OTHERBET:
+		case Protocol.OTHER_BET:
 			try {
 				String[] sp = packet.getMotion().split("/");
 				RoomScreen.getInstance().betAlert(Integer.parseInt(sp[0]), sp[1], sp[2],sp[3]);
@@ -179,7 +180,7 @@ public class ClientPacketController {
 			
 		// Motion(String winerMsg / int winerIdx / String winerHaveMoney)
 		// [승자가 나갈시] Motion(String winerMsg)
-		case Protocol.GAMEOVER :
+		case Protocol.GAME_OVER :
 			if(packet.getMotion().indexOf("/") != -1) {
 				String[] strArr = packet.getMotion().split("/");
 				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
@@ -195,15 +196,15 @@ public class ClientPacketController {
 			JOptionPane.showMessageDialog(null, "재경기");
 			break;
 			
-		case Protocol.RUNOUTMONEY:
+		case Protocol.RUN_OUT_MONEY:
 			System.out.println("[Receive]RUNOUTMONEY");
 			break;
 			
-		case Protocol.RELOADMYVO:
+		case Protocol.RELOAD_MY_VO:
 			PlayerVO.myVO.saveExceptPw(packet.getPlayerVO());
 			break;
 
-		case Protocol.SENDOFF:
+		case Protocol.SEND_OFF:
 			RoomScreen.getInstance().sendOff();
 			break;
 

@@ -4,9 +4,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.EntryMessage;
 
 import dao.PlayerDAO;
 import dao.ServerDAO;
@@ -19,7 +23,7 @@ import vo.Protocol;
 public class ServerMethod {
 	protected static final Logger logger = LogManager.getLogger();
 	protected PlayerVO thisPlayerVO = new PlayerVO();
-	protected static ArrayList<PlayerVO> lobbyPlayerList = new ArrayList<PlayerVO>();
+	protected static Map<String, PlayerVO> lobbyPlayerList = new HashMap<String,PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected ServerDAO serverDAO = new ServerDAO();
 	protected Socket socket;
@@ -46,38 +50,33 @@ public class ServerMethod {
 	} //exitPlayer
 
 	public void lobbyBroadcast(Packet packet) {
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
-		} //for
+		for (Entry<String,PlayerVO> e : lobbyPlayerList.entrySet()) {
+			Packing.sender(e.getValue().getPwSocket(), packet);
+		}
 	} //broadcast
 
 	public void lobbyExitBroadcast() {
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			if(lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-				lobbyPlayerList.remove(i);
-			}
-		} //for
+		
+		lobbyPlayerList.remove(thisPlayerVO.getNic());
+		
 		Packet packet = new Packet();
-		packet.setAction(Protocol.RELOADLOBBYLIST);
+		packet.setProtocol(Protocol.RELOAD_LOBBY_LIST);
 		packet.setPlayerList(lobbyPlayerList);
 		packet.setRoomMap(ro.getAllRoom());
-		for(PlayerVO player : lobbyPlayerList)
-			Packing.sender(player.getPwSocket(), packet);
+		lobbyBroadcast(packet);
 	}
 	
 	public void lobbyReloadBroadcast() {
 		Packet packet = new Packet();
-		packet.setAction(Protocol.RELOADLOBBYLIST);
+		packet.setProtocol(Protocol.RELOAD_LOBBY_LIST);
 		packet.setPlayerList(lobbyPlayerList);
 		packet.setRoomMap(ro.getAllRoom());
-		for (int i = 0; i < lobbyPlayerList.size(); i++) {
-			Packing.sender(lobbyPlayerList.get(i).getPwSocket(), packet);
-		} //for
+		lobbyBroadcast(packet);
 	}
 
 	public PlayerVO getThisPlayerVO() { return thisPlayerVO; }
 
-	public static ArrayList<PlayerVO> getLobbyPlayerList() {
+	public static Map<String, PlayerVO> getLobbyPlayerList() {
 		return lobbyPlayerList;
 	}
 	
