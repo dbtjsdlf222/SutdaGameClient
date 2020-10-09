@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -23,8 +24,8 @@ import dao.PlayerDAO;
 public class RunServer {
 
 	private static final Logger logger = LogManager.getLogger();
-	public static final int MAXROOM = 999;
-	public static final int MAXPLAYER = 999;
+	public static final int MAXPLAYER = 10;
+	public static final int MAXROOM = MAXPLAYER;
 	
 	private int port = 4886;
 
@@ -34,35 +35,15 @@ public class RunServer {
 
 	public void run() {
 		logger.info("서버 실행");
-//		ExecutorService pool = Executors.newFixedThreadPool(5); // 최대 스레드가 2개인 스레드풀 생성
-//		PlayerDAO dao = new PlayerDAO();
+
+		// 쓰레드풀 생성		
+		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
 
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
-
-//			dao.setServerIP();
-
-//			List<Runnable> runnableTasks = new ArrayList<>();
-
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다
-				
-//				new PrintWriter(new OutputStreamWriter(socket.getOutputStream())).println();
-				
-				new Thread(new ServerReceiver(socket)).start();
-
-//				pool.execute(new ServerReceiver(socket));
-
-//				Runnable task = () -> {
-//					try {
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				};
-//
-//				runnableTasks.add(task);
-//				runnableTasks.forEach(executor::executeTask);
-//				executor.waitForAllThreadsToCompletion();
-
+				Runnable r = new ServerReceiver(socket);
+				pool.execute(r);
 			} // while
 
 		} catch (BindException e) {
@@ -73,39 +54,9 @@ public class RunServer {
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		} finally {
-//			pool.shutdown();
+			pool.shutdown();
 		}
 
 	} // run();
 
-//	private static final int DEFAULT_THREAD_COUNT = 2;
-//
-//	private final ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors
-//			.newFixedThreadPool(DEFAULT_THREAD_COUNT);
-//
-//	public void executeTask(Runnable runnable) {
-//		executorService.execute(runnable);
-//	}
-//
-//	public void waitForAllThreadsToCompletion() {
-//		executorService.shutdown();
-//		while (!executorService.isTerminated()) {
-//			try {
-//				new ServerReceiver(socket);
-//			} catch (InterruptedException e) { }
-//		}
-//		executorService.shutdownNow();
-//	}
-//
-//	public void awaitTermination() {
-//		try {
-//			executorService.shutdown();
-//
-//			if (!executorService.awaitTermination(3000, TimeUnit.MILLISECONDS)) {
-//				executorService.shutdownNow();
-//			}
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//	}
 } // Accept();

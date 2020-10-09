@@ -373,6 +373,9 @@ public class Room extends ServerMethod {
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
 		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
+		
+		
+		
 	} //turnProgress();
 
 	public void bet(String proBet) {

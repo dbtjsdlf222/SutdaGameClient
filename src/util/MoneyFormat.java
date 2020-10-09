@@ -19,7 +19,6 @@ public class MoneyFormat {
 			}
 			cnt++;
 		} //for
-		System.out.println("result " + result);
 		return result;
 	}
 
@@ -62,7 +61,6 @@ public class MoneyFormat {
 				temp="";
 			} //else
 		}
-		System.out.println("result "+total);
 		return total;
 	} // reformat();
 
