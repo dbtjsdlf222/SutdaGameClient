@@ -32,6 +32,7 @@ public class MakeRoom {
       
    private Background imgP;
    private Container con;
+   private boolean makeRoom = false; 
    int i = 5; 
    
    public MakeRoom(){
@@ -200,9 +201,9 @@ public class MakeRoom {
             	   if(pwField.getText()!=null) 
             		   room.setRoomPw(pwField.getText());
             	   room.setPersonnel(pField.getText());
-               
-            	   ClientPacketSender.instance.makeRoom(room);
             	   
+            	   ClientPacketSender.instance.makeRoom(room);
+            	   makeRoom = true;
                }
             	   
             }
@@ -215,6 +216,16 @@ public class MakeRoom {
       cancelBtn.setFocusable(false);
 //    cancelBtn.setContentAreaFilled(false);
       cancelBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+      
+      cancelBtn.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==cancelBtn) {
+				roomJF.dispose();
+			}
+		}
+	});
       
       
       
@@ -253,4 +264,10 @@ public class MakeRoom {
       roomJF.setIconImage(img);
       
    }
+
+   public boolean isMakeRoom() {
+	   return makeRoom;
+   }
+
+   
 }
