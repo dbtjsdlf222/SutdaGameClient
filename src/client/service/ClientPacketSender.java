@@ -44,6 +44,10 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.JOIN, vo);
 	} // join();
 	
+	public void password(Room room) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PASSWORD, room);
+	}
+	
 	public void selectId(String id) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_ID, id);
 	} //selectId();
