@@ -49,7 +49,7 @@ public class ChattingOperator {
 				}else {
 					ChattingOperator.chatArea.append("자신에게 귓속말을 보낼 수 없습니다.\n");
 				}
-			}else {
+			} else {
 				ChattingOperator.chatArea.append("/w [상대방 닉네임] [할말] 형식으로 입력해주세요.\n");
 			}	
 			break;

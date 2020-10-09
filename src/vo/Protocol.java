@@ -50,6 +50,7 @@ public class Protocol {
    public static final String WHISPER= "36";              	 	//귓속말
    public static final String INVITE= "37";               		//초대
    public static final String KICK= "38";                  		//추방
+   public static final String PASSWORD= "39";                  	//비밀번호 체크
    
 
    public static final String Half = "Half";
@@ -103,6 +104,7 @@ public class Protocol {
          case "36": str = "WHISPER"; break;
          case "37": str = "INVITE"; break;
          case "38": str = "KICK"; break;
+         case "39": str = "PASSWORD"; break;
          case "Half": str = "Half"; break;
          case "Quater": str = "Quater"; break;
          case "Check": str = "Check"; break;

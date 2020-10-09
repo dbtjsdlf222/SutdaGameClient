@@ -177,6 +177,12 @@ public class ServerPacketController extends ServerMethod {
 			}
 			break;
 			
+		case Protocol.PASSWORD:
+			String password = ro.getRoom(packet.getRoom().getRoomNo()).getRoomPw();
+			Packing.sender(thisPlayerVO.getPwSocket(),Protocol.PASSWORD,password.equals(packet.getMotion())? "ture":"false");
+			
+		break;
+			
 		case Protocol.SELECTID:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECTID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
 			break;
