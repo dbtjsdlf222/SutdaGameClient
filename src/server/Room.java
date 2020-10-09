@@ -137,10 +137,16 @@ public class Room extends ServerMethod {
 				allIn = true;
 			
 			arr[1] = Protocol.Call;
-			arr[6] = beforeBetMoney + "";
-					
+			arr[6] = beforeBetMoney+ "";
+			
 			arr[2] = Protocol.Ddadang;
-			arr[7] = beforeBetMoney*2 + "";
+			if(beforeBetMoney==0) {
+				arr[7] = "-";
+				arr[2] +="_";
+			}else {
+				arr[7] = beforeBetMoney *2 + "";	
+			}
+			
 			if(beforeBetMoney * 2 > turnHaveMoney)
 				arr[2] += "_";
 		}
