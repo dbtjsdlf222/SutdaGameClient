@@ -31,12 +31,12 @@ public class ChattingOperator {
 	
 	public void oneChatting(String msg) {
 		String[] msgCheck = msg.split(" ");
+		String nic = msgCheck[1];
 
 		switch (msgCheck[0]) {
 		case "/ㅈ":
 		case "/w":
 			if(msgCheck.length >=3) {
-				String nic = msgCheck[1];
 				PlayerVO vo = new PlayerVO();
 				vo.setNic(nic);
 			
@@ -52,7 +52,12 @@ public class ChattingOperator {
 				ChattingOperator.chatArea.append("/w [상대방 닉네임] [할말] 형식으로 입력해주세요.\n");
 			}	
 			break;
+		case "/초대":
 		case "/c":
+			Packet packet = new Packet();
+			packet.setMotion(nic);
+			packet.setProtocol(Protocol.GET_INVITE);
+			Packing.sender(PlayerVO.myVO.getPwSocket(), packet);
 		case "/help":
 			
 			ChattingOperator.chatArea.append("귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n");
