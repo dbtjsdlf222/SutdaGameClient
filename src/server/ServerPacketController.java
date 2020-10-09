@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Map.Entry;
@@ -111,6 +112,15 @@ public class ServerPacketController extends ServerMethod {
 
 		case Protocol.ENTER_ROOM:
 			int roomNo = packet.getPlayerVO().getRoomNo();	//입장할 방 번호 받음
+			//엔터 룸 돈 체크
+			//엔터 룸시 방이 꽉 찻는지 체크
+			//게임 중인지 체크
+			String reason = null;
+			if((reason=ro.getRoom(roomNo).checkStatus(thisPlayerVO))!=null) {
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SERVER_MESSAGE,reason);
+				return;
+			}
+			
 			thisPlayerVO.setRoomNo(roomNo);
 			int index = ro.joinRoom(roomNo, thisPlayerVO);
 			thisPlayerVO.setIndex(index);	//자신이 몇번쨰 index인지 저장
@@ -189,14 +199,12 @@ public class ServerPacketController extends ServerMethod {
 			break;
 		
 		case Protocol.DO_INVITE:
-			boolean oftenTimer = false;
 			
-			Timer t = new Timer();
-			TimerTask task = new TimerTask() {
-				@Override
-				public void run() {  oftenTimer=true;  }
-			};
-			
+//			Timer t = new Timer();
+//			TimerTask task = new TimerTask() {
+//				@Override
+//				public void run() { }
+//			};
 			
 			//본인 로비인 경우
 			if(thisPlayerVO.getRoomNo() == 0) {
@@ -223,13 +231,10 @@ public class ServerPacketController extends ServerMethod {
 							packet1.setProtocol(Protocol.GET_INVITE);
 
 							Packing.sender(lobbyPlayerList.get(packet.getMotion()).getPwSocket(),packet1);
-							new Thread()
 						}
 					}
 				}
 			}
-			
-			
 			break;
 			
 		case Protocol.SELECT_ID:
@@ -245,5 +250,4 @@ public class ServerPacketController extends ServerMethod {
 			break;
 		} // switch
 	} // packetAnalysiser();
- 
 } // ServerPacketController();

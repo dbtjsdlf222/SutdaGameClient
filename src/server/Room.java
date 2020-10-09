@@ -1,6 +1,7 @@
 package server;
 
 import java.util.Iterator;
+
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,8 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Data;
-import lombok.Setter;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;
@@ -53,6 +52,14 @@ public class Room extends ServerMethod {
 		return playerMap.size();
 	}
 
+	public String checkStatus(PlayerVO vo) {
+		if(gameStarted) return "게임이 이미 시작하였습니다.";
+		if(vo.getMoney()<=startMoney) return "입장 머니가 부족합니다"; 
+		if(playerMap.size() > 4) return "자리가 없습니다.";
+		
+		return null;
+	}
+	
 	public void handOutCard() {
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packet packet = new Packet();
