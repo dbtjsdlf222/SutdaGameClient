@@ -196,9 +196,8 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					MakeRoom makeRoom = new MakeRoom();
-					if(makeRoom.isMakeRoom())
-						lobbyJF.dispose();
+					MakeRoom makeRoom = new MakeRoom(lobbyJF);
+					
 //					ClientPacketSender.instance.makeRoom();
 //					RoomScreen.getInstance().mainScreen();
 				}

@@ -32,17 +32,18 @@ public class MakeRoom {
       
    private Background imgP;
    private Container con;
-   private boolean makeRoom = false; 
    int i = 5; 
+   private JFrame lobbyJF;
    
-   public MakeRoom(){
-      makeRoom();
+   public MakeRoom(JFrame lobbyJF){
+      this.lobbyJF = lobbyJF;
+	  makeRoom();
    }
 
    private void makeRoom() {
       //Frame
-      JFrame roomJF = new JFrame("방 만들기");
-      con = roomJF.getContentPane();
+      JFrame makeJF = new JFrame("방 만들기");
+      con = makeJF.getContentPane();
       imgP = new Background();
       imgP.lobbyImage();
       
@@ -203,7 +204,8 @@ public class MakeRoom {
             	   room.setPersonnel(pField.getText());
             	   
             	   ClientPacketSender.instance.makeRoom(room);
-            	   makeRoom = true;
+            	   makeJF.dispose();
+            	   lobbyJF.dispose();
                }
             	   
             }
@@ -222,7 +224,7 @@ public class MakeRoom {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==cancelBtn) {
-				roomJF.dispose();
+				makeJF.dispose();
 			}
 		}
 	});
@@ -253,21 +255,18 @@ public class MakeRoom {
       //JFrame 정보
       con.add(roomPan);
       con.add(imgP, BorderLayout.CENTER);
-      roomJF.setSize(500,360);
-      roomJF.setVisible(true);
-      roomJF.setResizable(false);
-      roomJF.setLocationRelativeTo(null);
-      roomJF.setLayout(null);
+      makeJF.setSize(500,360);
+      makeJF.setVisible(true);
+      makeJF.setResizable(false);
+      makeJF.setLocationRelativeTo(null);
+      makeJF.setLayout(null);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
-      roomJF.setIconImage(img);
+      makeJF.setIconImage(img);
       
    }
 
-   public boolean isMakeRoom() {
-	   return makeRoom;
-   }
 
    
 }

@@ -56,7 +56,7 @@ public class ChattingOperator {
 		case "/c":
 			Packet packet = new Packet();
 			packet.setMotion(nic);
-			packet.setProtocol(Protocol.GET_INVITE);
+			packet.setProtocol(Protocol.DO_INVITE);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), packet);
 		case "/help":
 			

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -24,11 +25,13 @@ public class Invite {
 	
 	private Background imgP;
 	private Container con;
-
+	private JProgressBar progressBar;
+	private JFrame inviteJF;
+	
 	public void Invite() {
 		
-		JFrame makeJF = new JFrame("방 만들기");
-		con = makeJF.getContentPane();
+		inviteJF = new JFrame("초대창");
+		con = inviteJF.getContentPane();
 		imgP = new Background();
 		imgP.lobbyImage();
 		
@@ -38,6 +41,8 @@ public class Invite {
 		nicLbl.setBounds(-3, 0, 400, 30);
 		nicLbl.setBackground(Color.blue);
 		nicLbl.setHorizontalAlignment(JLabel.CENTER);
+		nicLbl.setForeground(new Color(255, 255, 255));
+		nicLbl.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 16));
 		
 		JPanel nicPan = new JPanel();
 		nicPan.setBounds(-3, 55, 400, 30);
@@ -59,7 +64,9 @@ public class Invite {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==okBtn) {
-					makeJF.dispose();
+					
+					
+					inviteJF.dispose();
 				}
 			}
 		});
@@ -78,20 +85,26 @@ public class Invite {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==cancelBtn) {
-					makeJF.dispose();
+					inviteJF.dispose();
+//					lobbyJF.dispose();
 				}
 			}
 		});
+	    
+	    //포로세스바
+	    progressBar = new JProgressBar(0,10);
+	    progressBar.setBounds(30, 95, 330, 15);
 		
 
 		// Room의 큰 틀
 		JLabel roomlbl = new JLabel("초 대 창");
 		roomlbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-		roomlbl.setForeground(new Color(0, 0, 0, 150));
+		roomlbl.setForeground(new Color(255, 255, 255, 150));
 		roomlbl.setBounds(0, 10, 400, 30);
 		roomlbl.setHorizontalAlignment(JLabel.CENTER);
 
 		JPanel roomPan = new JPanel();
+		roomPan.setBounds(0, 0, 384, 211);
 		roomPan.setBackground(new Color(0, 0, 0, 0));
 		roomPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		roomPan.setLayout(null);
@@ -100,21 +113,43 @@ public class Invite {
 		roomPan.add(nicPan);
 		roomPan.add(okBtn);
 		roomPan.add(cancelBtn);
+		roomPan.add(progressBar);
 
 		// JFrame 정보
 		con.add(roomPan);
 		con.add(imgP, BorderLayout.CENTER);
-		makeJF.setSize(400, 250);
-		makeJF.setVisible(true);
-		makeJF.setResizable(false);
-		makeJF.setLocationRelativeTo(null);
-		makeJF.setLayout(null);
-		makeJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		inviteJF.setSize(400, 250);
+		inviteJF.setVisible(true);
+		inviteJF.setResizable(false);
+		inviteJF.setLocationRelativeTo(null);
+		inviteJF.setLayout(null);
+		inviteJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
-		makeJF.setIconImage(img);
+		inviteJF.setIconImage(img);
 		
+		progressBar_start();
+	}
+	
+	
+	 public void progressBar_start(){
+	        int i;
+	        try{
+	            for(i=0;i<=10;i++){
+	                progressBar.setValue(i);
+	                Thread.sleep(1000);//밀리세컨드 단위로
+	                //지연시간을 설정.
+	            }
+	        }catch(InterruptedException ie){
+	            ie.printStackTrace();
+	        }
+	        
+	        inviteJF.dispose();
+	    }//progress_start()끝
+	
+	public static void main(String[] args) {
+		new Invite().Invite();
 	}
 }
 

@@ -117,6 +117,9 @@ public class ClientPacketController {
 			}
 			break;
 
+			
+			
+			
 		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
@@ -125,6 +128,7 @@ public class ClientPacketController {
 			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
 			break;
 			
+		case Protocol.GET_INVITE:
 		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
