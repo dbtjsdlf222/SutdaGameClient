@@ -18,8 +18,10 @@ import javax.swing.JProgressBar;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-
 import client.Background;
+import client.service.ClientPacketSender;
+import server.Room;
+import vo.PlayerVO;
 
 public class Invited {
 	
@@ -27,6 +29,15 @@ public class Invited {
 	private Container con;
 	private JProgressBar progressBar;
 	private JFrame inviteJF;
+	private PlayerVO vo;
+	private Room room;
+	
+	
+	public Invited(PlayerVO vo, Room room) {
+		this.vo = vo;
+		this.room = room;
+		Invite();
+	}
 	
 	public void Invite() {
 		
@@ -37,7 +48,9 @@ public class Invited {
 		
 		//닉네임
 		JLabel nicLbl = new JLabel();
-		nicLbl.setText("22222"+"님이 " + "9" + "번방에서 초대하셨습니다.");
+		System.out.println("vo" + vo);
+		System.out.println("room" + room);
+		nicLbl.setText(vo.getNic()+"님이 " + room.getRoomNo() + "번방에서 초대하셨습니다.");
 		nicLbl.setBounds(-3, 0, 400, 30);
 		nicLbl.setBackground(Color.blue);
 		nicLbl.setHorizontalAlignment(JLabel.CENTER);
@@ -64,9 +77,11 @@ public class Invited {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==okBtn) {
-					
-					
+
 					inviteJF.dispose();
+//					lobbyJF.dispose();
+					ClientPacketSender.instance.enterRoom(room.getRoomNo());
+					
 				}
 			}
 		});
@@ -86,7 +101,6 @@ public class Invited {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==cancelBtn) {
 					inviteJF.dispose();
-//					lobbyJF.dispose();
 				}
 			}
 		});
@@ -148,9 +162,6 @@ public class Invited {
 	        inviteJF.dispose();
 	    }//progress_start()끝
 	
-	public static void main(String[] args) {
-		new Invited().Invite();
-	}
 }
 
 	

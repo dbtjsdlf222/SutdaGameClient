@@ -54,7 +54,7 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	
-	public JPanel infoPan = new JPanel();
+	public JPanel infoPan;
 	
 	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
 //		ClientPacketSender.instance.enterLobby();
@@ -143,6 +143,7 @@ public class Lobby {
 		lobbyJF.add(infolbl);
 		
 		//인포 판넬
+		infoPan = new JPanel();
 		infoPan.setBounds(850, 410, 390, 260);
 		infoPan.setBackground(new Color(63, 28, 6));
 		infoPan.setBorder(new LineBorder(Color.orange, 3));

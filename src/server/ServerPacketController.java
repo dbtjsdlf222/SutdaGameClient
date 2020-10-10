@@ -228,6 +228,8 @@ public class ServerPacketController extends ServerMethod {
 							Packet packet1 = new Packet();
 							packet.setPlayerVO(thisPlayerVO);
 							packet.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
+							System.out.println("thisPlayerVO" + thisPlayerVO);
+							System.out.println("ro.getRoom(thisPlayerVO.getRoomNo())" + ro.getRoom(thisPlayerVO.getRoomNo()));
 							packet1.setProtocol(Protocol.GET_INVITE);
 
 							Packing.sender(lobbyPlayerList.get(packet.getMotion()).getPwSocket(),packet1);
