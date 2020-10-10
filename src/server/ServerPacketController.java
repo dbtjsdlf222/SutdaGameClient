@@ -76,7 +76,7 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		case Protocol.OFFLINE:
-			playerOnlineList.remove(packet.getPlayerVO().getNic());
+			exitPlayer();
 			try {
 				socket.close();
 			} catch (IOException e1) {
@@ -226,8 +226,8 @@ public class ServerPacketController extends ServerMethod {
 							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 초대했습니다.");
 							
 							Packet packet1 = new Packet();
-							packet.setPlayerVO(thisPlayerVO);
-							packet.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
+							packet1.setPlayerVO(thisPlayerVO);
+							packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
 							System.out.println("thisPlayerVO" + thisPlayerVO);
 							System.out.println("ro.getRoom(thisPlayerVO.getRoomNo())" + ro.getRoom(thisPlayerVO.getRoomNo()));
 							packet1.setProtocol(Protocol.GET_INVITE);

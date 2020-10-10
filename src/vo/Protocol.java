@@ -105,7 +105,8 @@ public class Protocol {
          case "36": str = "WHISPER"; break;
          case "37": str = "INVITE"; break;
          case "38": str = "KICK"; break;
-         case "39": str = "PASSWORD"; break;
+         case "40": str = "GET_INVITE"; break;
+         case "41": str = "SERVER_MESSAGE"; break;
          case "Half": str = "Half"; break;
          case "Quater": str = "Quater"; break;
          case "Check": str = "Check"; break;
