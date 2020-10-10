@@ -237,7 +237,7 @@ public class Lobby {
 		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 20));
 		ChattingOperator.chatArea.setBackground(new Color(63, 28, 6));
 		ChattingOperator.chatArea.setForeground(Color.white);
-		ClientPacketController.scrollPane.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
+		ChattingOperator.chatArea.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		ClientPacketController.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		ClientPacketController.scrollPane.setBounds(10, 10, 798, 205);
 		ClientPacketController.scrollPane.setBorder(null);
