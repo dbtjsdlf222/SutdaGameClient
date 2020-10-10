@@ -24,6 +24,7 @@ public class Room extends ServerMethod {
 	private long startMoney; // 시작 금액
 	private String title = "";
 	private String password = "";
+	private int maxPlayer;
 	private String personnel = "5"; 
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
@@ -40,7 +41,6 @@ public class Room extends ServerMethod {
 	private boolean gameStarted = false;
 	private boolean allIn = false;
 	
-	
 	// 생성자
 	public Room() {
 		roomNo = increaseRoomNo++;
@@ -55,7 +55,7 @@ public class Room extends ServerMethod {
 	public String checkStatus(PlayerVO vo) {
 		if(gameStarted) return "게임이 이미 시작하였습니다.";
 		if(vo.getMoney()<=startMoney) return "입장 머니가 부족합니다"; 
-		if(playerMap.size() > 4) return "자리가 없습니다.";
+		if(playerMap.size() >= maxPlayer) return "자리가 없습니다.";
 		
 		return null;
 	}
@@ -635,6 +635,7 @@ public class Room extends ServerMethod {
 		}
 	} // setMasterNo();
 	
+	public int getMaxPlayer() { return maxPlayer; }
 	public String getPassword() { return password; }
 	public String getPersonnel() { return personnel; }
 	public Map<Integer, PlayerVO> getPlayerMap() { return playerMap;}
@@ -656,6 +657,7 @@ public class Room extends ServerMethod {
 	public long getStartMoney() { return startMoney; }
 	public String getMaster() { return master; }
 	
+	public void setMaxPlayer(int maxPlayer) {this.maxPlayer = maxPlayer; }
 	public void setPassword(String password) { this.password = password; }
 	public void setPersonnel(String personnel) { this.personnel = personnel; }
 	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) { this.playerMap = playerMap;}

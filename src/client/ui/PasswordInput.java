@@ -20,7 +20,7 @@ import javax.swing.border.TitledBorder;
 
 import client.Background;
 
-public class GetIn {
+public class PasswordInput {
 	private Background imgP;
 	private Container con;
 	
@@ -115,7 +115,7 @@ public class GetIn {
 	}
 	
 	public static void main(String[] args) {
-		new GetIn().getIn();
+		new PasswordInput().getIn();
 	}
 	
 }

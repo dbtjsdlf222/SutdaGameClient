@@ -32,7 +32,7 @@ public class ClientPacketController {
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
-	private static String[][] pn = new String[99][99];
+	private static String[][] pn = new String[RunServer.MAXPLAYER][RunServer.MAXPLAYER];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -111,14 +111,11 @@ public class ClientPacketController {
 				rn[z][0] = Integer.toString(value.getRoomNo());
 				rn[z][1] = value.getTitle();
 				rn[z][2] = value.getMaster();
-				rn[z][3] = value.getPlayerSize() + "/5";
+				rn[z][3] = value.getPlayerSize() + "/"+value.getMaxPlayer();
 				rn[z][4] = value.isGameStarted() ? "게임중" : "대기중";
 				rLmodel.addRow(rn[z++]);
 			}
 			break;
-
-			
-			
 			
 		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();

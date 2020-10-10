@@ -21,7 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import client.Background;
 
-public class Invite {
+public class Invited {
 	
 	private Background imgP;
 	private Container con;
@@ -149,7 +149,7 @@ public class Invite {
 	    }//progress_start()끝
 	
 	public static void main(String[] args) {
-		new Invite().Invite();
+		new Invited().Invite();
 	}
 }
 
