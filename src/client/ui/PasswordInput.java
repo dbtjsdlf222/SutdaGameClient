@@ -54,6 +54,7 @@ public class PasswordInput {
 	  		public void actionPerformed(ActionEvent e) {
 	  			if(e.getSource()==okBtn) {
 	  				getInJF.dispose();
+	  				Lobby.getInstance().getLobbyJF().dispose();
 	  			}
 	  		}
 	  	});

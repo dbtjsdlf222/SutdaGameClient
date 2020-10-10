@@ -48,22 +48,27 @@ import util.MoneyFormat;
 import vo.PlayerVO;
 
 public class Lobby {
-	private JFrame lobbyJF = new JFrame();
+	public static Lobby instance;
+	private JFrame lobbyJF;
 	private Background imgP;
 	private Container con;
 	private JButton exitBtn;
 	private JButton newBtn;
+	private JPanel infoPan;
 	
-	public JPanel infoPan;
+	private Lobby() {};
 	
-	public Lobby() { // 서버에 로그인된 사람의 정보를 전송
-//		ClientPacketSender.instance.enterLobby();
-		lobbyScreen();
-	}
+	public static Lobby getInstance() {
+		if (instance == null)
+			instance = new Lobby();
+		return instance;
+	} //getInstance();
 
 	private static boolean initializeOnce = false;
 
 	public void lobbyScreen() {
+		 lobbyJF = new JFrame();
+		
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
 		lobLbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
@@ -366,5 +371,8 @@ public class Lobby {
 	}
 
 	private void initialize() { }
+	
+	public JFrame getLobbyJF() { return lobbyJF; }
+
 
 }

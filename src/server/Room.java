@@ -19,13 +19,12 @@ import vo.Protocol;
 
 public class Room extends ServerMethod {
 
-	private static int increaseRoomNo = 10000;
+	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
 	private String title = "";
 	private String password = "";
 	private int maxPlayer;
-	private String personnel = "5"; 
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
@@ -637,7 +636,6 @@ public class Room extends ServerMethod {
 	
 	public int getMaxPlayer() { return maxPlayer; }
 	public String getPassword() { return password; }
-	public String getPersonnel() { return personnel; }
 	public Map<Integer, PlayerVO> getPlayerMap() { return playerMap;}
 	public long getTotalMoney() { return totalMoney; }
 	public long getBeforeBetMoney() { return beforeBetMoney;} 
@@ -659,7 +657,6 @@ public class Room extends ServerMethod {
 	
 	public void setMaxPlayer(int maxPlayer) {this.maxPlayer = maxPlayer; }
 	public void setPassword(String password) { this.password = password; }
-	public void setPersonnel(String personnel) { this.personnel = personnel; }
 	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) { this.playerMap = playerMap;}
 	public void setTotalMoney(long totalMoney) { this.totalMoney = totalMoney;}
 	public void setBeforeBetMoney(long beforeBetMoney) { this.beforeBetMoney = beforeBetMoney; }

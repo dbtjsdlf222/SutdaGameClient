@@ -64,11 +64,16 @@ public class ClientPacketController {
 		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 
 		switch (packet.getProtocol()) {
+		case Protocol.SERVER_MESSAGE:
+			ChattingOperator.chatArea.append("<SYSTEM> " + packet.getMotion() + "\n");
+			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+			break;
+			
 		case Protocol.MESSAGE: // 채팅
 			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
-			
+
 		case Protocol.WHISPER:
 			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
 			break;
@@ -127,8 +132,6 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.GET_INVITE:
-			System.out.println("packet.getPlayerVO()" + packet.getPlayerVO());
-			System.out.println("packet.getRoom()" + packet.getRoom());
 			Invited invited = new Invited(packet.getPlayerVO(), packet.getRoom());
 			break;
 			

@@ -45,19 +45,23 @@ public class ChattingOperator {
 				if(!PlayerVO.myVO.getNic().equals(nic)) {
 					Packet pac = new Packet(Protocol.WHISPER, oneMsg[1], vo);
 					Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
+					ChattingOperator.chatArea.append("<보낸메시지>" + nic +" : " + oneMsg[1] + "\n");
 				}else {
-					ChattingOperator.chatArea.append("자신에게 귓속말을 보낼 수 없습니다.\n");
+					ChattingOperator.chatArea.append("<SYSTEM> 자신에게 귓속말을 보낼 수 없습니다.\n");
 				}
 			} else {
-				ChattingOperator.chatArea.append("/w [상대방 닉네임] [할말] 형식으로 입력해주세요.\n");
+				ChattingOperator.chatArea.append("<SYSTEM> /w [상대방 닉네임] [할말] 형식으로 입력해주세요.\n");
 			}	
 			break;
+		
 		case "/초대":
 		case "/c":
 			Packet packet = new Packet();
 			packet.setMotion(nic);
 			packet.setProtocol(Protocol.DO_INVITE);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), packet);
+			break;
+		
 		case "/help":
 			
 			ChattingOperator.chatArea.append("귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n");

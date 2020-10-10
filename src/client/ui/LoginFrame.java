@@ -178,7 +178,7 @@ public class LoginFrame implements LoginResultHandler {
 	public void loginSuccess(PlayerVO player) {
 		if(frame.isDisplayable()) {
 			dispose();
-			new Lobby();
+			Lobby.getInstance().lobbyScreen();;
 		}
 	} //loginSuccess();
 

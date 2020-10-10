@@ -201,7 +201,7 @@ public class MakeRoom {
             	   room.setTitle(titleField.getText());
             	   if(pwField.getText()!=null) 
             		   room.setPassword(pwField.getText());
-            	   room.setPersonnel(pField.getText());
+            	   room.setMaxPlayer(Integer.parseInt(pField.getText()));
             	   
             	   ClientPacketSender.instance.makeRoom(room);
             	   makeJF.dispose();

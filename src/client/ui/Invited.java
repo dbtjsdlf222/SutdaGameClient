@@ -48,14 +48,12 @@ public class Invited {
 		
 		//닉네임
 		JLabel nicLbl = new JLabel();
-		System.out.println("vo" + vo);
-		System.out.println("room" + room);
 		nicLbl.setText(vo.getNic()+"님이 " + room.getRoomNo() + "번방에서 초대하셨습니다.");
 		nicLbl.setBounds(-3, 0, 400, 30);
 		nicLbl.setBackground(Color.blue);
 		nicLbl.setHorizontalAlignment(JLabel.CENTER);
 		nicLbl.setForeground(new Color(255, 255, 255));
-		nicLbl.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 16));
+		nicLbl.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 13));
 		
 		JPanel nicPan = new JPanel();
 		nicPan.setBounds(-3, 55, 400, 30);
@@ -79,7 +77,7 @@ public class Invited {
 				if(e.getSource()==okBtn) {
 
 					inviteJF.dispose();
-//					lobbyJF.dispose();
+					Lobby.getInstance().getLobbyJF().dispose();
 					ClientPacketSender.instance.enterRoom(room.getRoomNo());
 					
 				}
@@ -150,7 +148,7 @@ public class Invited {
 	 public void progressBar_start(){
 	        int i;
 	        try{
-	            for(i=0;i<=10;i++){
+	            for(i=10;i>=0;i--){
 	                progressBar.setValue(i);
 	                Thread.sleep(1000);//밀리세컨드 단위로
 	                //지연시간을 설정.

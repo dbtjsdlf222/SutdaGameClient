@@ -557,7 +557,7 @@ public class RoomScreen extends JFrame {
 	public void sendOff() {
 		if (!gameStart) {
 			dispose();
-			new Lobby();
+			Lobby.getInstance().lobbyScreen();
 			ChattingOperator.chatArea.setText("");
 		} else {
 			roomOut = true;
@@ -751,7 +751,7 @@ public class RoomScreen extends JFrame {
 		beticon = new JLabel[5];
 		if (roomOut) {
 			dispose();
-			new Lobby();
+			Lobby.getInstance().lobbyScreen();;
 		}
 	} // gameOver();
 
