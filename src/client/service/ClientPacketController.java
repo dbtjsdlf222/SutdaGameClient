@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import client.ui.Invite;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
@@ -129,6 +130,9 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.GET_INVITE:
+			Invite invite = new Invite(packet.getPlayerVO(), packet.getRoom());
+			break;
+			
 		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
