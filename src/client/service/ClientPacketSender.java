@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import server.Room;
 import util.Packing;
+import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 

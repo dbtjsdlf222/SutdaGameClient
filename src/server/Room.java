@@ -25,6 +25,7 @@ public class Room extends ServerMethod {
 	private String title = "";
 	private String password = "";
 	private int maxPlayer;
+	private boolean  privateRoom = false;	//비밀번호방
 	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
@@ -654,7 +655,10 @@ public class Room extends ServerMethod {
 	public int getRoomNo() { return roomNo; }
 	public long getStartMoney() { return startMoney; }
 	public String getMaster() { return master; }
+	public boolean isPrivateRoom() { return privateRoom; }
 	
+
+
 	public void setMaxPlayer(int maxPlayer) {this.maxPlayer = maxPlayer; }
 	public void setPassword(String password) { this.password = password; }
 	public void setPlayerMap(Map<Integer, PlayerVO> playerMap) { this.playerMap = playerMap;}
@@ -675,4 +679,5 @@ public class Room extends ServerMethod {
  	public void setGameStarted(boolean gameStarted) { this.gameStarted = gameStarted; }
 	public void setRoomNo(int roomNo) { this.roomNo = roomNo; }
 	public void setStartMoney(long startMoney) { this.startMoney = startMoney; }
+	public void setPrivateRoom(boolean privateRoom) { this.privateRoom = privateRoom; }
 } //class

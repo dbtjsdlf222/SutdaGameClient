@@ -19,10 +19,19 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import client.Background;
+import client.service.ClientPacketController;
+import client.service.ClientPacketSender;
+import server.Room;
 
 public class PasswordInput {
 	private Background imgP;
 	private Container con;
+	private int no;
+	
+	public PasswordInput(int no) {
+		this.no = no;
+		getIn();
+	}
 	
 	public void getIn() {
 		JFrame getInJF = new JFrame("방 입장");
@@ -53,6 +62,10 @@ public class PasswordInput {
 	  		@Override
 	  		public void actionPerformed(ActionEvent e) {
 	  			if(e.getSource()==okBtn) {
+	  				Room room = new Room();
+	  				room.setPassword(pwField.getText());
+	  				room.setRoomNo(no);
+	  				ClientPacketSender.instance.password(room);
 	  				getInJF.dispose();
 	  				Lobby.getInstance().getLobbyJF().dispose();
 	  			}
@@ -113,10 +126,6 @@ public class PasswordInput {
 		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
 		getInJF.setIconImage(img);
 		
-	}
-	
-	public static void main(String[] args) {
-		new PasswordInput().getIn();
 	}
 	
 }

@@ -44,7 +44,7 @@ public class ClientPacketController {
 	public static JScrollPane plScroll = new JScrollPane(playerJT);
 	public static JPanel plobbyPan = new JPanel();
 
-	private static String rb[] = { "방번호", "방제목","방장 닉네임", "인원", "상태" };
+	private static String rb[] = { "방번호", "공개방", "방제목", "판돈", "인원", "상태" };
 	public static String[][] rn = new String[RunServer.MAXROOM][RunServer.MAXROOM];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
@@ -101,10 +101,11 @@ public class ClientPacketController {
 			}
 			rLmodel.getDataVector().removeAllElements();
 			rLmodel.fireTableDataChanged();
-			
+			 
 			roomJT.getColumn("방번호").setPreferredWidth(200);
-			roomJT.getColumn("방제목").setPreferredWidth(1500);
-			roomJT.getColumn("방장 닉네임").setPreferredWidth(500);
+			roomJT.getColumn("공개방").setPreferredWidth(200);
+			roomJT.getColumn("방제목").setPreferredWidth(1250);
+			roomJT.getColumn("판돈").setPreferredWidth(400);
 			roomJT.getColumn("인원").setPreferredWidth(300);
 			roomJT.getColumn("상태").setPreferredWidth(300);
 			
@@ -115,10 +116,11 @@ public class ClientPacketController {
 				int key = keys.next();
 				Room value = map.get(key);
 				rn[z][0] = Integer.toString(value.getRoomNo());
-				rn[z][1] = value.getTitle();
-				rn[z][2] = value.getMaster();
-				rn[z][3] = value.getPlayerSize() + "/"+value.getMaxPlayer();
-				rn[z][4] = value.isGameStarted() ? "게임중" : "대기중";
+				rn[z][1] = value.isPrivateRoom() ? "비공개" : "공개";
+				rn[z][2] = value.getTitle();
+				rn[z][3] = MoneyFormat.format(value.getStartMoney());
+				rn[z][4] = value.getPlayerSize() + "/"+value.getMaxPlayer();
+				rn[z][5] = value.isGameStarted() ? "게임중" : "대기중";
 				rLmodel.addRow(rn[z++]);
 			}
 			break;

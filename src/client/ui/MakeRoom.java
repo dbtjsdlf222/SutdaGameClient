@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 
 import client.Background;
 import client.service.ClientPacketSender;
+import operator.ChattingOperator;
 import server.Room;
 import util.Packing;
 import vo.PlayerVO;
@@ -84,6 +85,7 @@ public class MakeRoom {
       moneyCheck1.setBounds(130, 0, 50, 30);
       moneyCheck1.setBackground(new Color(255, 255, 255));
       moneyCheck1.setForeground(new Color(0, 0, 0));
+      moneyCheck1.setSelected(true);
 
       JRadioButton moneyCheck2 = new JRadioButton  ("50만");
       moneyCheck2.setBounds(206, 0, 50, 30);
@@ -196,21 +198,39 @@ public class MakeRoom {
          @Override
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()==okBtn) {
-               if(titleField.getText()!=null) {
-            	   Room room = new Room();
-            	   room.setTitle(titleField.getText());
-            	   if(pwField.getText()!=null) 
-            		   room.setPassword(pwField.getText());
-            	   room.setMaxPlayer(Integer.parseInt(pField.getText()));
-            	   
-            	   ClientPacketSender.instance.makeRoom(room);
-            	   makeJF.dispose();
-            	   lobbyJF.dispose();
-               }
-            	   
-            }
-         }
-      });//addActionListener();
+            	if(titleField.getText()!=null) {
+            		Room room = new Room();
+            		room.setTitle(titleField.getText());
+            		
+            		if(pwField.getText()!=null) {
+            			room.setPassword(pwField.getText());
+            			room.setPrivateRoom(true);
+            		}
+            		
+            		room.setMaxPlayer(Integer.parseInt(pField.getText()));
+            		
+            		//체크된거에 따라 시작금액 설정
+            		if(moneyCheck1.isSelected()) {
+                		room.setStartMoney(10);
+                	}else if(moneyCheck2.isSelected()) {
+                		room.setStartMoney(50);
+                	}else if(moneyCheck3.isSelected()) {
+                		room.setStartMoney(100);
+                	}else if(moneyCheck4.isSelected()) {
+                		room.setStartMoney(1000);
+                	}
+            		
+            		ClientPacketSender.instance.makeRoom(room);
+            		makeJF.dispose();
+            		lobbyJF.dispose();
+            		
+            	}else {
+            		ChattingOperator.chatArea.append("<SYSTEM> 방제를 입력해주세요.");
+            		makeJF.dispose();
+            	}//if(titleField.getText()!=null)
+            }//if(e.getsorce())
+         }//actionPerformed()
+      });//addActionListener()
       
       JButton cancelBtn = new JButton("취소");
       cancelBtn.setBounds(262, 235, 153, 50);

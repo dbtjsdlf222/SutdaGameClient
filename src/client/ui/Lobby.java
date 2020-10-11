@@ -105,7 +105,7 @@ public class Lobby {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 1) {
-						if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][3]
+						if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][5]
 								.equals("게임중")) {
 							JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
 									JOptionPane.WARNING_MESSAGE);
@@ -114,7 +114,13 @@ public class Lobby {
 							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
 									JOptionPane.WARNING_MESSAGE);
 							return;
-						}else {
+						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
+								.equals("비공개")) {
+							PasswordInput pwInput = new PasswordInput(Integer.parseInt(
+									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+						}
+						else {
+							
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
 //							RoomScreen.getInstance().mainScreen();
