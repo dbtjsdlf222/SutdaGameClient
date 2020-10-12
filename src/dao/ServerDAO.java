@@ -36,7 +36,7 @@ public class ServerDAO {
 	
 	public PlayerVO selectOnePlayerWithNo(int playerNo) {
 		
-		String sql = "SELECT * FROM player WHERE no=?";
+		String sql = "SELECT no,id,password,nickname,money,win,lose,admin,`character` FROM player WHERE no=?";
 		ResultSet rs = null;
 
 	try {
@@ -53,16 +53,15 @@ public class ServerDAO {
 				long money = rs.getLong(5);
 				int win = rs.getInt(6);
 				int lose = rs.getInt(7);
-				boolean online = rs.getBoolean(8);
-				int character = rs.getInt(10);
-				String ip = null;
-				try {
+				boolean admin = rs.getBoolean(8);
+				int character = rs.getInt(9);
+				/*try {
 					ip = InetAddress.getLocalHost().getHostAddress();
 				} catch (UnknownHostException e) {
 					logger.error(e.getMessage(), e);
-				}
+				}*/
 
-				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
+				return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
 			} catch (SQLException e) {
 				return null;
 			}
@@ -174,7 +173,7 @@ public class ServerDAO {
 	}
 
 	public PlayerVO login(String id, String pw) {
-		String sql = "SELECT * FROM player WHERE id=? AND password=?";
+		String sql = "SELECT no,id,password,nickname,money,win,lose,admin,`character` FROM player WHERE id=? AND password=?";
 		ResultSet rs = null;
 
 		try {
@@ -192,8 +191,8 @@ public class ServerDAO {
 				long money = rs.getLong(5);
 				int win = rs.getInt(6);
 				int lose = rs.getInt(7);
-				boolean online = rs.getBoolean(8);
-				int character = rs.getInt(10);
+				boolean admin = rs.getBoolean(8);
+				int character = rs.getInt(9);
 				String ip = null;
 				try {
 					ip = InetAddress.getLocalHost().getHostAddress();
@@ -201,7 +200,7 @@ public class ServerDAO {
 					logger.error(e.getMessage(), e);
 				}
 
-				return new PlayerVO(no, rsID, rsPW, nickname, money, online, win, lose, online, character, ip);
+				return new PlayerVO(no, rsID, rsPW, nickname, money, admin, win, lose, character);
 			} catch (SQLException e) {
 				return null;
 			}

@@ -56,15 +56,16 @@ public class PlayerVO {
 		return super.equals(obj);
 	}
 
-	public PlayerVO() { }
+	
+	public PlayerVO() {
+	}
 
 	public PlayerVO(String id, String pw) {
 		this.id = id;
 		this.password = pw;
 	}
 	
-	public PlayerVO(int no, String id, String password, String nic, long money, boolean admin, int win, int lose,
-			boolean online, int cha, String ip) {
+	public PlayerVO(int no, String id, String password, String nic, long money, boolean admin,int win, int lose, int cha) {
 		this.no = no;
 		this.id = id;
 		this.password = password;
@@ -73,9 +74,7 @@ public class PlayerVO {
 		this.admin = admin;
 		this.win = win;
 		this.lose = lose;
-		this.online = online;
 		this.cha = cha;
-		this.ip = ip;
 	}
 	
 	public PlayerVO(Socket socket, int no, String id, String password, String nic, long money, boolean admin, int win,
