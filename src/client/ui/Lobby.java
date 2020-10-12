@@ -167,15 +167,15 @@ public class Lobby {
 		ClientPacketController.userCha.setOpaque(false);
 		
 		//인포 닉네임 출력
-		JLabel infolbl2 = new JLabel();
-		infolbl2.setText(PlayerVO.myVO.getNic());
-		infolbl2.setBounds(130, 30, 120, 30);
-		infolbl2.setBackground(new Color(63, 28, 6));
-		infolbl2.setForeground(new Color(219, 182, 155));
-		infolbl2.setHorizontalAlignment(JLabel.CENTER);
-		infolbl2.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 22));
-		infolbl2.setOpaque(true);
-		infoPan.add(infolbl2);
+		JLabel infoNicLbl = new JLabel();
+		infoNicLbl.setText(PlayerVO.myVO.getNic());
+		infoNicLbl.setBounds(130, 30, 120, 30);
+		infoNicLbl.setBackground(new Color(63, 28, 6));
+		infoNicLbl.setForeground(new Color(219, 182, 155));
+		infoNicLbl.setHorizontalAlignment(JLabel.CENTER);
+		infoNicLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 22));
+		infoNicLbl.setOpaque(true);
+		infoPan.add(infoNicLbl);
 	
 		//인포 머니 출력
 		JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("../../img/infoMoney.png")));
@@ -183,8 +183,9 @@ public class Lobby {
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
 		infoMoneyLbl.setForeground(new Color(163, 95, 56));
 		infoMoneyLbl.setText("머니 : " +MoneyFormat.format(PlayerVO.myVO.getMoney()));
+		infoMoneyLbl.setHorizontalAlignment(JLabel.LEFT);
 		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
-		infoMoneyLbl.setBounds(120, 70, 230,30);
+		infoMoneyLbl.setBounds(120, 70, 250,30);
 		infoPan.add(infoMoneyLbl);
 		
 		//인포 전적 출력
@@ -193,6 +194,7 @@ public class Lobby {
 		infoRatingLbl.setBackground(new Color(63, 28, 6));
 		infoRatingLbl.setForeground(new Color(163, 95, 56));
 		infoRatingLbl.setText("전적 : " + PlayerVO.myVO.getWin()+"승 "+ PlayerVO.myVO.getLose() + "패");
+		infoRatingLbl.setHorizontalAlignment(JLabel.LEFT);
 		infoRatingLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
 		infoRatingLbl.setBounds(120, 110, 230,30);
 		infoPan.add(infoRatingLbl);

@@ -190,7 +190,7 @@ public class ServerPacketController extends ServerMethod {
 			
 		case Protocol.PASSWORD:
 			String password = ro.getRoom(packet.getRoom().getRoomNo()).getPassword();
-			if(password.equals(packet.getMotion())) {
+			if(password.equals(packet.getRoom().getPassword())) {
 				packet.setProtocol(Protocol.ENTER_ROOM);
 				packetAnalysiser(packet);
 			} else {

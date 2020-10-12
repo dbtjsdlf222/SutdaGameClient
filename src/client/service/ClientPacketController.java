@@ -136,6 +136,10 @@ public class ClientPacketController {
 		case Protocol.GET_INVITE:
 			Invited invited = new Invited(packet.getPlayerVO(), packet.getRoom());
 			break;
+
+		case Protocol.PASSWORD:
+			ChattingOperator.chatArea.setText("<SYSTEM> 비밀번호를 다르게 입력하셨습니다.");
+			break;
 			
 		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();

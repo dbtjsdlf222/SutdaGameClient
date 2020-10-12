@@ -198,11 +198,13 @@ public class MakeRoom {
          @Override
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()==okBtn) {
-            	if(titleField.getText()!=null) {
+            	if(!titleField.getText().equals("")) {
             		Room room = new Room();
             		room.setTitle(titleField.getText());
             		
-            		if(pwField.getText()!=null) {
+            		System.out.println("pw : " + pwField.getText());
+
+            		if(!pwField.getText().equals("")) {
             			room.setPassword(pwField.getText());
             			room.setPrivateRoom(true);
             		}
@@ -220,12 +222,12 @@ public class MakeRoom {
                 		room.setStartMoney(1000);
                 	}
             		
-            		ClientPacketSender.instance.makeRoom(room);
             		makeJF.dispose();
             		lobbyJF.dispose();
+            		ClientPacketSender.instance.makeRoom(room);
             		
             	}else {
-            		ChattingOperator.chatArea.append("<SYSTEM> 방제를 입력해주세요.");
+            		ChattingOperator.chatArea.append("<SYSTEM> 방제를 입력해주세요.\n");
             		makeJF.dispose();
             	}//if(titleField.getText()!=null)
             }//if(e.getsorce())

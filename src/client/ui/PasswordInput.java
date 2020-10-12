@@ -62,12 +62,13 @@ public class PasswordInput {
 	  		@Override
 	  		public void actionPerformed(ActionEvent e) {
 	  			if(e.getSource()==okBtn) {
+	  				getInJF.dispose();
+	  				Lobby.getInstance().getLobbyJF().dispose();
+	  				
 	  				Room room = new Room();
 	  				room.setPassword(pwField.getText());
 	  				room.setRoomNo(no);
 	  				ClientPacketSender.instance.password(room);
-	  				getInJF.dispose();
-	  				Lobby.getInstance().getLobbyJF().dispose();
 	  			}
 	  		}
 	  	});
