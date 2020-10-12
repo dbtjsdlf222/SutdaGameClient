@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 public class MoneyFormat {
 
 	public static String format(long money) {
-		System.out.println("formar " + money);
 		DecimalFormat d = new DecimalFormat("#,####");
 
 		String[] unit = new String[] { "만", "억", "조", "경" };
@@ -30,7 +29,6 @@ public class MoneyFormat {
 	}
 
 	public static Long reformat(String money) {
-		System.out.println("reformat "+money);
 		String[] unit = new String[]{"만","억","조","경"};
 		String[] sArr = money.split("");
 		int maxUnit=0;
@@ -63,9 +61,4 @@ public class MoneyFormat {
 		}
 		return total;
 	} // reformat();
-
-	public static void main(String[] args) {
-		System.out.println((long)Math.pow(10, 12));
-	}
-
 } // MoneyFormat

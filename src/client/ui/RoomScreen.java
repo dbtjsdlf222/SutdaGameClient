@@ -776,11 +776,10 @@ public class RoomScreen extends JFrame {
 			nicText[i].setHorizontalAlignment(JLabel.CENTER);
 			nicText[i].setFont(new Font("휴먼옛체", Font.PLAIN, 15));
 
-//			moneyText[i] = new JLabel(fm.format(setVO.getMoney()));
 			moneyText[i] = new JLabel(MoneyFormat.format(setVO.getMoney()) + "");
 			moneyText[i].setForeground(new Color(255, 252, 128));
 			moneyText[i].setHorizontalAlignment(JLabel.CENTER);
-			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 10));
+			moneyText[i].setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 9));
 
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {

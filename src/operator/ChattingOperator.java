@@ -56,12 +56,15 @@ public class ChattingOperator {
 		
 		case "/초대":
 		case "/c":
-			Packet packet = new Packet();
-			packet.setMotion(nic);
-			packet.setProtocol(Protocol.DO_INVITE);
+			Packet packet = new Packet(Protocol.DO_INVITE, nic);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), packet);
 			break;
-		
+			
+		case "/b":
+		case "/추방":
+			Packet kickPacket = new Packet(Protocol.KICK, nic);
+			Packing.sender(PlayerVO.myVO.getPwSocket(), kickPacket);
+			break;
 		case "/help":
 			
 			ChattingOperator.chatArea.append("<SYSTEM>\n귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n초대 : /c 또는 /초대 [상대방 닉네임]\n");

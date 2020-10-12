@@ -52,7 +52,9 @@ public class Protocol {
    public static final String KICK= "38";                  		//추방
    public static final String PASSWORD= "39";                  	//비밀번호 체크
    public static final String GET_INVITE= "40";               	//초대받기
-   public static final String SERVER_MESSAGE= "41";                //경고문 출력
+   public static final String SERVER_MESSAGE= "41";             //경고문 출력
+   public static final String KICKROOM= "42";                	//추방당하면 로비로 이동
+   
 
    public static final String Half = "Half";
    public static final String Quater = "Quater";
@@ -107,6 +109,7 @@ public class Protocol {
          case "38": str = "KICK"; break;
          case "40": str = "GET_INVITE"; break;
          case "41": str = "SERVER_MESSAGE"; break;
+         case "42": str = "KICKROOM"; break;
          case "Half": str = "Half"; break;
          case "Quater": str = "Quater"; break;
          case "Check": str = "Check"; break;

@@ -155,7 +155,16 @@ public class ClientPacketController {
 //			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			break;
+		
+		case Protocol.KICK:
+//			ClientPacketSender.instance.kickRoom();
+			RoomScreen.getInstance().dispose();
+			break;
 
+		case Protocol.KICKROOM:
+			RoomScreen.getInstance().dispose();
+			break;
+			
 		case Protocol.EXIT_OTHER_ROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
 			break;
