@@ -24,6 +24,7 @@ import server.Room;
 import vo.PlayerVO;
 
 public class Invited {
+	private static Invited instance;
 	
 	private Background imgP;
 	private Container con;
@@ -31,16 +32,27 @@ public class Invited {
 	private JFrame inviteJF;
 	private PlayerVO vo;
 	private Room room;
+	private boolean receiving = false;
 	
+	private Invited() {}
 	
-	public Invited(PlayerVO vo, Room room) {
-		this.vo = vo;
-		this.room = room;
-		Invite();
+	public static Invited getInstance() {
+		if(instance == null)
+			instance = new Invited();
+		return instance;
+		
 	}
 	
-	public void Invite() {
+	public void setVOROOM(PlayerVO vo, Room room) {
+		this.vo = vo;
+		this.room = room;
+	}
+	
+	public void runUI() {
+		//초대중으로 변경
+		receiving = true;
 		
+		//JFrame
 		inviteJF = new JFrame("초대창");
 		con = inviteJF.getContentPane();
 		imgP = new Background();
@@ -98,6 +110,7 @@ public class Invited {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==cancelBtn) {
+					receiving = false;
 					inviteJF.dispose();
 				}
 			}
@@ -146,7 +159,7 @@ public class Invited {
 	
 	
 	 public void progressBar_start(){
-	        int i;
+		 int i;
 	        try{
 	            for(i=10;i>=0;i--){
 	                progressBar.setValue(i);
@@ -156,10 +169,12 @@ public class Invited {
 	        }catch(InterruptedException ie){
 	            ie.printStackTrace();
 	        }
-	        
+	        receiving = false;
 	        inviteJF.dispose();
 	    }//progress_start()끝
-	
+
+	public boolean isReceiving() { return receiving; }
+	 
 }
 
 	

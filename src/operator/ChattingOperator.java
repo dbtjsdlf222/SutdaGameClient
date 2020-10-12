@@ -64,7 +64,7 @@ public class ChattingOperator {
 		
 		case "/help":
 			
-			ChattingOperator.chatArea.append("귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n");
+			ChattingOperator.chatArea.append("<SYSTEM>\n귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n초대 : /c 또는 /초대 [상대방 닉네임]\n");
 			
 			break;
 

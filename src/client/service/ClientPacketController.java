@@ -130,11 +130,14 @@ public class ClientPacketController {
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
-			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
+			ChattingOperator.chatArea.setText("<SYSTEM> " + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다.\n");
 			break;
 			
 		case Protocol.GET_INVITE:
-			Invited invited = new Invited(packet.getPlayerVO(), packet.getRoom());
+			Invited.getInstance().setVOROOM(packet.getPlayerVO(), packet.getRoom());
+			if(!Invited.getInstance().isReceiving()) {
+				Invited.getInstance().runUI();
+			}
 			break;
 
 		case Protocol.PASSWORD:
@@ -145,7 +148,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
-			ChattingOperator.chatArea.setText(packet.getPlayerVO().getRoomNo()+"방의 입장하셨습니다.\n");
+			ChattingOperator.chatArea.setText("<SYSTEM> " + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다.\n");
 			break;
 			
 		case Protocol.ENTER_OTHER_ROOM:

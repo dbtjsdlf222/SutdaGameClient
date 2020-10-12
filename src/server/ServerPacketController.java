@@ -192,6 +192,8 @@ public class ServerPacketController extends ServerMethod {
 			String password = ro.getRoom(packet.getRoom().getRoomNo()).getPassword();
 			if(password.equals(packet.getRoom().getPassword())) {
 				packet.setProtocol(Protocol.ENTER_ROOM);
+				thisPlayerVO.setRoomNo(packet.getRoom().getRoomNo());
+				packet.setPlayerVO(thisPlayerVO);
 				packetAnalysiser(packet);
 			} else {
 				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.PASSWORD,"false");
