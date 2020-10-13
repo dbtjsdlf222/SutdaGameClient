@@ -63,7 +63,7 @@ public class JoinFrame {
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 444, 444);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		frame.setIconImage(img);
 		frame.setTitle("섯다 온라인");
 		
@@ -423,32 +423,32 @@ public class JoinFrame {
 					bg.add(cha6Btn);
 
 					JLabel cha0 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha0.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha0.png")));
 					cha0.setBounds(80, 50, 130, 100);
 					sexJF.add(cha0);
 
 					JLabel cha1 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha1.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha1.png")));
 					cha1.setBounds(290, 50, 130, 100);
 					sexJF.add(cha1);
 
 					JLabel cha2 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha2.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha2.png")));
 					cha2.setBounds(80, 230, 130, 100);
 					sexJF.add(cha2);
 
 					JLabel cha3 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha3.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha3.png")));
 					cha3.setBounds(290, 230, 130, 100);
 					sexJF.add(cha3);
 
 					JLabel cha5 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha5.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha5.png")));
 					cha5.setBounds(80, 400, 130, 100);
 					sexJF.add(cha5);
 
 					JLabel cha6 = new JLabel(
-							new ImageIcon(JoinFrame.class.getResource("../../img/character/cha6.png")));
+							new ImageIcon(JoinFrame.class.getResource("/img/character/cha6.png")));
 					cha6.setBounds(290, 400, 130, 100);
 					sexJF.add(cha6);
 

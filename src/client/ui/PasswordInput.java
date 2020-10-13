@@ -124,7 +124,7 @@ public class PasswordInput {
 		getInJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		getInJF.setIconImage(img);
 		
 	}

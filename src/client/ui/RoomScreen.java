@@ -69,7 +69,7 @@ public class RoomScreen extends JFrame {
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_", "-", "-", "-", "-" };
 	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("../../img/master.PNG")));
+	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.PNG")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
@@ -199,7 +199,7 @@ public class RoomScreen extends JFrame {
 		for (int i = 0; i < 6; i++) {
 			try {
 				btn[i] = new JButton(
-						new ImageIcon(RoomScreen.class.getResource("../../img/button/" + arr[i] + ".PNG")));
+						new ImageIcon(RoomScreen.class.getResource("/img/button/" + arr[i] + ".PNG")));
 
 				if (arr[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
@@ -223,7 +223,7 @@ public class RoomScreen extends JFrame {
 	public void buttonReset() {
 		for (int i = 0; i < 6; i++) {
 			btn[i].setIcon(
-					new ImageIcon(RoomScreen.class.getResource("../../img/button/" + betAndBtnInitArr[i] + ".PNG")));
+					new ImageIcon(RoomScreen.class.getResource("/img/button/" + betAndBtnInitArr[i] + ".PNG")));
 			btn[i].setEnabled(false);
 		}
 	} // buttonReset();
@@ -339,8 +339,8 @@ public class RoomScreen extends JFrame {
 			return;
 		}
 
-		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartBasic.PNG"));
-		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("../../img/button/GameStartEnter.PNG"));
+		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartBasic.PNG"));
+		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartEnter.PNG"));
 		gameStartBtn = new JButton(gameStartBasic);
 		gameStartBtn.setBounds(510, 310, 240, 115);
 		gameStartBtn.setBorderPainted(false);
@@ -437,8 +437,8 @@ public class RoomScreen extends JFrame {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("../../img/Send.PNG"));
-		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("../../img/SendEnter.PNG"));
+		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("/img/Send.PNG"));
+		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("/img/SendEnter.PNG"));
 
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(340, 186, 70, 25);
@@ -481,7 +481,7 @@ public class RoomScreen extends JFrame {
 		}); // addActionListener();
 
 		// 나가기 버튼
-		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/smallExit.PNG")));
+		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/smallExit.PNG")));
 		exitBtn.setBounds(1235, 5, 20, 20);
 		exitBtn.setBackground(new Color(0, 0, 0, 0));
 		exitBtn.setFocusable(false);
@@ -530,7 +530,7 @@ public class RoomScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		setIconImage(img);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -606,9 +606,9 @@ public class RoomScreen extends JFrame {
 	public void betIcon(int idx, String bet) {
 		ImageIcon iCon;
 		if (idx == 0)
-			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/" + bet + "Icon_.png"));
+			iCon = new ImageIcon(RoomScreen.class.getResource("/img/icon/" + bet + "Icon_.png"));
 		else
-			iCon = new ImageIcon(RoomScreen.class.getResource("../../img/icon/" + bet + "Icon.png"));
+			iCon = new ImageIcon(RoomScreen.class.getResource("/img/icon/" + bet + "Icon.png"));
 
 //		remove(beticon[idx]); // 실행 의미 없음
 
@@ -654,7 +654,7 @@ public class RoomScreen extends JFrame {
 
 	public ImageIcon cardFormat(float card) {
 		return new ImageIcon(RoomScreen.class.getResource(
-				"../../img/card/" + String.format("%." + ((int) card == card ? "0" : "1") + "f", card) + ".png"));
+				"/img/card/" + String.format("%." + ((int) card == card ? "0" : "1") + "f", card) + ".png"));
 	}
 
 	public void openCard(Map<Integer, PlayerVO> cardMap) {
@@ -674,11 +674,6 @@ public class RoomScreen extends JFrame {
 			try {
 				card1[idx].setIcon(cardFormat(c1));
 				card2[idx].setIcon(cardFormat(c2));
-//				card1[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
-//				String.format("%." +((int) c1 == c1 ? "0" : "1")+"f", c1) +".png")));
-//				
-//				card2[idx].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/"+
-//						String.format("%." +((int) c2 == c2 ? "0" : "1")+"f", c2) +".png")));
 
 			} catch (NullPointerException e) {
 				e.printStackTrace();
@@ -701,9 +696,9 @@ public class RoomScreen extends JFrame {
 			if (liveList[i]) {
 
 				if (card[0] != 0)
-					card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
+					card1[i].setIcon(new ImageIcon(RoomScreen.class.getResource("/img/card/Pae.png")));
 				if (card[1] != 0)
-					card2[i].setIcon(new ImageIcon(RoomScreen.class.getResource("../../img/card/Pae.png")));
+					card2[i].setIcon(new ImageIcon(RoomScreen.class.getResource("/img/card/Pae.png")));
 
 			} // if
 		} // for
@@ -784,10 +779,10 @@ public class RoomScreen extends JFrame {
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(
-						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + "_.PNG")));
+						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + "_.PNG")));
 			} else {
 				profile[i] = new JLabel(new ImageIcon(
-						RoomScreen.class.getResource("../../img/character/cha" + setVO.getCha() + ".PNG")));
+						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + ".PNG")));
 			}
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);

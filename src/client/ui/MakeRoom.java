@@ -138,7 +138,7 @@ public class MakeRoom {
       pField.setText(i+"");
       pField.setEnabled(false);
       
-      JButton upBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/up.png")));
+      JButton upBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/up.png")));
       upBtn.setBounds(180, 0, 30, 30);
       upBtn.setBackground(new Color(0, 0, 0, 0));
       upBtn.setFocusable(false);
@@ -156,7 +156,7 @@ public class MakeRoom {
          }
       });
       
-      JButton downBtn = new JButton(new ImageIcon(Lobby.class.getResource("../../img/down.png")));
+      JButton downBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/down.png")));
       downBtn.setBounds(230, 0, 30, 30);
       downBtn.setBackground(new Color(0, 0, 0, 0));
       downBtn.setFocusable(false);
@@ -284,7 +284,7 @@ public class MakeRoom {
       makeJF.setLayout(null);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();
-      Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+      Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
       makeJF.setIconImage(img);
       
    }

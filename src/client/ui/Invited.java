@@ -154,7 +154,7 @@ public class Invited {
 		inviteJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		inviteJF.setIconImage(img);
 		
 		progressBar_start();
