@@ -56,7 +56,7 @@ public class Login extends JFrame {
 		lbl.setBounds(100, 0, 1100, 30);
 		logJF.add(lbl);
 
-		JButton adminBtn = new JButton(new ImageIcon(Login.class.getResource("../img/admin.jpg")));
+		JButton adminBtn = new JButton(new ImageIcon(Login.class.getResource("/img/admin.jpg")));
 		adminBtn.setBounds(380, 0, 20, 20);
 		logJF.add(adminBtn);
 
@@ -392,9 +392,9 @@ public class Login extends JFrame {
 									men.setBounds(120, 520, 50, 50);
 									women.setBounds(340, 520, 50, 50);
 
-									JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("../img/men.png")));
+									JLabel mLbl = new JLabel(new ImageIcon(Login.class.getResource("/img/men.png")));
 									JLabel wLbl = new JLabel(
-											new ImageIcon(Login.class.getResource("../img/women.png")));
+											new ImageIcon(Login.class.getResource("/img/women.png")));
 									sexJF.add(mLbl);
 									sexJF.add(wLbl);
 									mLbl.setBounds(40, 80, 190, 430);

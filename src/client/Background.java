@@ -11,10 +11,10 @@ public class Background extends JPanel {
 	}
 	
 	public void mainImage() {
-		image = new ImageIcon(Background.class.getResource("../img/background.jpg")).getImage();
+		image = new ImageIcon(Background.class.getResource("/img/background.jpg")).getImage();
 	}
 	public void lobbyImage() {
-		image = new ImageIcon(Background.class.getResource("../img/background.jpg")).getImage();
+		image = new ImageIcon(Background.class.getResource("/img/background.jpg")).getImage();
 	}
 
 	public void paintComponent(Graphics g) {

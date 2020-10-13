@@ -160,7 +160,11 @@ public class Lobby {
 		infoPan.setBorder(new LineBorder(Color.orange, 3));
 		infoPan.setLayout(null);
 		lobbyJF.add(infoPan);
-		ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("/img/character/cha" + PlayerVO.myVO.getCha() + ".png")));
+		try {
+			ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("/img/character/cha" + PlayerVO.myVO.getCha() + ".png")));
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		} 			
 		ClientPacketController.userCha.setBorder(new LineBorder(new Color(235, 209, 192), 3));
 		infoPan.add(ClientPacketController.userCha);
 		ClientPacketController.userCha.setBounds(30, 50, 80, 100);
