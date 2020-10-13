@@ -9,6 +9,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -117,7 +120,7 @@ public class Invited {
 		});
 	    
 	    //포로세스바
-	    progressBar = new JProgressBar(0,10);
+	    progressBar = new JProgressBar(0,1000);
 	    progressBar.setBounds(30, 95, 330, 15);
 		
 
@@ -161,9 +164,10 @@ public class Invited {
 	 public void progressBar_start(){
 		 int i;
 	        try{
-	            for(i=10;i>=0;i--){
+	            for(i=1000;i>=0;i--){
 	                progressBar.setValue(i);
-	                Thread.sleep(1000);//밀리세컨드 단위로
+	                System.out.println(i);
+	                Thread.sleep(10);//밀리세컨드 단위로
 	                //지연시간을 설정.
 	            }
 	        }catch(InterruptedException ie){
