@@ -140,7 +140,7 @@ public class PlayerVO {
 		this.socket = socket;
 		try {
 			brSocket = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+			pwSocket = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"), true);
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}
