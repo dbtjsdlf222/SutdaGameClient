@@ -69,7 +69,7 @@ public class RoomScreen extends JFrame {
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_", "-", "-", "-", "-" };
 	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.PNG")));
+	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
@@ -199,7 +199,7 @@ public class RoomScreen extends JFrame {
 		for (int i = 0; i < 6; i++) {
 			try {
 				btn[i] = new JButton(
-						new ImageIcon(RoomScreen.class.getResource("/img/button/" + arr[i] + ".PNG")));
+						new ImageIcon(RoomScreen.class.getResource("/img/button/" + arr[i] + ".png")));
 
 				if (arr[i].indexOf("_") == -1) { // 버튼 활성화 된것만 리스너
 					btn[i].addActionListener(action);
@@ -208,7 +208,7 @@ public class RoomScreen extends JFrame {
 					btn[i].setEnabled(false);
 				}
 			} catch (Exception e) {
-				System.err.println(arr[i] + ".PNG");
+				System.err.println(arr[i] + ".png");
 			} // try~catch
 			btn[i].setOpaque(false);
 			betButtonPan.add(btn[i]);
@@ -223,7 +223,7 @@ public class RoomScreen extends JFrame {
 	public void buttonReset() {
 		for (int i = 0; i < 6; i++) {
 			btn[i].setIcon(
-					new ImageIcon(RoomScreen.class.getResource("/img/button/" + betAndBtnInitArr[i] + ".PNG")));
+					new ImageIcon(RoomScreen.class.getResource("/img/button/" + betAndBtnInitArr[i] + ".png")));
 			btn[i].setEnabled(false);
 		}
 	} // buttonReset();
@@ -339,8 +339,8 @@ public class RoomScreen extends JFrame {
 			return;
 		}
 
-		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartBasic.PNG"));
-		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartEnter.PNG"));
+		ImageIcon gameStartBasic = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartBasic.png"));
+		ImageIcon gameStartEnter = new ImageIcon(RoomScreen.class.getResource("/img/button/GameStartEnter.png"));
 		gameStartBtn = new JButton(gameStartBasic);
 		gameStartBtn.setBounds(510, 310, 240, 115);
 		gameStartBtn.setBorderPainted(false);
@@ -437,8 +437,8 @@ public class RoomScreen extends JFrame {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("/img/Send.PNG"));
-		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("/img/SendEnter.PNG"));
+		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("/img/Send.png"));
+		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("/img/SendEnter.png"));
 
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(340, 186, 70, 25);
@@ -481,7 +481,7 @@ public class RoomScreen extends JFrame {
 		}); // addActionListener();
 
 		// 나가기 버튼
-		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/smallExit.PNG")));
+		JButton exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/smallExit.png")));
 		exitBtn.setBounds(1235, 5, 20, 20);
 		exitBtn.setBackground(new Color(0, 0, 0, 0));
 		exitBtn.setFocusable(false);
@@ -779,10 +779,10 @@ public class RoomScreen extends JFrame {
 			// 1번과 2번 자리 앉은 사람은 이미지 반전
 			if (i == 1 || i == 2) {
 				profile[i] = new JLabel(new ImageIcon(
-						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + "_.PNG")));
+						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + "_.png")));
 			} else {
 				profile[i] = new JLabel(new ImageIcon(
-						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + ".PNG")));
+						RoomScreen.class.getResource("/img/character/cha" + setVO.getCha() + ".png")));
 			}
 			betText[i] = new JLabel();
 			panlist[i].setLayout(null);

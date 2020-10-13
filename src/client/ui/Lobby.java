@@ -160,7 +160,7 @@ public class Lobby {
 		infoPan.setBorder(new LineBorder(Color.orange, 3));
 		infoPan.setLayout(null);
 		lobbyJF.add(infoPan);
-		ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("/img/character/cha" + PlayerVO.myVO.getCha() + ".PNG")));
+		ClientPacketController.userCha = new JLabel(new ImageIcon(Lobby.class.getResource("/img/character/cha" + PlayerVO.myVO.getCha() + ".png")));
 		ClientPacketController.userCha.setBorder(new LineBorder(new Color(235, 209, 192), 3));
 		infoPan.add(ClientPacketController.userCha);
 		ClientPacketController.userCha.setBounds(30, 50, 80, 100);
@@ -200,7 +200,7 @@ public class Lobby {
 		infoPan.add(infoRatingLbl);
 		
 		// 방만들기 버튼
-		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/newBtn.PNG")));
+		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/newBtn.png")));
 		newBtn.setBounds(10, 200, 370, 50);
 		newBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		infoPan.add(newBtn);
@@ -252,8 +252,8 @@ public class Lobby {
 		chatPan.add(ClientPacketController.scrollPane);
 
 		// 채팅 보내기 버튼
-		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("/img/Send.PNG"));
-		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("/img/SendEnter.PNG"));
+		ImageIcon chatSend = new ImageIcon(RoomScreen.class.getResource("/img/Send.png"));
+		ImageIcon chatSendEnter = new ImageIcon(RoomScreen.class.getResource("/img/SendEnter.png"));
 
 		JButton chatBtn = new JButton(chatSend);
 		chatBtn.setBounds(738, 225, 70, 25);
@@ -338,7 +338,7 @@ public class Lobby {
 		initialize(); // 초기화
 
 		// 나가기 버튼
-		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/exit.PNG")));
+		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/exit.png")));
 		exitBtn.setBounds(1220, 10, 30, 30);
 		exitBtn.setBackground(new Color(0, 0, 0, 0));
 		exitBtn.setFocusable(false);
