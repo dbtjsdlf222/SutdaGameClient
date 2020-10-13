@@ -157,14 +157,10 @@ public class ClientPacketController {
 			break;
 		
 		case Protocol.KICK:
-//			ClientPacketSender.instance.kickRoom();
-			RoomScreen.getInstance().dispose();
+			RoomScreen.getInstance().sendOff();
+			ChattingOperator.chatArea.setText("<SYSTEM>" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다.");
 			break;
 
-		case Protocol.KICKROOM:
-			RoomScreen.getInstance().dispose();
-			break;
-			
 		case Protocol.EXIT_OTHER_ROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
 			break;

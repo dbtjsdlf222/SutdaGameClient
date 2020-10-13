@@ -89,40 +89,36 @@ public class ServerPacketController extends ServerMethod {
 			
 			if(thisPlayerVO.getRoomNo() == 0) {
 				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"로비엔 추방이 불가능 합니다.");
-			} else {
+			}else {
 				//본인 게임 시작 했을 경우
 				if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
 					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"게임중엔 추방이 불가능 합니다.");
 				}else {
-					//상대가 오프라인인 경우
-					if(playerOnlineList.get(packet.getMotion()) == null) {
-						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"없는 닉네임 이거나 접속중이지 않습니다.");
-					} else {
-						//상대가 로비에 없는 경우
-						Integer  b = null;
-						for (Integer a : ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().keySet()) {
-							if(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(a).getNic().equals(packet.getMotion())) {
-								b=a;
-							}
+					//상대가 방에 없는 경우
+					Integer  b = null;
+					for (Integer a : ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().keySet()) {
+						if(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(a).getNic().equals(packet.getMotion())) {
+							b=a;
+							break;
 						}
-						
-						if(b == null) {
-							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 게임방에 없습니다.");
-						} else {
+					}
+					if(b == null) {
+						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 게임방에 없습니다.");
+					}else {
 						//추방
-							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 추방하셨습니다.");
-							
-							Packet packet1 = new Packet();
-//							packet1.setPlayerVO(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b));
-//							packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
-							packet1.setProtocol(Protocol.KICK);
-
-							
-							Packing.sender(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b).getPwSocket(),packet1);
-						}
+						Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 추방하셨습니다.");
+						
+						Packet packet1 = new Packet();
+						packet1.setProtocol(Protocol.KICK);
+						packet1.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
+						
+						Packing.sender(ro.getRoom(thisPlayerVO.getRoomNo()).getPlayerMap().get(b).getPwSocket(),packet1);
 					}
 				}
 			}
+				
+			
+			
 			break;
 			
 		case Protocol.MAKE_ROOM:
@@ -141,8 +137,7 @@ public class ServerPacketController extends ServerMethod {
 //			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
 			break;
-		case Protocol.KICKROOM:
-			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.KICKROOM);
+
 		case Protocol.EXIT_ROOM:
 			Room room = ro.getRoom(thisPlayerVO.getRoomNo());
 			room.exitPlayer(thisPlayerVO);
