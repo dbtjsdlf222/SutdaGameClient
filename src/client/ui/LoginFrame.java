@@ -60,7 +60,7 @@ public class LoginFrame implements LoginResultHandler {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("../../img/titleIcon.jpg"));
+		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		frame.setIconImage(img);
 		frame.setTitle("섯다 온라인");
 		GridBagLayout gridBagLayout = new GridBagLayout();
