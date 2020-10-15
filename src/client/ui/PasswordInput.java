@@ -97,7 +97,7 @@ public class PasswordInput {
 		// Room의 큰 틀
 		JLabel roomlbl = new JLabel("방 입 장");
 		roomlbl.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-		roomlbl.setForeground(new Color(0, 0, 0, 150));
+		roomlbl.setForeground(new Color(255, 255, 255, 150));
 		roomlbl.setBounds(0, 10, 384, 30);
 		roomlbl.setHorizontalAlignment(JLabel.CENTER);
 

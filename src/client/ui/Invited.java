@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,6 +38,7 @@ public class Invited {
 	private PlayerVO vo;
 	private Room room;
 	private boolean receiving = false;
+	private int i=10;
 	
 	private Invited() {}
 	
@@ -120,7 +123,7 @@ public class Invited {
 		});
 	    
 	    //포로세스바
-	    progressBar = new JProgressBar(0,1000);
+	    progressBar = new JProgressBar(0,10);
 	    progressBar.setBounds(30, 95, 330, 15);
 		
 
@@ -159,22 +162,30 @@ public class Invited {
 		
 		progressBar_start();
 	}
+
+	
 	
 	
 	 public void progressBar_start(){
-		 int i;
-	        try{
-	            for(i=1000;i>=0;i--){
-	                progressBar.setValue(i);
-	                System.out.println(i);
-	                Thread.sleep(10);//밀리세컨드 단위로
-	                //지연시간을 설정.
-	            }
-	        }catch(InterruptedException ie){
-	            ie.printStackTrace();
-	        }
-	        receiving = false;
-	        inviteJF.dispose();
+		 Timer t = new Timer();
+	     TimerTask tt = new TimerTask() {
+	    	
+	    	 @Override
+	    	 public void run() {
+	    		 if(i>=0) {
+	    			 progressBar.setValue(i);
+	    			 System.out.println(i);
+	        		i--;
+	    		 } else {
+	    			 receiving = false;
+	    			 inviteJF.dispose();
+	    			 i=10;
+	    			 t.cancel();
+	    		 }
+	    	 }
+	      };
+	        		t.schedule(tt,0,1000);
+	         
 	    }//progress_start()끝
 
 	public boolean isReceiving() { return receiving; }
