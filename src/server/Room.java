@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,6 +42,7 @@ public class Room extends ServerMethod {
 	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
 	private boolean allIn = false;
+	private int i = 10;
 	
 	// 생성자
 	public Room() {
@@ -174,6 +177,30 @@ public class Room extends ServerMethod {
 				arr[5] += "_";
 			}
 		} //if (round == 1) else
+		return arr;
+	} //setButton();
+	/**
+	 * @return 플레이어가 배팅 가능한 버튼 배열 return
+	 */
+	public String[] setButtonInitialization() {
+		String[] arr = new String[10];
+		
+		arr[0] = Protocol.Die+"_";
+		System.out.println(arr[0]);
+		arr[1] = Protocol.Call+"_";
+		System.out.println(arr[1]);
+		arr[2] = Protocol.Ddadang+"_";
+		System.out.println(arr[2]);
+		arr[3] = Protocol.Half+"_";
+		System.out.println(arr[3]);
+		arr[4] = Protocol.Allin+"_";
+
+		arr[5] = "-";
+		arr[6] = "-";
+		arr[7] = "-";
+		arr[8] = "-";
+		arr[9] = "-";
+		
 		return arr;
 	} //setButton();
 
@@ -367,12 +394,37 @@ public class Room extends ServerMethod {
 				break;
 			
 		} //for
+		if(isGameStarted()) {
+			
+		i=100;
 		String[] arr = setButton();
-		
 		//차례 클라이언트에게 button배열 전송
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
 		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
+		
+		Timer t = new Timer();
+		TimerTask tt = new TimerTask() {
+			@Override
+		    public void run() {
+				if(i>0) {
+					i--;
+					System.out.println("시간 : " + i);
+		    	} else {
+		    		String[] arr = setButtonInitialization();
+		    		//차례 클라이언트에게 button배열 전송
+		    		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
+		    		Packet packet = new Packet(Protocol.TURN, turn + "");
+		    		roomSpeaker(packet);
+		    		bet("Die");
+		    		t.cancel();
+		    	}
+		    }
+		};
+		        		t.schedule(tt,0,100);
+		}
+		
+		
 		
 		
 		

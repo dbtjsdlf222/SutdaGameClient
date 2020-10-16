@@ -38,7 +38,7 @@ public class Invited {
 	private PlayerVO vo;
 	private Room room;
 	private boolean receiving = false;
-	private int i=10;
+	private int i=100;
 	
 	private Invited() {}
 	
@@ -123,7 +123,7 @@ public class Invited {
 		});
 	    
 	    //포로세스바
-	    progressBar = new JProgressBar(0,10);
+	    progressBar = new JProgressBar(0,i);
 	    progressBar.setBounds(30, 95, 330, 15);
 		
 
@@ -172,19 +172,19 @@ public class Invited {
 	    	
 	    	 @Override
 	    	 public void run() {
-	    		 if(i>=0) {
+	    		 if(i>0) {
 	    			 progressBar.setValue(i);
 	    			 System.out.println(i);
 	        		i--;
 	    		 } else {
 	    			 receiving = false;
 	    			 inviteJF.dispose();
-	    			 i=10;
+	    			 i=100;
 	    			 t.cancel();
 	    		 }
 	    	 }
 	      };
-	        		t.schedule(tt,0,1000);
+	        		t.schedule(tt,0,100);
 	         
 	    }//progress_start()끝
 

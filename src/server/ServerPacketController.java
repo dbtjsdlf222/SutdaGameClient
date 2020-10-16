@@ -86,10 +86,14 @@ public class ServerPacketController extends ServerMethod {
 			break;
 		
 		case Protocol.KICK:
-			
+			//로비에 있는 경우 
 			if(thisPlayerVO.getRoomNo() == 0) {
 				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"로비엔 추방이 불가능 합니다.");
 			}else {
+				//방장이 아닌경우
+				if(!ro.getRoom(thisPlayerVO.getRoomNo()).getMaster().equals(thisPlayerVO.getNic())) {
+					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"방장이 아닌 플레이어는 사용할 수 없습니다.");
+				}
 				//본인 게임 시작 했을 경우
 				if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
 					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"게임중엔 추방이 불가능 합니다.");
@@ -249,6 +253,10 @@ public class ServerPacketController extends ServerMethod {
 			if(thisPlayerVO.getRoomNo() == 0) {
 				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"로비엔 초대가 불가능 합니다.");
 			} else {
+				//방장이 아닌경우
+				if(!ro.getRoom(thisPlayerVO.getRoomNo()).getMaster().equals(thisPlayerVO.getNic())) {
+					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"방장이 아닌 플레이어는 사용할 수 없습니다.");
+				}
 				//본인 게임 시작 했을 경우
 				if(ro.getRoom(thisPlayerVO.getRoomNo()).isGameStarted()) {
 					Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,"게임중엔 초대가 불가능 합니다.");
