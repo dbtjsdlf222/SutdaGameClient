@@ -11,8 +11,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.RepaintManager;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import client.ui.RoomScreen;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;
@@ -388,8 +391,11 @@ public class Room extends ServerMethod {
 				break;
 			
 		} //for
+		//전에 타임을 끊고 다시 시작
+		tt.cancel();
+		i=10;	//시간제한 초기화
+		
 		if(gameStarted) {
-			i=100;	//시간제한 초기화
 			String[] arr = setButton();
 			//차례 클라이언트에게 button배열 전송
 			Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
@@ -414,7 +420,7 @@ public class Room extends ServerMethod {
 			    	}
 			    }
 			};
-    		t.schedule(tt,0,1000);
+    		t.schedule(tt,1,1000);
 		}//isGameStarted();
 		
 		
@@ -582,6 +588,13 @@ public class Room extends ServerMethod {
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx, String cardName) {
 		try {
+			tt.cancel();
+			RoomScreen.getInstance().repaint();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
 			//올인시 자신이 건돈 만큼만 사람들한테서 받음
 			if(playerMap.get(winerIdx).isAllIn()) {
 				int winerNo = playerMap.get(winerIdx).getNo();
@@ -623,9 +636,10 @@ public class Room extends ServerMethod {
 			if(playerMap.get(i) == null)
 				continue;
 				
-			if(winerIdx==i) 
+			if(winerIdx==i) {
 				playerMap.get(i).gameWin();
-			 else 
+				setMasterIndex(winerIdx);
+			}else 
 				playerMap.get(i).gameLose();
 			
 			serverDAO.playerSave(playerMap.get(i));
@@ -635,7 +649,6 @@ public class Room extends ServerMethod {
 			PlayerVO vo = serverDAO.selectOnePlayerWithNo(s.getValue().getNo());
 			Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.RELOAD_MY_VO,vo)); 
 		} //for
-		
 		lobbyReloadBroadcast();
 	} // gameOver();
 

@@ -133,7 +133,9 @@ public class RoomScreen extends JFrame {
 	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
 	public void changeMaster(int idx) {
+		System.out.println("idx : " + idx);
 		roomMaster = idx;
+		System.out.println("내가 앉은번호 : " + mySit);
 		idx = (idx - mySit + 5) % 5;
 
 		if (!gameStart && roomMaster == mySit)
@@ -245,7 +247,7 @@ public class RoomScreen extends JFrame {
 			System.out.println("널포이트");
 		}
 		showMoneyPan = new JPanel(); 
-		showMoneyPan.setBounds(440, 180, 400, 100);
+		showMoneyPan.setBounds(440, 120, 400, 100);
 		showMoneyPan.setBackground(new Color(0,0, 0, 122));
 		showMoneyPan.setLayout(null);
 		add(showMoneyPan);
@@ -302,17 +304,20 @@ public class RoomScreen extends JFrame {
 //		mat.add(tbl);
 		mat.add(totalMoney);
 	}
-
+	
+	/*
+	 * 중앙 배팅 금액 패널
+	 */
 	public void mat() {
-		mat.setBounds(465, 50, 350, 70);
+		mat.setBounds(465, 20, 350, 70);
 		mat.setBackground(new Color(0, 0, 0, 122));
 		totalMoney.setBounds(10, 10, 380, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
 		totalMoney.setForeground(Color.yellow);
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
 
-		add(mat); // 배팅 금액 패널
-	}
+		add(mat);
+	} //mat();
 
 	private boolean initialized = false;
 
@@ -389,7 +394,7 @@ public class RoomScreen extends JFrame {
 	public void mainScreen() {
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
-			panlist[i].setBackground(new Color(0, 0, 0, 122));
+			panlist[i].setBackground(new Color(0, 0, 0, 125));
 			if (i == 0) {
 				panlist[i].setBounds(460, 440, 350, 180);
 			} else if (i == 1) {
