@@ -1,6 +1,6 @@
 package operator;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import server.Room;
@@ -9,9 +9,9 @@ import vo.PlayerVO;
 public class RoomOperator {
 	
 	private static RoomOperator ro = new RoomOperator();
-	private Map<Integer, Room> roomMap = new HashMap<Integer, Room>();
+	private Hashtable<Integer, Room> roomMap = new Hashtable<Integer, Room>();
 	
-	public static RoomOperator getInstance() {
+	public  static RoomOperator getInstance() {
 		return ro;
 	}
 	

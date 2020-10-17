@@ -2,17 +2,14 @@ package server;
 
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.EntryMessage;
 
-import dao.PlayerDAO;
 import dao.ServerDAO;
 import operator.RoomOperator;
 import util.Packing;
@@ -23,11 +20,11 @@ import vo.Protocol;
 public class ServerMethod {
 	protected static final Logger logger = LogManager.getLogger();
 	protected PlayerVO thisPlayerVO = new PlayerVO();
-	protected static Map<String, PlayerVO> lobbyPlayerList = new HashMap<String,PlayerVO>();
+	protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected ServerDAO serverDAO = new ServerDAO();
 	protected Socket socket;
-	protected static HashMap<String, PrintWriter> playerOnlineList = new HashMap<String, PrintWriter>();
+	protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
 	
 	public void exitPlayer() {
 

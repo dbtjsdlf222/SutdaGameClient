@@ -1,5 +1,6 @@
 package server;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import java.util.LinkedList;
@@ -31,7 +32,7 @@ public class Room extends ServerMethod {
 	private String password = "";
 	private int maxPlayer;
 	private boolean  privateRoom = false;	//비밀번호방
-	private Map<Integer, PlayerVO> playerMap = new ConcurrentHashMap<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
+	private Map<Integer, PlayerVO> playerMap = new Hashtable<Integer, PlayerVO>(); // 방안에 있는 사람 리스트
 	private float[] cardArr = new float[20]; // 카드각
 	private Queue<Float> shuffledCard = new LinkedList<>(); // 위에서 부터 카드 한장씩 배분하기위한 queue
 	private Integer masterIndex; // 방장 or 선판 이긴거
