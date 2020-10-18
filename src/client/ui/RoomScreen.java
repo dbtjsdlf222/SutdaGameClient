@@ -42,6 +42,7 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
+import server.Room;
 import util.Jokbo;
 import util.MoneyFormat;
 import util.Packing;
@@ -79,6 +80,7 @@ public class RoomScreen extends JFrame {
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
 	private JPanel[] panMoney;
+	private JLabel infoLal;
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
@@ -247,7 +249,7 @@ public class RoomScreen extends JFrame {
 			System.out.println("널포이트");
 		}
 		showMoneyPan = new JPanel(); 
-		showMoneyPan.setBounds(440, 120, 400, 100);
+		showMoneyPan.setBounds(440, 180, 400, 100);
 		showMoneyPan.setBackground(new Color(0,0, 0, 122));
 		showMoneyPan.setLayout(null);
 		add(showMoneyPan);
@@ -309,15 +311,25 @@ public class RoomScreen extends JFrame {
 	 * 중앙 배팅 금액 패널
 	 */
 	public void mat() {
-		mat.setBounds(465, 20, 350, 70);
+		mat.setBounds(465, 80, 350, 70);
 		mat.setBackground(new Color(0, 0, 0, 122));
-		totalMoney.setBounds(10, 10, 380, 50);
+		totalMoney.setBounds(0, 0, 380, 50);
 		totalMoney.setFont(new Font("Rosewood Std", Font.PLAIN, 50));
 		totalMoney.setForeground(Color.yellow);
 		totalMoney.setHorizontalAlignment(JLabel.CENTER);
 
 		add(mat);
 	} //mat();
+	
+	public void roomInfo() {
+		JPanel infoPan = new JPanel();
+		infoPan.setBounds(410, 0, 450, 50);;
+		infoPan.setBackground(new Color(0, 0, 0, 122));
+		infoLal = new JLabel();
+//		infoLal.setText("["+);
+		infoPan.add(infoLal);
+		add(infoPan);
+	}
 
 	private boolean initialized = false;
 
@@ -522,7 +534,8 @@ public class RoomScreen extends JFrame {
 
 		setTitle("섯다 온라인");
 		mat(); // 돈판 출력
-
+		roomInfo(); // 룸정보 출력
+		
 		back.mainImage();
 		content = getContentPane();
 		content.add(back, BorderLayout.CENTER);
@@ -874,4 +887,12 @@ public class RoomScreen extends JFrame {
 		index = (index - mySit + 5) % 5;
 		setSit(index, vo);
 	} // enterPlayerList();
+
+	
+	
+	public JLabel getInfoLal() { return infoLal; }
+	
 }
+
+
+
