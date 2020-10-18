@@ -729,6 +729,7 @@ public class RoomScreen extends JFrame {
 	 * @param winerTotalMoney 승자가 소유한 돈 (생략시 승자 탈주 처리)
 	 */
 	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
+		repaint();
 		gameStart = false;
 		roomMaster = winerIdx;
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);

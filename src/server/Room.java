@@ -393,7 +393,11 @@ public class Room extends ServerMethod {
 			
 		} //for
 		//전에 타임을 끊고 다시 시작
-		tt.cancel();
+		try {
+			tt.cancel();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		i=10;	//시간제한 초기화
 		
 		if(gameStarted) {
@@ -590,7 +594,6 @@ public class Room extends ServerMethod {
 	public void gameOver(int winerIdx, String cardName) {
 		try {
 			tt.cancel();
-			RoomScreen.getInstance().repaint();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
