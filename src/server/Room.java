@@ -394,8 +394,8 @@ public class Room extends ServerMethod {
 		} //for
 		//전에 타임을 끊고 다시 시작
 		try {
-			tt.cancel();
-		} catch (Exception e) {
+//			tt.cancel();
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 		i=10;	//시간제한 초기화
@@ -412,12 +412,13 @@ public class Room extends ServerMethod {
 				@Override
 			    public void run() {
 					if(i>0) {
+						RoomScreen.getInstance().getProgressBar().setValue(i);
 						i--;
 						System.out.println("시간 : " + i);
 			    	} else {
 			    		String[] arr = setButtonInitialization();
-			    		//차례 클라이언트에게 button배열 전송
 			    		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
+			    		//차례 클라이언트에게 button배열 전송
 //			    		Packet packet = new Packet(Protocol.TURN, turn + "");
 //			    		roomSpeaker(packet);
 			    		bet(Protocol.Die);

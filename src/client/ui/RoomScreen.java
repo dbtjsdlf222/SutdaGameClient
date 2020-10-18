@@ -26,6 +26,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -87,7 +88,9 @@ public class RoomScreen extends JFrame {
 	private boolean gameStart = false;
 	private boolean roomOut = false;
 	private int roomMaster = 0;
-
+	private JProgressBar progressBar; 
+	private int i=10;
+	
 	public static RoomScreen getInstance() {
 		if (instance == null)
 			instance = new RoomScreen();
@@ -334,6 +337,9 @@ public class RoomScreen extends JFrame {
 	private boolean initialized = false;
 
 	public void turn(int index) {
+		progressBar = new JProgressBar(0,i);
+		progressBar.setBounds(0, 0, 350, 10);;
+		panlist[index].add(progressBar);
 		index = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
 			if (panlist[i] == null)
@@ -822,7 +828,7 @@ public class RoomScreen extends JFrame {
 			card1[i].setBounds(10 + t, 10, 110, 160);
 			card2[i].setBounds(125 + t, 10, 110, 160);
 
-			profile[i].setBounds(w, 10, 90, 100);
+			profile[i].setBounds(w, 20, 90, 100);
 			betText[i].setBounds(w, 10, 90, 20);
 			nicText[i].setBounds(w, 125, 90, 20);
 			moneyText[i].setBounds(w, 150, 90, 20);
@@ -891,6 +897,8 @@ public class RoomScreen extends JFrame {
 	
 	
 	public JLabel getInfoLal() { return infoLal; }
+
+	public JProgressBar getProgressBar() { return progressBar; }
 	
 }
 

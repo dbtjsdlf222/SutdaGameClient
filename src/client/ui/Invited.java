@@ -38,7 +38,8 @@ public class Invited {
 	private PlayerVO vo;
 	private Room room;
 	private boolean receiving = false;
-	private int i=100;
+	private int i=10;
+	private TimerTask tt;
 	
 	private Invited() {}
 	
@@ -93,7 +94,7 @@ public class Invited {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==okBtn) {
-
+					tt.cancel();
 					inviteJF.dispose();
 					Lobby.getInstance().getLobbyJF().dispose();
 					ClientPacketSender.instance.enterRoom(room.getRoomNo());
@@ -168,7 +169,7 @@ public class Invited {
 	
 	 public void progressBar_start(){
 		 Timer t = new Timer();
-	     TimerTask tt = new TimerTask() {
+	     tt = new TimerTask() {
 	    	
 	    	 @Override
 	    	 public void run() {
@@ -179,12 +180,12 @@ public class Invited {
 	    		 } else {
 	    			 receiving = false;
 	    			 inviteJF.dispose();
-	    			 i=100;
+	    			 i=10;
 	    			 t.cancel();
 	    		 }
 	    	 }
 	      };
-	        		t.schedule(tt,0,100);
+	        		t.schedule(tt,0,1000);
 	         
 	    }//progress_start()끝
 

@@ -126,7 +126,6 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.MAKE_ROOM:
-			RoomScreen.getInstance().getInfoLal().setText(text);
 			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
