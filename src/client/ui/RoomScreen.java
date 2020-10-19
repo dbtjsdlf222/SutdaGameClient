@@ -92,7 +92,8 @@ public class RoomScreen extends JFrame {
 	private int roomMaster = 0;
 	private int count = 10;
 	private JProgressBar progressBar = new JProgressBar(0,10);
-	private Timer t = new Timer();
+	private static Timer t = new Timer();
+	private TimerTask tt;
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -141,9 +142,7 @@ public class RoomScreen extends JFrame {
 	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
 	public void changeMaster(int idx) {
-		System.out.println("idx : " + idx);
 		roomMaster = idx;
-		System.out.println("내가 앉은번호 : " + mySit);
 		idx = (idx - mySit + 5) % 5;
 
 		if (!gameStart && roomMaster == mySit)
@@ -180,7 +179,6 @@ public class RoomScreen extends JFrame {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				if (e.getSource() == btn[0]) {
 					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[0]);
 				} else if (e.getSource() == btn[1]) {
@@ -340,18 +338,19 @@ public class RoomScreen extends JFrame {
 	private boolean initialized = false;
 
 	public void turn(int index) {
-		index = (index - mySit + 5) % 5;
+		int turnIndex = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
 			if (panlist[i] == null)
 				continue;
 			panlist[i].setBorder(null);
 		}
-		panlist[index].setBorder(new LineBorder(Color.orange, 1));
+		panlist[turnIndex].setBorder(new LineBorder(Color.orange, 1));
 		progressBar.setBounds(2, 2, 347, 8);
-		panlist[index].add(progressBar);
-		
+		panlist[turnIndex].add(progressBar);
+
 		count=10;	//시간제한 초기화
-		TimerTask tt = new TimerTask() {
+		
+		tt = new TimerTask() {
 			@Override
 			public void run() {
 				if(count>0) {
@@ -359,15 +358,20 @@ public class RoomScreen extends JFrame {
 					System.out.println("conut : " + count);
 					count--;
 				} else {
-					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.COUNTDIE);
-					t.cancel();
+					System.out.println(turnIndex + " : " + mySit);
+					if(turnIndex == mySit) 
+						Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.COUNTDIE);
+					System.out.println("실행여기요");
 				}
 			}
 		};
+			if() {
+				tt.cancel();
+			}
 			t.schedule(tt,0,1000);
 			
 			try {
-				beticon[index].setBounds(0, 0, 0, 0);
+				beticon[turnIndex].setBounds(0, 0, 0, 0);
 			} catch (NullPointerException e) {
 			}
 			revalidate();

@@ -234,10 +234,8 @@ public class Room extends ServerMethod {
 		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 
 		logger.info(message);
-		System.out.println("룸스피커");
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
-			System.out.println("포문룸스피커");
 		}
 	} // roomSpeaker();
 	
@@ -408,6 +406,8 @@ public class Room extends ServerMethod {
 
 	public void bet(String proBet) {
 		long betMoney = 0;
+		int i = 0;
+		int winerIdx = 0;
 
 		// 1라운드 첫 배팅한 사람은 다이 하프만 가능
 		if(round1First) {
@@ -503,44 +503,44 @@ public class Room extends ServerMethod {
 
 		case Protocol.Die:
 			playerMap.get(turn).setLive(false);
-			int i = 0;
-			int winerIdx = 0;
-
-			for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
-				if (s.getValue().isLive()) {
-					i++;
-					winerIdx = s.getKey();
-				} // if
-			} // for
-
-			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
-			if (i <= 1) {
-				roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
-				gameOver(winerIdx,null);
-				return;
-			}
-			// 방장이 죽으면 다음 턴 사람한테 넘어간다
-			if (turn == masterIndex) {
-				int temp = 0;
-				for (int j = 1; j < 5; j++) {
-					temp = turn + j;
-					if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
-						continue;
-					
-					Packet packet = new Packet(Protocol.CHANGE_MASTER, temp + "");
-					roomSpeaker(packet);
-					break;
-				} // for
-			} // if (turn == masterIndex)
+		
 			break; // case die;
 		} // switch
+
+		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
+			if (s.getValue().isLive()) {
+				i++;
+				winerIdx = s.getKey();
+			} // if
+		} // for
+		// 방장이 죽으면 다음 턴 사람한테 넘어간다
+				if (turn == masterIndex) {
+					int temp = 0;
+					for (int j = 1; j < 5; j++) {
+						temp = turn + j;
+						if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
+							continue;
+						
+						Packet packet = new Packet(Protocol.CHANGE_MASTER, temp + "");
+						roomSpeaker(packet);
+						break;
+					} // for
+				} // if (turn == masterIndex)
+		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
+		
+		
 		beforeBetMoney = betMoney;
 		
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
 		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+		if (i <= 1) {
+			roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+			gameOver(winerIdx,null);
+			return;
+		}else
+			turnProgress();
 		
-		turnProgress();
 	} // bet();
 	
 	/**

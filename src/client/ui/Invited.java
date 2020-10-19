@@ -180,7 +180,7 @@ public class Invited {
 	    			 receiving = false;
 	    			 inviteJF.dispose();
 	    			 i=10;
-	    			 t.cancel();
+	    			 tt.cancel();
 	    		 }
 	    	 }
 	      };
