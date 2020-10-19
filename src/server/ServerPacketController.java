@@ -221,7 +221,7 @@ public class ServerPacketController extends ServerMethod {
 			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).bet(packet.getMotion());
 			break;
 			
-		case Protocol.COUNTDIE:
+		case Protocol.TIME_OUT:
 			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).countDie();
 			break;
 

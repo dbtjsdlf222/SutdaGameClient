@@ -54,7 +54,7 @@ public class Protocol {
    public static final String GET_INVITE= "40";               	//초대받기
    public static final String SERVER_MESSAGE= "41";             //경고문 출력
    public static final String KICKROOM= "42";                	//추방당하면 로비로 이동
-   public static final String COUNTDIE= "43";                	//시간초과시 다이
+   public static final String TIME_OUT= "43";                	//시간초과시 다이
    
 
    public static final String Half = "Half";

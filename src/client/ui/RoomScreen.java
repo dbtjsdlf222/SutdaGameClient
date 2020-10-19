@@ -92,8 +92,8 @@ public class RoomScreen extends JFrame {
 	private int roomMaster = 0;
 	private int count = 10;
 	private JProgressBar progressBar = new JProgressBar(0,10);
-	private static Timer t = new Timer();
-	private TimerTask tt;
+	private static Timer timer = new Timer();
+	private TimerTask task;
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -179,6 +179,7 @@ public class RoomScreen extends JFrame {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				task.cancel();
 				if (e.getSource() == btn[0]) {
 					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[0]);
 				} else if (e.getSource() == btn[1]) {
@@ -193,7 +194,7 @@ public class RoomScreen extends JFrame {
 					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.BET, arr[5]);
 				}
 				buttonReset();
-
+				
 			} // actionPerformed();
 		};
 
@@ -350,25 +351,22 @@ public class RoomScreen extends JFrame {
 
 		count=10;	//시간제한 초기화
 		
-		tt = new TimerTask() {
+		task = new TimerTask() {
 			@Override
 			public void run() {
 				if(count>0) {
-					progressBar.setValue(count);
+					progressBar.setValue(count);	//감소시 바 감소
 					System.out.println("conut : " + count);
 					count--;
 				} else {
 					System.out.println(turnIndex + " : " + mySit);
-					if(turnIndex == mySit) 
-						Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.COUNTDIE);
-					System.out.println("실행여기요");
+					if(turnIndex == mySit) {
+						Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.TIME_OUT);
+					}
 				}
 			}
 		};
-			if() {
-				tt.cancel();
-			}
-			t.schedule(tt,0,1000);
+			timer.schedule(task,0,1000);
 			
 			try {
 				beticon[turnIndex].setBounds(0, 0, 0, 0);
@@ -590,7 +588,7 @@ public class RoomScreen extends JFrame {
 				.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 691, Short.MAX_VALUE));
 		getContentPane().setLayout(groupLayout);
 
-//		for(int i = 0; i < timers.length; i++) {
+//		for(int i = 0; i < 2; i++) {
 //			final int j = i;
 //			timers[i] = new Timer(1000, e -> {
 //				remove(beticon[j]);
@@ -634,6 +632,7 @@ public class RoomScreen extends JFrame {
 	} // startPay();
 
 	public void betAlert(int idx, String bet, String money, String total) {
+		task.cancel();	//다른 사람이 배팅을 했을경우 스케줄러 중지
 		idx = (idx - mySit + 5) % 5;
 
 		moneyText[idx].setText(MoneyFormat.format(money));

@@ -2,21 +2,14 @@ package server;
 
 import java.util.Hashtable;
 import java.util.Iterator;
-
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.swing.RepaintManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import client.ui.RoomScreen;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;
@@ -46,7 +39,6 @@ public class Room extends ServerMethod {
 	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
 	private boolean allIn = false;
-	private TimerTask tt;
 	// 생성자
 	public Room() {
 		roomNo = increaseRoomNo++;
