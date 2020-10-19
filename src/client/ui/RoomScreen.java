@@ -359,8 +359,7 @@ public class RoomScreen extends JFrame {
 					System.out.println("conut : " + count);
 					count--;
 				} else {
-					System.out.println(turnIndex + " : " + mySit);
-					if(turnIndex == mySit) {
+					if(index == mySit) {
 						Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.TIME_OUT);
 					}
 				}
