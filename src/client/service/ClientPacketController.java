@@ -65,7 +65,8 @@ public class ClientPacketController {
 
 		switch (packet.getProtocol()) {
 		case Protocol.SERVER_MESSAGE:
-			ChattingOperator.chatArea.append("<SYSTEM> " + packet.getMotion() + "\n");
+			System.out.println(packet.getMotion());
+//			ChattingOperator.chatArea.append("<SYSTEM> " + packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
 			

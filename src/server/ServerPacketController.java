@@ -221,6 +221,10 @@ public class ServerPacketController extends ServerMethod {
 			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).bet(packet.getMotion());
 			break;
 			
+		case Protocol.COUNTDIE:
+			RoomOperator.getInstance().getRoom(thisPlayerVO.getRoomNo()).countDie();
+			break;
+
 		case Protocol.JOIN:
 			try {
 				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.JOIN, Integer.toString(serverDAO.playerJoin(packet.getPlayerVO())));

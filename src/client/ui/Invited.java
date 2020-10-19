@@ -175,7 +175,6 @@ public class Invited {
 	    	 public void run() {
 	    		 if(i>0) {
 	    			 progressBar.setValue(i);
-	    			 System.out.println(i);
 	        		i--;
 	    		 } else {
 	    			 receiving = false;

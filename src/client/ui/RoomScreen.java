@@ -17,6 +17,8 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -88,8 +90,9 @@ public class RoomScreen extends JFrame {
 	private boolean gameStart = false;
 	private boolean roomOut = false;
 	private int roomMaster = 0;
-	private JProgressBar progressBar; 
-	private int i=10;
+	private int count = 10;
+	private JProgressBar progressBar = new JProgressBar(0,10);
+	private Timer t = new Timer();
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -337,9 +340,6 @@ public class RoomScreen extends JFrame {
 	private boolean initialized = false;
 
 	public void turn(int index) {
-		progressBar = new JProgressBar(0,i);
-		progressBar.setBounds(0, 0, 350, 10);;
-		panlist[index].add(progressBar);
 		index = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
 			if (panlist[i] == null)
@@ -347,12 +347,32 @@ public class RoomScreen extends JFrame {
 			panlist[i].setBorder(null);
 		}
 		panlist[index].setBorder(new LineBorder(Color.orange, 1));
-		try {
-			beticon[index].setBounds(0, 0, 0, 0);
-		} catch (NullPointerException e) {
-		}
-		revalidate();
-		repaint();
+		progressBar.setBounds(2, 2, 347, 8);
+		panlist[index].add(progressBar);
+		
+		count=10;	//시간제한 초기화
+		TimerTask tt = new TimerTask() {
+			@Override
+			public void run() {
+				if(count>0) {
+					progressBar.setValue(count);
+					System.out.println("conut : " + count);
+					count--;
+				} else {
+					Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.COUNTDIE);
+					t.cancel();
+				}
+			}
+		};
+			t.schedule(tt,0,1000);
+			
+			try {
+				beticon[index].setBounds(0, 0, 0, 0);
+			} catch (NullPointerException e) {
+			}
+			revalidate();
+			repaint();
+		
 	} // turn();
 
 	// 게임시작 버튼
@@ -541,6 +561,9 @@ public class RoomScreen extends JFrame {
 		setTitle("섯다 온라인");
 		mat(); // 돈판 출력
 		roomInfo(); // 룸정보 출력
+		
+		
+		
 		
 		back.mainImage();
 		content = getContentPane();

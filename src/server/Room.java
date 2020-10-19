@@ -46,7 +46,6 @@ public class Room extends ServerMethod {
 	private boolean round2First = false;	// 첫 차례 버튼세팅 조건 변수
 	private boolean gameStarted = false;
 	private boolean allIn = false;
-	private int i = 10;
 	private TimerTask tt;
 	// 생성자
 	public Room() {
@@ -209,10 +208,9 @@ public class Room extends ServerMethod {
 	 */
 	public void gameStart() {
 		gameReset();
+		roomSpeaker(new Packet(Protocol.START_PAY, startMoney + ""));
 		handOutCard();		// 1라운드 카드배분
 		turnProgress();
-		roomSpeaker(new Packet(Protocol.TURN, masterIndex + ""));
-		roomSpeaker(new Packet(Protocol.START_PAY, startMoney + ""));
 		lobbyReloadBroadcast(); 
 	} // gameStart();
 
@@ -236,9 +234,10 @@ public class Room extends ServerMethod {
 		message += ", " + Protocol.getName(pac.getProtocol()) + "))] " + pac;
 
 		logger.info(message);
-
+		System.out.println("룸스피커");
 		for (Entry<Integer, PlayerVO> s : playerMap.entrySet()) {
 			Packing.sender(playerMap.get(s.getKey()).getPwSocket(), pac);
+			System.out.println("포문룸스피커");
 		}
 	} // roomSpeaker();
 	
@@ -390,50 +389,22 @@ public class Room extends ServerMethod {
 				continue;
 			if(playerMap.get(turn).isLive())
 				break;
-			
 		} //for
-		//전에 타임을 끊고 다시 시작
-		try {
-//			tt.cancel();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		i=10;	//시간제한 초기화
-		
-		if(gameStarted) {
-			String[] arr = setButton();
-			//차례 클라이언트에게 button배열 전송
-			Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
-			Packet packet = new Packet(Protocol.TURN, turn + "");
-			roomSpeaker(packet);
-		
-			Timer t = new Timer();
-			tt = new TimerTask() {
-				@Override
-			    public void run() {
-					if(i>0) {
-						RoomScreen.getInstance().getProgressBar().setValue(i);
-						i--;
-						System.out.println("시간 : " + i);
-			    	} else {
-			    		String[] arr = setButtonInitialization();
-			    		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
-			    		//차례 클라이언트에게 button배열 전송
-//			    		Packet packet = new Packet(Protocol.TURN, turn + "");
-//			    		roomSpeaker(packet);
-			    		bet(Protocol.Die);
-			    		t.cancel();
-			    	}
-			    }
-			};
-    		t.schedule(tt,1,1000);
-		}//isGameStarted();
-		
-		
-		
-		
-		
+		System.out.println("프레스트 턴 : " + turn);
+	
+		String[] arr = setButton();
+		//차례 클라이언트에게 button배열 전송
+		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
+		Packet packet = new Packet(Protocol.TURN, turn + "");
+		roomSpeaker(packet);
 	} //turnProgress();
+	
+	public void countDie() {
+		System.out.println("카운트다이 턴 : " + turn);
+		String[] arr = setButtonInitialization();
+		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
+		bet(Protocol.Die);
+	}
 
 	public void bet(String proBet) {
 		long betMoney = 0;
@@ -544,8 +515,8 @@ public class Room extends ServerMethod {
 
 			// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 			if (i <= 1) {
-				gameOver(winerIdx,null);
 				roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+				gameOver(winerIdx,null);
 				return;
 			}
 			// 방장이 죽으면 다음 턴 사람한테 넘어간다
@@ -593,12 +564,6 @@ public class Room extends ServerMethod {
 	 */
 	// 승자에게 돈 이동
 	public void gameOver(int winerIdx, String cardName) {
-		try {
-			tt.cancel();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
 		try {
 			//올인시 자신이 건돈 만큼만 사람들한테서 받음
 			if(playerMap.get(winerIdx).isAllIn()) {
@@ -720,6 +685,7 @@ public class Room extends ServerMethod {
 	public String getMaster() { return master; }
 	public boolean isPrivateRoom() { return privateRoom; }
 	
+
 
 
 	public void setMaxPlayer(int maxPlayer) {this.maxPlayer = maxPlayer; }
