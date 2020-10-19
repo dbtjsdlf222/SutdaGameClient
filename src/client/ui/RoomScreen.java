@@ -356,7 +356,6 @@ public class RoomScreen extends JFrame {
 			public void run() {
 				if(count>0) {
 					progressBar.setValue(count);	//감소시 바 감소
-					System.out.println("conut : " + count);
 					count--;
 				} else {
 					if(index == mySit) {
@@ -369,11 +368,9 @@ public class RoomScreen extends JFrame {
 			
 			try {
 				beticon[turnIndex].setBounds(0, 0, 0, 0);
-			} catch (NullPointerException e) {
-			}
+			} catch (NullPointerException e) { }
 			revalidate();
 			repaint();
-		
 	} // turn();
 
 	// 게임시작 버튼
