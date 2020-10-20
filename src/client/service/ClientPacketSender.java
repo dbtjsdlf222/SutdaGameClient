@@ -69,6 +69,10 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_ONE_PLAYER_WITH_NO, Integer.toString(playerVO));
 	}
 	
+	public void extraMoney() {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXTRAMONEY);
+	}
+	
 	
 	
 	public boolean connectToServer(String ip) {

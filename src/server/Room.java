@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import dao.ServerDAO;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;
@@ -135,12 +136,13 @@ public class Room extends ServerMethod {
 				allIn = true;
 			
 			arr[1] = Protocol.Call;
-			arr[6] = beforeBetMoney+ "";
 			
+			arr[6] = beforeBetMoney+ "";
+
 			arr[2] = Protocol.Ddadang;
 			if(beforeBetMoney==0) {
+				arr[6] = "-";
 				arr[7] = "-";
-				arr[2] +="_";
 			}else {
 				arr[7] = beforeBetMoney *2 + "";	
 			}
@@ -175,7 +177,7 @@ public class Room extends ServerMethod {
 		return arr;
 	} //setButton();
 	/**
-	 * @return 플레이어가 배팅 가능한 버튼 배열 return
+	 * @return 플레이어 버튼 비활성
 	 */
 	public String[] setButtonInitialization() {
 		String[] arr = new String[10];
@@ -383,14 +385,19 @@ public class Room extends ServerMethod {
 		System.out.println("프레스트 턴 : " + turn);
 	
 		String[] arr = setButton();
+		
+		Packet packet1 = new Packet(Protocol.SHOWNEEDMONEY, arr);
+		roomSpeaker(packet1);
+
 		//차례 클라이언트에게 button배열 전송
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
+		
+
 		Packet packet = new Packet(Protocol.TURN, turn + "");
 		roomSpeaker(packet);
 	} //turnProgress();
 	
 	public void countDie() {
-		System.out.println("카운트다이 턴 : " + turn);
 		String[] arr = setButtonInitialization();
 		Packing.sender(playerMap.get(turn).getPwSocket(), new Packet(Protocol.SET_BUTTON, arr));
 		bet(Protocol.Die);
@@ -431,7 +438,7 @@ public class Room extends ServerMethod {
 			break;
 
 		case Protocol.Call:
-			if(playerMap.get(turn).getMoney() < beforeBetMoney) {
+			if(playerMap.get(turn).getMoney() <= beforeBetMoney) {
 				playerMap.get(turn).setAllIn(true);
 				totalMoney += playerMap.get(turn).getMoney();
 			} else {
@@ -527,7 +534,6 @@ public class Room extends ServerMethod {
 		
 		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 		if (i <= 1) {
-			roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
 			gameOver(winerIdx,null);
 			return;
 		}else
@@ -569,6 +575,7 @@ public class Room extends ServerMethod {
 					}
 					if(s.getValue().isAllIn()) {
 						if(s.getValue().getMoney() < startMoney)
+							extraMoney();
 							Packing.sender(s.getValue().getPwSocket(), new Packet(Protocol.SEND_OFF));
 					}
 				} //for

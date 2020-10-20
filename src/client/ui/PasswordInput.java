@@ -24,13 +24,18 @@ import client.service.ClientPacketSender;
 import server.Room;
 
 public class PasswordInput {
+	private static PasswordInput instance;
+	
 	private Background imgP;
 	private Container con;
 	private int no;
 	
-	public PasswordInput(int no) {
-		this.no = no;
-		getIn();
+	private PasswordInput() {};
+	
+	public static PasswordInput getInstance(int no) {
+		if(instance == null) 
+			instance = new PasswordInput();
+		return instance;
 	}
 	
 	public void getIn() {

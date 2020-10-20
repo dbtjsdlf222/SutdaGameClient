@@ -30,18 +30,24 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class MakeRoom {
+	
+	private static MakeRoom instance;
+	
       
    private Background imgP;
    private Container con;
    int i = 5; 
-   private JFrame lobbyJF;
    
-   public MakeRoom(JFrame lobbyJF){
-      this.lobbyJF = lobbyJF;
-	  makeRoom();
+   private MakeRoom() {};
+   
+   public static MakeRoom getInstance() {
+	   if(instance == null)
+		   instance = new MakeRoom();
+	return instance;
    }
+   
 
-   private void makeRoom() {
+   public void makeRoom() {
       //Frame
       JFrame makeJF = new JFrame("방 만들기");
       con = makeJF.getContentPane();
@@ -97,7 +103,7 @@ public class MakeRoom {
       moneyCheck3.setBackground(new Color(255, 255, 255));
       moneyCheck3.setForeground(new Color(0, 0, 0));
       
-      JRadioButton moneyCheck4 = new JRadioButton ("1000만");
+      JRadioButton moneyCheck4 = new JRadioButton ("500만");
       moneyCheck4.setBounds(370, 0, 65, 30);
       moneyCheck4.setBackground(new Color(255, 255, 255));
       moneyCheck4.setForeground(new Color(0, 0, 0));
@@ -223,7 +229,7 @@ public class MakeRoom {
                 	}
             		
             		makeJF.dispose();
-            		lobbyJF.dispose();
+            		Lobby.getInstance().getLobbyJF().dispose();
             		ClientPacketSender.instance.makeRoom(room);
             		
             	}else {

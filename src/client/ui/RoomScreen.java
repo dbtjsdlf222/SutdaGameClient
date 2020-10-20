@@ -172,8 +172,6 @@ public class RoomScreen extends JFrame {
 	} // 게임 진행 순서
 
 	public void setButtonAndPrice(String[] arr) {
-		if (arr != null)
-			showNeedMoney(arr);
 
 		ActionListener action = new ActionListener() {
 			// 배팅하면 사람들 돈 새로고침 브로드 캐스트
@@ -298,8 +296,13 @@ public class RoomScreen extends JFrame {
 			else
 				lblMoney[i].setFont(new Font("Rosewood Std", Font.BOLD, 16));
 			panMoney[i].setBackground(new Color(0,0,0));
-			panMoney[i].setBorder(new LineBorder(Color.orange, 1));
+			panMoney[i].setBorder(new LineBorder(Color.orange, 3));
 			showMoneyPan.add(panMoney[i]);
+			
+			add(betButtonPan);
+			add(back);
+			revalidate();
+			repaint();
 		}
 		
 		
@@ -337,7 +340,7 @@ public class RoomScreen extends JFrame {
 	}
 
 	private boolean initialized = false;
-
+	
 	public void turn(int index) {
 		int turnIndex = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
@@ -355,7 +358,7 @@ public class RoomScreen extends JFrame {
 			@Override
 			public void run() {
 				if(count>0) {
-					progressBar.setValue(count);	//감소시 바 감소
+					progressBar.setValue(count);	//감소시 바 게이지 감소
 					count--;
 				} else {
 					if(index == mySit) {
@@ -364,7 +367,7 @@ public class RoomScreen extends JFrame {
 				}
 			}
 		};
-			timer.schedule(task,0,1000);
+			timer.schedule(task,0,1000); // task를 0초뒤 1초 간격으로 실행
 			
 			try {
 				beticon[turnIndex].setBounds(0, 0, 0, 0);
@@ -791,7 +794,7 @@ public class RoomScreen extends JFrame {
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
-		if (roomOut) {
+		if (roomOut || PlayerVO.myVO.getMoney() == 0) {
 			dispose();
 			Lobby.getInstance().lobbyScreen();;
 		}

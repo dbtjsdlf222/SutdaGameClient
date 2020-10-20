@@ -72,6 +72,27 @@ public class ServerDAO {
 		
 		return null;
 	}
+	
+	public int extraMoney(PlayerVO vo) {
+		String money = "1000";
+		String sql = "UPDATE player SET  money = ? WHERE nickname = ?";
+		int result = 0; 
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, money);
+			pstmt.setString(2, vo.getNic());
+			
+			result = pstmt.executeUpdate();
+			
+			vo.setMoney(Integer.parseInt(money));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return result;
+	}
 
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		InetAddress local = null;
@@ -108,6 +129,46 @@ public class ServerDAO {
 		}
 		return result;
 	}
+	
+	public void initMoneyChage() {
+	      String query = "update player set money_charge = 5";
+	      try {
+	         pstmt = conn.prepareStatement(query);
+	         pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         logger.error(e.getMessage(), e);
+	      }
+	   }
+	   
+	   public void useMoneyCharge(int no) {
+	      String query = "UPDATE player SET money_charge = (select charge from(SELECT money_charge-1 as charge FROM player WHERE no =?) as charge) WHERE no = ?";
+	      try {
+	         pstmt = conn.prepareStatement(query);
+	         pstmt.setInt(1, no);
+	         pstmt.setInt(2, no);
+
+	         pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         logger.error(e.getMessage(), e);
+	      }
+	   }
+	   
+	   public int moneyChargeCheck(int no) {
+	      ResultSet rs;
+	      String query = "SELECT money_charge FROM player WHERE no = ?";
+	      int charge = 0;
+	      try {
+	         pstmt = conn.prepareStatement(query);
+	         pstmt.setInt(1, no);
+	         rs = pstmt.executeQuery();
+	         rs.next();
+	         rs.getInt(1);
+	      } catch (SQLException e) {
+	         logger.error(e.getMessage(), e);
+	      }
+	      return charge;
+	   }
+	
 
 //	public ArrayList<PlayerVO> listAll() {
 //		ResultSet rs;

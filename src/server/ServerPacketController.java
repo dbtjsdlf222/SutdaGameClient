@@ -288,6 +288,18 @@ public class ServerPacketController extends ServerMethod {
 			}
 			break;
 			
+		case Protocol.EXTRAMONEY:
+			if(serverDAO.extraMoney(thisPlayerVO) == 1) {
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.RELOAD_MY_VO, thisPlayerVO);
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.RELOAD_INFO_MONEY);
+				packet.setMotion("비상금 1000만원이 입급 되었습니다.");
+				Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SERVER_MESSAGE, packet.getMotion());
+				
+			}
+			
+				
+			break;
+			
 		case Protocol.SELECT_ID:
 			Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SELECT_ID, serverDAO.selectID(packet.getMotion()) ? "true" : "false");
 			break;

@@ -49,13 +49,14 @@ import util.MoneyFormat;
 import vo.PlayerVO;
 
 public class Lobby {
-	public static Lobby instance;
+	private static Lobby instance;
 	private JFrame lobbyJF;
 	private Background imgP;
 	private Container con;
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JPanel infoPan;
+	public static JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("/img/infoMoney.png")));
 	
 	private Lobby() {};
 	
@@ -117,8 +118,8 @@ public class Lobby {
 							return;
 						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
 								.equals("비공개")) {
-							PasswordInput pwInput = new PasswordInput(Integer.parseInt(
-									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+							PasswordInput.getInstance(Integer.parseInt(
+									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])).getIn();
 						}
 						else {
 							
@@ -174,7 +175,7 @@ public class Lobby {
 		//인포 닉네임 출력
 		JLabel infoNicLbl = new JLabel();
 		infoNicLbl.setText(PlayerVO.myVO.getNic());
-		infoNicLbl.setBounds(130, 30, 120, 30);
+		infoNicLbl.setBounds(130, 30, 200, 30);
 		infoNicLbl.setBackground(new Color(63, 28, 6));
 		infoNicLbl.setForeground(new Color(219, 182, 155));
 		infoNicLbl.setHorizontalAlignment(JLabel.CENTER);
@@ -183,10 +184,13 @@ public class Lobby {
 		infoPan.add(infoNicLbl);
 	
 		//인포 머니 출력
-		JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("/img/infoMoney.png")));
 		infoMoneyLbl.setOpaque(true);
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
 		infoMoneyLbl.setForeground(new Color(163, 95, 56));
+		//돈이 10만원 밑이면 충전
+		if(PlayerVO.myVO.getMoney()<10)
+			ClientPacketSender.instance.extraMoney();
+		
 		infoMoneyLbl.setText("머니 : " +MoneyFormat.format(PlayerVO.myVO.getMoney()));
 		infoMoneyLbl.setHorizontalAlignment(JLabel.LEFT);
 		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
@@ -215,7 +219,7 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					MakeRoom makeRoom = new MakeRoom(lobbyJF);
+					MakeRoom.getInstance().makeRoom();
 					
 //					ClientPacketSender.instance.makeRoom();
 //					RoomScreen.getInstance().mainScreen();
@@ -382,9 +386,10 @@ public class Lobby {
 		
 		
 	}
+	
 
 	private void initialize() { }
-	
+
 	public JFrame getLobbyJF() { return lobbyJF; }
 
 

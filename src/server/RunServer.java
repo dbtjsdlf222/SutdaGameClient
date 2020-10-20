@@ -5,6 +5,8 @@ import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,6 +22,15 @@ public class RunServer {
 	private int port = 4886;
 
 	public static void main(String[] args) {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				System.out.println("5분이 지났습니다.");
+			}
+		};
+		timer.schedule(task, 0, 24*60*60*1000);;
 		new RunServer().run();
 	}
 
@@ -47,6 +58,7 @@ public class RunServer {
 			pool.shutdown();
 		}
 
+		
 	} // run();
 
 } // Accept();

@@ -52,6 +52,10 @@ public class ServerMethod {
 		}
 	} //broadcast
 
+	public void extraMoney() {
+		serverDAO.extraMoney(thisPlayerVO);
+	}
+	
 	public void lobbyExitBroadcast() {
 		
 		lobbyPlayerList.remove(thisPlayerVO.getNic());

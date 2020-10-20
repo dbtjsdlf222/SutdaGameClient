@@ -55,6 +55,9 @@ public class Protocol {
    public static final String SERVER_MESSAGE= "41";             //경고문 출력
    public static final String KICKROOM= "42";                	//추방당하면 로비로 이동
    public static final String TIME_OUT= "43";                	//시간초과시 다이
+   public static final String SHOWNEEDMONEY= "44";              //게임중 돈이 얼마 드는지 출력
+   public static final String EXTRAMONEY= "45";                	//돈이 부족하면 충전
+   public static final String RELOAD_INFO_MONEY= "46";          //
    
 
    public static final String Half = "Half";
@@ -111,7 +114,10 @@ public class Protocol {
          case "40": str = "GET_INVITE"; break;
          case "41": str = "SERVER_MESSAGE"; break;
          case "42": str = "KICKROOM"; break;
-         case "43": str = "COUNTDIE"; break;
+         case "43": str = "TIME_OUT"; break;
+         case "44": str = "SHOWNEEDMONEY"; break;
+         case "45": str = "EXTRAMONEY"; break;
+         case "46": str = "RELOAD_INFO_MONEY"; break;
          case "Half": str = "Half"; break;
          case "Quater": str = "Quater"; break;
          case "Check": str = "Check"; break;

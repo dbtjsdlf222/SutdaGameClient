@@ -16,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import client.ui.Invited;
+import client.ui.Lobby;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
@@ -78,10 +79,14 @@ public class ClientPacketController {
 		case Protocol.WHISPER:
 			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
 			break;
-
+		case Protocol.RELOAD_INFO_MONEY:
+		//INFO
+			Lobby.getInstance().infoMoneyLbl.setText(MoneyFormat.format(PlayerVO.myVO.getMoney())+"");
 		case Protocol.ENTER_LOBBY:
 		case Protocol.RELOAD_LOBBY_LIST:
 			Map<String,PlayerVO> lobbyPlayerList = packet.getPlayerList();
+			
+			
 			// PlayerList
 			for (int i = 0; i < ((DefaultTableModel) playerJT.getModel()).getRowCount(); i++) {
 				((DefaultTableModel) playerJT.getModel()).removeRow(i);
@@ -185,6 +190,12 @@ public class ClientPacketController {
 		case Protocol.SET_BUTTON:
 			RoomScreen.getInstance().setButtonAndPrice(packet.getButtonArr()); // 버튼&베팅비용 세팅
 			break;
+			
+		case Protocol.SHOWNEEDMONEY:
+			if(packet.getButtonArr() != null)
+				RoomScreen.getInstance().showNeedMoney(packet.getButtonArr());
+			break;
+			
 		case Protocol.START_PAY:
 			try {
 				RoomScreen.getInstance().startPay(Integer.parseInt(packet.getMotion()));
@@ -208,7 +219,7 @@ public class ClientPacketController {
 		case Protocol.GAME_OVER :
 			if(packet.getMotion().indexOf("/") != -1) {
 				String[] strArr = packet.getMotion().split("/");
-				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),strArr[2]);
+				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),(Integer.parseInt(strArr[2])+Integer.parseInt(strArr[3]))+"");
 				RoomScreen.getInstance().changeMaster(Integer.parseInt(strArr[1]));
 			} else {
 				RoomScreen.getInstance().gameOver(packet.getMotion());
