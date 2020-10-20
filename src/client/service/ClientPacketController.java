@@ -133,6 +133,7 @@ public class ClientPacketController {
 			
 		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().getInfoLal().setText(packet.getRoom().getRoomNo()+"번방          "+packet.getRoom().getTitle()+"          "+packet.getRoom().getStartMoney());;
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
@@ -219,8 +220,7 @@ public class ClientPacketController {
 		case Protocol.GAME_OVER :
 			if(packet.getMotion().indexOf("/") != -1) {
 				String[] strArr = packet.getMotion().split("/");
-				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),(Integer.parseInt(strArr[2])+Integer.parseInt(strArr[3]))+"");
-				RoomScreen.getInstance().changeMaster(Integer.parseInt(strArr[1]));
+				RoomScreen.getInstance().gameOver(strArr[0],Integer.parseInt(strArr[1]),Integer.parseInt(strArr[2])+"");
 			} else {
 				RoomScreen.getInstance().gameOver(packet.getMotion());
 			}

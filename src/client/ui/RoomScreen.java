@@ -73,7 +73,7 @@ public class RoomScreen extends JFrame {
 			Protocol.Quater + "_", Protocol.Half + "_", Protocol.Allin + "_", "-", "-", "-", "-" };
 	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
-	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
+	
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
@@ -83,17 +83,19 @@ public class RoomScreen extends JFrame {
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
 	private JPanel[] panMoney;
-	private JLabel infoLal;
+	private JLabel infoLal = new JLabel();
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
 	private boolean gameStart = false;
 	private boolean roomOut = false;
 	private int roomMaster = 0;
+	private int turnIndex;
 	private int count = 10;
 	private JProgressBar progressBar = new JProgressBar(0,10);
 	private static Timer timer = new Timer();
 	private TimerTask task;
+	private String[] arr = {"다이","콜","따당","쿼터","하프","올인","-","-","-","-"};
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -142,31 +144,34 @@ public class RoomScreen extends JFrame {
 	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
 	public void changeMaster(int idx) {
+		JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
-
+		System.out.println("인덱스"+idx);
 		if (!gameStart && roomMaster == mySit)
 			RoomScreen.getInstance().startBtnSet();
 
 		if (idx == 0) {
 			// frame.setBounds(450, 430, 370, 190);
-			masterSticker.setBounds(430, 440, 15, 15);
+			masterSticker.setBounds(440, 440, 15, 15);
 		} else if (idx == 1) {
 			// frame.setBounds(-5, 205, 370, 190);
-			masterSticker.setBounds(370, 220, 15, 15);
+			masterSticker.setBounds(355, 215, 15, 15);
 		} else if (idx == 2) {
 			// frame.setBounds(-5, 20, 370, 190);
-			masterSticker.setBounds(370, 30, 15, 15);
+			masterSticker.setBounds(355, 30, 15, 15);
 		} else if (idx == 3) {
 			// frame.setBounds(905, 20, 370, 190);
-			masterSticker.setBounds(890, 30, 15, 15);
+			masterSticker.setBounds(895, 30, 15, 15);
 		} else if (idx == 4) {
 			// frame.setBounds(905, 205, 370, 190);
-			masterSticker.setBounds(890, 220, 15, 15);
+			masterSticker.setBounds(895, 215, 15, 15);
 		}
 		masterSticker.setOpaque(false);
 
 		add(masterSticker);
+		add(betButtonPan);
+		add(back);
 		revalidate();
 		repaint();
 	} // 게임 진행 순서
@@ -333,8 +338,10 @@ public class RoomScreen extends JFrame {
 		JPanel infoPan = new JPanel();
 		infoPan.setBounds(410, 0, 450, 50);;
 		infoPan.setBackground(new Color(0, 0, 0, 122));
-		infoLal = new JLabel();
-//		infoLal.setText("["+);
+		infoLal.setBounds(0, 0, 450, 50);
+		infoLal.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
+		infoLal.setForeground(Color.white);
+		infoLal.setHorizontalAlignment(JLabel.CENTER);
 		infoPan.add(infoLal);
 		add(infoPan);
 	}
@@ -342,7 +349,7 @@ public class RoomScreen extends JFrame {
 	private boolean initialized = false;
 	
 	public void turn(int index) {
-		int turnIndex = (index - mySit + 5) % 5;
+		turnIndex = (index - mySit + 5) % 5;
 		for (int i = 0; i < 5; i++) {
 			if (panlist[i] == null)
 				continue;
@@ -431,6 +438,7 @@ public class RoomScreen extends JFrame {
 	}
 
 	public void mainScreen() {
+		
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
 			panlist[i].setBackground(new Color(0, 0, 0, 125));
@@ -562,6 +570,7 @@ public class RoomScreen extends JFrame {
 		setTitle("섯다 온라인");
 		mat(); // 돈판 출력
 		roomInfo(); // 룸정보 출력
+		showNeedMoney(arr);
 		
 		
 		
@@ -646,7 +655,7 @@ public class RoomScreen extends JFrame {
 			} catch (NullPointerException e) {
 			}
 		} // if
-		betText[idx].setText(bet);
+//		betText[idx].setText(bet+"222");
 		betIcon(idx, bet);
 	} // betAlert();
 
@@ -659,7 +668,6 @@ public class RoomScreen extends JFrame {
 		else
 			iCon = new ImageIcon(RoomScreen.class.getResource("/img/icon/" + bet + "Icon.png"));
 
-//		remove(beticon[idx]); // 실행 의미 없음
 
 		try {
 			beticon[idx].setBounds(0, 0, 0, 0);
@@ -775,7 +783,9 @@ public class RoomScreen extends JFrame {
 	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
 		repaint();
 		gameStart = false;
-		roomMaster = winerIdx;
+		changeMaster(winerIdx);
+		panlist[turnIndex].remove(progressBar);
+		showNeedMoney(arr);
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));

@@ -382,7 +382,6 @@ public class Room extends ServerMethod {
 			if(playerMap.get(turn).isLive())
 				break;
 		} //for
-		System.out.println("프레스트 턴 : " + turn);
 	
 		String[] arr = setButton();
 		
@@ -503,6 +502,18 @@ public class Room extends ServerMethod {
 		case Protocol.Die:
 			playerMap.get(turn).setLive(false);
 		
+//			if (turn == masterIndex) {
+//				int temp = 0;
+//				for (int j = 1; j < 5; j++) {
+//					temp = turn + j;
+//					if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
+//						continue;
+//					
+//					Packet packet = new Packet(Protocol.CHANGE_MASTER, temp + "");
+//					roomSpeaker(packet);
+//					break;
+//				} // for
+//			} // if (turn == masterIndex)
 			break; // case die;
 		} // switch
 
@@ -513,19 +524,6 @@ public class Room extends ServerMethod {
 			} // if
 		} // for
 		// 방장이 죽으면 다음 턴 사람한테 넘어간다
-				if (turn == masterIndex) {
-					int temp = 0;
-					for (int j = 1; j < 5; j++) {
-						temp = turn + j;
-						if (playerMap.get(temp) == null || !(playerMap.get(temp).isLive()))
-							continue;
-						
-						Packet packet = new Packet(Protocol.CHANGE_MASTER, temp + "");
-						roomSpeaker(packet);
-						break;
-					} // for
-				} // if (turn == masterIndex)
-		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 		
 		
 		beforeBetMoney = betMoney;
@@ -533,6 +531,8 @@ public class Room extends ServerMethod {
 		playerMap.get(turn).pay(betMoney); // 배팅 한 만큼 VO에서 뺌
 		
 		roomSpeaker(new Packet(Protocol.OTHER_BET, turn + "/" + proBet + "/" + playerMap.get(turn).getMoney()+"/"+totalMoney));
+
+		// 생존 플레이어가 한명일 경우 winer 인덱스에 있는 사람이 승리
 		if (i <= 1) {
 			gameOver(winerIdx,null);
 			return;
@@ -593,10 +593,12 @@ public class Room extends ServerMethod {
 		} else {
 			winMsg = playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/";
 		}
+		System.out.println("토탈 " + totalMoney);
+		System.out.println("승리자머니 " + playerMap.get(winerIdx).getMoney());
+		System.out.println("토탈 +승리자머니 " + (totalMoney+playerMap.get(winerIdx).getMoney()));
 		roomSpeaker(new Packet(Protocol.GAME_OVER,
 					winMsg+
 					winerIdx+"/" +
-					totalMoney + "/" +
 					playerMap.get(winerIdx).getMoney()
 				));
 		
