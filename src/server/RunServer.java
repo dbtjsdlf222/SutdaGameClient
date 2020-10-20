@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import dao.ServerDAO;
+
 public class RunServer {
 
 	private static final Logger logger = LogManager.getLogger();
@@ -22,15 +24,6 @@ public class RunServer {
 	private int port = 4886;
 
 	public static void main(String[] args) {
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				System.out.println("5분이 지났습니다.");
-			}
-		};
-		timer.schedule(task, 0, 24*60*60*1000);;
 		new RunServer().run();
 	}
 
@@ -39,7 +32,19 @@ public class RunServer {
 
 		// 쓰레드풀 생성		
 		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
-
+		
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				new ServerDAO().initMoneyChage();
+				System.out.println("초기화실행");
+			}
+		};
+		timer.schedule(task, 0, 24*60*60*1000);
+		
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while (true) {
 				Socket socket = serverSocket.accept(); // 접속한 소켓 받는다

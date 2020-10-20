@@ -162,12 +162,13 @@ public class ServerDAO {
 	         pstmt.setInt(1, no);
 	         rs = pstmt.executeQuery();
 	         rs.next();
-	         rs.getInt(1);
+	         charge=rs.getInt(1);
 	      } catch (SQLException e) {
 	         logger.error(e.getMessage(), e);
 	      }
 	      return charge;
 	   }
+	
 	
 
 //	public ArrayList<PlayerVO> listAll() {

@@ -74,6 +74,13 @@ public class ServerMethod {
 		packet.setRoomMap(ro.getAllRoom());
 		lobbyBroadcast(packet);
 	}
+	public void infoReloadcast() {
+		Packet packet = new Packet();
+		packet.setProtocol(Protocol.RELOAD_INFO_MONEY);
+		packet.setPlayerList(lobbyPlayerList);
+		packet.setRoomMap(ro.getAllRoom());
+		lobbyBroadcast(packet);
+	}
 
 	public PlayerVO getThisPlayerVO() { return thisPlayerVO; }
 
