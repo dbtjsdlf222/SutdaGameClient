@@ -80,7 +80,7 @@ public class Lobby {
 		lobLbl.setBounds(340, 20, 200, 30);
 		lobbyJF.add(lobLbl);
 
-		// 로비 판넬 [방리스트]
+		// 로비 패널 [방리스트]
 		ClientPacketController.rlobbyPan.setBackground(new Color(63, 28, 6, 120));
 		ClientPacketController.rlobbyPan.setBounds(5, 60, 818, 290);
 		ClientPacketController.rlobbyPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
@@ -118,18 +118,17 @@ public class Lobby {
 							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
 									JOptionPane.WARNING_MESSAGE);
 							return;
-						}
-//						else if() {
-//							
-//						}
-						else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
+						}else if(checkSit() != 1 ) {
+							JOptionPane.showMessageDialog(null, "인원수 초과로 인해 입장하실 수 없습니다.", "알림",
+							JOptionPane.WARNING_MESSAGE);
+							return;
+						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
 								.equals("비공개")) {
 							PasswordInput.getInstance(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])).getIn();
 						}else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-//							RoomScreen.getInstance().mainScreen();
 							((JFrame)SwingUtilities.getRoot((Component)e.getSource())).dispose();
 						}
 					}
@@ -159,7 +158,7 @@ public class Lobby {
 		infolbl.setBounds(1000, 370, 280, 30);
 		lobbyJF.add(infolbl);
 		
-		//인포 판넬
+		//인포 패널
 		infoPan = new JPanel();
 		infoPan.setBounds(850, 410, 390, 260);
 		infoPan.setBackground(new Color(63, 28, 6));
@@ -237,7 +236,7 @@ public class Lobby {
 		lbl.setBounds(300, 370, 280, 30);
 		lobbyJF.add(lbl);
 
-		// 채팅 판넬
+		// 채팅 패널
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(5, 410, 818, 260);
 		chatPan.setBackground(new Color(0, 0, 0, 120));
@@ -323,7 +322,7 @@ public class Lobby {
 		playerLbl.setBounds(970, 20, 200, 30);
 		lobbyJF.add(playerLbl);
 
-		// 플레이어 판넬
+		// 플레이어 패널
 		JPanel playerPan = new JPanel();
 		playerPan.setBounds(850, 60, 390, 290);
 		playerPan.setBackground(new Color(63, 28, 6, 120));

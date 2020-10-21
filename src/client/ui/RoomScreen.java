@@ -86,7 +86,6 @@ public class RoomScreen extends JFrame {
 	private JLabel[] beticon = new JLabel[5];
 	private JLabel noAndMoneyLal;
 	private JLabel titleLal;
-	private JPanel[] panMoney;
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
@@ -331,6 +330,7 @@ public class RoomScreen extends JFrame {
 		add(mat);
 	} //mat();
 	
+	//상단에 룸정보 출력하는 메소드
 	public void roomInfo() {
 		JPanel infoPan = new JPanel();
 		infoPan.setBounds(350, 0, 565, 30);;
@@ -353,7 +353,7 @@ public class RoomScreen extends JFrame {
 		infoPan.add(noAndMoneyLal);	
 		infoPan.add(titleLal);	
 		add(infoPan);
-	}
+	} //roomInfo();
 
 	private boolean initialized = false;
 	
@@ -377,7 +377,7 @@ public class RoomScreen extends JFrame {
 					progressBar.setValue(count);	//감소시 바 게이지 감소
 					count--;
 				} else {
-					if(index == mySit) {
+					if(index == mySit) {			//내 차례일때만 타임아웃 sender
 						Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.TIME_OUT);
 					}
 				}
@@ -804,6 +804,7 @@ public class RoomScreen extends JFrame {
 	public void gameOver(String msg, int winerIdx, String winerTotalMoney) {
 		repaint();
 		gameStart = false;
+		remove(jokboPanel);
 		changeMaster(winerIdx);
 		panlist[turnIndex].remove(progressBar);
 		showNeedMoney(betAndBtnInitArr);

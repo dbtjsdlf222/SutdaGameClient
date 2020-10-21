@@ -57,8 +57,8 @@ public class ChattingOperator {
 			}	
 			break;
 		
-		case "/초대":
 		case "/c":
+		case "/초대":
 			Packet packet = new Packet(Protocol.DO_INVITE, nic);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), packet);
 			break;
@@ -68,10 +68,13 @@ public class ChattingOperator {
 			Packet kickPacket = new Packet(Protocol.KICK, nic);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), kickPacket);
 			break;
+		case "/f":
+		case "/찾기":
+			Packet findPacket = new Packet(Protocol.FIND, nic);
+			Packing.sender(PlayerVO.myVO.getPwSocket(), findPacket);
+			break;
 		case "/help":
-			
 			ChattingOperator.chatArea.append("<SYSTEM>\n귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n초대 : /c 또는 /초대 [상대방 닉네임]\n추방 : /b 또는 /추방 [상대방 닉네임]\n");
-			
 			break;
 
 		default:

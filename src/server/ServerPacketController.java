@@ -125,6 +125,11 @@ public class ServerPacketController extends ServerMethod {
 			
 			break;
 			
+		case Protocol.FIND:
+			if(playerOnlineList.get(packet.getMotion()) != null) {
+				
+			}
+			
 		case Protocol.MAKE_ROOM:
 			thisPlayerVO.setRoomNo(ro.makeRoom(thisPlayerVO,packet.getRoom()));
 			lobbyExitBroadcast();
