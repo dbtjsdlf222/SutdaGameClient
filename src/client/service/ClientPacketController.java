@@ -133,7 +133,8 @@ public class ClientPacketController {
 			
 		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();
-			RoomScreen.getInstance().getInfoLal().setText(packet.getRoom().getRoomNo()+"번방          "+packet.getRoom().getTitle()+"          "+packet.getRoom().getStartMoney());;
+			RoomScreen.getInstance().getNoAndMoneyLal().setText("[" + packet.getRoom().getRoomNo()+"번방]  시작금액 : " + packet.getRoom().getStartMoney()+"만");
+			RoomScreen.getInstance().getTitleLal().setText("방제 : " + packet.getRoom().getTitle());
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();

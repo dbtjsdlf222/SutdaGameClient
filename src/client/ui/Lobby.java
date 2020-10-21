@@ -14,6 +14,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.UnsupportedEncodingException;
@@ -219,10 +221,9 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					MakeRoom.getInstance().makeRoom();
+					if(!MakeRoom.getInstance().isMake())
+						MakeRoom.getInstance().makeRoom();
 					
-//					ClientPacketSender.instance.makeRoom();
-//					RoomScreen.getInstance().mainScreen();
 				}
 			} // action
 		}); // listener
@@ -245,6 +246,17 @@ public class Lobby {
 		// 채팅 필드
 		JTextField chatText = new JTextField();
 		chatText.setBounds(10, 225, 720, 25);
+		
+	    // 15글자 넘어가면 입력불가
+		chatText.addKeyListener(new KeyAdapter() {
+	    	public void keyTyped(KeyEvent e) {
+	    		if(e.getSource()==chatText) {
+	    			if(chatText.getText().length()>=16)
+	    				e.consume();
+	    		  	}
+	    	  	}
+	     });
+		
 		chatPan.add(chatText);
 		chatText.requestFocus();
 		chatText.setFont(new Font("휴먼옛체", Font.PLAIN, 13));

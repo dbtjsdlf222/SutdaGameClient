@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,6 +54,16 @@ public class PasswordInput {
 	      
 	    JTextField pwField = new JTextField();
 	    pwField.setBounds(100, 55, 270, 30);
+	    // 10글자 넘어가면 입력불가
+	    pwField.addKeyListener(new KeyAdapter() {
+	    	
+	    	public void keyTyped(KeyEvent e) {
+	    		if(e.getSource()==pwField) {
+	    			if(pwField.getText().length()>=11)
+	    				e.consume();
+	    		}
+	    	}
+	    });
 		
 	  //수락/거절버튼
 	    JButton okBtn = new JButton("입 장");

@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -33,10 +35,10 @@ public class MakeRoom {
 	
 	private static MakeRoom instance;
 	
-      
-   private Background imgP;
-   private Container con;
-   int i = 5; 
+	private Background imgP;
+	private Container con;
+	private int i = 5;
+	private boolean make = false;
    
    private MakeRoom() {};
    
@@ -48,6 +50,8 @@ public class MakeRoom {
    
 
    public void makeRoom() {
+	   make = true;
+	   
       //Frame
       JFrame makeJF = new JFrame("방 만들기");
       con = makeJF.getContentPane();
@@ -59,9 +63,18 @@ public class MakeRoom {
       titlelbl.setBounds(18, 0, 120, 30);
       titlelbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
       titlelbl.setForeground(new Color(255, 255, 255, 150));
-      
+
       JTextField titleField = new JTextField();
       titleField.setBounds(130, 0, 305, 30);
+      // 13글자 넘어가면 입력불가
+      titleField.addKeyListener(new KeyAdapter() {
+    	  public void keyTyped(KeyEvent e) {
+    		  if(e.getSource()==titleField) {
+    			  if(titleField.getText().length()>=13)
+    				  e.consume();
+    		  }
+    	  }
+	});
       
       JPanel titlePan = new JPanel();
       titlePan.setBounds(0, 55, 465, 30);
@@ -78,6 +91,16 @@ public class MakeRoom {
       
       JTextField pwField = new JTextField();
       pwField.setBounds(130, 0, 305, 30);
+      // 10글자 넘어가면 입력불가
+      pwField.addKeyListener(new KeyAdapter() {
+    	  public void keyTyped(KeyEvent e) {
+    		  if(e.getSource()==pwField) {
+    			  if(pwField.getText().length()>=11)
+    				  e.consume();
+    		  }
+    	  }
+      });
+      
       
       JPanel pwPan = new JPanel();
       pwPan.setBounds(0, 100, 465, 30);
@@ -208,8 +231,6 @@ public class MakeRoom {
             		Room room = new Room();
             		room.setTitle(titleField.getText());
             		
-            		System.out.println("pw : " + pwField.getText());
-
             		if(!pwField.getText().equals("")) {
             			room.setPassword(pwField.getText());
             			room.setPrivateRoom(true);
@@ -229,6 +250,7 @@ public class MakeRoom {
                 	}
             		
             		makeJF.dispose();
+            		make=false;
             		Lobby.getInstance().getLobbyJF().dispose();
             		ClientPacketSender.instance.makeRoom(room);
             		
@@ -253,6 +275,7 @@ public class MakeRoom {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==cancelBtn) {
 				makeJF.dispose();
+				make=false;
 			}
 		}
 	});
@@ -288,6 +311,7 @@ public class MakeRoom {
       makeJF.setResizable(false);
       makeJF.setLocationRelativeTo(null);
       makeJF.setLayout(null);
+      makeJF.setAlwaysOnTop(true);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
@@ -295,6 +319,6 @@ public class MakeRoom {
       
    }
 
-
+public boolean isMake() { return make; }
    
 }

@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
@@ -82,8 +84,9 @@ public class RoomScreen extends JFrame {
 	private JLabel[] betText = new JLabel[5];
 	private JLabel[] profile = new JLabel[5];
 	private JLabel[] beticon = new JLabel[5];
+	private JLabel noAndMoneyLal;
+	private JLabel titleLal;
 	private JPanel[] panMoney;
-	private JLabel infoLal = new JLabel();
 	private boolean[] liveList = { false, false, false, false, false };
 	private JButton gameStartBtn = null;
 	public static JPanel jokboPanel;
@@ -147,7 +150,6 @@ public class RoomScreen extends JFrame {
 		JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
-		System.out.println("인덱스"+idx);
 		if (!gameStart && roomMaster == mySit)
 			RoomScreen.getInstance().startBtnSet();
 
@@ -336,13 +338,25 @@ public class RoomScreen extends JFrame {
 	
 	public void roomInfo() {
 		JPanel infoPan = new JPanel();
-		infoPan.setBounds(410, 0, 450, 50);;
+		infoPan.setBounds(350, 0, 565, 30);;
 		infoPan.setBackground(new Color(0, 0, 0, 122));
-		infoLal.setBounds(0, 0, 450, 50);
-		infoLal.setFont(new Font("Rosewood Std", Font.PLAIN, 30));
-		infoLal.setForeground(Color.white);
-		infoLal.setHorizontalAlignment(JLabel.CENTER);
-		infoPan.add(infoLal);
+		infoPan.setLayout(null);
+		
+		noAndMoneyLal = new JLabel();
+		noAndMoneyLal.setBounds(10, 0, 280, 30);
+		noAndMoneyLal.setFont(new Font("Rosewood Std", Font.PLAIN, 20));
+		noAndMoneyLal.setForeground(Color.YELLOW);
+		noAndMoneyLal.setHorizontalAlignment(JLabel.CENTER);
+		
+		titleLal = new JLabel();
+		titleLal.setBounds(280, 0, 285, 30);
+		titleLal.setFont(new Font("Rosewood Std", Font.PLAIN, 20));
+		titleLal.setForeground(Color.YELLOW);
+		titleLal.setHorizontalAlignment(JLabel.CENTER);
+				
+			
+		infoPan.add(noAndMoneyLal);	
+		infoPan.add(titleLal);	
 		add(infoPan);
 	}
 
@@ -477,8 +491,19 @@ public class RoomScreen extends JFrame {
 		chatText.requestFocus();
 		chatText.setFont(new Font("Rosewood Std", Font.PLAIN, 12));
 		chatText.setBorder(new LineBorder(Color.orange, 1));
+		
+		// 15글자 넘어가면 입력불가
+		chatText.addKeyListener(new KeyAdapter() {
+	    	public void keyTyped(KeyEvent e) {
+	    		if(e.getSource()==chatText) {
+	    			if(chatText.getText().length()>=16)
+	    				e.consume();
+	    		}
+	    	}
+	    });
+		
+		
 		ChattingOperator co = ChattingOperator.getInstance();
-
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
 		ChattingOperator.chatArea.setBorder(new LineBorder(Color.orange, 1));
@@ -931,7 +956,11 @@ public class RoomScreen extends JFrame {
 
 	
 	
-	public JLabel getInfoLal() { return infoLal; }
+
+
+	public JLabel getTitleLal() { return titleLal; }
+
+	public JLabel getNoAndMoneyLal() { return noAndMoneyLal; }
 
 	public JProgressBar getProgressBar() { return progressBar; }
 	

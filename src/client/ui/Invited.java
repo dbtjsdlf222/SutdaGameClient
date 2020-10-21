@@ -156,6 +156,7 @@ public class Invited {
 		inviteJF.setLocationRelativeTo(null);
 		inviteJF.setLayout(null);
 		inviteJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		inviteJF.setAlwaysOnTop(true);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
