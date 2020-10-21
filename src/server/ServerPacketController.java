@@ -171,6 +171,7 @@ public class ServerPacketController extends ServerMethod {
 			ro.getRoom(roomNo).roomSpeakerNotThisPlayer(pak,thisPlayerVO.getNo());
 			packet.setRoomPlayerList(ro.getRoom(roomNo).getList());
 			packet.setPlayerVO(thisPlayerVO);
+			packet.setRoom(ro.getRoom(roomNo));
 			packet.setMotion(ro.getRoom(roomNo).getMasterIndex().toString());
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			

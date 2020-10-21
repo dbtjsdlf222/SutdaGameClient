@@ -197,7 +197,7 @@ public class MakeRoom {
          @Override
          public void actionPerformed(ActionEvent e) {
             if(e.getSource()== downBtn) {
-               if(i>=2)
+               if(i>=3)
                   pField.setText((i-=1)+"");
                   
             }
@@ -246,7 +246,7 @@ public class MakeRoom {
                 	}else if(moneyCheck3.isSelected()) {
                 		room.setStartMoney(100);
                 	}else if(moneyCheck4.isSelected()) {
-                		room.setStartMoney(1000);
+                		room.setStartMoney(500);
                 	}
             		
             		makeJF.dispose();

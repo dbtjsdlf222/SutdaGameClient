@@ -154,6 +154,9 @@ public class ClientPacketController {
 			
 		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().getNoAndMoneyLal().setText("[" + packet.getRoom().getRoomNo()+"번방]  시작금액 : " + packet.getRoom().getStartMoney()+"만");
+			RoomScreen.getInstance().getTitleLal().setText("방제 : " + packet.getRoom().getTitle());
+			
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			ChattingOperator.chatArea.setText("<SYSTEM> " + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다.\n");

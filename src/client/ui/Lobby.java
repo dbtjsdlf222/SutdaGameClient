@@ -118,13 +118,15 @@ public class Lobby {
 							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
 									JOptionPane.WARNING_MESSAGE);
 							return;
-						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
+						}
+//						else if() {
+//							
+//						}
+						else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
 								.equals("비공개")) {
 							PasswordInput.getInstance(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])).getIn();
-						}
-						else {
-							
+						}else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
 //							RoomScreen.getInstance().mainScreen();
@@ -403,6 +405,16 @@ public class Lobby {
 	private void initialize() { }
 
 	public JFrame getLobbyJF() { return lobbyJF; }
+	
+	
+	public int checkSit() {
+		
+		String[] checkSit = ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][4].split("/");
+		if(Integer.parseInt(checkSit[0])<Integer.parseInt(checkSit[1])) {
+			return 1;
+		}else
+			return 0;
+	}
 
 
 }

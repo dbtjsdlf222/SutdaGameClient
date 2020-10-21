@@ -111,7 +111,7 @@ public class CalcCardLevel implements Comparable {
 					cal.setCardName("장땡");
 					mungGusa = null;
 				} else {
-					cal.setCardName(cal.cardLevel + "땡");
+					cal.setCardName(Math.floor(card1) + "땡");
 					if (catchDdaeng != null) {
 						playerCardList.get(catchDdaeng).setCardLevel(950);
 					}

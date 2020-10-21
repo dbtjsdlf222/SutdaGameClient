@@ -98,7 +98,6 @@ public class RoomScreen extends JFrame {
 	private JProgressBar progressBar = new JProgressBar(0,10);
 	private static Timer timer = new Timer();
 	private TimerTask task;
-	private String[] arr = {"다이","콜","따당","쿼터","하프","올인","-","-","-","-"};
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -148,25 +147,21 @@ public class RoomScreen extends JFrame {
 	 */
 	public void changeMaster(int idx) {
 		JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
+		remove(masterSticker);
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
 		if (!gameStart && roomMaster == mySit)
 			RoomScreen.getInstance().startBtnSet();
 
 		if (idx == 0) {
-			// frame.setBounds(450, 430, 370, 190);
 			masterSticker.setBounds(440, 440, 15, 15);
 		} else if (idx == 1) {
-			// frame.setBounds(-5, 205, 370, 190);
 			masterSticker.setBounds(355, 215, 15, 15);
 		} else if (idx == 2) {
-			// frame.setBounds(-5, 20, 370, 190);
 			masterSticker.setBounds(355, 30, 15, 15);
 		} else if (idx == 3) {
-			// frame.setBounds(905, 20, 370, 190);
 			masterSticker.setBounds(895, 30, 15, 15);
 		} else if (idx == 4) {
-			// frame.setBounds(905, 205, 370, 190);
 			masterSticker.setBounds(895, 215, 15, 15);
 		}
 		masterSticker.setOpaque(false);
@@ -453,6 +448,7 @@ public class RoomScreen extends JFrame {
 
 	public void mainScreen() {
 		
+		//플레이어 패널
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
 			panlist[i].setBackground(new Color(0, 0, 0, 125));
@@ -476,7 +472,7 @@ public class RoomScreen extends JFrame {
 			return;
 		initialized = true;
 
-		// 채팅 판넬
+		// 채팅 패널
 		JPanel chatPan = new JPanel();
 		chatPan.setBounds(0, 400, 420, 220);
 		chatPan.setBackground(new Color(0, 0, 0, 120));
@@ -595,7 +591,7 @@ public class RoomScreen extends JFrame {
 		setTitle("섯다 온라인");
 		mat(); // 돈판 출력
 		roomInfo(); // 룸정보 출력
-		showNeedMoney(arr);
+		showNeedMoney(betAndBtnInitArr);
 		
 		
 		
@@ -810,7 +806,7 @@ public class RoomScreen extends JFrame {
 		gameStart = false;
 		changeMaster(winerIdx);
 		panlist[turnIndex].remove(progressBar);
-		showNeedMoney(arr);
+		showNeedMoney(betAndBtnInitArr);
 		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));
@@ -831,7 +827,7 @@ public class RoomScreen extends JFrame {
 		beticon = new JLabel[5];
 		if (roomOut || PlayerVO.myVO.getMoney() == 0) {
 			dispose();
-			Lobby.getInstance().lobbyScreen();;
+			Lobby.getInstance().lobbyScreen();
 		}
 	} // gameOver();
 
