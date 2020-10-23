@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.UnsupportedEncodingException;
 
 import javax.swing.BoxLayout;
@@ -72,6 +75,7 @@ public class Lobby {
 
 	public void lobbyScreen() {
 		 lobbyJF = new JFrame();
+		 PopMenu();
 		
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
@@ -400,6 +404,54 @@ public class Lobby {
 		
 	}
 	
+	public void PopMenu() {
+		PopupMenu pm = new PopupMenu();
+		ClientPacketController.playerJT.add(pm);
+		MenuItem m1 = new MenuItem("GIi");
+		MenuItem m2 = new MenuItem("DMDS");
+		MenuItem m3 = new MenuItem("ONMSD");
+		
+		pm.add(m1);
+		pm.add(m2);
+		pm.add(m3);
+
+		ClientPacketController.playerJT.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println(ClientPacketController.playerJT.getSelectedRow());
+					System.out.println("클릭");
+					pm.show(ClientPacketController.playerJT, e.getX(), e.getY());
+				}
+			}
+		});
+		
+	}
 
 	private void initialize() { }
 
@@ -407,7 +459,6 @@ public class Lobby {
 	
 	
 	public int checkSit() {
-		
 		String[] checkSit = ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][4].split("/");
 		if(Integer.parseInt(checkSit[0])<Integer.parseInt(checkSit[1])) {
 			return 1;
