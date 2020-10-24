@@ -15,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,8 +29,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -76,6 +79,7 @@ public class RoomScreen extends JFrame {
 	private int mySit; // 서버상 내 index
 	private JLabel totalMoney = new JLabel();
 	
+	private JTextField chatText;
 	private JPanel[] panlist = new JPanel[5];
 	private JLabel[] card1 = new JLabel[5];
 	private JLabel[] card2 = new JLabel[5];
@@ -481,7 +485,7 @@ public class RoomScreen extends JFrame {
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 채팅 필드
-		JTextField chatText = new JTextField();
+		chatText = new JTextField();
 		chatText.setBounds(10, 186, 320, 25);
 		chatPan.add(chatText);
 		chatText.requestFocus();
@@ -592,6 +596,7 @@ public class RoomScreen extends JFrame {
 		mat(); // 돈판 출력
 		roomInfo(); // 룸정보 출력
 		showNeedMoney(betAndBtnInitArr);
+		PopMenu();
 		
 		
 		
@@ -951,6 +956,85 @@ public class RoomScreen extends JFrame {
 		setSit(index, vo);
 	} // enterPlayerList();
 
+	
+	public void PopMenu() {
+		//팝업메뉴 추가
+		JPopupMenu popupMenu = new JPopupMenu();
+		
+		//팝업메뉴에 아이템 추가
+		JMenuItem whisperItem = new JMenuItem("귓말");
+		JMenuItem kickItem = new JMenuItem("추방");
+			
+	
+		//아이템 기눙 구현
+		whisperItem.addActionListener(new ActionListener() {
+				
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chatText.setText("/귓말 " + ClientPacketController.pn[ClientPacketController.playerJT.getSelectedRow()][0] + " ");
+				chatText.requestFocus();
+			}
+		});
+		kickItem.addActionListener(new ActionListener() {
+				
+			@Override
+			public void actionPerformed(ActionEvent e) {
+	//			ClientPacketSender.instance.kick();
+			}
+		});
+			
+		//팝업메뉴에 아이템 추가
+		popupMenu.add(whisperItem);
+		popupMenu.add(kickItem);
+	
+		//JTable에 팝업메뉴 추가
+		add(popupMenu);
+			
+		for (int i = 0; i < profile.length; i++) {
+		
+			try {
+				profile[i].addMouseListener(new MouseListener() {
+					
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						
+						if(e.getButton() == MouseEvent.BUTTON1) {
+							popupMenu.show(profile[1], e.getX(), e.getY());
+						}
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+					}
+					
+				});
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+			
+	}
 	
 	
 

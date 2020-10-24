@@ -1,18 +1,14 @@
 package client.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.MenuItem;
-import java.awt.PopupMenu;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,26 +17,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.UnsupportedEncodingException;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -61,6 +52,7 @@ public class Lobby {
 	private JButton exitBtn;
 	private JButton newBtn;
 	private JPanel infoPan;
+	private JTextField chatText;
 	public static JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("/img/infoMoney.png")));
 	
 	private Lobby() {};
@@ -249,7 +241,7 @@ public class Lobby {
 		chatPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 
 		// 채팅 필드
-		JTextField chatText = new JTextField();
+		chatText = new JTextField();
 		chatText.setBounds(10, 225, 720, 25);
 		
 	    // 15글자 넘어가면 입력불가
@@ -347,9 +339,10 @@ public class Lobby {
 				.getDefaultRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
 		ClientPacketController.playerJT.getTableHeader().setDefaultRenderer(renderer);
-
+		
 		ClientPacketController.playerJT.getTableHeader().setBackground(Color.orange);
 		ClientPacketController.playerJT.setShowVerticalLines(false);
+		ClientPacketController.playerJT.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ClientPacketController.playerJT.setSelectionBackground(new Color(232, 57, 95));
 		ClientPacketController.playerJT.setRowHeight(30);
 		ClientPacketController.playerJT.setFont(new Font("휴먼편지체", Font.PLAIN, 15));
@@ -405,28 +398,49 @@ public class Lobby {
 	}
 	
 	public void PopMenu() {
-		PopupMenu pm = new PopupMenu();
-		ClientPacketController.playerJT.add(pm);
-		MenuItem m1 = new MenuItem("GIi");
-		MenuItem m2 = new MenuItem("DMDS");
-		MenuItem m3 = new MenuItem("ONMSD");
 		
-		pm.add(m1);
-		pm.add(m2);
-		pm.add(m3);
+		//팝업메뉴 추가
+		JPopupMenu popupMenu = new JPopupMenu();
+		
+		//팝업메뉴에 아이템 추가
+		JMenuItem whisperItem = new JMenuItem("귓말");
+		JMenuItem m2 = new JMenuItem("어쩌구");
+		JMenuItem m3 = new JMenuItem("저쩌구");
+		
 
+		//아이템 기눙 구현
+		whisperItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chatText.setText("/귓말 " + ClientPacketController.pn[ClientPacketController.playerJT.getSelectedRow()][0] + " ");
+				chatText.requestFocus();
+			}
+		});
+		
+		
+		//팝업메뉴에 아이템 추가
+		popupMenu.add(whisperItem);
+		popupMenu.add(m2);
+		popupMenu.add(m3);
+
+		//JTable에 팝업메뉴 추가
+		ClientPacketController.playerJT.add(popupMenu);
+		
 		ClientPacketController.playerJT.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
+				//왼쪽클릭 || 내 자신이 아니면 팝업메뉴 실행 
+				if(e.getButton() == MouseEvent.BUTTON1 && !ClientPacketController.pn[ClientPacketController.playerJT.getSelectedRow()][0].equals(PlayerVO.myVO.getNic())) {
+					popupMenu.show(ClientPacketController.playerJT, e.getX(), e.getY());
+				}
 			}
 			
 			@Override
@@ -443,11 +457,9 @@ public class Lobby {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getButton() == MouseEvent.BUTTON3) {
-					System.out.println(ClientPacketController.playerJT.getSelectedRow());
-					System.out.println("클릭");
-					pm.show(ClientPacketController.playerJT, e.getX(), e.getY());
-				}
+				//내자신이 아닌경우 실행하고 팝업메뉴가 꺼지면서 JTable 선택 행 초기화 
+				if(!ClientPacketController.pn[ClientPacketController.playerJT.getSelectedRow()][0].equals(PlayerVO.myVO.getNic()))
+					ClientPacketController.playerJT.clearSelection();
 			}
 		});
 		

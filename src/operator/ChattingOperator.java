@@ -32,19 +32,23 @@ public class ChattingOperator {
 	public void oneChatting(String msg) {
 		String[] msgCheck = msg.split(" ");
 		String nic = null;
-		if(msgCheck.length<=2) {
+		if(msgCheck.length>=2) {
 			nic = msgCheck[1];
 		}
 
 		switch (msgCheck[0]) {
-		case "/ㅈ":
 		case "/w":
+		case "/귓말":
 			if(msgCheck.length >=3) {
 				PlayerVO vo = new PlayerVO();
 				vo.setNic(nic);
 			
 				String[] oneMsg = msg.split(msgCheck[0] + " " + nic);
-			
+				System.out.println(msgCheck[0]);
+				System.out.println(msgCheck[1]);
+				System.out.println(msgCheck[2]);
+				System.out.println(nic);
+				System.out.println(oneMsg[0]);
 				if(!PlayerVO.myVO.getNic().equals(nic)) {
 					Packet pac = new Packet(Protocol.WHISPER, oneMsg[1], vo);
 					Packing.sender(PlayerVO.myVO.getPwSocket(), pac);

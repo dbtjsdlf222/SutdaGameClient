@@ -114,16 +114,16 @@ public class ServerDAO {
 		nick = vo.getNic();
 		character = vo.getCha();
 
-		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `ip`, `character`) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO player(`id`, `password`, `nickname`, `character`) VALUES (?,?,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			pstmt.setString(3, nick);
-			pstmt.setString(4, ip);
 			pstmt.setInt(5, character);
-
 			result = pstmt.executeUpdate();
+			System.out.println(result);
+			System.out.println(pstmt.executeUpdate());
 		} catch (Exception e) {
 			e.getMessage();
 		}
