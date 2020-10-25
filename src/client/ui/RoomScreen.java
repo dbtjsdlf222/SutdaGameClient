@@ -909,7 +909,7 @@ public class RoomScreen extends JFrame {
 			panlist[i].add(nicText[i]);
 			moneyText[i].setOpaque(false);
 			panlist[i].add(moneyText[i]);
-			PopMenu(i);
+			pMenu(i);
 			revalidate();
 			repaint();
 
@@ -957,82 +957,80 @@ public class RoomScreen extends JFrame {
 	} // enterPlayerList();
 
 	
-	public void PopMenu(int sit) {
-		//팝업메뉴 추가
-		JPopupMenu popupMenu = new JPopupMenu();
+	public void pMenu(int sit) {
+		//자신은 popupMenu를 추가하지 않음
+		if(!(mySit == sit)) {
 		
-		//팝업메뉴에 아이템 추가
-		JMenuItem whisperItem = new JMenuItem("귓말");
-		JMenuItem kickItem = new JMenuItem("추방");
+			//팝업메뉴 추가
+			JPopupMenu popupMenu = new JPopupMenu();
 			
+			//팝업메뉴에 아이템 추가
+			JMenuItem whisperItem = new JMenuItem("귓말");
+				
+		
+			//아이템 기눙 구현
+			whisperItem.addActionListener(new ActionListener() {
+					
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					chatText.setText("/귓말 " + nicText[sit].getText() + " ");
+					chatText.requestFocus();
+				}
+			});//addActionListener();
+				
+			//팝업메뉴에 아이템 추가
+			popupMenu.add(whisperItem);
+			
+			//방장일 경우 추방 아이템 추가
+			if(roomMaster == mySit) {
+				JMenuItem kickItem = new JMenuItem("추방");		
+		
+				//추방 아이템 기능 구현
+				kickItem.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ClientPacketSender.instance.kick(nicText[sit].getText());
+					}
+				});//addActionListener();
+						
+				//팝업메뉴에 추방 아이템 추가
+				popupMenu.add(kickItem);
 	
-		//아이템 기눙 구현
-		whisperItem.addActionListener(new ActionListener() {
-				
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				chatText.setText("/귓말 " + nicText[sit].getText() + " ");
-				chatText.requestFocus();
 			}
-		});
-		kickItem.addActionListener(new ActionListener() {
-				
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ClientPacketSender.instance.kick(nicText[sit].getText());
-			}
-		});
 			
-		//팝업메뉴에 아이템 추가
-		popupMenu.add(whisperItem);
-		popupMenu.add(kickItem);
-	
-		//JTable에 팝업메뉴 추가
-		add(popupMenu);
 			
 		
-			try {
-				profile[sit].addMouseListener(new MouseListener() {
-					
-					
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						
-					}
-					
-					@Override
-					public void mousePressed(MouseEvent e) {
-						
-						if(e.getButton() == MouseEvent.BUTTON1) {
-							popupMenu.show(profile[sit], e.getX(), e.getY());
-						}
-					}
-					
-					@Override
-					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseClicked(MouseEvent e) {
-					}
-					
-				});
+			//JTable에 팝업메뉴 추가
+			add(popupMenu);
 				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
-		
-			
-	}
+				try {
+					profile[sit].addMouseListener(new MouseListener() {
+						
+						@Override
+						public void mousePressed(MouseEvent e) {	
+							if(e.getButton() == MouseEvent.BUTTON1) {
+								popupMenu.show(profile[sit], e.getX(), e.getY());
+							}
+						}//mousePressed();
+						
+						@Override
+						public void mouseReleased(MouseEvent e) {}
+						@Override
+						public void mouseExited(MouseEvent e) {}
+						@Override
+						public void mouseEntered(MouseEvent e) {}
+						@Override
+						public void mouseClicked(MouseEvent e) {}
+						
+					});//addMouseListener();
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}//try~catch			
+		}//if(!(mySit == sit));
+	}//pMenu();
 	
 	
 
