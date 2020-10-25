@@ -27,7 +27,6 @@ import server.Room;
 
 public class PasswordInput {
 	private static PasswordInput instance;
-	
 	private Background imgP;
 	private Container con;
 	private int no;
@@ -51,7 +50,7 @@ public class PasswordInput {
 	    pwlbl.setBounds(10, 55, 120, 30);
 	    pwlbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
 	    pwlbl.setForeground(new Color(255, 255, 255, 150));
-	      
+	    
 	    JTextField pwField = new JTextField();
 	    pwField.setBounds(100, 55, 270, 30);
 	    // 10글자 넘어가면 입력불가
@@ -74,7 +73,6 @@ public class PasswordInput {
 	  	okBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	  		
 	  	okBtn.addActionListener(new ActionListener() {
-	  		
 	  			
 	  		@Override
 	  		public void actionPerformed(ActionEvent e) {
@@ -89,9 +87,7 @@ public class PasswordInput {
 	  			}
 	  		}
 	  	});
-	  		
-	  		
-	  		
+
 	  	JButton cancelBtn = new JButton("취 소");
 	  	cancelBtn.setBounds(231, 100, 120, 50);
 //	  	cancelBtn.setBackground(new Color(0, 0, 0, 0));
@@ -108,8 +104,6 @@ public class PasswordInput {
 	  			}
 	  		}
 	  	});
-	    
-		
 
 		// Room의 큰 틀
 		JLabel roomlbl = new JLabel("방 입 장");

@@ -290,11 +290,11 @@ public class JoinFrame {
 						if (match.find()) {
 							if (text.equals("")) {
 								_text = "아이디를 입력해주세요.";
-							} else if (text.length() < 5 && text.length() > 10) {
-								_text = "5 ~ 10자리 이하만 가능합니다.";
+							} else if (text.length() < 6 && text.length() > 12) {
+								_text = "6 ~ 12자리 이하만 가능합니다.";
 							} else if (playerDAO.selectID(text)) {
 								_text = "이미 생성된 아이디 입니다.";
-							} else if (text.length() <= 10 && text.length() >= 5) {
+							} else if (text.length() <= 12 && text.length() >= 6) {
 								_text = "생성 가능한 아이디 입니다.";
 								Thread.sleep(0);
 								idCheck = true;
@@ -467,20 +467,13 @@ public class JoinFrame {
 								if (bg.isSelected(null)) {
 									JOptionPane.showMessageDialog(null, "캐릭터를 선택해주세요.");
 									return;
-								} else if (cha0Btn.isSelected()) {
-									playerVO.setCha(0);
-								} else if (cha1Btn.isSelected()) {
-									playerVO.setCha(1);
-								} else if (cha2Btn.isSelected()) {
-									playerVO.setCha(2);
-								} else if (cha3Btn.isSelected()) {
-									playerVO.setCha(3);
-								} else if (cha5Btn.isSelected()) {
-									playerVO.setCha(5);
-								} else if (cha6Btn.isSelected()) {
-									playerVO.setCha(6);
-								}
-
+								} else 
+								if (cha0Btn.isSelected()) { playerVO.setCha(0); } else 
+								if (cha1Btn.isSelected()) { playerVO.setCha(1); } else
+								if (cha2Btn.isSelected()) { playerVO.setCha(2); } else
+								if (cha3Btn.isSelected()) { playerVO.setCha(3); } else 
+								if (cha5Btn.isSelected()) { playerVO.setCha(5); } else 
+								if (cha6Btn.isSelected()) { playerVO.setCha(6); }
 							}
 							try {
 								playerVO.joinPlayer(textFieldId.getText(), new String(passwordField.getPassword()),
