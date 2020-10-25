@@ -34,7 +34,7 @@ public class ClientPacketSender {
 	} // exitRoom();
 
 	public void kick(String nic) {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.KICKROOM, nic);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.KICK, nic);
 	} // exitRoom();
 
 	public void login(String id, String pw) {

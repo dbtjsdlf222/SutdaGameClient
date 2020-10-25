@@ -596,7 +596,7 @@ public class RoomScreen extends JFrame {
 		mat(); // 돈판 출력
 		roomInfo(); // 룸정보 출력
 		showNeedMoney(betAndBtnInitArr);
-		PopMenu();
+		
 		
 		
 		
@@ -909,7 +909,7 @@ public class RoomScreen extends JFrame {
 			panlist[i].add(nicText[i]);
 			moneyText[i].setOpaque(false);
 			panlist[i].add(moneyText[i]);
-
+			PopMenu(i);
 			revalidate();
 			repaint();
 
@@ -957,7 +957,7 @@ public class RoomScreen extends JFrame {
 	} // enterPlayerList();
 
 	
-	public void PopMenu() {
+	public void PopMenu(int sit) {
 		//팝업메뉴 추가
 		JPopupMenu popupMenu = new JPopupMenu();
 		
@@ -971,7 +971,7 @@ public class RoomScreen extends JFrame {
 				
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				chatText.setText("/귓말 " + ClientPacketController.pn[ClientPacketController.playerJT.getSelectedRow()][0] + " ");
+				chatText.setText("/귓말 " + nicText[sit].getText() + " ");
 				chatText.requestFocus();
 			}
 		});
@@ -979,7 +979,7 @@ public class RoomScreen extends JFrame {
 				
 			@Override
 			public void actionPerformed(ActionEvent e) {
-	//			ClientPacketSender.instance.kick();
+				ClientPacketSender.instance.kick(nicText[sit].getText());
 			}
 		});
 			
@@ -990,10 +990,9 @@ public class RoomScreen extends JFrame {
 		//JTable에 팝업메뉴 추가
 		add(popupMenu);
 			
-		for (int i = 0; i < profile.length; i++) {
 		
 			try {
-				profile[i].addMouseListener(new MouseListener() {
+				profile[sit].addMouseListener(new MouseListener() {
 					
 					
 					@Override
@@ -1005,7 +1004,7 @@ public class RoomScreen extends JFrame {
 					public void mousePressed(MouseEvent e) {
 						
 						if(e.getButton() == MouseEvent.BUTTON1) {
-							popupMenu.show(profile[1], e.getX(), e.getY());
+							popupMenu.show(profile[sit], e.getX(), e.getY());
 						}
 					}
 					
@@ -1031,7 +1030,6 @@ public class RoomScreen extends JFrame {
 				e.printStackTrace();
 			}
 			
-		}
 		
 			
 	}
