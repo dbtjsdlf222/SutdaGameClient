@@ -179,6 +179,9 @@ public class ClientPacketController {
 		case Protocol.CHANGE_MASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
+		case Protocol.RELOAD_PlAYERLIST:
+			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
+			break;
 
 		case Protocol.CARD:
 			RoomScreen.getInstance().receiveCard(packet.getCard());

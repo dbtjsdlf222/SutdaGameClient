@@ -28,6 +28,9 @@ public class ClientPacketSender {
 		PlayerVO.myVO.setRoomNo(roomNo);
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTER_ROOM, PlayerVO.myVO);
 	} // enterRoom();
+	public void reloadPlayerList() {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.RELOAD_PlAYERLIST, PlayerVO.myVO);
+	}
 
 	public void exitRoom() {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXIT_ROOM, PlayerVO.myVO);
