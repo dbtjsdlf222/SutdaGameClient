@@ -960,7 +960,11 @@ public class RoomScreen extends JFrame {
 		setSit(index, vo);
 	} // enterPlayerList();
 
-	
+	/*
+	 * sit = 클라이언트 기준 앉은 자리
+	 * mySit = 서버상 내가 앉아 있는 자리
+	 *  
+	 */
 	public void pMenu(int sit) {
 		
 		System.out.println("플레이어 : " + PlayerVO.myVO.getNic());
@@ -989,7 +993,7 @@ public class RoomScreen extends JFrame {
 		popupMenu.add(whisperItem);
 		
 		//방장일 경우 추방 아이템 추가
-		if(roomMaster == mySit) {
+		if(roomMaster == sit) {
 			JMenuItem kickItem = new JMenuItem("추방");		
 			System.out.println("들어옴");
 			
@@ -1013,14 +1017,14 @@ public class RoomScreen extends JFrame {
 		add(popupMenu);
 			
 		
+		//자신은 popupMenu를 띄우지 않음
+		if(!(profile[sit] == profile[0]))
 			profile[sit].addMouseListener(new MouseListener() {
 				
 				@Override
 				public void mousePressed(MouseEvent e) {	
 					if(e.getButton() == MouseEvent.BUTTON1) {
-						//자신은 popupMenu를 띄우지 않음
-						if(!(e.getSource() == profile[0]))
-							popupMenu.show(profile[sit], e.getX(), e.getY());
+						popupMenu.show(profile[sit], e.getX(), e.getY());
 					}
 				}//mousePressed();
 					
