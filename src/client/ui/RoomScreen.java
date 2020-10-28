@@ -145,12 +145,15 @@ public class RoomScreen extends JFrame {
 		repaint();
 
 	} // exitPlayer();
+	
+	public void setRoomMaster(int idx) {
+		roomMaster = idx;
+	}
 
 	/**
 	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
 	public void changeMaster(int idx) {
-		
 		remove(masterSticker);
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
@@ -453,9 +456,8 @@ public class RoomScreen extends JFrame {
 		revalidate();
 		repaint();
 	}
-
-	public void mainScreen() {
-		
+	
+	public void setPanList() {
 		//플레이어 패널
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
@@ -473,7 +475,12 @@ public class RoomScreen extends JFrame {
 			}
 			add(panlist[i]);
 		} // for
+		
+	}
 
+	public void mainScreen() {
+		
+		setPanList();
 		setButtonAndPrice(betAndBtnInitArr);
 		buttonReset();
 		if (initialized)
@@ -939,6 +946,11 @@ public class RoomScreen extends JFrame {
 //		} //for
 
 		mySit = index;
+		for (int i = 0; i < 5; i++) {
+			remove(panlist[i]);
+		}
+		
+		setPanList();
 
 		for (int i = 0; i < 5; i++) {
 			int j;
@@ -946,7 +958,6 @@ public class RoomScreen extends JFrame {
 			PlayerVO setVO = voList.get(j);
 			if (setVO == null)
 				continue;
-
 			setSit(i, setVO);
 
 		} // for
@@ -966,13 +977,6 @@ public class RoomScreen extends JFrame {
 	 *  
 	 */
 	public void pMenu(int sit) {
-		
-		System.out.println("플레이어 : " + PlayerVO.myVO.getNic());
-		System.out.println("mySit : " + mySit);
-		System.out.println("masterIdex : " + roomMaster);
-		System.out.println("sit : " + sit);
-		System.out.println();
-		
 		//팝업메뉴 추가
 		JPopupMenu popupMenu = new JPopupMenu();
 		
@@ -993,9 +997,8 @@ public class RoomScreen extends JFrame {
 		popupMenu.add(whisperItem);
 		
 		//방장일 경우 추방 아이템 추가
-		if(roomMaster == sit) {
+		if(roomMaster == mySit) {
 			JMenuItem kickItem = new JMenuItem("추방");		
-			System.out.println("들어옴");
 			
 			//추방 아이템 기능 구현
 			kickItem.addActionListener(new ActionListener() {
@@ -1008,15 +1011,16 @@ public class RoomScreen extends JFrame {
 						
 			//팝업메뉴에 추방 아이템 추가
 			popupMenu.add(kickItem);
+			
+			add(back);
+			revalidate();
+			repaint();
 	
 		}
-			
-			
-		
+
 		//JTable에 팝업메뉴 추가
 		add(popupMenu);
 			
-		
 		//자신은 popupMenu를 띄우지 않음
 		if(!(profile[sit] == profile[0]))
 			profile[sit].addMouseListener(new MouseListener() {
