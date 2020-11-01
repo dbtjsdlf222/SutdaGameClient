@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import client.ui.Invited;
 import client.ui.Lobby;
+import client.ui.PasswordInput;
 import client.ui.RoomScreen;
 import operator.ChattingOperator;
 import server.Room;
@@ -150,7 +151,12 @@ public class ClientPacketController {
 			break;
 
 		case Protocol.PASSWORD:
-			ChattingOperator.chatArea.setText("<SYSTEM> 비밀번호를 다르게 입력하셨습니다.");
+			if (packet.getMotion().equals("true")) {
+				PasswordInput.getInstance().dispose();
+			}else {
+				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다.", "알림", JOptionPane.ERROR_MESSAGE );
+//				ChattingOperator.chatArea.setText("<SYSTEM> 비밀번호를 다르게 입력하셨습니다.");
+			}
 			break;
 			
 		case Protocol.ENTER_ROOM:

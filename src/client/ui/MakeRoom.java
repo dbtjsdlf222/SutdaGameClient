@@ -240,9 +240,9 @@ public class MakeRoom {
          public void actionPerformed(ActionEvent e) {            
         	 if(e.getSource()==okBtn) {
             	if(titleField.getText().trim().equals("")) {
-            		JOptionPane.showMessageDialog(null, "방제목을 입력해주세요. ", "알림", JOptionPane.WARNING_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "방제목을 입력해주세요. ", "알림", JOptionPane.ERROR_MESSAGE);
             	}else if(!(moneyCheck1.isSelected() || moneyCheck2.isSelected() || moneyCheck3.isSelected() || moneyCheck4.isSelected())) {
-            		JOptionPane.showMessageDialog(null, "배팅금액을 설정해주세요. ", "알림", JOptionPane.WARNING_MESSAGE);
+            		JOptionPane.showMessageDialog(null, "배팅금액을 설정해주세요. ", "알림", JOptionPane.ERROR_MESSAGE);
             	}else {
             		Room room = new Room();
             		room.setTitle(titleField.getText());

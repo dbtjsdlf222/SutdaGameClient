@@ -151,11 +151,11 @@ public class Invited {
 		con.add(roomPan);
 		con.add(imgP, BorderLayout.CENTER);
 		inviteJF.setSize(400, 250);
-		inviteJF.setVisible(true);
 		inviteJF.setResizable(false);
 		inviteJF.setLocationRelativeTo(null);
 		inviteJF.setLayout(null);
-		inviteJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		inviteJF.setDefaultCloseOperation(inviteJF.EXIT_ON_CLOSE);
+		inviteJF.setVisible(true);
 		inviteJF.setAlwaysOnTop(true);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
