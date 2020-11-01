@@ -1,15 +1,11 @@
 package server;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Map.Entry;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import client.ui.RoomScreen;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -17,9 +13,10 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
+	protected Socket socket;
 	
 	public ServerPacketController(Socket socket) {
-		super.socket = socket;
+		this.socket = socket;
 		thisPlayerVO.setSocketWithBrPw(socket);
 	} //ServerPacketController();
 	

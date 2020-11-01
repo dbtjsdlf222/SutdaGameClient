@@ -10,7 +10,6 @@ import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import dao.ServerDAO;
 import util.CalcCardLevel;
 import util.Packing;
 import vo.Packet;

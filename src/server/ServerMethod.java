@@ -1,8 +1,6 @@
 package server;
 
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,23 +21,12 @@ public class ServerMethod {
 	protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 
 	protected ServerDAO serverDAO = new ServerDAO();
-	protected Socket socket;
 	protected static Hashtable<String, PrintWriter> playerOnlineList = new Hashtable<String, PrintWriter>();
 	
 	public void exitPlayer() {
 
 		if (thisPlayerVO.getRoomNo() != 0) {
 			ro.getRoom(thisPlayerVO.getRoomNo()).exitPlayer(thisPlayerVO);
-//			Packet packet = new Packet();
-//			packet.setPlayerVO(thisPlayerVO);
-//			packet.setAction(Protocol.EXITOTHERROOM);
-//			packet.setMotion(thisPlayerVO.getIndex()+"");
-//			ro.getRoom(thisPlayerVO.getRoomNo()).roomSpeaker(packet);
-			
-//			if (ro.getRoom(thisPlayerVO.getRoomNo()).getList().size() <= 0) {
-//				ro.removeRoom(thisPlayerVO.getRoomNo());
-//				lobbyReloadBroadcast();
-//			}
 		} else {
 			lobbyExitBroadcast();
 		} // if~else
@@ -74,6 +61,7 @@ public class ServerMethod {
 		packet.setRoomMap(ro.getAllRoom());
 		lobbyBroadcast(packet);
 	}
+	
 	public void infoReloadcast() {
 		Packet packet = new Packet();
 		packet.setProtocol(Protocol.RELOAD_INFO_MONEY);
@@ -88,15 +76,4 @@ public class ServerMethod {
 		return lobbyPlayerList;
 	}
 	
-	public static void main(String[] args) {
-		long n=17;
-		System.out.println(f(n));
-	}
-	public static long f(long n) {
-		if(n==0) {
-			return 1;
-		}else {
-			return n*f(n-1);
-		}
-	}
 }
