@@ -133,6 +133,7 @@ public class ClientPacketController {
 			
 		case Protocol.MAKE_ROOM:
 			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().setRoomMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().getNoAndMoneyLal().setText("[" + packet.getRoom().getRoomNo()+"번방]  시작금액 : " + packet.getRoom().getStartMoney()+"만");
 			RoomScreen.getInstance().getTitleLal().setText("방제 : " + packet.getRoom().getTitle());
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
@@ -154,6 +155,7 @@ public class ClientPacketController {
 			
 		case Protocol.ENTER_ROOM:
 			RoomScreen.getInstance().mainScreen();
+			RoomScreen.getInstance().setRoomMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().getNoAndMoneyLal().setText("[" + packet.getRoom().getRoomNo()+"번방]  시작금액 : " + packet.getRoom().getStartMoney()+"만");
 			RoomScreen.getInstance().getTitleLal().setText("방제 : " + packet.getRoom().getTitle());
 			
@@ -178,6 +180,9 @@ public class ClientPacketController {
 
 		case Protocol.CHANGE_MASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
+			break;
+		case Protocol.RELOAD_PlAYERLIST:
+			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			break;
 
 		case Protocol.CARD:

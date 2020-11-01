@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -109,24 +110,25 @@ public class MakeRoom {
       pwPan.add(pwlbl);
       pwPan.add(pwField);
       
+      long[] battingPoint = {10, 50, 100, 500};
+      
       //시작 금액
-      JRadioButton moneyCheck1 = new JRadioButton ("10만");
+      JRadioButton moneyCheck1 = new JRadioButton (battingPoint[0] + "만");
       moneyCheck1.setBounds(130, 0, 50, 30);
       moneyCheck1.setBackground(new Color(255, 255, 255));
       moneyCheck1.setForeground(new Color(0, 0, 0));
-      moneyCheck1.setSelected(true);
 
-      JRadioButton moneyCheck2 = new JRadioButton  ("50만");
+      JRadioButton moneyCheck2 = new JRadioButton  (battingPoint[1] + "만");
       moneyCheck2.setBounds(206, 0, 50, 30);
       moneyCheck2.setBackground(new Color(255, 255, 255));
       moneyCheck2.setForeground(new Color(0, 0, 0));
       
-      JRadioButton moneyCheck3 = new JRadioButton ("100만");
+      JRadioButton moneyCheck3 = new JRadioButton (battingPoint[2] + "만");
       moneyCheck3.setBounds(283, 0, 60, 30);
       moneyCheck3.setBackground(new Color(255, 255, 255));
       moneyCheck3.setForeground(new Color(0, 0, 0));
       
-      JRadioButton moneyCheck4 = new JRadioButton ("500만");
+      JRadioButton moneyCheck4 = new JRadioButton (battingPoint[3] + "만");
       moneyCheck4.setBounds(370, 0, 65, 30);
       moneyCheck4.setBackground(new Color(255, 255, 255));
       moneyCheck4.setForeground(new Color(0, 0, 0));
@@ -136,6 +138,16 @@ public class MakeRoom {
       btnGroup.add(moneyCheck2);
       btnGroup.add(moneyCheck3);
       btnGroup.add(moneyCheck4);
+      
+      if(PlayerVO.myVO.getMoney() < battingPoint[0])
+    	  moneyCheck1.setEnabled(false);
+      if(PlayerVO.myVO.getMoney() < battingPoint[1])
+    	  moneyCheck2.setEnabled(false);
+      if(PlayerVO.myVO.getMoney() < battingPoint[2])
+    	  moneyCheck3.setEnabled(false);
+      if(PlayerVO.myVO.getMoney() < battingPoint[3])
+    	  moneyCheck4.setEnabled(false);
+      
       
       JLabel moneylbl = new JLabel("시 작 금 액 : ");
       moneylbl.setBounds(10, 0, 120, 30);
@@ -214,7 +226,7 @@ public class MakeRoom {
       pPan.add(upBtn);
       pPan.add(downBtn);
       
-      //만들기 / 취소 버튼
+      //만들기버튼
       JButton okBtn = new JButton("만들기");
       okBtn.setBounds(50, 235, 153, 50);
 //      okBtn.setBackground(new Color(0, 0, 0, 0));
@@ -225,9 +237,13 @@ public class MakeRoom {
       okBtn.addActionListener(new ActionListener() {
          
          @Override
-         public void actionPerformed(ActionEvent e) {
-            if(e.getSource()==okBtn) {
-            	if(!titleField.getText().equals("")) {
+         public void actionPerformed(ActionEvent e) {            
+        	 if(e.getSource()==okBtn) {
+            	if(titleField.getText().trim().equals("")) {
+            		JOptionPane.showMessageDialog(null, "방제목을 입력해주세요. ", "알림", JOptionPane.WARNING_MESSAGE);
+            	}else if(!(moneyCheck1.isSelected() || moneyCheck2.isSelected() || moneyCheck3.isSelected() || moneyCheck4.isSelected())) {
+            		JOptionPane.showMessageDialog(null, "배팅금액을 설정해주세요. ", "알림", JOptionPane.WARNING_MESSAGE);
+            	}else {
             		Room room = new Room();
             		room.setTitle(titleField.getText());
             		
@@ -253,15 +269,12 @@ public class MakeRoom {
             		make=false;
             		Lobby.getInstance().getLobbyJF().dispose();
             		ClientPacketSender.instance.makeRoom(room);
-            		
-            	}else {
-            		ChattingOperator.chatArea.append("<SYSTEM> 방제를 입력해주세요.\n");
-            		makeJF.dispose();
-            	}//if(titleField.getText()!=null)
+            	}
             }//if(e.getsorce())
          }//actionPerformed()
       });//addActionListener()
       
+      //취소 버튼
       JButton cancelBtn = new JButton("취소");
       cancelBtn.setBounds(262, 235, 153, 50);
 //    cancelBtn.setBackground(new Color(0, 0, 0, 0));
@@ -311,6 +324,7 @@ public class MakeRoom {
       makeJF.setResizable(false);
       makeJF.setLocationRelativeTo(null);
       makeJF.setLayout(null);
+//      makeJF.setDefaultCloseOperation(makeJF.EXIT_ON_CLOSE);
       makeJF.setAlwaysOnTop(true);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();

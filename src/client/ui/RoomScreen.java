@@ -101,6 +101,7 @@ public class RoomScreen extends JFrame {
 	private JProgressBar progressBar = new JProgressBar(0,10);
 	private static Timer timer = new Timer();
 	private TimerTask task;
+	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -144,17 +145,23 @@ public class RoomScreen extends JFrame {
 		repaint();
 
 	} // exitPlayer();
+	
+	public void setRoomMaster(int idx) {
+		roomMaster = idx;
+	}
 
 	/**
 	 * @param idx 방장이 나가거나 죽었을경우 방장 위임할 인덱스
 	 */
 	public void changeMaster(int idx) {
-		JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
 		remove(masterSticker);
 		roomMaster = idx;
 		idx = (idx - mySit + 5) % 5;
-		if (!gameStart && roomMaster == mySit)
+		if (!gameStart && roomMaster == mySit) {
+			ClientPacketSender.instance.reloadPlayerList();
 			RoomScreen.getInstance().startBtnSet();
+		}
+			
 
 		if (idx == 0) {
 			masterSticker.setBounds(440, 440, 15, 15);
@@ -449,9 +456,8 @@ public class RoomScreen extends JFrame {
 		revalidate();
 		repaint();
 	}
-
-	public void mainScreen() {
-		
+	
+	public void setPanList() {
 		//플레이어 패널
 		for (int i = 0; i < 5; i++) {
 			panlist[i] = new JPanel();
@@ -469,7 +475,12 @@ public class RoomScreen extends JFrame {
 			}
 			add(panlist[i]);
 		} // for
+		
+	}
 
+	public void mainScreen() {
+		
+		setPanList();
 		setButtonAndPrice(betAndBtnInitArr);
 		buttonReset();
 		if (initialized)
@@ -935,6 +946,11 @@ public class RoomScreen extends JFrame {
 //		} //for
 
 		mySit = index;
+		for (int i = 0; i < 5; i++) {
+			remove(panlist[i]);
+		}
+		
+		setPanList();
 
 		for (int i = 0; i < 5; i++) {
 			int j;
@@ -942,7 +958,6 @@ public class RoomScreen extends JFrame {
 			PlayerVO setVO = voList.get(j);
 			if (setVO == null)
 				continue;
-
 			setSit(i, setVO);
 
 		} // for
@@ -956,80 +971,77 @@ public class RoomScreen extends JFrame {
 		setSit(index, vo);
 	} // enterPlayerList();
 
-	
+	/*
+	 * sit = 클라이언트 기준 앉은 자리
+	 * mySit = 서버상 내가 앉아 있는 자리
+	 *  
+	 */
 	public void pMenu(int sit) {
-		//자신은 popupMenu를 추가하지 않음
-		if(!(mySit == sit)) {
+		//팝업메뉴 추가
+		JPopupMenu popupMenu = new JPopupMenu();
 		
-			//팝업메뉴 추가
-			JPopupMenu popupMenu = new JPopupMenu();
+		//팝업메뉴에 아이템 추가
+		JMenuItem whisperItem = new JMenuItem("귓말");
 			
-			//팝업메뉴에 아이템 추가
-			JMenuItem whisperItem = new JMenuItem("귓말");
+		//아이템 기눙 구현
+		whisperItem.addActionListener(new ActionListener() {
 				
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				chatText.setText("/귓말 " + nicText[sit].getText() + " ");
+				chatText.requestFocus();
+			}
+		});//addActionListener();
+			
+		//팝업메뉴에 아이템 추가
+		popupMenu.add(whisperItem);
 		
-			//아이템 기눙 구현
-			whisperItem.addActionListener(new ActionListener() {
-					
+		//방장일 경우 추방 아이템 추가
+		if(roomMaster == mySit) {
+			JMenuItem kickItem = new JMenuItem("추방");		
+			
+			//추방 아이템 기능 구현
+			kickItem.addActionListener(new ActionListener() {
+				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					chatText.setText("/귓말 " + nicText[sit].getText() + " ");
-					chatText.requestFocus();
+					ClientPacketSender.instance.kick(nicText[sit].getText());
 				}
 			});//addActionListener();
-				
-			//팝업메뉴에 아이템 추가
-			popupMenu.add(whisperItem);
-			
-			//방장일 경우 추방 아이템 추가
-			if(roomMaster == mySit) {
-				JMenuItem kickItem = new JMenuItem("추방");		
-		
-				//추방 아이템 기능 구현
-				kickItem.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						ClientPacketSender.instance.kick(nicText[sit].getText());
-					}
-				});//addActionListener();
 						
-				//팝업메뉴에 추방 아이템 추가
-				popupMenu.add(kickItem);
+			//팝업메뉴에 추방 아이템 추가
+			popupMenu.add(kickItem);
+			
+			add(back);
+			revalidate();
+			repaint();
 	
-			}
+		}
+
+		//JTable에 팝업메뉴 추가
+		add(popupMenu);
 			
-			
-		
-			//JTable에 팝업메뉴 추가
-			add(popupMenu);
+		//자신은 popupMenu를 띄우지 않음
+		if(!(profile[sit] == profile[0]))
+			profile[sit].addMouseListener(new MouseListener() {
 				
-			
-				try {
-					profile[sit].addMouseListener(new MouseListener() {
-						
-						@Override
-						public void mousePressed(MouseEvent e) {	
-							if(e.getButton() == MouseEvent.BUTTON1) {
-								popupMenu.show(profile[sit], e.getX(), e.getY());
-							}
-						}//mousePressed();
-						
-						@Override
-						public void mouseReleased(MouseEvent e) {}
-						@Override
-						public void mouseExited(MouseEvent e) {}
-						@Override
-						public void mouseEntered(MouseEvent e) {}
-						@Override
-						public void mouseClicked(MouseEvent e) {}
-						
-					});//addMouseListener();
+				@Override
+				public void mousePressed(MouseEvent e) {	
+					if(e.getButton() == MouseEvent.BUTTON1) {
+						popupMenu.show(profile[sit], e.getX(), e.getY());
+					}
+				}//mousePressed();
 					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}//try~catch			
-		}//if(!(mySit == sit));
+				@Override
+				public void mouseReleased(MouseEvent e) {}
+				@Override
+				public void mouseExited(MouseEvent e) {}
+				@Override
+				public void mouseEntered(MouseEvent e) {}
+				@Override
+				public void mouseClicked(MouseEvent e) {}
+					
+			});//addMouseListener();
 	}//pMenu();
 	
 	

@@ -194,6 +194,15 @@ public class ServerPacketController extends ServerMethod {
 			} //for
 			
 			break;
+		case Protocol.RELOAD_PlAYERLIST:
+			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
+			packet.setPlayerVO(thisPlayerVO);
+			packet.setRoom(ro.getRoom(thisPlayerVO.getRoomNo()));
+			packet.setMotion(ro.getRoom(thisPlayerVO.getRoomNo()).getMasterIndex().toString());
+			Packing.sender(thisPlayerVO.getPwSocket(), packet);
+			
+			break;
+			
 
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTER_LOBBY:

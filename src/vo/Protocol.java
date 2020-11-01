@@ -59,6 +59,7 @@ public class Protocol {
    public static final String EXTRAMONEY= "45";                	//돈이 부족하면 충전
    public static final String RELOAD_INFO_MONEY= "46";          //비상금서비스 받을시 다시 저장후 출력
    public static final String FIND = "47";						//유저 찾기
+   public static final String RELOAD_PlAYERLIST = "48";			//유저 찾기
 
    public static final String Half = "Half";
    public static final String Quater = "Quater";
@@ -119,6 +120,7 @@ public class Protocol {
          case "45": str = "EXTRAMONEY"; break;
          case "46": str = "RELOAD_INFO_MONEY"; break;
          case "47": str = "FIND"; break;
+         case "48": str = "RELOAD_PlAYERLIST"; break;
          case "Half": str = "Half"; break;
          case "Quater": str = "Quater"; break;
          case "Check": str = "Check"; break;
