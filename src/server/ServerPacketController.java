@@ -181,16 +181,6 @@ public class ServerPacketController extends ServerMethod {
 
 			break;
 
-		case Protocol.EXIT_LOBBY:
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				}
-				lobbyReloadBroadcast();				
-			} //for
-			
-			break;
 		case Protocol.RELOAD_PlAYERLIST:
 			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
 			packet.setPlayerVO(thisPlayerVO);
@@ -199,8 +189,8 @@ public class ServerPacketController extends ServerMethod {
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
 			break;
-			
 
+			
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTER_LOBBY:
 			if (thisPlayerVO.getNic() == null) {
