@@ -182,13 +182,8 @@ public class ServerPacketController extends ServerMethod {
 			break;
 
 		case Protocol.EXIT_LOBBY:
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				}
+				lobbyPlayerList.remove(thisPlayerVO.getNic());
 				lobbyReloadBroadcast();				
-			} //for
 			
 			break;
 		case Protocol.RELOAD_PlAYERLIST:
