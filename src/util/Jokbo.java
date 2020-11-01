@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import client.ui.RoomScreen;
-import server.Room;
-import vo.Protocol;
 
 class Card {
 	private float card1;
@@ -44,14 +42,6 @@ public class Jokbo {
 		return instance;
 	}
 	
-//		jokboList.add(new Jokbo(3,8,"38광땡"));
-//		jokboList.add(new Jokbo(1,8,"18광땡"));
-//		jokboList.add(new Jokbo(1,3,"13광땡"));
-//		for(float i=1; i<11; i++) {
-//			jokboList.add(new Jokbo(i, (float) (i+0.5), i+"땡"));
-//			if(i==10)
-//				jokboList.add(new Jokbo(10, (float) 10.5, "장땡"));
-//		}
 	public void setArr() {
 		// 38광땡
 		Jokbo a = new Jokbo("38광땡");
