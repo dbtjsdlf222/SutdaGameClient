@@ -593,9 +593,6 @@ public class Room extends ServerMethod {
 		} else {
 			winMsg = playerMap.get(winerIdx).getNic()+"님이 "+cardName+"(으)로 승입니다. "+"/";
 		}
-		System.out.println("토탈 " + totalMoney);
-		System.out.println("승리자머니 " + playerMap.get(winerIdx).getMoney());
-		System.out.println("토탈 +승리자머니 " + (totalMoney+playerMap.get(winerIdx).getMoney()));
 		roomSpeaker(new Packet(Protocol.GAME_OVER,
 					winMsg+
 					winerIdx+"/" +
