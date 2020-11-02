@@ -507,11 +507,14 @@ public class RoomScreen extends JFrame {
 		chatText.addKeyListener(new KeyAdapter() {
 	    	public void keyTyped(KeyEvent e) {
 	    		if(e.getSource()==chatText) {
-	    			if(chatText.getText().length()>=16)
-	    				e.consume();
-	    		}
-	    	}
-	    });
+	    			if(chatText.getText().equals("/귓말")||chatText.getText().equals("/w"))
+	    				if(chatText.getText().length()>=32)
+	    					e.consume();
+		    		}else if(chatText.getText().length()>=16) {
+		    		  		e.consume();
+	    		  	}//if~else if
+	    	  	}//keyTyped();
+	     });//addKeyListener();
 		
 		
 		ChattingOperator co = ChattingOperator.getInstance();
