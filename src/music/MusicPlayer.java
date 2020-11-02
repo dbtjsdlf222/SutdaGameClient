@@ -3,14 +3,17 @@ package music;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import dao.PlayerDAO;
+
+import org.slf4j.Logger;
 
 import javazoom.jl.player.Player;
 
 public class MusicPlayer extends Thread {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(MusicPlayer.class);
 	
 	private Player player;
 	private File file;

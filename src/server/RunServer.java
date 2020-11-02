@@ -10,14 +10,16 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import client.RunClient;
+
+import org.slf4j.Logger;
 
 import dao.ServerDAO;
 
 public class RunServer {
-
-	private Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(RunServer.class);
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 	

@@ -5,12 +5,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public abstract class DocumentUpdateListener implements DocumentListener {
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(DocumentUpdateListener.class);
 	
 	@Override public void insertUpdate(DocumentEvent e)  { update(e); }
 	@Override public void removeUpdate(DocumentEvent e)  { update(e); }

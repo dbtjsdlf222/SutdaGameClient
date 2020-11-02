@@ -24,16 +24,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
+import client.RunClient;
 import client.service.ClientReceiver;
 import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class Login extends JFrame {
-	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(Login.class);
 
 	private PlayerDAO playerDAO = new PlayerDAO();
 	private PlayerVO playerVO = new PlayerVO();

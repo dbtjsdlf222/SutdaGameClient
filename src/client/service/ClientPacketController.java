@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import client.ui.Invited;
 import client.ui.Lobby;
@@ -31,7 +31,7 @@ import vo.Protocol;
 @SuppressWarnings("serial")
 public class ClientPacketController {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(ClientPacketController.class);
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };

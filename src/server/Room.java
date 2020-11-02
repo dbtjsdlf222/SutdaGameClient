@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Queue;
 import java.util.Random;
 
@@ -18,6 +22,7 @@ import vo.Protocol;
 
 public class Room extends ServerMethod {
 
+	private static final Logger logger = LoggerFactory.getLogger(Room.class);
 	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액

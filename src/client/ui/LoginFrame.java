@@ -23,8 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import client.service.login.LoginResultHandler;
 import client.service.login.LoginService;
@@ -33,7 +33,7 @@ import vo.PlayerVO;
 
 public class LoginFrame implements LoginResultHandler {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(LoginFrame.class);
 	
 	private LoginService loginService = new LoginService(this);
 	

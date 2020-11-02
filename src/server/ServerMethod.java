@@ -5,10 +5,11 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import dao.ServerDAO;
+import music.MusicPlayer;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -16,7 +17,7 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerMethod {
-	protected static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(ServerMethod.class);
 	protected PlayerVO thisPlayerVO = new PlayerVO();
 	protected static Hashtable<String, PlayerVO> lobbyPlayerList = new Hashtable<String,PlayerVO>();
 	protected RoomOperator ro = RoomOperator.getInstance(); 

@@ -42,8 +42,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import client.Background;
 import client.service.ClientPacketController;
@@ -61,7 +61,7 @@ import vo.Protocol;
 @SuppressWarnings("serial")
 public class RoomScreen extends JFrame {
 
-	private final static Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(RoomScreen.class);
 
 	public final int SCREEN_WIDTH = 1280;
 	public final int SCREEN_HEIGHT = 720;

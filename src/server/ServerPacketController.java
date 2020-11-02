@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import operator.RoomOperator;
@@ -14,6 +17,8 @@ import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
 	protected Socket socket;
+	private static final Logger logger = LoggerFactory.getLogger(ServerPacketController.class);
+
 	
 	public ServerPacketController(Socket socket) {
 		this.socket = socket;

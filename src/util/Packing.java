@@ -2,20 +2,21 @@ package util;
 
 import java.io.PrintWriter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import server.Room;
+import server.ServerReceiver;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
 
 public class Packing {
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(Packing.class);
 	
 	/**
 	 * 

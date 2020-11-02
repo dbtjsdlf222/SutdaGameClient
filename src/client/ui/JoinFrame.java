@@ -25,8 +25,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import client.service.login.DocumentUpdateListener;
 import dao.PlayerDAO;
@@ -34,7 +34,7 @@ import vo.PlayerVO;
 
 public class JoinFrame {
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LoggerFactory.getLogger(JoinFrame.class);
 
 	private PlayerDAO playerDAO;
 
