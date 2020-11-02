@@ -276,7 +276,11 @@ public class ServerPacketController extends ServerMethod {
 						if(lobbyPlayerList.get(packet.getMotion()) == null) {
 							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 다른 게임방에 있습니다.");
 						} else {
-						//초대
+							//상대가 판돈이 부족한 경우
+							if(lobbyPlayerList.get(packet.getMotion()).getMoney() < ro.getRoom(thisPlayerVO.getRoomNo()).getStartMoney()) {
+								Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님이 판돈이 부족합니다.");
+							}else {
+							//초대
 							Packing.sender(thisPlayerVO.getPwSocket(),Protocol.SERVER_MESSAGE,packet.getMotion()+"님을 초대했습니다.");
 							
 							Packet packet1 = new Packet();
@@ -285,6 +289,7 @@ public class ServerPacketController extends ServerMethod {
 							packet1.setProtocol(Protocol.GET_INVITE);
 
 							Packing.sender(lobbyPlayerList.get(packet.getMotion()).getPwSocket(),packet1);
+							}
 						}
 					}
 				}

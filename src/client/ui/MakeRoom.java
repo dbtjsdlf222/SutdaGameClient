@@ -52,7 +52,6 @@ public class MakeRoom {
 
    public void makeRoom() {
 	   make = true;
-	   
       //Frame
       JFrame makeJF = new JFrame("방 만들기");
       con = makeJF.getContentPane();
@@ -324,7 +323,8 @@ public class MakeRoom {
       makeJF.setResizable(false);
       makeJF.setLocationRelativeTo(null);
       makeJF.setLayout(null);
-//      makeJF.setDefaultCloseOperation(makeJF.EXIT_ON_CLOSE);
+      makeJF.setDefaultCloseOperation(makeJF.EXIT_ON_CLOSE);
+      
       makeJF.setAlwaysOnTop(true);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();

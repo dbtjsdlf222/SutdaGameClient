@@ -61,9 +61,7 @@ public class Invited {
 		
 		//JFrame
 		inviteJF = new JFrame("초대창");
-		con = inviteJF.getContentPane();
-		imgP = new Background();
-		imgP.lobbyImage();
+		
 		
 		//닉네임
 		JLabel nicLbl = new JLabel();
@@ -148,8 +146,11 @@ public class Invited {
 		roomPan.add(progressBar);
 
 		// JFrame 정보
-		con.add(roomPan);
+		con = inviteJF.getContentPane();
+		imgP = new Background();
+		imgP.lobbyImage();
 		con.add(imgP, BorderLayout.CENTER);
+		con.add(roomPan);
 		inviteJF.setSize(400, 250);
 		inviteJF.setResizable(false);
 		inviteJF.setLocationRelativeTo(null);
@@ -161,7 +162,7 @@ public class Invited {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		inviteJF.setIconImage(img);
-		
+		inviteJF.repaint();
 		progressBar_start();
 	}
 

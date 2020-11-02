@@ -406,7 +406,6 @@ public class Lobby {
 		//팝업메뉴에 아이템 추가
 		JMenuItem whisperItem = new JMenuItem("귓말");
 		
-
 		//아이템 기눙 구현
 		whisperItem.addActionListener(new ActionListener() {
 			
