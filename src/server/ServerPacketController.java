@@ -1,15 +1,11 @@
 package server;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Map.Entry;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import client.ui.RoomScreen;
 import operator.RoomOperator;
 import util.Packing;
 import vo.Packet;
@@ -17,9 +13,10 @@ import vo.PlayerVO;
 import vo.Protocol;
 
 public class ServerPacketController extends ServerMethod {
+	protected Socket socket;
 	
 	public ServerPacketController(Socket socket) {
-		super.socket = socket;
+		this.socket = socket;
 		thisPlayerVO.setSocketWithBrPw(socket);
 	} //ServerPacketController();
 	
@@ -184,16 +181,6 @@ public class ServerPacketController extends ServerMethod {
 
 			break;
 
-		case Protocol.EXIT_LOBBY:
-			for (int i = 0; i < lobbyPlayerList.size(); i++) {
-				if (lobbyPlayerList.get(i).getNo() == thisPlayerVO.getNo()) {
-					lobbyPlayerList.remove(i);
-					break;
-				}
-				lobbyReloadBroadcast();				
-			} //for
-			
-			break;
 		case Protocol.RELOAD_PlAYERLIST:
 			packet.setRoomPlayerList(ro.getRoom(thisPlayerVO.getRoomNo()).getList());
 			packet.setPlayerVO(thisPlayerVO);
@@ -202,8 +189,8 @@ public class ServerPacketController extends ServerMethod {
 			Packing.sender(thisPlayerVO.getPwSocket(), packet);
 			
 			break;
-			
 
+			
 		// 로비에 있는 소켓에게 입장 playerVO와 그 소켓들의 목록을 자신 소켓에 보냄
 		case Protocol.ENTER_LOBBY:
 			if (thisPlayerVO.getNic() == null) {
@@ -251,6 +238,7 @@ public class ServerPacketController extends ServerMethod {
 		case Protocol.PASSWORD:
 			String password = ro.getRoom(packet.getRoom().getRoomNo()).getPassword();
 			if(password.equals(packet.getRoom().getPassword())) {
+				Packing.sender(thisPlayerVO.getPwSocket(),Protocol.PASSWORD,"true");
 				packet.setProtocol(Protocol.ENTER_ROOM);
 				thisPlayerVO.setRoomNo(packet.getRoom().getRoomNo());
 				packet.setPlayerVO(thisPlayerVO);

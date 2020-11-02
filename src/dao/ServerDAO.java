@@ -307,21 +307,4 @@ public class ServerDAO {
 			logger.error(e.getMessage(), e);
 		}
 	}
-	
-	public Packet getResponse() {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			BufferedReader br = PlayerVO.myVO.getBrSocket();
-			String packetStr = "";
-			packetStr = br.readLine();
-			logger.debug(packetStr);
-			Packet packet = mapper.readValue(packetStr, Packet.class);
-			
-			return packet;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	} //getResponse
-	
 }

@@ -108,20 +108,21 @@ public class Lobby {
 						if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][5]
 								.equals("게임중")) {
 							JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
-									JOptionPane.WARNING_MESSAGE);
+									JOptionPane.ERROR_MESSAGE);
 							return;
-						}else if(PlayerVO.myVO.getMoney() < 100000) {
+						}else if(PlayerVO.myVO.getMoney() < 1000) {
 							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
-									JOptionPane.WARNING_MESSAGE);
+									JOptionPane.ERROR_MESSAGE);
 							return;
 						}else if(checkSit() != 1 ) {
 							JOptionPane.showMessageDialog(null, "인원수 초과로 인해 입장하실 수 없습니다.", "알림",
-							JOptionPane.WARNING_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 							return;
 						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
 								.equals("비공개")) {
-							PasswordInput.getInstance(Integer.parseInt(
-									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0])).getIn();
+							PasswordInput.getInstance().setNo(Integer.parseInt(
+									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+							PasswordInput.getInstance().getIn();
 						}else {
 							ClientPacketSender.instance.enterRoom(Integer.parseInt(
 									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
@@ -404,8 +405,6 @@ public class Lobby {
 		
 		//팝업메뉴에 아이템 추가
 		JMenuItem whisperItem = new JMenuItem("귓말");
-		JMenuItem m2 = new JMenuItem("어쩌구");
-		JMenuItem m3 = new JMenuItem("저쩌구");
 		
 
 		//아이템 기눙 구현
@@ -421,8 +420,6 @@ public class Lobby {
 		
 		//팝업메뉴에 아이템 추가
 		popupMenu.add(whisperItem);
-		popupMenu.add(m2);
-		popupMenu.add(m3);
 
 		//JTable에 팝업메뉴 추가
 		ClientPacketController.playerJT.add(popupMenu);

@@ -17,7 +17,7 @@ import dao.ServerDAO;
 
 public class RunServer {
 
-	private static final Logger logger = LogManager.getLogger();
+	private Logger logger = LogManager.getLogger();
 	public static final int MAXPLAYER = 10;
 	public static final int MAXROOM = MAXPLAYER;
 	
@@ -32,18 +32,6 @@ public class RunServer {
 
 		// 쓰레드풀 생성		
 		ExecutorService pool = Executors.newFixedThreadPool(MAXPLAYER);
-		
-		
-//		Timer timer = new Timer();
-//		TimerTask task = new TimerTask() {
-//			
-//			@Override
-//			public void run() {
-//				new ServerDAO().initMoneyChage();
-//				System.out.println("비상금 서비스 초기화 실행");
-//			}
-//		};
-//		timer.schedule(task, 0, 24*60*60*1000);
 		
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			while (true) {
@@ -62,7 +50,6 @@ public class RunServer {
 		} finally {
 			pool.shutdown();
 		}
-
 		
 	} // run();
 

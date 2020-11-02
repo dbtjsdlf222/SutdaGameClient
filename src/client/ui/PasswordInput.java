@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -27,20 +28,21 @@ import server.Room;
 
 public class PasswordInput {
 	private static PasswordInput instance;
+	private JFrame getInJF;
 	private Background imgP;
 	private Container con;
 	private int no;
 	
 	private PasswordInput() {};
 	
-	public static PasswordInput getInstance(int no) {
+	public static PasswordInput getInstance() {
 		if(instance == null) 
 			instance = new PasswordInput();
 		return instance;
 	}
 	
 	public void getIn() {
-		JFrame getInJF = new JFrame("방 입장");
+		getInJF = new JFrame("방 입장");
 		con = getInJF.getContentPane();
 		imgP = new Background();
 		imgP.lobbyImage();
@@ -77,13 +79,14 @@ public class PasswordInput {
 	  		@Override
 	  		public void actionPerformed(ActionEvent e) {
 	  			if(e.getSource()==okBtn) {
-	  				getInJF.dispose();
-	  				Lobby.getInstance().getLobbyJF().dispose();
-	  				
-	  				Room room = new Room();
-	  				room.setPassword(pwField.getText());
-	  				room.setRoomNo(no);
-	  				ClientPacketSender.instance.password(room);
+	  				if (pwField.getText().trim().equals(""))
+	  					JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "알림", JOptionPane.ERROR_MESSAGE );
+	  				else {
+	  					Room room = new Room();
+	  					room.setPassword(pwField.getText());
+	  					room.setRoomNo(no);
+	  					ClientPacketSender.instance.password(room);
+	  				}
 	  			}
 	  		}
 	  	});
@@ -132,12 +135,23 @@ public class PasswordInput {
 		getInJF.setResizable(false);
 		getInJF.setLocationRelativeTo(null);
 		getInJF.setLayout(null);
-		getInJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getInJF.setDefaultCloseOperation(getInJF.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		getInJF.setIconImage(img);
 		
 	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public void dispose() {
+		getInJF.dispose();
+		Lobby.getInstance().getLobbyJF().dispose();
+	}
+	
+	
 	
 }

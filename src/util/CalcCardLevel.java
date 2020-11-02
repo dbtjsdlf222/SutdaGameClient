@@ -41,7 +41,7 @@ public class CalcCardLevel implements Comparable {
 		}
 		
 		Collections.sort(playerCardList);	//점수가 높은순으로 정렬
-
+		
 		//1등과 2등의 점수가 다르면 1등 승
 		if(playerCardList.get(0).getCardLevel() != playerCardList.get(1).getCardLevel()) {
 			RoomOperator.getInstance().getRoom(roomNo).gameOver(playerCardList.get(0).getIdx(),playerCardList.get(0).getCardName());
@@ -61,12 +61,6 @@ public class CalcCardLevel implements Comparable {
 			RoomOperator.getInstance().getRoom(roomNo).draw();
 		} //if~else
 	} // getWinner();
-
-	@Override
-	public String toString() {
-		return "[card1=" + card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName="
-				+ cardName + "]";
-	}
 
 	public void CardLevel(Map<Integer, PlayerVO> playerMap) {
 		for (int i = 0; i < 5; i++) {
@@ -237,4 +231,8 @@ public class CalcCardLevel implements Comparable {
 		this.card2 = card2;
 //		CardLevel(idx, card1, card2);
 	}
+	
+	@Override
+	public String toString() { return "[card1=" + card1 + ", card2=" + card2 + ", cardLevel=" + cardLevel + ", cardName=" + cardName + "]"; }
+	
 } //class
