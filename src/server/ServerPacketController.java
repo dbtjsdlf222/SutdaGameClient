@@ -297,12 +297,14 @@ public class ServerPacketController extends ServerMethod {
 			break;
 			
 		case Protocol.EXTRAMONEY:
-			if(serverDAO.moneyChargeCheck(thisPlayerVO.getNo()) > 0) {
+			int count = serverDAO.moneyChargeCheck(thisPlayerVO.getNo());
+			
+			if(count > 0) {
 				if(serverDAO.extraMoney(thisPlayerVO) == 1) {
 					serverDAO.useMoneyCharge(thisPlayerVO.getNo());
 					Packing.sender(thisPlayerVO.getPwSocket(), Protocol.RELOAD_MY_VO, thisPlayerVO);
 					infoReloadcast();
-					packet.setMotion("비상금 1000만원이 입급 되었습니다.");
+					packet.setMotion("비상금 1000만원이 입급 되었습니다. ("+ count +"/5)");
 					Packing.sender(thisPlayerVO.getPwSocket(), Protocol.SERVER_MESSAGE, packet.getMotion());
 				}
 			}else {

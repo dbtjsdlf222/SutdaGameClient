@@ -325,7 +325,7 @@ public class MakeRoom {
       makeJF.setLayout(null);
       makeJF.setDefaultCloseOperation(makeJF.EXIT_ON_CLOSE);
       
-      makeJF.setAlwaysOnTop(true);
+//      makeJF.setAlwaysOnTop(true);
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
