@@ -22,7 +22,6 @@ import vo.Protocol;
 public class Room {
 
 	private static final Logger logger = LoggerFactory.getLogger(Room.class);
-	private static int increaseRoomNo = 1;
 	private int roomNo;		// 방 번호
 	private long startMoney; // 시작 금액
 	private String title = "";

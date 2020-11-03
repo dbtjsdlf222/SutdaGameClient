@@ -31,6 +31,8 @@ public class PasswordInput {
 	private Background imgP;
 	private Container con;
 	private int no;
+	private final int x = 384;
+	private final int y = 161;
 	
 	private PasswordInput() {};
 	
@@ -115,7 +117,7 @@ public class PasswordInput {
 		roomlbl.setHorizontalAlignment(JLabel.CENTER);
 
 		JPanel roomPan = new JPanel();
-		roomPan.setBounds(0, 0, 384, 161);
+		roomPan.setSize(x, y);
 		roomPan.setBackground(new Color(0, 0, 0, 0));
 		roomPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		roomPan.setLayout(null);
@@ -129,17 +131,13 @@ public class PasswordInput {
 		// JFrame 정보
 		con.add(roomPan);
 		con.add(imgP, BorderLayout.CENTER);
-		getInJF.setSize(400, 200);
-		getInJF.setVisible(true);
+		getInJF.setSize(x, y);
 		getInJF.setResizable(false);
 		getInJF.setLocationRelativeTo(null);
 //		getInJF.setLayout(null);
 		getInJF.setAlwaysOnTop(true);
-		getInJF.addWindowListener(new WindowAdapter() {
-			public void closeJF() {
-				getInJF.dispose();
-			}
-		});
+		getInJF.setUndecorated(true);
+		getInJF.setVisible(true);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));

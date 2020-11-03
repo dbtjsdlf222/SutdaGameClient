@@ -36,7 +36,10 @@ public class MakeRoom {
 	private Background imgP;
 	private Container con;
 	private int i = 5;
-	private JFrame makeJF = new JFrame("방 만들기");
+	private boolean making = false;
+	private final int x = 465;
+	private final int y = 300;
+	
    
    private MakeRoom() {};
    
@@ -48,7 +51,10 @@ public class MakeRoom {
    
 
    public void makeRoom() {
+	   
+	   making = true;
       //Frame
+	   JFrame makeJF = new JFrame("방 만들기");;
     
       
       //방제목       
@@ -260,6 +266,7 @@ public class MakeRoom {
             		makeJF.dispose();
             		Lobby.getInstance().getLobbyJF().dispose();
             		ClientPacketSender.instance.makeRoom(room);
+            		making = false;
             	}
             }//if(e.getsorce())
          }//actionPerformed()
@@ -279,6 +286,7 @@ public class MakeRoom {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==cancelBtn) {
 				makeJF.dispose();
+				making = false;
 			}
 		}
 	});
@@ -292,7 +300,7 @@ public class MakeRoom {
       roomlbl.setBounds(175, 10, 150, 30);
       
       JPanel roomPan = new JPanel();
-      roomPan.setBounds(10, 10, 464, 301);
+      roomPan.setSize(x, y);
       roomPan.setBackground(new Color(0, 0, 0, 0));
       roomPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
       roomPan.setLayout(null);
@@ -312,16 +320,11 @@ public class MakeRoom {
       imgP.lobbyImage();
       con.add(roomPan);
       con.add(imgP, BorderLayout.CENTER);
-      makeJF.setSize(500,360);
+      makeJF.setSize(x,y);
       makeJF.setResizable(false);
       makeJF.setLocationRelativeTo(null);
       makeJF.setAlwaysOnTop(true);
-//      makeJF.setUndecorated(true);
-      makeJF.addWindowListener(new WindowAdapter() {
-			public void closeJF() {
-				makeJF.dispose();
-			}
-		});
+      makeJF.setUndecorated(true);
       makeJF.setVisible(true);
     	  
       
@@ -332,6 +335,8 @@ public class MakeRoom {
       makeJF.setIconImage(img);
       
    }
+
+public boolean isMaking() { return making; }
 
 
 }

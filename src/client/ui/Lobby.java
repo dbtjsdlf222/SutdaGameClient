@@ -104,31 +104,33 @@ public class Lobby {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getClickCount() == 1) {
-						if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][5]
-								.equals("게임중")) {
-							JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
-									JOptionPane.ERROR_MESSAGE);
-							return;
-						}else if(PlayerVO.myVO.getMoney() < 1000) {
-							JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
-									JOptionPane.ERROR_MESSAGE);
-							return;
-						}else if(checkSit() != 1 ) {
-							JOptionPane.showMessageDialog(null, "인원수 초과로 인해 입장하실 수 없습니다.", "알림",
-							JOptionPane.ERROR_MESSAGE);
-							return;
-						}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
-								.equals("비공개")) {
-							PasswordInput.getInstance().setNo(Integer.parseInt(
-									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-							PasswordInput.getInstance().getIn();
-						}else {
-							ClientPacketSender.instance.enterRoom(Integer.parseInt(
-									ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
-							((JFrame)SwingUtilities.getRoot((Component)e.getSource())).dispose();
+						if(!MakeRoom.getInstance().isMaking()) {
+							if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][5]
+									.equals("게임중")) {
+								JOptionPane.showMessageDialog(null, "게임이 끝날 때까지 기다려 주세요. ", "알림",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}else if(PlayerVO.myVO.getMoney() < MoneyFormat.reformat(ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][3])) {
+								JOptionPane.showMessageDialog(null, "판돈이 부족합니다.", "알림",
+										JOptionPane.ERROR_MESSAGE);
+								return;
+							}else if(checkSit() != 1 ) {
+								JOptionPane.showMessageDialog(null, "인원수 초과로 인해 입장하실 수 없습니다.", "알림",
+								JOptionPane.ERROR_MESSAGE);
+								return;
+							}else if (ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][1]
+									.equals("비공개")) {
+								PasswordInput.getInstance().setNo(Integer.parseInt(
+										ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+								PasswordInput.getInstance().getIn();
+							}else {
+								ClientPacketSender.instance.enterRoom(Integer.parseInt(
+										ClientPacketController.rn[ClientPacketController.roomJT.getSelectedRow()][0]));
+								((JFrame)SwingUtilities.getRoot((Component)e.getSource())).dispose();
+							}
 						}
-					}
-				}
+					}//if(e.getClickcount());
+				}//mouseClicked();
 			});
 		} //if(!initializeOnce);
 
@@ -354,7 +356,8 @@ public class Lobby {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == newBtn) {
-					MakeRoom.getInstance().makeRoom();
+					if(!MakeRoom.getInstance().isMaking())
+						MakeRoom.getInstance().makeRoom();
 					
 				}
 			} // action
