@@ -1,6 +1,5 @@
 package client.service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,10 +18,10 @@ import client.ui.Invited;
 import client.ui.Lobby;
 import client.ui.PasswordInput;
 import client.ui.RoomScreen;
+import client.ui.ShowErrorPane;
 import operator.ChattingOperator;
 import server.Room;
 import server.RunServer;
-//import server.Room;
 import util.MoneyFormat;
 import vo.Packet;
 import vo.PlayerVO;
@@ -145,17 +144,15 @@ public class ClientPacketController {
 			
 		case Protocol.GET_INVITE:
 			Invited.getInstance().setVOROOM(packet.getPlayerVO(), packet.getRoom());
-			if(!Invited.getInstance().isReceiving()) {
-				Invited.getInstance().runUI();
-			}
+			Invited.getInstance().runUI();
 			break;
 
 		case Protocol.PASSWORD:
 			if (packet.getMotion().equals("true")) {
 				PasswordInput.getInstance().dispose();
 			}else {
-				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다.", "알림", JOptionPane.ERROR_MESSAGE );
-//				ChattingOperator.chatArea.setText("<SYSTEM> 비밀번호를 다르게 입력하셨습니다.");
+				
+				ShowErrorPane moneyErrorPane = new ShowErrorPane("비밀번호가 틀렸습니다.");
 			}
 			break;
 			

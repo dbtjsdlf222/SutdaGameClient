@@ -11,13 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -26,11 +26,8 @@ import javax.swing.border.TitledBorder;
 
 import client.Background;
 import client.service.ClientPacketSender;
-import operator.ChattingOperator;
 import server.Room;
-import util.Packing;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class MakeRoom {
 	
@@ -39,7 +36,7 @@ public class MakeRoom {
 	private Background imgP;
 	private Container con;
 	private int i = 5;
-	private boolean make = false;
+	private JFrame makeJF = new JFrame("방 만들기");
    
    private MakeRoom() {};
    
@@ -51,12 +48,8 @@ public class MakeRoom {
    
 
    public void makeRoom() {
-	   make = true;
       //Frame
-      JFrame makeJF = new JFrame("방 만들기");
-      con = makeJF.getContentPane();
-      imgP = new Background();
-      imgP.lobbyImage();
+    
       
       //방제목       
       JLabel titlelbl = new JLabel("방  제  목 : ");
@@ -239,9 +232,9 @@ public class MakeRoom {
          public void actionPerformed(ActionEvent e) {            
         	 if(e.getSource()==okBtn) {
             	if(titleField.getText().trim().equals("")) {
-            		JOptionPane.showMessageDialog(null, "방제목을 입력해주세요. ", "알림", JOptionPane.ERROR_MESSAGE);
+            		ShowErrorPane titleErrorPane = new ShowErrorPane("방 제목을 입력해주세요.");
             	}else if(!(moneyCheck1.isSelected() || moneyCheck2.isSelected() || moneyCheck3.isSelected() || moneyCheck4.isSelected())) {
-            		JOptionPane.showMessageDialog(null, "배팅금액을 설정해주세요. ", "알림", JOptionPane.ERROR_MESSAGE);
+            		ShowErrorPane moneyErrorPane = new ShowErrorPane("배팅금액을 설정해주세요. ");
             	}else {
             		Room room = new Room();
             		room.setTitle(titleField.getText());
@@ -265,7 +258,6 @@ public class MakeRoom {
                 	}
             		
             		makeJF.dispose();
-            		make=false;
             		Lobby.getInstance().getLobbyJF().dispose();
             		ClientPacketSender.instance.makeRoom(room);
             	}
@@ -287,7 +279,6 @@ public class MakeRoom {
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==cancelBtn) {
 				makeJF.dispose();
-				make=false;
 			}
 		}
 	});
@@ -316,16 +307,25 @@ public class MakeRoom {
       
       
       //JFrame 정보
+      con = makeJF.getContentPane();
+      imgP = new Background();
+      imgP.lobbyImage();
       con.add(roomPan);
       con.add(imgP, BorderLayout.CENTER);
       makeJF.setSize(500,360);
-      makeJF.setVisible(true);
       makeJF.setResizable(false);
       makeJF.setLocationRelativeTo(null);
-      makeJF.setLayout(null);
-      makeJF.setDefaultCloseOperation(makeJF.EXIT_ON_CLOSE);
+      makeJF.setAlwaysOnTop(true);
+//      makeJF.setUndecorated(true);
+      makeJF.addWindowListener(new WindowAdapter() {
+			public void closeJF() {
+				makeJF.dispose();
+			}
+		});
+      makeJF.setVisible(true);
+    	  
       
-//      makeJF.setAlwaysOnTop(true);
+      
       
       Toolkit toolkit = Toolkit.getDefaultToolkit();
       Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
@@ -333,6 +333,5 @@ public class MakeRoom {
       
    }
 
-public boolean isMake() { return make; }
-   
+
 }

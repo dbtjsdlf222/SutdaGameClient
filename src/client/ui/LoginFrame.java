@@ -26,6 +26,7 @@ import javax.swing.border.MatteBorder;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import client.Background;
 import client.service.login.LoginResultHandler;
 import client.service.login.LoginService;
 import dao.PlayerDAO;
@@ -41,7 +42,7 @@ public class LoginFrame implements LoginResultHandler {
 	private JLabel lblErrorMessage;
 	private JTextField textFieldId;
 	private JPasswordField passwordField;
-	
+	private Background back = new Background();
 	private JoinFrame joinFrame;
 	
 	

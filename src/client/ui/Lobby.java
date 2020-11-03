@@ -7,8 +7,6 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,6 +51,7 @@ public class Lobby {
 	private JButton newBtn;
 	private JPanel infoPan;
 	private JTextField chatText;
+	
 	public static JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("/img/infoMoney.png")));
 	
 	private Lobby() {};
@@ -208,23 +207,7 @@ public class Lobby {
 		infoRatingLbl.setBounds(120, 110, 230,30);
 		infoPan.add(infoRatingLbl);
 		
-		// 방만들기 버튼
-		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/newBtn.png")));
-		newBtn.setBounds(10, 200, 370, 50);
-		newBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		infoPan.add(newBtn);
-
-		newBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (e.getSource() == newBtn) {
-					if(!MakeRoom.getInstance().isMake())
-						MakeRoom.getInstance().makeRoom();
-					
-				}
-			} // action
-		}); // listener
+		
 
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
@@ -360,6 +343,23 @@ public class Lobby {
 		playerPan.add(ClientPacketController.plScroll);
 		initialize(); // 초기화
 
+		// 방만들기 버튼
+		newBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/newBtn.png")));
+		newBtn.setBounds(10, 200, 370, 50);
+		newBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		infoPan.add(newBtn);
+	
+		newBtn.addActionListener(new ActionListener() {
+	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == newBtn) {
+					MakeRoom.getInstance().makeRoom();
+					
+				}
+			} // action
+		}); // listener
+		
 		// 나가기 버튼
 		exitBtn = new JButton(new ImageIcon(Lobby.class.getResource("/img/exit.png")));
 		exitBtn.setBounds(1220, 10, 30, 30);

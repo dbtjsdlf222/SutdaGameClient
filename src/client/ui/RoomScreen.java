@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -16,9 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,7 +47,6 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
-import server.Room;
 import util.Jokbo;
 import util.MoneyFormat;
 import util.Packing;
@@ -323,7 +319,6 @@ public class RoomScreen extends JFrame {
 			
 		DefaultTableModel model = new DefaultTableModel(data,a);
 		JTable tbl = new JTable(model);
-//		mat.add(tbl);
 		mat.add(totalMoney);
 	}
 	
@@ -1014,7 +1009,7 @@ public class RoomScreen extends JFrame {
 						
 			//팝업메뉴에 추방 아이템 추가
 			popupMenu.add(kickItem);
-			
+
 			add(back);
 			revalidate();
 			repaint();

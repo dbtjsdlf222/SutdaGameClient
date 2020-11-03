@@ -11,24 +11,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import client.Background;
-import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import server.Room;
 
 public class PasswordInput {
 	private static PasswordInput instance;
-	private JFrame getInJF;
+	private JFrame getInJF = new JFrame("방 입장");
 	private Background imgP;
 	private Container con;
 	private int no;
@@ -42,7 +41,7 @@ public class PasswordInput {
 	}
 	
 	public void getIn() {
-		getInJF = new JFrame("방 입장");
+		
 		con = getInJF.getContentPane();
 		imgP = new Background();
 		imgP.lobbyImage();
@@ -79,9 +78,9 @@ public class PasswordInput {
 	  		@Override
 	  		public void actionPerformed(ActionEvent e) {
 	  			if(e.getSource()==okBtn) {
-	  				if (pwField.getText().trim().equals(""))
-	  					JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "알림", JOptionPane.ERROR_MESSAGE );
-	  				else {
+	  				if (pwField.getText().trim().equals("")) {
+	  					ShowErrorPane errorPane = new ShowErrorPane("비밀번호를 입력해주세요.");
+	  				}else {
 	  					Room room = new Room();
 	  					room.setPassword(pwField.getText());
 	  					room.setRoomNo(no);
@@ -134,8 +133,13 @@ public class PasswordInput {
 		getInJF.setVisible(true);
 		getInJF.setResizable(false);
 		getInJF.setLocationRelativeTo(null);
-		getInJF.setLayout(null);
-		getInJF.setDefaultCloseOperation(getInJF.EXIT_ON_CLOSE);
+//		getInJF.setLayout(null);
+		getInJF.setAlwaysOnTop(true);
+		getInJF.addWindowListener(new WindowAdapter() {
+			public void closeJF() {
+				getInJF.dispose();
+			}
+		});
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));

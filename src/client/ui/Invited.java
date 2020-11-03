@@ -9,9 +9,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,14 +27,12 @@ import vo.PlayerVO;
 
 public class Invited {
 	private static Invited instance;
-	
+	private JFrame inviteJF;
 	private Background imgP;
 	private Container con;
 	private JProgressBar progressBar;
-	private JFrame inviteJF;
 	private PlayerVO vo;
 	private Room room;
-	private boolean receiving = false;
 	private int i=10;
 	private TimerTask tt;
 	
@@ -57,10 +52,10 @@ public class Invited {
 	
 	public void runUI() {
 		//초대중으로 변경
-		receiving = true;
 		
 		//JFrame
 		inviteJF = new JFrame("초대창");
+		con = inviteJF.getContentPane();
 		
 		
 		//닉네임
@@ -115,7 +110,6 @@ public class Invited {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==cancelBtn) {
-					receiving = false;
 					inviteJF.dispose();
 				}
 			}
@@ -144,20 +138,20 @@ public class Invited {
 		roomPan.add(okBtn);
 		roomPan.add(cancelBtn);
 		roomPan.add(progressBar);
+		con.add(roomPan);
 
 		// JFrame 정보
-		con = inviteJF.getContentPane();
 		imgP = new Background();
 		imgP.lobbyImage();
 		con.add(imgP, BorderLayout.CENTER);
-		con.add(roomPan);
 		inviteJF.setSize(400, 250);
 		inviteJF.setResizable(false);
 		inviteJF.setLocationRelativeTo(null);
-		inviteJF.setLayout(null);
+		inviteJF.setUndecorated(true);
+		inviteJF.setAlwaysOnTop(true);
 		inviteJF.setDefaultCloseOperation(inviteJF.EXIT_ON_CLOSE);
 		inviteJF.setVisible(true);
-		inviteJF.setAlwaysOnTop(true);
+		
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
@@ -179,9 +173,8 @@ public class Invited {
 	    			 progressBar.setValue(i);
 	        		i--;
 	    		 } else {
-	    			 receiving = false;
-	    			 inviteJF.dispose();
 	    			 i=10;
+	    			 inviteJF.dispose();
 	    			 tt.cancel();
 	    		 }
 	    	 }
@@ -190,7 +183,6 @@ public class Invited {
 	         
 	    }//progress_start()끝
 
-	public boolean isReceiving() { return receiving; }
 	 
 }
 
