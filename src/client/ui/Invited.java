@@ -35,6 +35,9 @@ public class Invited {
 	private Room room;
 	private int i=10;
 	private TimerTask tt;
+	private final int x = 385;
+	private final int y = 215;
+	private boolean receiving = false;
 	
 	private Invited() {}
 	
@@ -52,7 +55,7 @@ public class Invited {
 	
 	public void runUI() {
 		//초대중으로 변경
-		
+		receiving = true;
 		//JFrame
 		inviteJF = new JFrame("초대창");
 		con = inviteJF.getContentPane();
@@ -88,6 +91,7 @@ public class Invited {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==okBtn) {
 					tt.cancel();
+					receiving = false;
 					inviteJF.dispose();
 					Lobby.getInstance().getLobbyJF().dispose();
 					ClientPacketSender.instance.enterRoom(room.getRoomNo());
@@ -111,6 +115,7 @@ public class Invited {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource()==cancelBtn) {
 					inviteJF.dispose();
+					receiving = false;
 				}
 			}
 		});
@@ -128,7 +133,7 @@ public class Invited {
 		roomlbl.setHorizontalAlignment(JLabel.CENTER);
 
 		JPanel roomPan = new JPanel();
-		roomPan.setBounds(0, 0, 384, 211);
+		roomPan.setBounds(0, 0, x, y);
 		roomPan.setBackground(new Color(0, 0, 0, 0));
 		roomPan.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));
 		roomPan.setLayout(null);
@@ -144,12 +149,12 @@ public class Invited {
 		imgP = new Background();
 		imgP.lobbyImage();
 		con.add(imgP, BorderLayout.CENTER);
-		inviteJF.setSize(400, 250);
-		inviteJF.setResizable(false);
+		inviteJF.setSize(x, y);
+//		inviteJF.setResizable(false);
 		inviteJF.setLocationRelativeTo(null);
 		inviteJF.setUndecorated(true);
 		inviteJF.setAlwaysOnTop(true);
-		inviteJF.setDefaultCloseOperation(inviteJF.EXIT_ON_CLOSE);
+//		inviteJF.setDefaultCloseOperation(inviteJF.EXIT_ON_CLOSE);
 		inviteJF.setVisible(true);
 		
 
@@ -171,9 +176,11 @@ public class Invited {
 	    	 public void run() {
 	    		 if(i>0) {
 	    			 progressBar.setValue(i);
+	    			 inviteJF.repaint();
 	        		i--;
 	    		 } else {
 	    			 i=10;
+	    			 receiving = false;
 	    			 inviteJF.dispose();
 	    			 tt.cancel();
 	    		 }
@@ -182,6 +189,8 @@ public class Invited {
 	        		t.schedule(tt,0,1000);
 	         
 	    }//progress_start()끝
+
+	public boolean isReceiving() { return receiving; }
 
 	 
 }

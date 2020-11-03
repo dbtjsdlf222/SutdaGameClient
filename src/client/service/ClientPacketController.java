@@ -144,7 +144,8 @@ public class ClientPacketController {
 			
 		case Protocol.GET_INVITE:
 			Invited.getInstance().setVOROOM(packet.getPlayerVO(), packet.getRoom());
-			Invited.getInstance().runUI();
+				if(!Invited.getInstance().isReceiving())
+					Invited.getInstance().runUI();
 			break;
 
 		case Protocol.PASSWORD:
