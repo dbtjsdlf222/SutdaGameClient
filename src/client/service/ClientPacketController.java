@@ -21,7 +21,6 @@ import client.ui.RoomScreen;
 import client.ui.ShowErrorPane;
 import operator.ChattingOperator;
 import server.Room;
-import server.RunServer;
 import util.MoneyFormat;
 import vo.Packet;
 import vo.PlayerVO;
@@ -34,7 +33,7 @@ public class ClientPacketController {
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
-	public static String[][] pn = new String[RunServer.MAXPLAYER][RunServer.MAXPLAYER];
+	public static String[][] pn = new String[999][999];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -46,7 +45,7 @@ public class ClientPacketController {
 	public static JPanel plobbyPan = new JPanel();
 
 	private static String rb[] = { "방번호", "공개방", "방제목", "판돈", "인원", "상태" };
-	public static String[][] rn = new String[RunServer.MAXROOM][RunServer.MAXROOM];
+	public static String[][] rn = new String[999][999];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
 		public boolean isCellEditable(int row, int column) {

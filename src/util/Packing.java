@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import server.Room;
-import server.ServerReceiver;
 import vo.Packet;
 import vo.PlayerVO;
 import vo.Protocol;
