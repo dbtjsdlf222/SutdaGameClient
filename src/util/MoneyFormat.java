@@ -18,7 +18,11 @@ public class MoneyFormat {
 			}
 			cnt++;
 		} //for
-		return result;
+		
+		if(result == "")
+			return "0만";
+		else
+			return result;
 	}
 
 	public static String format(String money) {

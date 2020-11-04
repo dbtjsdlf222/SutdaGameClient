@@ -47,6 +47,7 @@ import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
 import music.MusicPlayer;
 import operator.ChattingOperator;
+import server.Room;
 import util.Jokbo;
 import util.MoneyFormat;
 import util.Packing;
@@ -98,6 +99,7 @@ public class RoomScreen extends JFrame {
 	private static Timer timer = new Timer();
 	private TimerTask task;
 	private JLabel masterSticker = new JLabel(new ImageIcon(RoomScreen.class.getResource("/img/master.png")));
+	private Room room;
 	
 	public static RoomScreen getInstance() {
 		if (instance == null)
@@ -342,19 +344,19 @@ public class RoomScreen extends JFrame {
 		infoPan.setBounds(350, 0, 565, 30);;
 		infoPan.setBackground(new Color(0, 0, 0, 122));
 		infoPan.setLayout(null);
-		
 		noAndMoneyLal = new JLabel();
+		noAndMoneyLal.setText("[" + room.getRoomNo()+"번방]  시작금액 : " + room.getStartMoney()+"만");
 		noAndMoneyLal.setBounds(10, 0, 280, 30);
 		noAndMoneyLal.setFont(new Font("Rosewood Std", Font.PLAIN, 20));
 		noAndMoneyLal.setForeground(Color.YELLOW);
 		noAndMoneyLal.setHorizontalAlignment(JLabel.CENTER);
 		
 		titleLal = new JLabel();
+		titleLal.setText("방제 : " + room.getTitle());
 		titleLal.setBounds(280, 0, 285, 30);
 		titleLal.setFont(new Font("Rosewood Std", Font.PLAIN, 20));
 		titleLal.setForeground(Color.YELLOW);
 		titleLal.setHorizontalAlignment(JLabel.CENTER);
-				
 			
 		infoPan.add(noAndMoneyLal);	
 		infoPan.add(titleLal);	
@@ -840,7 +842,7 @@ public class RoomScreen extends JFrame {
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
-		if (roomOut || PlayerVO.myVO.getMoney() == 0) {
+		if (roomOut || PlayerVO.myVO.getMoney() < room.getStartMoney()) {
 			dispose();
 			Lobby.getInstance().lobbyScreen();
 		}
@@ -1044,6 +1046,8 @@ public class RoomScreen extends JFrame {
 	
 	
 
+
+	public void setRoom(Room room) { this.room = room; }
 
 	public JLabel getTitleLal() { return titleLal; }
 
