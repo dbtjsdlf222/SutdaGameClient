@@ -824,13 +824,13 @@ public class RoomScreen extends JFrame {
 		changeMaster(winerIdx);
 		panlist[turnIndex].remove(progressBar);
 		showNeedMoney(betAndBtnInitArr);
-		JOptionPane.showMessageDialog(null, msg, "알림", JOptionPane.WARNING_MESSAGE);
+		totalMoney.setText(msg);
+
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));
 		RoomScreen.getInstance().gameStart = false;
 		if (mySit == roomMaster)
 			startBtnSet();
-		totalMoney.setText("대기중");
 		for (int j = 0; j < 5; j++) {
 			try {
 				card1[j].setIcon(null);
