@@ -843,8 +843,7 @@ public class RoomScreen extends JFrame {
 		}
 		beticon = new JLabel[5];
 		if (roomOut || PlayerVO.myVO.getMoney() < room.getStartMoney()) {
-			dispose();
-			Lobby.getInstance().lobbyScreen();
+			sendOff();
 		}
 	} // gameOver();
 
