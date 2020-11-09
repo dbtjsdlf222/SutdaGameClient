@@ -842,6 +842,8 @@ public class RoomScreen extends JFrame {
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
+		System.out.println(room.getStartMoney());
+		System.out.println(PlayerVO.myVO.getMoney());
 		if (roomOut || PlayerVO.myVO.getMoney() < room.getStartMoney()) {
 			sendOff();
 		}

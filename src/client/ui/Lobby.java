@@ -188,6 +188,8 @@ public class Lobby {
 		infoMoneyLbl.setOpaque(true);
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
 		infoMoneyLbl.setForeground(new Color(163, 95, 56));
+		
+		System.out.println(PlayerVO.myVO.getMoney());
 		//돈이 10만원 밑이면 충전
 		if(PlayerVO.myVO.getMoney()<10)
 			ClientPacketSender.instance.extraMoney();
