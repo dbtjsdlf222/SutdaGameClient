@@ -65,8 +65,14 @@ public class Lobby {
 	private static boolean initializeOnce = false;
 
 	public void lobbyScreen() {
-		 lobbyJF = new JFrame();
-		 PopMenu();
+		lobbyJF = new JFrame();
+		PopMenu();
+		System.out.println(PlayerVO.myVO.getMoney());
+		//돈이 10만원 밑이면 충전
+		if(PlayerVO.myVO.getMoney()<10) {
+			ClientPacketSender.instance.extraMoney();
+		}
+		 
 		
 		// 로비 라벨
 		JLabel lobLbl = new JLabel("L O B B Y");
@@ -188,12 +194,6 @@ public class Lobby {
 		infoMoneyLbl.setOpaque(true);
 		infoMoneyLbl.setBackground(new Color(63, 28, 6));
 		infoMoneyLbl.setForeground(new Color(163, 95, 56));
-		
-		System.out.println(PlayerVO.myVO.getMoney());
-		//돈이 10만원 밑이면 충전
-		if(PlayerVO.myVO.getMoney()<10)
-			ClientPacketSender.instance.extraMoney();
-		
 		infoMoneyLbl.setText("머니 : " +MoneyFormat.format(PlayerVO.myVO.getMoney()));
 		infoMoneyLbl.setHorizontalAlignment(JLabel.LEFT);
 		infoMoneyLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));

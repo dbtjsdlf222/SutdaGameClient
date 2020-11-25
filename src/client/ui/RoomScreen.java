@@ -822,12 +822,11 @@ public class RoomScreen extends JFrame {
 		gameStart = false;
 		remove(jokboPanel);
 		changeMaster(winerIdx);
-		panlist[turnIndex].remove(progressBar);
 		showNeedMoney(betAndBtnInitArr);
-		chatText.setText(msg);
+		ChattingOperator.chatArea.append("<SYSTEM> " + msg + "\n");
 		winerIdx = (winerIdx - mySit + 5) % 5;
+		panlist[winerIdx].remove(progressBar);
 		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));
-		RoomScreen.getInstance().gameStart = false;
 		if (mySit == roomMaster)
 			startBtnSet();
 		totalMoney.setText("대기중");
@@ -842,6 +841,7 @@ public class RoomScreen extends JFrame {
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
+		System.out.println(gameStart);
 		System.out.println(room.getStartMoney());
 		System.out.println(PlayerVO.myVO.getMoney());
 		if (roomOut || PlayerVO.myVO.getMoney() < room.getStartMoney()) {
