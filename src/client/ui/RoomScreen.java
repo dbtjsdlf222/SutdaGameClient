@@ -114,6 +114,7 @@ public class RoomScreen extends JFrame {
 	@Override
 	public void dispose() {
 		instance = null;
+		System.out.println("여기");
 		ClientPacketSender.instance.exitRoom();
 		super.dispose();
 	} // dispose();
@@ -125,11 +126,11 @@ public class RoomScreen extends JFrame {
 
 		index = (index - mySit + 5) % 5;
 		liveList[index] = false;
+		profile[index] = null;
 
 		panlist[index].setBounds(0, 0, 0, 0);
 
 		panlist[index] = new JPanel();
-
 		int[] x = { 460, 0, 0, 915, 915 };
 		int[] y = { 440, 215, 30, 30, 215 };
 
