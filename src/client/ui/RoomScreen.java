@@ -114,7 +114,6 @@ public class RoomScreen extends JFrame {
 	@Override
 	public void dispose() {
 		instance = null;
-		System.out.println("여기");
 		ClientPacketSender.instance.exitRoom();
 		super.dispose();
 	} // dispose();
@@ -652,8 +651,6 @@ public class RoomScreen extends JFrame {
 	public void sendOff() {
 		if (!gameStart) {
 			dispose();
-			ChattingOperator.chatArea.setText("");
-			Lobby.getInstance().lobbyScreen();
 		} else {
 			roomOut = true;
 			JOptionPane.showMessageDialog(null, "나가기 예약이 되었습니다.", "알림", JOptionPane.WARNING_MESSAGE);

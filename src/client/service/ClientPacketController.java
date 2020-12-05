@@ -174,6 +174,10 @@ public class ClientPacketController {
 			RoomScreen.getInstance().sendOff();
 			ChattingOperator.chatArea.setText("<SYSTEM>" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다.");
 			break;
+		case Protocol.EXIT_ROOM:
+			ChattingOperator.chatArea.setText("");
+			Lobby.getInstance().lobbyScreen();
+			break;
 
 		case Protocol.EXIT_OTHER_ROOM:
 			RoomScreen.getInstance().exitPlayer(Integer.parseInt(packet.getMotion()));
