@@ -148,8 +148,7 @@ public class ClientPacketController {
 		case Protocol.PASSWORD:
 			if (packet.getMotion().equals("true")) {
 				PasswordInput.getInstance().dispose();
-			}else {
-				
+			} else {
 				ShowErrorPane moneyErrorPane = new ShowErrorPane("비밀번호가 틀렸습니다.");
 			}
 			break;
@@ -173,6 +172,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().sendOff();
 			ChattingOperator.chatArea.setText("<SYSTEM>" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다.");
 			break;
+
 		case Protocol.EXIT_ROOM:
 			ChattingOperator.chatArea.setText("");
 			Lobby.getInstance().lobbyScreen();

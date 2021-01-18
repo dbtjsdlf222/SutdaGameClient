@@ -67,8 +67,6 @@ public class Lobby {
 	public void lobbyScreen() {
 		lobbyJF = new JFrame();
 		PopMenu();
-		System.out.println(PlayerVO.myVO.getMoney());
-		//돈이 10만원 밑이면 충전
 		if(PlayerVO.myVO.getMoney()<10) {
 			ClientPacketSender.instance.extraMoney();
 		}
