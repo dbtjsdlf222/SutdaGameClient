@@ -1,23 +1,13 @@
 package dao;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import client.service.ClientPacketController;
 import client.service.ClientPacketSender;
-import client.ui.Lobby;
-import connection.DBCon;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -25,32 +15,7 @@ public class PlayerDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PlayerDAO.class);
 	
-	private Connection conn;
-	private PreparedStatement pstmt;
-
-	public PlayerDAO() {
-		try {
-			conn = new DBCon().getMysqlConn();
-		} catch (ClassNotFoundException e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
-
-//	public String getServerIP() {
-//		return "192.168.0.79";
-//	}
-
-	public void setServerIP() {
-		String sql = "UPDATE player SET ip = ? WHERE id = 'SERVER'";
-		try (PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, InetAddress.getLocalHost().getHostAddress());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			logger.error(e.getMessage(), e);
-		} catch (UnknownHostException e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
+	public PlayerDAO() { }
 	
 	public int playerJoin(PlayerVO vo) throws ClassNotFoundException {
 		ClientPacketSender.instance.join(vo);

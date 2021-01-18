@@ -2,7 +2,6 @@ package client.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,7 +28,6 @@ import org.slf4j.Logger;
 import client.Background;
 import client.service.login.LoginResultHandler;
 import client.service.login.LoginService;
-import dao.PlayerDAO;
 import vo.PlayerVO;
 
 public class LoginFrame implements LoginResultHandler {
@@ -161,7 +159,7 @@ public class LoginFrame implements LoginResultHandler {
 						logger.error(e1.getMessage(), e1);
 					}
 				else {
-					EventQueue.invokeLater(() -> joinFrame = new JoinFrame(loginService.getPlayerDAO()));
+					new JoinFrame(loginService.getPlayerDAO());
 				}
 				
 			}

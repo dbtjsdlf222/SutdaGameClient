@@ -1,6 +1,5 @@
 package client;
 
-import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -42,7 +41,7 @@ public class RunClient {
 			catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) { logger.error(e1.getMessage());}
 		}
 		
-		EventQueue.invokeLater(() -> new LoginFrame()); // 쓰레드 충돌 방지
+		new LoginFrame();
 		
 	} // main();
 	

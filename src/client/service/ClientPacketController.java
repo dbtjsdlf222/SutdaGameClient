@@ -34,7 +34,7 @@ public class ClientPacketController {
 
 	public static JScrollPane scrollPane = new JScrollPane(ChattingOperator.chatArea);
 	private static String pb[] = { "닉네임", "판수", "돈" };
-	public static String[][] pn = new String[999][999];
+	public static String[][] pn = new String[999][10];
 
 	public static DefaultTableModel pLmodel = new DefaultTableModel(pb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -46,7 +46,7 @@ public class ClientPacketController {
 	public static JPanel plobbyPan = new JPanel();
 
 	private static String rb[] = { "방번호", "공개방", "방제목", "판돈", "인원", "상태" };
-	public static String[][] rn = new String[999][999];
+	public static String[][] rn = new String[999][6];
 
 	public static DefaultTableModel rLmodel = new DefaultTableModel(rb, 0) {
 		public boolean isCellEditable(int row, int column) {
@@ -136,7 +136,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
-			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다>\n");
+//			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번 방에 입장하셨습니다>\n");
 			break;
 			
 		case Protocol.GET_INVITE:
@@ -160,7 +160,7 @@ public class ClientPacketController {
 			
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
-			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다>\n");
+			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번 방에 입장하셨습니다>\n");
 			break;
 			
 		case Protocol.ENTER_OTHER_ROOM:
@@ -169,8 +169,8 @@ public class ClientPacketController {
 			break;
 		
 		case Protocol.KICK:
+			new ShowErrorPane("방에서 추방당하셨습니다>");
 			RoomScreen.getInstance().sendOff();
-			ChattingOperator.chatArea.setText("<" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다>");
 			break;
 
 		case Protocol.EXIT_ROOM:
@@ -185,6 +185,7 @@ public class ClientPacketController {
 		case Protocol.CHANGE_MASTER:
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
+			
 		case Protocol.RELOAD_PlAYERLIST:
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			break;
@@ -237,7 +238,6 @@ public class ClientPacketController {
 			} else {
 				RoomScreen.getInstance().gameOver(packet.getMotion());
 			}
-			
 			break;
 			
 		case Protocol.DRAW:
