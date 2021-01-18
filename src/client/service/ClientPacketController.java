@@ -11,8 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import client.ui.Invited;
 import client.ui.Lobby;
@@ -21,6 +21,7 @@ import client.ui.RoomScreen;
 import client.ui.ShowErrorPane;
 import operator.ChattingOperator;
 import server.Room;
+import util.ChatFilter;
 import util.MoneyFormat;
 import util.Protocol;
 import vo.Packet;
@@ -60,22 +61,21 @@ public class ClientPacketController {
 	public ClientPacketController() { }
 
 	public void controller(Packet packet) {
-
+		ChatFilter filter= new ChatFilter();
+		
 		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
 
 		switch (packet.getProtocol()) {
 		case Protocol.SERVER_MESSAGE:
-			ChattingOperator.chatArea.append("<SYSTEM> " + packet.getMotion() + "\n");
-			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+			ChattingOperator.chatArea.append("<" + packet.getMotion() + ">\n");
 			break;
 			
 		case Protocol.MESSAGE: // 채팅
-			ChattingOperator.chatArea.append(packet.getMotion() + "\n");
-			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+			ChattingOperator.chatArea.append(filter.filter(packet.getMotion()) + "\n");
 			break;
 
 		case Protocol.WHISPER:
-			ChattingOperator.chatArea.append("<귓속말> " + packet.getMotion() + "\n");
+			ChattingOperator.chatArea.append("<귓속말> " + filter.filter(packet.getMotion()) + "\n");
 			break;
 		case Protocol.RELOAD_INFO_MONEY:
 		//INFO
@@ -136,7 +136,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			RoomScreen.getInstance().startBtnSet();
-			ChattingOperator.chatArea.setText("<SYSTEM> " + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다.\n");
+			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다>\n");
 			break;
 			
 		case Protocol.GET_INVITE:
@@ -160,7 +160,7 @@ public class ClientPacketController {
 			
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
-			ChattingOperator.chatArea.setText("<SYSTEM> " + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다.\n");
+			ChattingOperator.chatArea.setText("<" + packet.getPlayerVO().getRoomNo()+"번방의 입장하셨습니다>\n");
 			break;
 			
 		case Protocol.ENTER_OTHER_ROOM:
@@ -170,7 +170,7 @@ public class ClientPacketController {
 		
 		case Protocol.KICK:
 			RoomScreen.getInstance().sendOff();
-			ChattingOperator.chatArea.setText("<SYSTEM>" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다.");
+			ChattingOperator.chatArea.setText("<" + packet.getRoom().getRoomNo() + "번방에서 추방당하셨습니다>");
 			break;
 
 		case Protocol.EXIT_ROOM:
@@ -259,5 +259,6 @@ public class ClientPacketController {
 				//알수 없는 프로토콜 입니다.
 			
 		} // switch
+		scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 	} // controller();
 } // class

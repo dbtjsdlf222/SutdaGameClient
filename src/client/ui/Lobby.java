@@ -245,7 +245,7 @@ public class Lobby {
 		ChattingOperator co = ChattingOperator.getInstance();
 		ChattingOperator.chatArea.setEditable(false);
 		ChattingOperator.chatArea.setLineWrap(true);
-		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 20));
+		ChattingOperator.chatArea.setFont(new Font("휴먼옛체", Font.PLAIN, 16));
 		ChattingOperator.chatArea.setBackground(new Color(63, 28, 6));
 		ChattingOperator.chatArea.setForeground(Color.white);
 		ChattingOperator.chatArea.setBorder(new TitledBorder(new LineBorder(Color.orange, 3)));

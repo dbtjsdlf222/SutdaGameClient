@@ -46,20 +46,15 @@ public class ChattingOperator {
 				vo.setNic(nic);
 			
 				String[] oneMsg = msg.split(msgCheck[0] + " " + nic);
-				System.out.println(msgCheck[0]);
-				System.out.println(msgCheck[1]);
-				System.out.println(msgCheck[2]);
-				System.out.println(nic);
-				System.out.println(oneMsg[0]);
 				if(!PlayerVO.myVO.getNic().equals(nic)) {
 					Packet pac = new Packet(Protocol.WHISPER, oneMsg[1], vo);
 					Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
 					ChattingOperator.chatArea.append("<보낸메시지>" + nic +" : " + oneMsg[1] + "\n");
 				}else {
-					ChattingOperator.chatArea.append("<SYSTEM> 자신에게 귓속말을 보낼 수 없습니다.\n");
+					ChattingOperator.chatArea.append("<자신에게 귓속말을 보낼 수 없습니다>\n");
 				}
 			} else {
-				ChattingOperator.chatArea.append("<SYSTEM> /w [상대방 닉네임] [할말] 형식으로 입력해주세요.\n");
+				ChattingOperator.chatArea.append("</w [상대방 닉네임] [할말] 형식으로 입력해주세요>\n");
 			}	
 			break;
 		
@@ -80,11 +75,13 @@ public class ChattingOperator {
 			Packing.sender(PlayerVO.myVO.getPwSocket(), findPacket);
 			break;
 		case "/help":
-			ChattingOperator.chatArea.append("<SYSTEM>\n귓속말 : /w 또는 /ㅈ [상대방 닉네임] [할말] \n초대 : /c 또는 /초대 [상대방 닉네임]\n추방 : /b 또는 /추방 [상대방 닉네임]\n");
+			ChattingOperator.chatArea.append("<귓속말> /w 또는 /귓말 [상대방 닉네임] [할말] \n");
+			ChattingOperator.chatArea.append("<초대> /c 또는 /초대 [상대방 닉네임]\n");
+			ChattingOperator.chatArea.append("<추방> /b 또는 /추방 [상대방 닉네임]\n");
 			break;
 
 		default:
-			ChattingOperator.chatArea.append("<SYSTEM> 잘못된 명령어입니다. /help 를 참조하세요.");
+			ChattingOperator.chatArea.append("<잘못된 명령어입니다. /help 를 참조하세요>\n");
 			break;
 		}
 		//채팅창 자동으로 내리기

@@ -822,7 +822,7 @@ public class RoomScreen extends JFrame {
 		remove(jokboPanel);
 		changeMaster(winerIdx);
 		showNeedMoney(betAndBtnInitArr);
-		ChattingOperator.chatArea.append("<SYSTEM> " + msg + "\n");
+		ChattingOperator.chatArea.append("<" + msg + ">\n");
 		winerIdx = (winerIdx - mySit + 5) % 5;
 		panlist[winerIdx].remove(progressBar);
 		moneyText[winerIdx].setText(MoneyFormat.format(winerTotalMoney));
