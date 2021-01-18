@@ -45,7 +45,6 @@ public class LoginFrame implements LoginResultHandler {
 	private Background back = new Background();
 	private JoinFrame joinFrame;
 	
-	
 	public LoginFrame() {
 		initialize();
 		frame.setVisible(true);
@@ -181,7 +180,7 @@ public class LoginFrame implements LoginResultHandler {
 	public void loginSuccess(PlayerVO player) {
 		if(frame.isDisplayable()) {
 			dispose();
-			Lobby.getInstance().lobbyScreen();;
+			Lobby.getInstance().lobbyScreen();
 		}
 	} //loginSuccess();
 
