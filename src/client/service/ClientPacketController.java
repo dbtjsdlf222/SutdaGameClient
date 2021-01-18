@@ -22,9 +22,9 @@ import client.ui.ShowErrorPane;
 import operator.ChattingOperator;
 import server.Room;
 import util.MoneyFormat;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 @SuppressWarnings("serial")
 public class ClientPacketController {
@@ -65,7 +65,6 @@ public class ClientPacketController {
 
 		switch (packet.getProtocol()) {
 		case Protocol.SERVER_MESSAGE:
-			System.out.println(packet.getMotion());
 			ChattingOperator.chatArea.append("<SYSTEM> " + packet.getMotion() + "\n");
 			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 			break;
@@ -242,12 +241,10 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.DRAW:
-			System.out.println("[Receive]DRAW");
 			JOptionPane.showMessageDialog(null, "재경기");
 			break;
 			
 		case Protocol.RUN_OUT_MONEY:
-			System.out.println("[Receive]RUNOUTMONEY");
 			break;
 			
 		case Protocol.RELOAD_MY_VO:

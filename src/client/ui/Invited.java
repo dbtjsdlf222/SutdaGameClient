@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -157,10 +158,10 @@ public class Invited {
 //		inviteJF.setDefaultCloseOperation(inviteJF.EXIT_ON_CLOSE);
 		inviteJF.setVisible(true);
 		
-
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		inviteJF.setIconImage(img);
+		
 		inviteJF.repaint();
 		progressBar_start();
 	}

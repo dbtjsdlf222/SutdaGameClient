@@ -51,9 +51,9 @@ import server.Room;
 import util.Jokbo;
 import util.MoneyFormat;
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 @SuppressWarnings("serial")
 public class RoomScreen extends JFrame {
@@ -626,6 +626,7 @@ public class RoomScreen extends JFrame {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		setIconImage(img);
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 				groupLayout.createParallelGroup(Alignment.LEADING).addGap(0, 1274, Short.MAX_VALUE));

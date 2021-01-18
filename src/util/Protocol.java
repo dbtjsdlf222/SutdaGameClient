@@ -1,4 +1,4 @@
-package vo;
+package util;
 
 public class Protocol {
    

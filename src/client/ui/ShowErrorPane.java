@@ -15,6 +15,5 @@ public class ShowErrorPane {
 	    dialog.setAlwaysOnTop(true);
 	    dialog.setVisible(true);
 	}
-	
 }
 

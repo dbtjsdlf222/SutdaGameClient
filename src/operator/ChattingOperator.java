@@ -1,8 +1,10 @@
 package operator;
 
 import javax.swing.JTextArea;
+
+import client.service.ClientPacketController;
 import util.Packing;
-import vo.Protocol;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -21,7 +23,7 @@ public class ChattingOperator {
 
 	public void chatting(String msg) {
 		if(msg.substring(0, 1).equals("/")) {
-			oneChatting(msg);
+			chatCommand(msg);
 		} else {
 			Packet pac = new Packet(Protocol.MESSAGE, msg, PlayerVO.myVO);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), pac);
@@ -29,7 +31,7 @@ public class ChattingOperator {
 	} //chatting();
 	
 	
-	public void oneChatting(String msg) {
+	public void chatCommand(String msg) {
 		String[] msgCheck = msg.split(" ");
 		String nic = null;
 		if(msgCheck.length>=2) {
@@ -85,6 +87,8 @@ public class ChattingOperator {
 			ChattingOperator.chatArea.append("<SYSTEM> 잘못된 명령어입니다. /help 를 참조하세요.");
 			break;
 		}
+		//채팅창 자동으로 내리기
+		ClientPacketController.scrollPane.getVerticalScrollBar().setValue(ClientPacketController.scrollPane.getVerticalScrollBar().getMaximum());
 	}
 	
 } //class

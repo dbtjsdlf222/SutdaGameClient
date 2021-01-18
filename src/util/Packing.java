@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import server.Room;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class Packing {
 	

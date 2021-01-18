@@ -15,9 +15,9 @@ import java.util.Random;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class Room {
 

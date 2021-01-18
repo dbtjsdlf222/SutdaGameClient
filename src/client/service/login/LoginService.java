@@ -12,9 +12,9 @@ import client.service.ClientReceiver;
 import client.service.login.LoginResultHandler.Focus;
 import dao.PlayerDAO;
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class LoginService {
 

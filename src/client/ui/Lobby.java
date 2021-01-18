@@ -51,7 +51,7 @@ public class Lobby {
 	private JButton newBtn;
 	private JPanel infoPan;
 	private JTextField chatText;
-	
+	private int chatInputMaximum = 30;
 	public static JLabel infoMoneyLbl = new JLabel(new ImageIcon(Lobby.class.getResource("/img/infoMoney.png")));
 	
 	private Lobby() {};
@@ -210,8 +210,6 @@ public class Lobby {
 		infoRatingLbl.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 16));
 		infoRatingLbl.setBounds(120, 110, 230,30);
 		infoPan.add(infoRatingLbl);
-		
-		
 
 		// 채팅 라벨
 		JLabel lbl = new JLabel("C H A T T I N G");
@@ -232,17 +230,15 @@ public class Lobby {
 		chatText = new JTextField();
 		chatText.setBounds(10, 225, 720, 25);
 		
-	    // 15글자 넘어가면 입력불가
+	    // 채팅 입력 리스너
 		chatText.addKeyListener(new KeyAdapter() {
 	    	public void keyTyped(KeyEvent e) {
 	    		if(e.getSource()==chatText) {
-	    			if(chatText.getText().equals("/귓말")||chatText.getText().equals("/w"))
-	    				if(chatText.getText().length()>=32)
-	    					e.consume();
-		    		}else if(chatText.getText().length()>=16) {
+		    		if(chatText.getText().length() > chatInputMaximum) {
 		    		  		e.consume();
-	    		  	}//if~else if
-	    	  	}//keyTyped();
+	    		  	}//if~else
+    			}
+    	  	}//keyTyped();
 	     });//addKeyListener();
 		
 		chatPan.add(chatText);
@@ -294,7 +290,11 @@ public class Lobby {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == chatBtn) {
 					if (!(chatText.getText().equals(""))) {
-						co.chatting(chatText.getText());
+						try {
+							co.chatting(chatText.getText().substring(0, chatInputMaximum));
+						} catch (StringIndexOutOfBoundsException e2) {
+							co.chatting(chatText.getText());							
+						}
 						chatText.requestFocus();
 						chatText.setText("");
 					}
@@ -397,12 +397,10 @@ public class Lobby {
 		lobbyJF.setResizable(false);
 		lobbyJF.setLocationRelativeTo(null);
 		lobbyJF.setLayout(null);
-		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		lobbyJF.setIconImage(img);
 		lobbyJF.setTitle("섯다 온라인");
-		
 		
 	}
 	

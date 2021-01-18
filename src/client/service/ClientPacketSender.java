@@ -7,9 +7,9 @@ import java.net.Socket;
 
 import server.Room;
 import util.Packing;
+import util.Protocol;
 import vo.Packet;
 import vo.PlayerVO;
-import vo.Protocol;
 
 public class ClientPacketSender {
 	public static ClientPacketSender instance = new ClientPacketSender();
