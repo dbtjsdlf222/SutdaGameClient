@@ -259,7 +259,7 @@ public class RoomScreen extends JFrame {
 		try {
 			remove(showMoneyPan);
 		}catch(NullPointerException e) {
-			System.out.println("널포이트");
+			e.printStackTrace();
 		}
 		showMoneyPan = new JPanel(); 
 		showMoneyPan.setBounds(440, 180, 400, 100);
@@ -840,9 +840,6 @@ public class RoomScreen extends JFrame {
 			liveList[j] = false;
 		}
 		beticon = new JLabel[5];
-		System.out.println(gameStart);
-		System.out.println(room.getStartMoney());
-		System.out.println(PlayerVO.myVO.getMoney());
 		if (roomOut || PlayerVO.myVO.getMoney() < room.getStartMoney()) {
 			sendOff();
 		}
