@@ -10,7 +10,9 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,16 +54,16 @@ public class LoginFrame implements LoginResultHandler {
 	
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("로그인");
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
+		Toolkit tool = Toolkit.getDefaultToolkit();
+		Image img = tool.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		frame.setIconImage(img);
-
+		
+		
 		frame.setTitle("섯다 온라인");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 640, 192, 0};
@@ -71,7 +73,7 @@ public class LoginFrame implements LoginResultHandler {
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(LoginFrame.class.getResource("/img/resources/Logo.jpg")));
+		lblLogo.setIcon(new ImageIcon("img/resources/Logo.jpg"));
 		GridBagConstraints gbc_lblLogo = new GridBagConstraints();
 		gbc_lblLogo.gridwidth = 2;
 		gbc_lblLogo.insets = new Insets(0, 0, 5, 5);
@@ -117,7 +119,7 @@ public class LoginFrame implements LoginResultHandler {
 		
 		JButton btnLoginJoin = new JButton("");
 		btnLoginJoin.setMargin(new Insets(-3, -3, -3, -3));
-		btnLoginJoin.setIcon(new ImageIcon(LoginFrame.class.getResource("/img/resources/BtnLoginJoin.png")));
+		btnLoginJoin.setIcon(new ImageIcon(RoomScreen.class.getResource("/img/resources/BtnLoginJoin.png")));
 		btnLoginJoin.setFocusPainted(false);
 		btnLoginJoin.setContentAreaFilled(false);
 		btnLoginJoin.setBorderPainted(false);
@@ -146,7 +148,8 @@ public class LoginFrame implements LoginResultHandler {
 		passwordField.setCaretColor(Color.WHITE);
 		passwordField.setBorder(new EmptyBorder(0, 8, 0, 0));
 		panelPaswwordField.add(passwordField);
-		
+		frame.revalidate();
+		frame.repaint();
 		btnLoginJoin.addMouseListener(new MouseAdapter() {
 			
 			@Override

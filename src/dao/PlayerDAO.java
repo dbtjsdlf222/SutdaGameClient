@@ -1,6 +1,7 @@
 package dao;
 
 import java.io.BufferedReader;
+import java.net.SocketTimeoutException;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import client.service.ClientPacketSender;
+import client.ui.ShowErrorPane;
 import vo.Packet;
 import vo.PlayerVO;
 
@@ -71,12 +73,15 @@ public class PlayerDAO {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			BufferedReader br = PlayerVO.myVO.getBrSocket();
+			PlayerVO.myVO.getSocket().setSoTimeout(10000);
 			String packetStr = "";
 			packetStr = br.readLine();
 			logger.debug(packetStr);
 			Packet packet = mapper.readValue(packetStr, Packet.class);
 			
 			return packet;
+		} catch (SocketTimeoutException e) {
+			new ShowErrorPane("서버가 응답하지 않습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

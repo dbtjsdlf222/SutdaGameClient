@@ -60,14 +60,13 @@ public class LoginService {
 				return;
 			}
 
-
-			
+			//------로그인 성공------// 
 			player.setSocketWithBrPw(PlayerVO.myVO.getSocket());
 			PlayerVO.myVO = player;
-
+			PlayerVO.myVO.getSocket().setSoTimeout(0);
 			new Thread(new ClientReceiver(player.getSocket())).start();
 			resultHandler.loginSuccess(player);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		//try~catch

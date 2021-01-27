@@ -78,9 +78,9 @@ public class ClientPacketSender {
 	
 	
 	
-	public boolean connectToServer(String ip) {
+	public boolean connectToServer(String ip,int port) {
 		
-		try(Socket socket = new Socket(ip, 4888)) {
+		try(Socket socket = new Socket(ip, port)) {
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			if(br.readLine().equals(Protocol.CONNECT_SUCCESS)) {
