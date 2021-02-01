@@ -291,7 +291,7 @@ public class JoinFrame {
 							if (text.equals("")) {
 								_text = "아이디를 입력해주세요.";
 							}else if (text.substring(0,1).matches("^[0-9]$")){
-								_text = "앞자리는 영문만 가능합니다.";
+								_text = "첫 글자는 영문만 가능합니다.";
 							} else if (text.length() < 6 || text.length() > 12) {
 								_text = "6 ~ 12자리 이하만 가능합니다.";
 							} else if (playerDAO.selectID(text)) {
@@ -390,25 +390,25 @@ public class JoinFrame {
 					sexJF.add(cha1Btn);
 					cha1Btn.setBounds(330, 160, 70, 50);
 
-					JRadioButton cha2Btn = new JRadioButton("옆집누나");
+					JRadioButton cha2Btn = new JRadioButton("고시생");
 					cha2Btn.setForeground(Color.white);
 					cha2Btn.setBackground(Color.black);
 					sexJF.add(cha2Btn);
 					cha2Btn.setBounds(110, 340, 130, 50);
 
-					JRadioButton cha3Btn = new JRadioButton("옆집할아버지");
+					JRadioButton cha3Btn = new JRadioButton("할아버지");
 					cha3Btn.setForeground(Color.white);
 					cha3Btn.setBackground(Color.black);
 					sexJF.add(cha3Btn);
 					cha3Btn.setBounds(310, 340, 130, 50);
 
-					JRadioButton cha5Btn = new JRadioButton("옆집삼촌");
+					JRadioButton cha5Btn = new JRadioButton("동네삼촌");
 					cha5Btn.setForeground(Color.white);
 					cha5Btn.setBackground(Color.black);
 					sexJF.add(cha5Btn);
 					cha5Btn.setBounds(110, 510, 130, 50);
 
-					JRadioButton cha6Btn = new JRadioButton("sexy한 누나");
+					JRadioButton cha6Btn = new JRadioButton("나빛나");
 					cha6Btn.setForeground(Color.white);
 					cha6Btn.setBackground(Color.black);
 					sexJF.add(cha6Btn);
