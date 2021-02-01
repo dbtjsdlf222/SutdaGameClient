@@ -253,7 +253,7 @@ public class JoinFrame {
 								nicknameCheck = true;
 							}
 						} else {
-							_text = "특수문자는 불가능합니다.";
+							_text = "자음 및 모음, 특수문자는 불가능합니다.";
 						}
 						
 						Thread.sleep(0);
@@ -271,7 +271,7 @@ public class JoinFrame {
 
 		textFieldId.getDocument().addDocumentListener(new DocumentUpdateListener() {
 			
-			private Pattern idPattern = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]*$");
+			private Pattern idPattern = Pattern.compile("^[a-zA-Z0-9]*$");
 			private Thread t;
 			
 			@Override
@@ -290,7 +290,9 @@ public class JoinFrame {
 						if (match.find()) {
 							if (text.equals("")) {
 								_text = "아이디를 입력해주세요.";
-							} else if (text.length() < 6 && text.length() > 12) {
+							}else if (text.substring(0,1).matches("^[0-9]$")){
+								_text = "앞자리는 영문만 가능합니다.";
+							} else if (text.length() < 6 || text.length() > 12) {
 								_text = "6 ~ 12자리 이하만 가능합니다.";
 							} else if (playerDAO.selectID(text)) {
 								_text = "이미 생성된 아이디 입니다.";
@@ -299,10 +301,8 @@ public class JoinFrame {
 								Thread.sleep(0);
 								idCheck = true;
 							}
-						} else if (!(text.matches("^[a-zA-Z0-9]*$"))) {
-							_text = "영어와 숫자만 입력 가능합니다.";
-						} else if (!(text.matches("^[a-zA-Z]{1}$"))) {
-							_text = "앞자리는 영어만 가능합니다.";
+						} else {
+							_text = "영문과 숫자만 입력 가능합니다.";
 						}
 						
 						Thread.sleep(0);

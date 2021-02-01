@@ -16,8 +16,8 @@ public class RunClient {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RunClient.class);
 	
-	public static final String SERVERS_IP = "3.80.54.122";
-//	public static final String SERVERS_IP = "localhost";
+//	public static final String SERVERS_IP = "3.80.54.122";
+	public static final String SERVERS_IP = "localhost";
 	private static int port = 4886;
 	
 	public static void main(String[] args) {

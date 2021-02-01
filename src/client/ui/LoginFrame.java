@@ -73,7 +73,7 @@ public class LoginFrame implements LoginResultHandler {
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon("img/resources/Logo.jpg"));
+		lblLogo.setIcon(new ImageIcon(RoomScreen.class.getResource("/img/resources/Logo.jpg")));
 		GridBagConstraints gbc_lblLogo = new GridBagConstraints();
 		gbc_lblLogo.gridwidth = 2;
 		gbc_lblLogo.insets = new Insets(0, 0, 5, 5);
