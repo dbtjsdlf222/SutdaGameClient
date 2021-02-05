@@ -48,7 +48,7 @@ public class JoinFrame {
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldCheck;
 
-	private JFrame sexJF;
+	private JFrame characterJF;
 
 	public JoinFrame(PlayerDAO playerDAO) {
 		this.playerDAO = playerDAO;
@@ -85,7 +85,7 @@ public class JoinFrame {
 		gbc_lblHint1.gridy = 1;
 		frame.getContentPane().add(lblHint1, gbc_lblHint1);
 
-		JLabel lblHint2 = new JLabel("아이디는 영문+숫자 5~10자리 비밀번호는 특수문자까지 입력 가능합니다.");
+		JLabel lblHint2 = new JLabel("아이디와 비밀번호는 5~10자리 내로 입력 가능합니다.");
 		lblHint2.setFont(new Font("굴림", Font.BOLD, 12));
 		lblHint2.setForeground(Color.PINK);
 		GridBagConstraints gbc_lblHint2 = new GridBagConstraints();
@@ -94,6 +94,16 @@ public class JoinFrame {
 		gbc_lblHint2.gridx = 1;
 		gbc_lblHint2.gridy = 2;
 		frame.getContentPane().add(lblHint2, gbc_lblHint2);
+		
+		JLabel lblHint3 = new JLabel("");
+		lblHint3.setFont(new Font("굴림", Font.BOLD, 12));
+		lblHint3.setForeground(Color.PINK);
+		GridBagConstraints gbc_lblHint3 = new GridBagConstraints();
+		gbc_lblHint3.gridwidth = 4;
+		gbc_lblHint3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHint3.gridx = 1;
+		gbc_lblHint3.gridy = 3;
+		frame.getContentPane().add(lblHint3, gbc_lblHint3);
 
 		JLabel lblNickName = new JLabel("닉네임");
 		lblNickName.setForeground(Color.WHITE);
@@ -363,55 +373,58 @@ public class JoinFrame {
 
 				if (idCheck && passwordCheck && passwordCheck2 && nicknameCheck) {
 
-					sexJF = new JFrame("캐릭터 선택창");
-					Container con = sexJF.getContentPane();
+					characterJF = new JFrame("캐릭터 선택창");
+					Container con = characterJF.getContentPane();
 					con.setLayout(null);
 					con.setBackground(Color.black);
-					sexJF.setSize(500, 700);
-					sexJF.setLocationRelativeTo(null);
-					sexJF.setVisible(true);
+					characterJF.setSize(500, 700);
+					characterJF.setLocationRelativeTo(null);
+					characterJF.setVisible(true);
+					Toolkit tool = Toolkit.getDefaultToolkit();
+					Image img = tool.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
+					characterJF.setIconImage(img);
 
-					JLabel sexLbl = new JLabel("캐릭을 선택하세요.");
-					sexLbl.setFont(new Font("d2coding", Font.BOLD, 20));
-					sexLbl.setForeground(Color.white);
-					sexLbl.setBackground(Color.white);
-					sexLbl.setBounds(150, 20, 200, 20);
-					sexJF.add(sexLbl);
+					JLabel charLbl = new JLabel("캐릭을 선택하세요.");
+					charLbl.setFont(new Font("d2coding", Font.BOLD, 20));
+					charLbl.setForeground(Color.white);
+					charLbl.setBackground(Color.white);
+					charLbl.setBounds(150, 20, 200, 20);
+					characterJF.add(charLbl);
 
 					JRadioButton cha0Btn = new JRadioButton("심슨");
 					cha0Btn.setForeground(Color.white);
 					cha0Btn.setBackground(Color.black);
-					sexJF.add(cha0Btn);
+					characterJF.add(cha0Btn);
 					cha0Btn.setBounds(120, 160, 70, 50);
 
 					JRadioButton cha1Btn = new JRadioButton("마지");
 					cha1Btn.setForeground(Color.white);
 					cha1Btn.setBackground(Color.black);
-					sexJF.add(cha1Btn);
+					characterJF.add(cha1Btn);
 					cha1Btn.setBounds(330, 160, 70, 50);
 
 					JRadioButton cha2Btn = new JRadioButton("고시생");
 					cha2Btn.setForeground(Color.white);
 					cha2Btn.setBackground(Color.black);
-					sexJF.add(cha2Btn);
+					characterJF.add(cha2Btn);
 					cha2Btn.setBounds(110, 340, 130, 50);
 
 					JRadioButton cha3Btn = new JRadioButton("할아버지");
 					cha3Btn.setForeground(Color.white);
 					cha3Btn.setBackground(Color.black);
-					sexJF.add(cha3Btn);
+					characterJF.add(cha3Btn);
 					cha3Btn.setBounds(310, 340, 130, 50);
 
 					JRadioButton cha5Btn = new JRadioButton("동네삼촌");
 					cha5Btn.setForeground(Color.white);
 					cha5Btn.setBackground(Color.black);
-					sexJF.add(cha5Btn);
+					characterJF.add(cha5Btn);
 					cha5Btn.setBounds(110, 510, 130, 50);
 
 					JRadioButton cha6Btn = new JRadioButton("나빛나");
 					cha6Btn.setForeground(Color.white);
 					cha6Btn.setBackground(Color.black);
-					sexJF.add(cha6Btn);
+					characterJF.add(cha6Btn);
 					cha6Btn.setBounds(310, 510, 130, 50);
 
 					ButtonGroup bg = new ButtonGroup();
@@ -425,36 +438,36 @@ public class JoinFrame {
 					JLabel cha0 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha0.png")));
 					cha0.setBounds(80, 50, 130, 100);
-					sexJF.add(cha0);
+					characterJF.add(cha0);
 
 					JLabel cha1 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha1.png")));
 					cha1.setBounds(290, 50, 130, 100);
-					sexJF.add(cha1);
+					characterJF.add(cha1);
 
 					JLabel cha2 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha2.png")));
 					cha2.setBounds(80, 230, 130, 100);
-					sexJF.add(cha2);
+					characterJF.add(cha2);
 
 					JLabel cha3 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha3.png")));
 					cha3.setBounds(290, 230, 130, 100);
-					sexJF.add(cha3);
+					characterJF.add(cha3);
 
 					JLabel cha5 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha5.png")));
 					cha5.setBounds(80, 400, 130, 100);
-					sexJF.add(cha5);
+					characterJF.add(cha5);
 
 					JLabel cha6 = new JLabel(
 							new ImageIcon(JoinFrame.class.getResource("/img/character/cha6.png")));
 					cha6.setBounds(290, 400, 130, 100);
-					sexJF.add(cha6);
+					characterJF.add(cha6);
 
 					JButton okBtn = new JButton("선택");
 					okBtn.setBounds(200, 580, 100, 40);
-					sexJF.add(okBtn);
+					characterJF.add(okBtn);
 
 					okBtn.addActionListener(new ActionListener() {
 
@@ -480,7 +493,7 @@ public class JoinFrame {
 										textFieldNickname.getText());
 								if (1 == playerDAO.playerJoin(playerVO)) {
 									JOptionPane.showMessageDialog(null, "회원가입을 축하드립니다.");
-									sexJF.dispose();
+									characterJF.dispose();
 									frame.dispose();
 
 								}
@@ -500,8 +513,8 @@ public class JoinFrame {
 	} // initialize();
 
 	public void dispose() {
-		if (sexJF != null && sexJF.isDisplayable())
-			sexJF.dispose();
+		if (characterJF != null && characterJF.isDisplayable())
+			characterJF.dispose();
 		frame.dispose();
 	}
 
