@@ -1,3 +1,18 @@
-# SutdaGame
-<blockquote>섯다 게임 클라이언트 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>를 통해 바로 접속 하실수 있습니다.</blockquote>
+# 섯다게임
 
+<strong>섯다</strong>는 화투로 할 수 있는 대표적인 카드 게임입니다. 참가자들은 본인이 가진 단 2장의 카드 조합을 확인하고 금액을 베팅한 후, 이후 서로의 카드를 모두 공개하여 그 결과 가장 높은 2장의 카드 조합을 가진 참가자가 승자가 되어 베팅된 판돈을 모두 획득합니다. (포커의 화투 버전입니다)
+
+<blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 섯다 게임 클라이언트만 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>하신 후 실행시 바로 서버에 접속 하실수 있습니다.</blockquote>
+
+
+<h2>로그인 화면</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
+
+
+<h2 id="회원가입">회원가입 화면<a>목차</a></h2>
+<img src="https://user-images.githubusercontent.com/34783191/107035131-0861a000-67fb-11eb-87e3-8eb31967f351.png" alt="회원가입 화면"/>
+<blockquote>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</blockquote>
+
+
+<img src="https://user-images.githubusercontent.com/34783191/107041740-34cdea00-6804-11eb-9948-9b20759159dd.png" alt="캐릭터 선택창"/>
+<blockquote>캐릭터 선택 </blockquote>
