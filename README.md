@@ -19,8 +19,9 @@
 
 
 <h2 id="회원가입">회원가입 화면</h2>
-<img src="https://user-images.githubusercontent.com/34783191/107035131-0861a000-67fb-11eb-87e3-8eb31967f351.png" alt="회원가입 화면"/>
 <blockquote>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</blockquote>
+<img src="https://user-images.githubusercontent.com/34783191/107035131-0861a000-67fb-11eb-87e3-8eb31967f351.png" alt="회원가입 화면"/>
 
-<img src="https://user-images.githubusercontent.com/34783191/107041740-34cdea00-6804-11eb-9948-9b20759159dd.png" alt="캐릭터 선택창"/>
+
 <blockquote>캐릭터 선택 </blockquote>
+<img src="https://user-images.githubusercontent.com/34783191/107060240-1377f880-681a-11eb-9a6a-6fb24814f846.png" alt="캐릭터 선택창"/>
