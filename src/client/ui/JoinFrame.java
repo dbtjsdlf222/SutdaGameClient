@@ -85,7 +85,7 @@ public class JoinFrame {
 		gbc_lblHint1.gridy = 1;
 		frame.getContentPane().add(lblHint1, gbc_lblHint1);
 
-		JLabel lblHint2 = new JLabel("아이디는 5~10자리 비밀번호는 영어 + 숫자로만 가능합니다.");
+		JLabel lblHint2 = new JLabel("아이디는 영문+숫자 5~10자리 비밀번호는 특수문자까지 입력 가능합니다.");
 		lblHint2.setFont(new Font("굴림", Font.BOLD, 12));
 		lblHint2.setForeground(Color.PINK);
 		GridBagConstraints gbc_lblHint2 = new GridBagConstraints();
