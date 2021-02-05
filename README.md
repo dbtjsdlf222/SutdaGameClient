@@ -5,9 +5,9 @@
 
 <blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 섯다 게임 클라이언트만 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>하신 후 실행시 바로 서버에 접속 하실수 있습니다.</blockquote>
 
-<h2>소개 순서</h2>
+<h2 id="top">소개 순서</h2>
 <ol>
-  <li><a href="login">로그인 및 회원가입</a></li>
+  <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href=""></a></li>
   <li><a href=""></a></li>
   <li><a href=""></a></li>
@@ -18,10 +18,9 @@
 <img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
 
 
-<h2 id="회원가입">회원가입 화면<a>목차</a></h2>
+<h2 id="회원가입">회원가입 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107035131-0861a000-67fb-11eb-87e3-8eb31967f351.png" alt="회원가입 화면"/>
 <blockquote>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</blockquote>
-
 
 <img src="https://user-images.githubusercontent.com/34783191/107041740-34cdea00-6804-11eb-9948-9b20759159dd.png" alt="캐릭터 선택창"/>
 <blockquote>캐릭터 선택 </blockquote>
