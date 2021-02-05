@@ -65,7 +65,7 @@ public class JoinFrame {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		frame.setIconImage(img);
-		frame.setTitle("섯다 온라인");
+		frame.setTitle("회원가입");
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 16, 0, 0, 64, 0, 16 };
