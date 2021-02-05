@@ -20,8 +20,6 @@
 
 <h2 id="회원가입">회원가입 화면</h2>
 <blockquote>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</blockquote>
-<img src="https://user-images.githubusercontent.com/34783191/107035131-0861a000-67fb-11eb-87e3-8eb31967f351.png" alt="회원가입 화면"/>
-
-
-<blockquote>캐릭터 선택 </blockquote>
+<img src="https://user-images.githubusercontent.com/34783191/107060793-bd578500-681a-11eb-9896-de5896195c38.png" alt="회원가입 화면"/>
+<blockquote>캐릭터 선택 후 회원가입 완료</blockquote>
 <img src="https://user-images.githubusercontent.com/34783191/107060240-1377f880-681a-11eb-9a6a-6fb24814f846.png" alt="캐릭터 선택창"/>
