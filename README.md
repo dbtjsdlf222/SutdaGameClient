@@ -31,7 +31,7 @@
 <br><br>
 <h2 id="lobby">게임 로비 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
-<blockquote></blockquote>
+<blockquote>로비에 변화가 있을시 실시간으로 반영합니다.</blockquote>
     
 <img src="https://user-images.githubusercontent.com/34783191/107120024-72974500-68ce-11eb-9825-70ba01c0e8e1.png" alt="초대 화면"/>
 <blockquote>
@@ -45,36 +45,21 @@
 <blockquote>자신이 가진 한도 내에서 시작 금액 설정 가능합니다.</blockquote>
 <br><br>
 <h2 id="lobby">게임 화면</h2>
-<img src="https://user-images.githubusercontent.com/34783191/107118974-cce0d780-68c7-11eb-8a12-7bd226dd5262.png" alt="게임 화면"/>
+<img src="https://user-images.githubusercontent.com/34783191/107121278-e3416000-68d4-11eb-9824-fb180c1d465f.png" alt="게임 화면"/>
 <blockquote>
   <p>게임 진행 순서</P>
   <ol>
+    <li>방장이 게임을 시작 합니다(2명 이상일 때만 가능)</li>
     <li>1번 카드를 받습니다</li>
-    <li>배팅을 합니다</li>
+    <li>배팅을 합니다(프로필 옆에 어떤 배팅을 했는지 보입니다)</li>
     <li>2번 카드를 받습니다</li>
     <li>배팅을 합니다</li>
     <li>패를 공개하며 승자가 결정 됩니다</li>
   </ol>
-</blockquote>
-
-<h3>채팅 기능</h3>
-<blockquote>
-  <ul>
-    <li>욕설 필터링</li>
-    <li>최대 입력 가능 글자 제한</li>
-      <li>사용 가능 명령어</li>
-      <ul>
-        <li>도움말(/help)</li>
-        <li>귓속말(/w|/귓말)</li>
-        <li>[방]게임방 초대(상대는 로비에 있어야함)</li>
-        <li>[방]강퇴(방장만 작동)</li>
-      </ul>
-  <ul>
+  승자는 방장 권한을 가지게 됩니다.
 </blockquote>
 
 <h3 id="diagram">다이어그램</h3>
-<img src="https://user-images.githubusercontent.com/34783191/107119085-9d7e9a80-68c8-11eb-8634-2eb15a78d14b.png" alt="다이어그램">
+<img src="https://user-images.githubusercontent.com/34783191/107120302-2ea53f80-68d0-11eb-8411-d028ea646a57.png" alt="다이어그램">
 
-
-<h2 id="lobby">게임 화면</h2>
 
