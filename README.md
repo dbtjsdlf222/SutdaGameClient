@@ -10,7 +10,7 @@
   <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href="#lobby">게임 로비 화면</a></li>
   <li><a href="#makeRoom"></a>방 만들기</li>
-  <li><a href=""></a></li>
+  <li><a href="#diagram">다이어그램</a></li>
 </ol>
 <hr>
 
@@ -28,44 +28,47 @@
 <img src="https://user-images.githubusercontent.com/34783191/107060793-bd578500-681a-11eb-9896-de5896195c38.png" alt="회원가입 화면"/>
 <blockquote>캐릭터 선택 후 회원가입 완료</blockquote>
 <img src="https://user-images.githubusercontent.com/34783191/107060240-1377f880-681a-11eb-9a6a-6fb24814f846.png" alt="캐릭터 선택창"/>
-
+<br><br>
 <h2 id="lobby">게임 로비 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
+<br><br>
+<h2 id="makeroom">방만들기</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107118521-ee8c8f80-68c4-11eb-8041-e03d04d022cb.png" alt="방만들기 화면">
+<blockquote>자신이 가진 한도 내에서 시작 금액 설정 가능합니다.</blockquote>
+<br><br>
+<h2 id="lobby">게임 화면</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107118974-cce0d780-68c7-11eb-8a12-7bd226dd5262.png" alt="게임 화면"/>
+<blockquote>
+  <p>게임 진행 순서</P>
+  <ol>
+    <li>1번 카드를 받습니다</li>
+    <li>배팅을 합니다</li>
+    <li>2번 카드를 받습니다</li>
+    <li>배팅을 합니다</li>
+    <li>승자가 결정 됩니다</li>
+  </ol>
+</blockquote>
+
+<h2 id="lobby">게임 시작 화면</h2>
+
 <h3>채팅 기능</h3>
 <blockquote>
   <ul>
     <li>욕설 필터링</li>
+    <li>최대 입력 가능 글자 제한</li>
       <li>사용 가능 명령어</li>
       <ul>
-        <li>도움말</li>
+        <li>도움말(/help)</li>
         <li>귓속말</li>
         <li>게임방 초대</li>
-        <li>강퇴(방장만 작동)</li>
+        <li>[게임중]강퇴(방장만 작동)</li>
       </ul>
   <ul>
 </blockquote>
 
 
-<img src="https://user-images.githubusercontent.com/34783191/107118521-ee8c8f80-68c4-11eb-8041-e03d04d022cb.png" alt="방만들기 화면">
-
-<h2 id="lobby">게임 화면</h2>
-<img src="https://user-images.githubusercontent.com/34783191/107118311-82f5f280-68c3-11eb-85d8-7ee36c77c625.png" alt="게임 화면"/>
-<blockquote>
-  <p>게임 진행 순서</P>
-  <ol>
-    <li>1번 카드를 받습니다.</li>
-    <li>배팅을 합니다.</li>
-    <li>2번 카드를 받습니다.</li>
-    <li>2번 합니다.</li>
-  </ol>
-</blockquote>
-
-
-
-<h2 id="lobby">게임 시작 화면</h2>
-
-
-<img src="" alt="">
+<h3 id="diagram">다이어그램</h3>
+<img src="https://user-images.githubusercontent.com/34783191/107119085-9d7e9a80-68c8-11eb-8634-2eb15a78d14b.png" alt="다이어그램">
 
 
 <h2 id="lobby">게임 화면</h2>
