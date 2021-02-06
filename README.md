@@ -16,7 +16,7 @@
 
 <h2 id="login">로그인 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
-
+<blockquote>접속 중인 아이디로 로그인시 "접속중인 아이디"라는 안내 메세지가 나옵니다.</blockquote>
 
 <h2 id="회원가입">회원가입 화면</h2>
 <blockquote>
@@ -31,6 +31,14 @@
 <br><br>
 <h2 id="lobby">게임 로비 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
+<blockquote></blockquote>
+    
+<img src="https://user-images.githubusercontent.com/34783191/107120024-72974500-68ce-11eb-9825-70ba01c0e8e1.png" alt="초대 화면"/>
+<blockquote>
+  초대를 받을시 초대장이 10초 동안 노출 됩니다. <br>
+  초대시 상대가 시작 금액보다 더 많이 보유하고 있어야 가능합니다.
+</blockquote>
+
 <br><br>
 <h2 id="makeroom">방만들기</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107118521-ee8c8f80-68c4-11eb-8041-e03d04d022cb.png" alt="방만들기 화면">
@@ -45,11 +53,9 @@
     <li>배팅을 합니다</li>
     <li>2번 카드를 받습니다</li>
     <li>배팅을 합니다</li>
-    <li>승자가 결정 됩니다</li>
+    <li>패를 공개하며 승자가 결정 됩니다</li>
   </ol>
 </blockquote>
-
-<h2 id="lobby">게임 시작 화면</h2>
 
 <h3>채팅 기능</h3>
 <blockquote>
@@ -59,13 +65,12 @@
       <li>사용 가능 명령어</li>
       <ul>
         <li>도움말(/help)</li>
-        <li>귓속말</li>
-        <li>게임방 초대</li>
-        <li>[게임중]강퇴(방장만 작동)</li>
+        <li>귓속말(/w|/귓말)</li>
+        <li>[방]게임방 초대(상대는 로비에 있어야함)</li>
+        <li>[방]강퇴(방장만 작동)</li>
       </ul>
   <ul>
 </blockquote>
-
 
 <h3 id="diagram">다이어그램</h3>
 <img src="https://user-images.githubusercontent.com/34783191/107119085-9d7e9a80-68c8-11eb-8634-2eb15a78d14b.png" alt="다이어그램">
