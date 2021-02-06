@@ -69,11 +69,11 @@ public class ChattingOperator {
 			Packet kickPacket = new Packet(Protocol.KICK, nic);
 			Packing.sender(PlayerVO.myVO.getPwSocket(), kickPacket);
 			break;
-		case "/f":
-		case "/찾기":
-			Packet findPacket = new Packet(Protocol.FIND, nic);
-			Packing.sender(PlayerVO.myVO.getPwSocket(), findPacket);
-			break;
+//		case "/f":
+//		case "/찾기":
+//			Packet findPacket = new Packet(Protocol.FIND, nic);
+//			Packing.sender(PlayerVO.myVO.getPwSocket(), findPacket);
+//			break;
 		case "/help":
 			ChattingOperator.chatArea.append("<귓속말> /w 또는 /귓말 [상대방 닉네임] [할말] \n");
 			ChattingOperator.chatArea.append("<초대> /c 또는 /초대 [상대방 닉네임]\n");
