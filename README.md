@@ -8,7 +8,7 @@
 <h2 id="top">소개 순서</h2>
 <ol>
   <li><a href="#login">로그인 및 회원가입</a></li>
-  <li><a href=""></a></li>
+  <li><a href="#lobby">게임 로비 화면</a></li>
   <li><a href=""></a></li>
   <li><a href=""></a></li>
 </ol>
@@ -23,3 +23,17 @@
 <img src="https://user-images.githubusercontent.com/34783191/107060793-bd578500-681a-11eb-9896-de5896195c38.png" alt="회원가입 화면"/>
 <blockquote>캐릭터 선택 후 회원가입 완료</blockquote>
 <img src="https://user-images.githubusercontent.com/34783191/107060240-1377f880-681a-11eb-9a6a-6fb24814f846.png" alt="캐릭터 선택창"/>
+
+<h2 id="lobby">게임 로비 화면</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
+<h3>채팅 기능</h3>
+<blockquote>
+  <ul>
+    <li>채팅을 제외한 </li>
+  <ul>
+</blockquote>
+
+
+<img src="" alt=""/>
+
+
