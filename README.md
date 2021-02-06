@@ -26,8 +26,14 @@
 
 <h2 id="lobby">게임 로비 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
-
+<h3>채팅 기능</h3>
+<blockquote>
+  <ul>
+    <li>채팅을 제외한 </li>
+  <ul>
+</blockquote>
 
 
 <img src="" alt=""/>
+
 
