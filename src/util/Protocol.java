@@ -59,7 +59,7 @@ public class Protocol {
    public static final String EXTRAMONEY= "45";                	//돈이 부족하면 충전
    public static final String RELOAD_INFO_MONEY= "46";          //비상금서비스 받을시 다시 저장후 출력
    public static final String FIND = "47";						//유저 찾기
-   public static final String RELOAD_PlAYERLIST = "48";			//유저 찾기
+   public static final String RELOAD_PlAYERLIST = "48";			//사람 리스트만 멀티 케스트
 
    public static final String Half = "Half";
    public static final String Quater = "Quater";
