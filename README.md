@@ -9,7 +9,7 @@
 <ol>
   <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href="#lobby">게임 로비 화면</a></li>
-  <li><a href="#makeRoom"></a>방 만들기</li>
+  <li><a href="#makeRoom">방 만들기</a></li>
   <li><a href="#diagram">다이어그램</a></li>
 </ol>
 <hr>
@@ -56,7 +56,8 @@
     <li>배팅을 합니다</li>
     <li>패를 공개하며 승자가 결정 됩니다</li>
   </ol>
-  승자는 방장 권한을 가지게 됩니다.
+  <p>승자는 방장 권한을 가지게 됩니다.</p>
+  <p>파산할 경우 1000만원이 지급 됩니다. (하루 제한 5회)</p>
 </blockquote>
 
 <h3 id="diagram">다이어그램</h3>
