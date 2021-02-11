@@ -9,31 +9,59 @@
 <ol>
   <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href="#lobby">게임 로비 화면</a></li>
-  <li><a href=""></a></li>
-  <li><a href=""></a></li>
+  <li><a href="#makeRoom">방 만들기</a></li>
+  <li><a href="#diagram">다이어그램</a></li>
 </ol>
 <hr>
 
 <h2 id="login">로그인 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
-
+<blockquote>접속 중인 아이디로 로그인시 "접속중인 아이디"라는 안내 메세지가 나옵니다.</blockquote>
 
 <h2 id="회원가입">회원가입 화면</h2>
-<blockquote>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</blockquote>
+<blockquote>
+  <ul>
+    <li>실시간으로 서버에 요청을 하여 유효성을 체크합니다.</li>
+    <li>비밀번호는 bcrypt로 암호화하여 저장합니다.</li>
+  <ul>
+  </blockquote>
 <img src="https://user-images.githubusercontent.com/34783191/107060793-bd578500-681a-11eb-9896-de5896195c38.png" alt="회원가입 화면"/>
 <blockquote>캐릭터 선택 후 회원가입 완료</blockquote>
 <img src="https://user-images.githubusercontent.com/34783191/107060240-1377f880-681a-11eb-9a6a-6fb24814f846.png" alt="캐릭터 선택창"/>
-
+<br><br>
 <h2 id="lobby">게임 로비 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107061822-f47a6600-681b-11eb-9c38-f8e43a0818c1.png" alt="게임 로비 화면"/>
-<h3>채팅 기능</h3>
+<blockquote>로비에 변화가 있을시 실시간으로 반영합니다.</blockquote>
+    
+<img src="https://user-images.githubusercontent.com/34783191/107120024-72974500-68ce-11eb-9825-70ba01c0e8e1.png" alt="초대 화면"/>
 <blockquote>
-  <ul>
-    <li>채팅을 제외한 </li>
-  <ul>
+  초대를 받을시 초대장이 10초 동안 노출 됩니다. <br>
+  초대시 상대가 시작 금액보다 더 많이 보유하고 있어야 가능합니다.
 </blockquote>
 
+<br><br>
+<h2 id="makeroom">방만들기</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107118521-ee8c8f80-68c4-11eb-8041-e03d04d022cb.png" alt="방만들기 화면">
+<blockquote>자신이 가진 한도 내에서 시작 금액 설정 가능합니다.</blockquote>
+<br><br>
+<h2 id="lobby">게임 화면</h2>
+<img src="https://user-images.githubusercontent.com/34783191/107121278-e3416000-68d4-11eb-9824-fb180c1d465f.png" alt="게임 화면"/>
+<blockquote>
+  <p>게임 진행 순서</P>
+  <ol>
+    <li>방장이 게임을 시작 합니다(2명 이상일 때만 가능)</li>
+    <li>1번 카드를 받습니다</li>
+    <li>배팅을 합니다(프로필 옆에 어떤 배팅을 했는지 보입니다)</li>
+    <li>2번 카드를 받습니다</li>
+    <li>배팅을 합니다</li>
+    <li>패를 공개하며 승자가 결정 됩니다</li>
+  </ol>
+  <p>승자는 방장 권한을 가지게 됩니다</p>
+  <p>파산할 경우 1000만원이 지급 됩니다 (하루 제한 5회)</p>
+  <p>게임중 나가기 버튼을 클릭시 나가기 예약이 되며 게임이 끝난 후 퇴장이 됩니다</p>
+</blockquote>
 
-<img src="" alt=""/>
+<h3 id="diagram">다이어그램</h3>
+<img src="https://user-images.githubusercontent.com/34783191/107120302-2ea53f80-68d0-11eb-8411-d028ea646a57.png" alt="다이어그램">
 
 
