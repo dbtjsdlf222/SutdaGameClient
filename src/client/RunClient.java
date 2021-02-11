@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import javax.swing.UIManager;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import client.ui.LoginFrame;
+import client.ui.ShowErrorPane;
 import vo.PlayerVO;
 
 public class RunClient {
@@ -26,6 +28,9 @@ public class RunClient {
 		
 		try {
 			socket = new Socket(SERVERS_IP, port);
+		} catch(ConnectException e) {
+			new ShowErrorPane("서버가 점검중입니다.");
+			return;
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}

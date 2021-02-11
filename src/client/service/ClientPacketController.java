@@ -149,7 +149,7 @@ public class ClientPacketController {
 			if (packet.getMotion().equals("true")) {
 				PasswordInput.getInstance().dispose();
 			} else {
-				ShowErrorPane moneyErrorPane = new ShowErrorPane("비밀번호가 틀렸습니다.");
+				new ShowErrorPane("비밀번호가 틀렸습니다.");
 			}
 			break;
 			
@@ -164,7 +164,6 @@ public class ClientPacketController {
 			break;
 			
 		case Protocol.ENTER_OTHER_ROOM:
-//			RoomScreen.getInstance().mainScreen();
 			RoomScreen.getInstance().enterPlayer(packet.getPlayerVO(), packet.getPlayerVO().getIndex());
 			break;
 		

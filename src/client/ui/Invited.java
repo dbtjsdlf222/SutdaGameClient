@@ -58,7 +58,7 @@ public class Invited {
 		//초대중으로 변경
 		receiving = true;
 		//JFrame
-		inviteJF = new JFrame("초대창");
+		inviteJF = new JFrame("초대장");
 		con = inviteJF.getContentPane();
 		
 		
