@@ -5,13 +5,15 @@
 
 <blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 섯다 게임 클라이언트만 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>하신 후 실행시 바로 서버에 접속 하실수 있습니다.</blockquote>
 
-<h2 id="top">소개 순서</h2>
+<details open>
+  <summary id="top">소개 순서</summary>
 <ol>
   <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href="#lobby">게임 로비 화면</a></li>
   <li><a href="#makeRoom">방 만들기</a></li>
-  <li><a href="#diagram">다이어그램</a></li>
+  <li><a href="#diagram">심플 다이어그램</a></li>
 </ol>
+ </details open>
 <hr>
 
 <h2 id="login">로그인 화면</h2>
@@ -40,7 +42,7 @@
 </blockquote>
 
 <br><br>
-<h2 id="makeroom">방만들기</h2>
+<h2 id="makeRoom">방만들기</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107118521-ee8c8f80-68c4-11eb-8041-e03d04d022cb.png" alt="방만들기 화면">
 <blockquote>자신이 가진 한도 내에서 시작 금액 설정 가능합니다.</blockquote>
 <br><br>
