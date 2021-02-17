@@ -60,7 +60,7 @@ public class ClientPacketController {
 	
 	public ClientPacketController() { }
 
-	public void controller(Packet packet) {
+	public synchronized void controller(Packet packet) {
 		ChatFilter filter= new ChatFilter();
 		
 		logger.info("[Receive(" + Protocol.getName(packet.getProtocol()) + ")] " + packet);
@@ -185,7 +185,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().changeMaster(Integer.parseInt(packet.getMotion()));
 			break;
 			
-		case Protocol.RELOAD_PlAYERLIST:
+		case Protocol.RELOAD_PlAYER_LIST:
 			RoomScreen.getInstance().enterPlayerList(packet.getRoomPlayerList(), packet.getPlayerVO().getIndex());
 			break;
 
@@ -205,7 +205,7 @@ public class ClientPacketController {
 			RoomScreen.getInstance().setButtonAndPrice(packet.getButtonArr()); // 버튼&베팅비용 세팅
 			break;
 			
-		case Protocol.SHOWNEEDMONEY:
+		case Protocol.SHOW_NEED_MONEY:
 			if(packet.getButtonArr() != null)
 				RoomScreen.getInstance().showNeedMoney(packet.getButtonArr());
 			break;

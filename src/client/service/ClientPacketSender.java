@@ -28,8 +28,9 @@ public class ClientPacketSender {
 		PlayerVO.myVO.setRoomNo(roomNo);
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.ENTER_ROOM, PlayerVO.myVO);
 	} // enterRoom();
+	
 	public void reloadPlayerList() {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.RELOAD_PlAYERLIST, PlayerVO.myVO);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.RELOAD_PlAYER_LIST, PlayerVO.myVO);
 	}
 
 	public void exitRoom() {
@@ -64,6 +65,18 @@ public class ClientPacketSender {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_NICK, nick);
 	} //selectNick();
 	
+	public void selectMail(String mail) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SELECT_MAIL, mail);
+	} //selectMail();
+	
+	public void sendMailCode(String mail) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.SEND_MAIL_CODE, mail);
+	} //sendMailCode();
+	
+	public void checkMailCode(String code) {
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.CHECK_MAIL_CODE, code);
+	} //selectCode();
+	
 	public void playerSave(PlayerVO vo) {
 		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.PLAYER_SAVE, vo);
 	}
@@ -73,10 +86,8 @@ public class ClientPacketSender {
 	}
 	
 	public void extraMoney() {
-		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXTRAMONEY);
+		Packing.sender(PlayerVO.myVO.getPwSocket(), Protocol.EXTRA_MONEY);
 	}
-	
-	
 	
 	public boolean connectToServer(String ip,int port) {
 		

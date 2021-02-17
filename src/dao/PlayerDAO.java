@@ -55,6 +55,30 @@ public class PlayerDAO {
 			return false;
 	}//selectNick()
 	
+	public boolean selectMail(String mail) {
+		ClientPacketSender.instance.selectMail(mail);
+		Packet result = getResponse();
+		if(result.getMotion().equals("true"))
+			return true;
+		else 
+			return false;
+	}//selectMail()
+	
+	public boolean sendMailCode(String mail) {
+		ClientPacketSender.instance.sendMailCode(mail);
+		getResponse();
+		return true;
+	} //sendMailCode()
+	
+	public boolean checkMailCode(String code) {
+		ClientPacketSender.instance.checkMailCode(code);
+		Packet result = getResponse();
+		if(result.getMotion().equals("true"))
+			return true;
+		else 
+			return false;
+	}//checkMailCode()
+	
 	public void playerSave(PlayerVO vo) {
 		ClientPacketSender.instance.playerSave(vo);
 	}//playerSave()

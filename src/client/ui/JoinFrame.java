@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.activation.MimeTypeParameterList;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,13 +39,16 @@ public class JoinFrame {
 
 	private PlayerDAO playerDAO;
 
-	private boolean nicknameCheck;
-	private boolean idCheck;
-	private boolean passwordCheck;
-	private boolean passwordCheck2;
+	private boolean nicknameCheck= false;
+	private boolean idCheck= false;
+	private boolean mailCheck = false;
+	private boolean mailCodeCheck = false;
+	private boolean passwordCheck= false;
+	private boolean passwordCheck2= false;
 	private JFrame frame;
 	private JTextField textFieldNickname;
 	private JTextField textFieldId;
+	private JTextField textFieldMail;
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldCheck;
 
@@ -61,7 +65,7 @@ public class JoinFrame {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setBackground(Color.BLACK);
-		frame.setBounds(100, 100, 444, 444);
+		frame.setBounds(700, 300, 444, 470);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image img = toolkit.getImage(RoomScreen.class.getResource("/img/titleIcon.jpg"));
 		frame.setIconImage(img);
@@ -69,10 +73,9 @@ public class JoinFrame {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 16, 0, 0, 64, 0, 16 };
-		gridBagLayout.rowHeights = new int[] { 32, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 64, 16 };
+		gridBagLayout.rowHeights = new int[] { 32, 0, 0, 32, 0, 0};
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0 };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0,
-				0.0 };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0 };
 		frame.getContentPane().setLayout(gridBagLayout);
 
 		JLabel lblHint1 = new JLabel("새롭게 만들 아이디와 비밀번호를 입력해주세요.");
@@ -223,13 +226,61 @@ public class JoinFrame {
 		gbc_lblPasswordCheckErrorMessage.gridy = 11;
 		frame.getContentPane().add(lblPasswordCheckErrorMessage, gbc_lblPasswordCheckErrorMessage);
 
+		
+		/* -------이메일--------------*/
+		JLabel lblMail = new JLabel("이메일");
+		lblMail.setForeground(Color.WHITE);
+		GridBagConstraints gbc_lblMail = new GridBagConstraints();
+		gbc_lblMail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblMail.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMail.gridx = 1;
+		gbc_lblMail.gridy = 12;
+		frame.getContentPane().add(lblMail, gbc_lblMail);
+		
+		textFieldMail = new JTextField();
+		GridBagConstraints gbc_textFieldMail = new GridBagConstraints();
+		gbc_textFieldMail.gridwidth = 3;
+		gbc_textFieldMail.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldMail.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldMail.gridx = 2;
+		gbc_textFieldMail.gridy = 12;
+		frame.getContentPane().add(textFieldMail, gbc_textFieldMail);
+		textFieldMail.setColumns(10);
+
+		JLabel lblMailErrorMessage = new JLabel("");
+		lblMailErrorMessage.setForeground(Color.RED);
+		lblMailErrorMessage.setFont(new Font("굴림", Font.BOLD, 12));
+		GridBagConstraints gbc_lblMailErrorMessage = new GridBagConstraints();
+		gbc_lblMailErrorMessage.gridwidth = 3;
+		gbc_lblMailErrorMessage.anchor = GridBagConstraints.WEST;
+		gbc_lblMailErrorMessage.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMailErrorMessage.gridx = 2;
+		gbc_lblMailErrorMessage.gridy = 13;
+		frame.getContentPane().add(lblMailErrorMessage, gbc_lblMailErrorMessage);
+		
+		JButton btnMail = new JButton("이메일 인증");
+		GridBagConstraints gbc_btnMail = new GridBagConstraints();
+		gbc_btnMail.fill = GridBagConstraints.NONE;
+		gbc_btnMail.gridwidth = 1;
+		gbc_btnMail.insets = new Insets(0, 0, 5, 5);
+		gbc_btnMail.gridx = 2;
+		gbc_btnMail.gridy =14;
+		
+		JButton btnCode = new JButton("인증번호 입력");
+		GridBagConstraints gbc_btnCode = new GridBagConstraints();
+		gbc_btnCode.fill = GridBagConstraints.NONE;
+		gbc_btnCode.gridwidth = 1;
+		gbc_btnCode.insets = new Insets(0, 0, 5, 5);
+		gbc_btnCode.gridx = 2;
+		gbc_btnCode.gridy =14;
+		
 		JButton btnJoin = new JButton("회원가입");
 		GridBagConstraints gbc_btnJoin = new GridBagConstraints();
 		gbc_btnJoin.fill = GridBagConstraints.BOTH;
 		gbc_btnJoin.gridwidth = 2;
 		gbc_btnJoin.insets = new Insets(0, 0, 5, 5);
 		gbc_btnJoin.gridx = 3;
-		gbc_btnJoin.gridy = 12;
+		gbc_btnJoin.gridy = 15;
 		frame.getContentPane().add(btnJoin, gbc_btnJoin);
 
 		textFieldNickname.getDocument().addDocumentListener(new DocumentUpdateListener() {
@@ -241,11 +292,8 @@ public class JoinFrame {
 			public void action(String text) {
 				
 				if(t != null && !t.isInterrupted()) t.interrupt();
-				
 				t = new Thread(() -> {
-					
 					try {
-						
 						nicknameCheck = false;
 						String _text = null;
 						
@@ -271,11 +319,8 @@ public class JoinFrame {
 						lblNicknameErrorMessage.setText(_text);
 						
 					}catch (InterruptedException e) { logger.debug("nickname validate check intruppeted"); }
-					
 				});
-				
 				t.start();
-				
 			}
 		});
 
@@ -286,11 +331,8 @@ public class JoinFrame {
 			
 			@Override
 			public void action(String text) {
-				
 				if(t != null && !t.isInterrupted()) t.interrupt();
-				
 				t = new Thread(() -> {
-					
 					try {
 						
 						idCheck = false;
@@ -320,58 +362,130 @@ public class JoinFrame {
 						lblIdErrorMessage.setText(_text);
 						
 					}catch (InterruptedException e) { logger.debug("id validate check intruppeted"); }
-					
 				});
-				
 				t.start();
-				
 			}
-			
 		});
 
 		passwordField.getDocument().addDocumentListener(new DocumentUpdateListener() {
-
+			
 			@Override
 			public void action(String text) {
-
 				passwordCheck = text.length() >= 5 && text.length() <= 10;
 				lblPasswordErrorMessage.setForeground(passwordCheck ? Color.GREEN : Color.RED);
 				lblPasswordErrorMessage.setText(passwordCheck ? "가능한 비밀번호입니다." : "5 ~ 10자리를 입력하세요.");
-
 			}
-
 		});
-
+		
 		DocumentListener passwordCheckListener = new DocumentUpdateListener() {
-
 			@Override
 			public void action(String text) {
-
 				passwordCheck2 = Arrays.equals(passwordField.getPassword(), passwordFieldCheck.getPassword());
 				lblPasswordCheckErrorMessage.setForeground(passwordCheck2 ? Color.GREEN : Color.RED);
 				lblPasswordCheckErrorMessage.setText(passwordCheck2 ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.");
-
 			}
-
 		};
 
+		//비밀번호체크 필드 입력 후에 비교 리스너 추가
 		passwordFieldCheck.getDocument().addDocumentListener(passwordCheckListener);
 		passwordFieldCheck.getDocument().addDocumentListener(new DocumentUpdateListener() {
-
 			@Override
 			public void action(String text) {
-
 				passwordField.getDocument().addDocumentListener(passwordCheckListener);
 				passwordFieldCheck.getDocument().removeDocumentListener(this);
-
 			}
-
 		});
+		
+		DocumentUpdateListener dl = new DocumentUpdateListener() {
+			
+			private Pattern mailPattern = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+			private Thread t;
+			
+			@Override
+			public void action(String text) {
+				if(t != null && !t.isInterrupted()) t.interrupt();
+				
+				t = new Thread(() -> {
+					
+					try {
+						mailCheck = false;
+						String _text = null;
+						
+						Matcher match = mailPattern.matcher(text);
+						if (match.find()) {
+							
+							if (playerDAO.selectMail(text)) {
+								_text = "사용중인 아이디 입니다";
+								frame.getContentPane().remove(btnMail);
+								mailCheck=false;
+							} else {
+								_text = "사용 가능한 메일 입니다. 인증을 진행해주세요";
+								frame.getContentPane().add(btnMail, gbc_btnMail);
+								mailCheck=true;
+							}
+						} else {
+							_text = "메일을 확인해주세요";
+							frame.getContentPane().remove(btnMail);
+							mailCheck=false;
+						}
+						
+						Thread.sleep(0);
+						lblMailErrorMessage.setForeground(mailCheck ? Color.GREEN : Color.RED);
+						lblMailErrorMessage.setText(_text);
+						
+					}catch (InterruptedException e) { logger.debug("mail validate check intruppeted"); }
+				});
+				t.start();
+			}
+		};
+	textFieldMail.getDocument().addDocumentListener(dl);
 
+	btnMail.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(mailCheck) {
+					frame.getContentPane().remove(btnMail);
+					lblMail.setText("인증번호");
+					lblMailErrorMessage.setForeground(Color.YELLOW);
+					lblMailErrorMessage.setText("인증번호 전송중...");
+					textFieldMail.getDocument().removeDocumentListener(dl);
+					playerDAO.sendMailCode(textFieldMail.getText());
+					textFieldMail.setText("");
+					frame.getContentPane().add(btnCode, gbc_btnCode);
+					lblMailErrorMessage.setForeground(Color.GREEN);
+					lblMailErrorMessage.setText("이메일로 전송한 인증번호를 입력해주세요.");
+				} else {
+					lblMailErrorMessage.setForeground(Color.RED);
+					lblMailErrorMessage.setText("오류가 발생하였습니다. 재접속해주세요");
+				}
+			}
+		});
+		
+		
+		btnCode.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblMailErrorMessage.setText("인증번호 확인중...");
+				if(playerDAO.checkMailCode(textFieldMail.getText())) {
+					lblMailErrorMessage.setForeground(Color.GREEN);
+					lblMailErrorMessage.setText("이메일 인증이 완료 되었습니다.");
+					frame.getContentPane().remove(btnCode);
+					textFieldMail.setEnabled(false);
+					mailCodeCheck=true;
+				} else {
+					textFieldMail.setText("");
+					lblMailErrorMessage.setForeground(Color.RED);
+					lblMailErrorMessage.setText("인증번호를 확인해주세요.");
+				}
+			}
+		});
+		
+	
 		btnJoin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (idCheck && passwordCheck && passwordCheck2 && nicknameCheck) {
+				if (idCheck && passwordCheck && passwordCheck2 && nicknameCheck && mailCodeCheck) {
 
 					characterJF = new JFrame("캐릭터 선택창");
 					Container con = characterJF.getContentPane();
@@ -504,9 +618,11 @@ public class JoinFrame {
 						}
 					});
 
-				} else
-					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호 또는 닉네임을 입력해주세요.");
-
+				} else if(idCheck && passwordCheck && passwordCheck2 && nicknameCheck) {
+					JOptionPane.showMessageDialog(null, "이메일 인증를 완료해주세요.");
+				} else {
+					JOptionPane.showMessageDialog(null, "입력 값을 확인해 주세요");
+				}
 			}
 		});
 
