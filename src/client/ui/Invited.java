@@ -187,37 +187,11 @@ public class Invited {
 	    		 }
 	    	 }
 	      };
-	        		t.schedule(tt,0,1000);
+    		t.schedule(tt,0,1000);
 	         
-	    }//progress_start()끝
+	    } //progress_start()끝
 
 	public boolean isReceiving() { return receiving; }
 
 	 
 }
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
