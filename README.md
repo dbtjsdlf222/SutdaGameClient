@@ -5,7 +5,7 @@
 
 <blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 섯다 게임 클라이언트만 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>하신 후 실행시 바로 서버에 접속 하실수 있습니다.</blockquote>
 
-<p>클라이언트 Test계정입니다.</p>
+<p>클라이언트 Test계정은 (id,pw)(1,1)~(5,5) 입니다.</p>
 <p>ID 1~5</p>
 <p>PW 1~5</p>
 
