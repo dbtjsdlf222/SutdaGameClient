@@ -3,10 +3,11 @@
 <strong>섯다</strong>는 화투로 할 수 있는 대표적인 카드 게임입니다. <br>
 참가자들은 본인이 가진 단 2장의 카드 조합을 확인하고 금액을 베팅한 후, 이후 서로의 카드를 모두 공개하여 그 결과 가장 높은 2장의 카드 조합을 가진 참가자가 승자가 되어 베팅된 판돈을 모두 획득합니다. (포커의 화투 버전입니다)
 
-<blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 섯다 게임 클라이언트만 <a href="https://drive.google.com/file/d/1pkjSCJg5_KFpaW67MfsgLPa24rtpq7X4/view?usp=sharing">다운로드</a>하신 후 실행시 바로 서버에 접속 하실수 있습니다.</blockquote>
+<blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 
+  섯다 게임 클라이언트을 다운로드하기 위해선 <a href="http://sunx.cafe24.com/main">홈페이지</a>에 접속하신 후 다운로드 해주시길 바랍니다.
+</blockquote>
 
-<p>클라이언트 Test계정은 (id,pw)(1,1)~(5,5) 입니다.</p>
-
+<p>클라이언트 Test계정은 [id,pw] > [1,1]~[5,5] 입니다.</p>
 
 <details open>
   <summary id="top">소개 순서</summary>
