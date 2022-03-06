@@ -1,9 +1,10 @@
-# 섯다게임
+# 2020 섯다게임
 
 <strong>섯다</strong>는 화투로 할 수 있는 대표적인 카드 게임입니다. <br>
-참가자들은 본인이 가진 단 2장의 카드 조합을 확인하고 금액을 베팅한 후, 이후 서로의 카드를 모두 공개하여 그 결과 가장 높은 2장의 카드 조합을 가진 참가자가 승자가 되어 베팅된 판돈을 모두 획득합니다. (포커의 화투 버전입니다)
+참가자들은 본인이 가진 단 2장의 카드 조합을 확인하고 금액을 베팅한 후, 이후 서로의 카드를 모두 공개하여 <br>
+그 결과 가장 높은 2장의 카드 조합을 가진 참가자가 승자가 되어 베팅된 판돈을 모두 획득합니다. (포커의 화투 버전입니다)
 
-<blockquote>게임 서버는 현재 아마존 웹 서비스 VPC에서 배포 중입니다.<br> 
+<blockquote>게임 서버는 현재 AWS에서 Docker로 배포 중입니다.<br> 
   섯다 게임 클라이언트을 다운로드하기 위해선 <a href="http://sunx.cafe24.com/main">홈페이지</a>에 접속하신 후 다운로드 해주시길 바랍니다.
 </blockquote>
 
@@ -12,6 +13,7 @@
 <details open>
   <summary id="top">소개 순서</summary>
 <ol>
+  <li><a href="#developers">개발 구성</a></li>
   <li><a href="#login">로그인 및 회원가입</a></li>
   <li><a href="#lobby">게임 로비 화면</a></li>
   <li><a href="#makeRoom">방 만들기</a></li>
@@ -20,6 +22,36 @@
  </details open>
 <hr>
 
+<h2 id="developers">개발 구성</h2>
+
+<table>
+  <tr>
+    <td>개발언어</td>
+    <td>Java 11</td>
+  </tr>
+  <tr>
+    <td>빌드도구</td>
+    <td>Maven</td>
+  </tr>
+  <tr>
+    <td>UI</td>
+    <td>Java Swing</td>
+  </tr>
+  <tr>
+    <td>DB</td>
+    <td>MySQL</td>
+  </tr>
+  <tr>
+    <td>기여도</td>
+    <td>
+      웹 서버(100%)<br>
+      웹 프론트 (20%)<br>
+      게임 서버 (80%)<br>
+      게임 클라이언트 (30%)
+    </td>
+  </tr>
+</table>
+  
 <h2 id="login">로그인 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
 <blockquote>접속 중인 아이디로 로그인시 "접속중인 아이디"라는 안내 메세지가 나옵니다.</blockquote>
