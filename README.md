@@ -27,7 +27,7 @@
 <table>
   <tr>
     <td>개발언어</td>
-    <td>Java 11</td>
+    <td>Java 1.8</td>
   </tr>
   <tr>
     <td>빌드도구</td>
