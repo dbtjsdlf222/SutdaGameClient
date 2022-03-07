@@ -4,11 +4,15 @@
 참가자들은 본인이 가진 단 2장의 카드 조합을 확인하고 금액을 베팅한 후, 이후 서로의 카드를 모두 공개하여 <br>
 그 결과 가장 높은 2장의 카드 조합을 가진 참가자가 승자가 되어 베팅된 판돈을 모두 획득합니다. (포커의 화투 버전입니다)
 
-<blockquote>게임 서버는 현재 AWS에서 Docker로 배포 중입니다.<br> 
-  섯다 게임 클라이언트을 다운로드하기 위해선 <a href="http://sunx.cafe24.com/main">홈페이지</a>에 접속하신 후 다운로드 해주시길 바랍니다.
+<del>게임 서버는 현재 AWS에서 Docker로 배포 중입니다.<br> 
+  섯다 게임 클라이언트을 다운로드하기 위해선 <a href="http://sunx.cafe24.com/main">홈페이지</a>에 접속하신 후 다운로드 해주시길 바랍니다.<br>
+  클라이언트 Test계정은 [id,pw] > [1,1]~[5,5] 입니다.
+</del>
+<blockquote>
+  게임 서버는 배포 중단 상태 입니다
+  클라이언트 실행 화면은 
+  <a href="https://docs.google.com/presentation/d/1G4KhOYwfUCxKXHyzQWx3tlIUBmKlz8g3EB1fZBO9NTU/edit?usp=sharing">PPT 링크</a>에서 확인 하실 수 있습니다.
 </blockquote>
-
-<p>클라이언트 Test계정은 [id,pw] > [1,1]~[5,5] 입니다.</p>
 
 <details open>
   <summary id="top">소개 순서</summary>
@@ -52,6 +56,7 @@
   </tr>
 </table>
   
+ 
 <h2 id="login">로그인 화면</h2>
 <img src="https://user-images.githubusercontent.com/34783191/107025166-5e7b1700-67ec-11eb-8bd7-d62e784176d6.png" alt="로그인 화면"/>
 <blockquote>접속 중인 아이디로 로그인시 "접속중인 아이디"라는 안내 메세지가 나옵니다.</blockquote>
