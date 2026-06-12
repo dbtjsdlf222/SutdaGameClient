@@ -12,7 +12,8 @@
 <blockquote>
   게임 서버는 배포 중단 상태 입니다
   클라이언트 실행 화면은 
-  <a href="https://docs.google.com/presentation/d/1G4KhOYwfUCxKXHyzQWx3tlIUBmKlz8g3EB1fZBO9NTU/edit?usp=sharing">PPT 링크</a>에서 확인 하실 수 있습니다.
+  <a href="https://docs.google.com/presentation/d/1aNIftqvKGK-JZ4mYD-qXYRzhOnWwvyGYRBofPPURRwM/edit?slide=id.g9fc791e933_1_64#slide=id.g9fc791e933_1_64">PPT 링크</a>에서 확인 하실 수 있습니다.
+  
 </blockquote>
 
 <details open>
